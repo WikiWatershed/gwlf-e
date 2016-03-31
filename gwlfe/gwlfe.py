@@ -4,21 +4,32 @@ from __future__ import print_function
 from __future__ import unicode_literals
 from __future__ import division
 
-import logging
+from . import ReadGwlfDataFile
+from . import PrelimCalculations
+from . import CalcCnErosRunoffSed
+from . import AFOS
+from . import CalcLoads
+from . import StreamBank
+from . import AnnualMeans
+from . import WriteOutputFiles
 
-from .parser import GmsReader
 
+def run():
+    print('Running model...')
+    ReadGwlfDataFile.ReadAllData()
+    PrelimCalculations.InitialCalculations()
 
-if __name__ == '__main__':
-    import sys
-    import json
+    for year in range(100):
+        for month in range(12):
+            for day in range(30):
+                CalcCnErosRunoffSed.CalcCN()
 
-    ch = logging.StreamHandler()
-    log.addHandler(ch)
+        AFOS.AnimalOperations()
+        CalcLoads.CalculateLoads()
+        StreamBank.CalculateStreamBankEros()
+        AnnualMeans.CalculateAnnualMeanLoads()
 
-    gms_filename = sys.argv[1]
+    WriteOutputFiles.WriteOutput()
+    WriteOutputFiles.WriteOutputSumFiles()
 
-    fp = open(gms_filename, 'r')
-    gms = GmsReader(fp).read()
-
-    print(json.dumps(gms))
+    print('Done')

@@ -955,4 +955,3 @@ class GmsReader(object):
             raise ValueError('Expected "{}" but got "{}" at Line {} Column {}'.format(typ, value, line_no, col_no))
 
         return value
-
