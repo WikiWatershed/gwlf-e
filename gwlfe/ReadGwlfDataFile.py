@@ -120,7 +120,7 @@ def ReadAllData(z):
     z.Runoff = np.zeros((z.DimYrs, 12))
     z.Erosion = np.zeros((z.DimYrs, 12))
     z.SedYield = np.zeros((z.DimYrs, 12))
-    z.DaysMonth = np.zeros((z.DimYrs, 12))
+    z.DaysMonth = np.zeros((z.DimYrs, 12), dtype=int)
     z.WxMonth = np.zeros((z.DimYrs, 12))
     z.WxYear = np.zeros((z.DimYrs, 12))
     z.GroundNitr = np.zeros((z.DimYrs, 12))
