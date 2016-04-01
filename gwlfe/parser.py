@@ -8,6 +8,8 @@ import logging
 
 from collections import defaultdict
 
+import numpy as np
+
 
 log = logging.getLogger(__name__)
 log.setLevel(logging.DEBUG)
@@ -193,23 +195,25 @@ class GmsReader(object):
 
         # Lines 20 - 29: (for each Rural Land Use Category)
         for i in range(result['NRur']):
-            result['Landuse'] = self.next(LandUse.parse)  # Rural Land Use Category
-            result['Area'] = self.next(float)  # Area (Ha)
-            result['CN'] = self.next(float)  # Curve Number
-            result['KF'] = self.next(float)  # K Factor
-            result['LS'] = self.next(float)  # LS Factor
-            result['C'] = self.next(float)   # C Factor
-            result['P'] = self.next(float)   # P Factor
+            result['Landuse'].append(self.next(LandUse.parse))  # Rural Land Use Category
+            result['Area'].append(self.next(float))  # Area (Ha)
+            result['CN'].append(self.next(float))  # Curve Number
+            result['KF'].append(self.next(float))  # K Factor
+            result['LS'].append(self.next(float))  # LS Factor
+            result['C'].append(self.next(float))   # C Factor
+            result['P'].append(self.next(float))   # P Factor
             self.next(EOL)
 
         # Lines 30 - 35: (for each Urban Land Use Category)
+        result['CNI'] = np.zeros((3, 16))
+        result['CNP'] = np.zeros((3, 16))
         for i in range(result['NUrb']):
-            result['Landuse'] = self.next(LandUse.parse)  # Urban Land Use Category
-            result['Area'] = self.next(float)  # Area (Ha)
-            result['Imper'] = self.next(float)  # Impervious Surface %
-            result['CNI'] = self.next(float)  # Curve Number(Impervious Surfaces)
-            result['CNP'] = self.next(float)  # Curve Number(Pervious Surfaces)
-            result['TotSusSolids'] = self.next(float)  # Total Suspended Solids Factor
+            result['Landuse'].append(self.next(LandUse.parse))  # Urban Land Use Category
+            result['Area'].append(self.next(float))  # Area (Ha)
+            result['Imper'].append(self.next(float))  # Impervious Surface %
+            result['CNI'][2, i] = self.next(float)  # Curve Number(Impervious Surfaces)
+            result['CNP'][2, i] = self.next(float)  # Curve Number(Pervious Surfaces)
+            result['TotSusSolids'].append(self.next(float))  # Total Suspended Solids Factor
             self.next(EOL)
 
         # Line 36:
@@ -664,7 +668,7 @@ class GmsReader(object):
         result['ISRA(4)'] = self.next(float)  # Impervious Surface Reduction: Medium Density Residential (% Area)
         result['ISRR(5)'] = self.next(float)  # Impervious Surface Reduction: High Density Residential (% Reduction)
         result['ISRA(5)'] = self.next(float)  # Impervious Surface Reduction: High Density Residential (% Area)
-        result['SweepType'] = self.next(float)  # Street Sweeping: Sweep Type (1-2)
+        result['SweepType'] = self.next(SweepType.parse)  # Street Sweeping: Sweep Type (1-2)
         result['UrbSweepFrac'] = self.next(float)  # Street Sweeping: Fraction of area treated (0-1)
         self.next(EOL)
 
