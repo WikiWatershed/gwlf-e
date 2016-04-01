@@ -16,7 +16,7 @@ from . import AnnualMeans
 from . import WriteOutputFiles
 
 
-def run():
+def run(z):
     print('Running model...')
 
     # Redimension the Summary Variables
