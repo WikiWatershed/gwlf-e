@@ -7,13 +7,14 @@ from __future__ import division
 import sys
 import logging
 
-from gwlfe import gwlfe, parser
-from gwlfe.model import DataModel
+from gwlfe import gwlfe, parser, ReadGwlfDataFile
+from gwlfe.datamodel import DataModel
 
 
 def main():
     ch = logging.StreamHandler()
     parser.log.addHandler(ch)
+    ReadGwlfDataFile.log.addHandler(ch)
 
     gms_filename = sys.argv[1]
 

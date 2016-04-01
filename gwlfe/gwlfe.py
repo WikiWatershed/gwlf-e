@@ -300,7 +300,7 @@ def run(z):
     # AnnSumTotStreamBankN = np.zeros(50)
     # AnnSumTotStreamBankP = np.zeros(50)
 
-    ReadGwlfDataFile.ReadAllData()
+    ReadGwlfDataFile.ReadAllData(z)
 
     # ########################- BEGIN MAIN GWLF RUN CODE -########################
     # #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
