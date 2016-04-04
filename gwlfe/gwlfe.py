@@ -34,12 +34,12 @@ def run(z):
     # MODEL CALCULATIONS FOR EACH YEAR OF ANALYSIS - WATER BALANCE,
     # NUTRIENTS AND SEDIMENT LOADS
 
-    for y in range(0, z.NYrs):
+    for y in range(z.NYrs):
         # FOR EACH MONTH...
-        for i in range(0, 12):
+        for i in range(12):
             # Initialize monthly septic system variables
             # LOOP THROUGH NUMBER OF LANDUSES IN THE BASIN TO GET QRUNOFF
-            for l in range(0, z.NLU):
+            for l in range(z.NLU):
                 z.QRunoff[l, i] = 0
                 z.AgQRunoff[l, i] = 0
                 z.ErosWashoff[l, i] = 0
@@ -51,7 +51,7 @@ def run(z):
             # TODO: J should start at 1, but I changed
             # it to 0 so that the code executes with fake
             # data. Otherwise range is 1 to 1.
-            for j in range(0, z.DaysMonth[y, i]):
+            for j in range(z.DaysMonth[y, i]):
                 # GET THE DAYS OF THE YEAR
                 if (z.DayYr + 1) > z.DaysYear[y]:
                     z.DayYr = 0
@@ -70,7 +70,7 @@ def run(z):
                 z.QTotal = 0
                 z.MeltPest[y, i, j] = 0
 
-                for l in range(0, z.NLU):
+                for l in range(z.NLU):
                     z.ImpervAccum[l] = (z.ImpervAccum[l] * np.exp(-0.12) +
                                         (1 / 0.12) * (1 - np.exp(-0.12)))
                     z.PervAccum[l] = (z.PervAccum[l] * np.exp(-0.12) +
@@ -100,7 +100,7 @@ def run(z):
                     # IF WATER AVAILABLE, THEN CALL SUB TO COMPUTE CN, RUNOFF,
                     # EROSION AND SEDIMENT
                     if z.Water > 0.01:
-                        CalcCnErosRunoffSed.CalcCN()
+                        CalcCnErosRunoffSed.CalcCN(z, i, y, j)
 
                     # DAILY CN
                     z.DailyCN[y, i, j] = z.CNum
@@ -108,7 +108,7 @@ def run(z):
                     # UPDATE ANTECEDENT RAIN+MELT CONDITION
                     z.AMC5 = z.AMC5 - z.AntMoist[5] + z.Water
                     z.DailyAMC5[y, i, j] = z.AMC5
-                    for k in range(0, 4):
+                    for k in range(4):
                         z.AntMoist[6 - k] = z.AntMoist[5 - k]
                     z.AntMoist[1] = z.Water
 
@@ -263,7 +263,7 @@ def run(z):
             # CALCULATE FINAL MONTHLY AND ANNUAL WATER BALANCE FOR
             # AVERAGE STREAM FLOW
 
-            for i in range(0, 12):
+            for i in range(12):
                 z.AvStreamFlow[i] = (z.AvRunoff[i] + z.AvGroundWater[i] +
                                      z.AvPtSrcFlow[i] + z.AvTileDrain[i] -
                                      z.AvWithdrawal[i])
