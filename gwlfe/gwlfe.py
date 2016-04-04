@@ -29,7 +29,7 @@ def run(z):
 
     # CALCLULATE PRELIMINARY INITIALIZATIONS AND VALUES FOR
     # WATER BALANCE AND NUTRIENTS
-    PrelimCalculations.InitialCalculations()
+    PrelimCalculations.InitialCalculations(z)
 
     # MODEL CALCULATIONS FOR EACH YEAR OF ANALYSIS - WATER BALANCE,
     # NUTRIENTS AND SEDIMENT LOADS

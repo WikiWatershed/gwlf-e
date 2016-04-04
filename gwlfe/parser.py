@@ -106,8 +106,12 @@ class GmsReader(object):
             self.next(EOL)
 
         # Lines 30 - 35: (for each Urban Land Use Category)
-        result['CNI'] = np.zeros((3, 16))
-        result['CNP'] = np.zeros((3, 16))
+        # CNI and CNP are 1-based in VB, so although the first dimension
+        # should be size 3, we increase it by 1 because the model
+        # references indexes 1, 2, and 3. The first index is never used.
+        result['CNI'] = np.zeros((4, 16))
+        result['CNP'] = np.zeros((4, 16))
+
         for i in range(result['NUrb']):
             result['Landuse'].append(self.next(LandUse.parse))  # Urban Land Use Category
             result['Area'].append(self.next(float))  # Area (Ha)
