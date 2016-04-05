@@ -8,113 +8,16 @@ import logging
 
 from collections import defaultdict
 
+import numpy as np
+
+from .enums import YesOrNo, ETflag, GrowFlag, LandUse, SweepType
+
 
 log = logging.getLogger(__name__)
 log.setLevel(logging.DEBUG)
 
 
 EOL = '<EOL>'
-
-
-class YesOrNo(object):
-    NO = '<No>'
-    YES = '<Yes>'
-
-    @staticmethod
-    def parse(value):
-        if value in ('0', 'N'):
-            return YesOrNo.NO
-        elif value in ('1', 'Y'):
-            return YesOrNo.YES
-        raise ValueError('Unexpected value: ' + str(value))
-
-
-class ETflag(object):
-    HAMMON_METHOD = '<Hammon method>'
-    BLAINY_CRIDDLE_METHOD = '<Blainy-Criddle method>'
-
-    @staticmethod
-    def parse(value):
-        value = int(value)
-        if value == 0:
-            return ETflag.HAMMON_METHOD
-        elif value == 1:
-            return ETflag.BLAINY_CRIDDLE_METHOD
-        raise ValueError('Unexpected value: ' + str(value))
-
-
-class GrowFlag(object):
-    NON_GROWING_SEASON = '<Non-growing season>'
-    GROWING_SEASON = '<Growing season>'
-
-    @staticmethod
-    def parse(value):
-        value = int(value)
-        if value == 0:
-            return GrowFlag.NON_GROWING_SEASON
-        elif value == 1:
-            return GrowFlag.GROWING_SEASON
-        raise ValueError('Unexpected value: ' + str(value))
-
-
-# TODO: Use actual NLCD values
-# Reference: https://drive.google.com/a/azavea.com/file/d/0B3v0QxIOuR_nX3Rnekp0NGUyOGM/view
-class LandUse(object):
-    WATER = '<Water>'
-    HAY_PAST = '<Hay/Past>'
-    CROPLAND = '<Cropland>'
-    FOREST = '<Forest>'
-    WETLAND = '<Wetland>'
-    DISTURBED = '<Disturbed>'
-    TURFGRASS = '<Turfgrass>'
-    OPEN_LAND = '<Open_Land>'
-    BARE_ROCK = '<Bare_Rock>'
-    SANDY_AREAS = '<Sandy_Areas>'
-    UNPAVED_ROAD = '<Unpaved_Road>'
-    LD_MIXED = '<Ld_Mixed>'
-    MD_MIXED = '<Md_Mixed>'
-    HD_MIXED = '<Hd_Mixed>'
-    LD_RESIDENTIAL = '<Ld_Residential>'
-    MD_RESIDENTIAL = '<Md_Residential>'
-    HD_RESIDENTIAL = '<Hd_Residential>'
-
-    @staticmethod
-    def parse(value):
-        if value == 'Water':
-            return LandUse.WATER
-        if value in ('Hay/Past', 'Hay'):
-            return LandUse.HAY_PAST
-        elif value == 'Cropland':
-            return LandUse.CROPLAND
-        elif value == 'Forest':
-            return LandUse.FOREST
-        elif value == 'Wetland':
-            return LandUse.WETLAND
-        elif value in ('Disturbed', 'Disturbed Land'):
-            return LandUse.DISTURBED
-        elif value == 'Turfgrass':
-            return LandUse.TURFGRASS
-        elif value in ('Open_Land', 'Open Land'):
-            return LandUse.OPEN_LAND
-        elif value in ('Bare_Rock', 'Bare Rock'):
-            return LandUse.BARE_ROCK
-        elif value in ('Sandy_Areas', 'Sandy Areas'):
-            return LandUse.SANDY_AREAS
-        elif value in ('Unpaved_Road', 'Unpaved Roads'):
-            return LandUse.UNPAVED_ROAD
-        elif value in ('Ld_Mixed', 'LD Mixed'):
-            return LandUse.LD_MIXED
-        elif value in ('Md_Mixed', 'MD Mixed'):
-            return LandUse.MD_MIXED
-        elif value in ('Hd_Mixed', 'HD Mixed'):
-            return LandUse.HD_MIXED
-        elif value in ('Ld_Residential', 'LD Residential'):
-            return LandUse.LD_RESIDENTIAL
-        elif value in ('Md_Residential', 'MD Residential'):
-            return LandUse.MD_RESIDENTIAL
-        elif value in ('Hd_Residential', 'HD Residential'):
-            return LandUse.HD_RESIDENTIAL
-        raise ValueError('Unexpected value: ' + str(value))
 
 
 def iterate_csv_values(fp):
@@ -193,23 +96,25 @@ class GmsReader(object):
 
         # Lines 20 - 29: (for each Rural Land Use Category)
         for i in range(result['NRur']):
-            result['Landuse'] = self.next(LandUse.parse)  # Rural Land Use Category
-            result['Area'] = self.next(float)  # Area (Ha)
-            result['CN'] = self.next(float)  # Curve Number
-            result['KF'] = self.next(float)  # K Factor
-            result['LS'] = self.next(float)  # LS Factor
-            result['C'] = self.next(float)   # C Factor
-            result['P'] = self.next(float)   # P Factor
+            result['Landuse'].append(self.next(LandUse.parse))  # Rural Land Use Category
+            result['Area'].append(self.next(float))  # Area (Ha)
+            result['CN'].append(self.next(float))  # Curve Number
+            result['KF'].append(self.next(float))  # K Factor
+            result['LS'].append(self.next(float))  # LS Factor
+            result['C'].append(self.next(float))   # C Factor
+            result['P'].append(self.next(float))   # P Factor
             self.next(EOL)
 
         # Lines 30 - 35: (for each Urban Land Use Category)
+        result['CNI'] = np.zeros((3, 16))
+        result['CNP'] = np.zeros((3, 16))
         for i in range(result['NUrb']):
-            result['Landuse'] = self.next(LandUse.parse)  # Urban Land Use Category
-            result['Area'] = self.next(float)  # Area (Ha)
-            result['Imper'] = self.next(float)  # Impervious Surface %
-            result['CNI'] = self.next(float)  # Curve Number(Impervious Surfaces)
-            result['CNP'] = self.next(float)  # Curve Number(Pervious Surfaces)
-            result['TotSusSolids'] = self.next(float)  # Total Suspended Solids Factor
+            result['Landuse'].append(self.next(LandUse.parse))  # Urban Land Use Category
+            result['Area'].append(self.next(float))  # Area (Ha)
+            result['Imper'].append(self.next(float))  # Impervious Surface %
+            result['CNI'][2, i] = self.next(float)  # Curve Number(Impervious Surfaces)
+            result['CNP'][2, i] = self.next(float)  # Curve Number(Pervious Surfaces)
+            result['TotSusSolids'].append(self.next(float))  # Total Suspended Solids Factor
             self.next(EOL)
 
         # Line 36:
@@ -664,7 +569,7 @@ class GmsReader(object):
         result['ISRA(4)'] = self.next(float)  # Impervious Surface Reduction: Medium Density Residential (% Area)
         result['ISRR(5)'] = self.next(float)  # Impervious Surface Reduction: High Density Residential (% Reduction)
         result['ISRA(5)'] = self.next(float)  # Impervious Surface Reduction: High Density Residential (% Area)
-        result['SweepType'] = self.next(float)  # Street Sweeping: Sweep Type (1-2)
+        result['SweepType'] = self.next(SweepType.parse)  # Street Sweeping: Sweep Type (1-2)
         result['UrbSweepFrac'] = self.next(float)  # Street Sweeping: Fraction of area treated (0-1)
         self.next(EOL)
 
