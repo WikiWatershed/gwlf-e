@@ -252,7 +252,7 @@ def run(z):
                     AFOS.AnimalOperations(z, y)
 
                     # CALCULATE NUTRIENT AND SEDIMENT LOADS
-                    CalcLoads.CalculateLoads()
+                    CalcLoads.CalculateLoads(z, y)
 
                     # CALCULATE STREAM BANK EROSION
                     StreamBank.CalculateStreamBankEros()
