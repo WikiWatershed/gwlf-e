@@ -3,6 +3,12 @@ from __future__ import print_function
 from __future__ import unicode_literals
 from __future__ import division
 
+"""
+Initialize variables and perfom some preliminary calculations.
+
+Imported from ReadAllDataFiles.bas
+"""
+
 import re
 import logging
 
