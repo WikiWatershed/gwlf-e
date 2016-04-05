@@ -249,7 +249,7 @@ def run(z):
                         z.Runoff[y, i] = 0
 
                     # CALCULATE ANIMAL FEEDING OPERATIONS OUTPUT
-                    AFOS.AnimalOperations()
+                    AFOS.AnimalOperations(z, y)
 
                     # CALCULATE NUTRIENT AND SEDIMENT LOADS
                     CalcLoads.CalculateLoads()
