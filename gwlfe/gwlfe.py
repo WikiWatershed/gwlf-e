@@ -258,7 +258,7 @@ def run(z):
                     StreamBank.CalculateStreamBankEros(z, y)
 
                     # CALCULATE FINAL ANNUAL MEAN LOADS
-                    AnnualMeans.CalculateAnnualMeanLoads()
+                    AnnualMeans.CalculateAnnualMeanLoads(z, y)
 
             # CALCULATE FINAL MONTHLY AND ANNUAL WATER BALANCE FOR
             # AVERAGE STREAM FLOW
