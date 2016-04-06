@@ -255,7 +255,7 @@ def run(z):
                     CalcLoads.CalculateLoads(z, y)
 
                     # CALCULATE STREAM BANK EROSION
-                    StreamBank.CalculateStreamBankEros()
+                    StreamBank.CalculateStreamBankEros(z, y)
 
                     # CALCULATE FINAL ANNUAL MEAN LOADS
                     AnnualMeans.CalculateAnnualMeanLoads()
