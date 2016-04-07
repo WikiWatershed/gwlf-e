@@ -72,6 +72,8 @@ class DataModel(object):
             'AFOP': np.zeros(12),
             'AvLoad': np.zeros((12, 3)),
             'AvLuLoad': np.zeros((16, 3)),
+            'AvDisLoad': np.zeros((16, 3)),
+            'AvLuDisLoad': np.zeros((16, 3)),
             'UrbSedLoad': np.zeros((16, 12)),
             'AvGroundNitr': np.zeros(12),
             'AvGroundPhos': np.zeros(12),
@@ -272,8 +274,11 @@ class DataModel(object):
             'AreaTotal': 0,
             'SweepFrac': np.zeros(12),
 
-            'CNI': np.zeros((3, 16)),
-            'CNP': np.zeros((3, 16)),
+            # CNI and CNP are 1-based in VB, so although the first dimension
+            # should be size 3, we increase it by 1 because the model
+            # references indexes 1, 2, and 3. The first index is never used.
+            'CNI': np.zeros((3 + 1, 16)),
+            'CNP': np.zeros((3 + 1, 16)),
 
             # Load Delivery data
             'AttenFlowDist': 0,
