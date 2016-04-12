@@ -301,6 +301,18 @@ class DataModel(object):
             'n13bdp': 0,
             'n13cdp': 0,
             'RetentEff': 0,
+
+            # Referenced in WriteOutputFiles
+            'SumSedDelivRatio': 0,
+            'SumTotArea': 1,
+            'SumPrecipitation': np.zeros(12),
+            'SumEvapoTrans': np.zeros(12),
+            'SumGroundWater': np.zeros(12),
+            'SumRunoff': np.zeros(12),
+            'SumStreamFlow': np.zeros(12),
+            'SumPtSrcFlow': np.zeros(12),
+            'SumTileDrain': np.zeros(12),
+            'SumWithdrawal': np.zeros(12),
         }
 
     def __str__(self):
