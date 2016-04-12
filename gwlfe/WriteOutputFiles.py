@@ -6,9 +6,9 @@ from __future__ import division
 from . import LoadReductions
 
 
-def WriteOutput():
+def WriteOutput(z):
     print('WriteOutput')
-    LoadReductions.AdjustScnLoads()
+    LoadReductions.AdjustScnLoads(z)
     UrbanAreasOutput()
 
 

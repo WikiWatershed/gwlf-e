@@ -288,6 +288,19 @@ class DataModel(object):
             'AttenLossRateTSS': 0,
             'AttenLossRatePath': 0,
             'StreamFlowVolAdj': 1,
+
+            # Referenced in LoadReductions
+            # Mostly initialized in PublicVariables.bas
+            'SMCheck': 'Both',
+            'n5dn': 0,
+            'n12dp': 0,
+            'n13dp': 0,
+            'n6dn': 0,
+            'n6bdn': 0,
+            'n6cdn': 0,
+            'n13bdp': 0,
+            'n13cdp': 0,
+            'RetentEff': 0,
         }
 
     def __str__(self):

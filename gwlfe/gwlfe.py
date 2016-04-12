@@ -277,7 +277,7 @@ def run(z):
 
     print("Model run complete for " + str(z.NYrs) + " years of data.")
 
-    WriteOutputFiles.WriteOutput()
+    WriteOutputFiles.WriteOutput(z)
     WriteOutputFiles.WriteOutputSumFiles()
 
     print('Done')
