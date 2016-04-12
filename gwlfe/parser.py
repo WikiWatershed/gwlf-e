@@ -253,6 +253,19 @@ class GmsReader(object):
         z.n13cdp = 0
         z.RetentEff = 0
 
+        # Referenced in WriteOutputFiles
+        z.SumSedDelivRatio = 0
+        z.SumTotArea = 1
+        z.SumPrecipitation = np.zeros(12)
+        z.SumEvapoTrans = np.zeros(12)
+        z.SumGroundWater = np.zeros(12)
+        z.SumRunoff = np.zeros(12)
+        z.SumStreamFlow = np.zeros(12)
+        z.SumPtSrcFlow = np.zeros(12)
+        z.SumTileDrain = np.zeros(12)
+        z.SumWithdrawal = np.zeros(12)
+        z.AreaSum = np.zeros(12)
+
         # Line 1:
         z.NRur = self.next(int)  # Number of Rural Land Use Categories
         z.NUrb = self.next(int)  # Number Urban Land Use Categories
