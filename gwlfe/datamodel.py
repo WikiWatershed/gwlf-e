@@ -313,6 +313,7 @@ class DataModel(object):
             'SumPtSrcFlow': np.zeros(12),
             'SumTileDrain': np.zeros(12),
             'SumWithdrawal': np.zeros(12),
+            'AreaSum': np.zeros(12),
         }
 
     def __str__(self):
