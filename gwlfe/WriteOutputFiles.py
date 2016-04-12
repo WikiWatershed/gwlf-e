@@ -651,34 +651,43 @@ def WriteOutput(z):
             if z.LuDisPhos[y, l] > z.LuTotPhos[y, l]:
                 z.LuDisPhos[y, l] = z.LuTotPhos[y, l]
 
+    # WRITE THE RESULTS FILES INTO THE OUTPUT DIRECTORY IN METRIC UNITS
+    # TODO: Skipping section that prepares and writes AnnualFile and AnnCsvFile
+    # Lines ~630 - 921
 
-def WriteOutputSumFiles(z):
-    output_sum = {}
+    # WRITE THE SUMARY FILES TO THE OUTPUT DIRECTORY IN METRIC UNITS
+    # TODO: For now, we are only writing the first chunk of AvgFile
 
-    z.SumSedDelivRatio = z.SumSedDelivRatio / z.SumTotArea
+    output = {}
+    output['meta'] = {
+        'NYrs': z.NYrs,
+        'NRur': z.NRur,
+        'NUrb': z.NUrb,
+        'NLU': z.NLU,
+        'SedDelivRatio': z.SedDelivRatio,
+        'WxYrBeg': z.WxYrBeg,
+        'WxYrEnd': z.WxYrEnd,
+    }
+
+    output['monthly'] = []
 
     for i in range(0, 12):
-        z.SumPrecipitation[i] = z.SumPrecipitation[i] / z.SumTotArea
-        z.SumEvapoTrans[i] = z.SumEvapoTrans[i] / z.SumTotArea
-        z.SumGroundWater[i] = z.SumGroundWater[i] / z.SumTotArea
-        z.SumRunoff[i] = z.SumRunoff[i] / z.SumTotArea
-        z.SumStreamFlow[i] = z.SumStreamFlow[i] / z.SumTotArea
-        z.SumPtSrcFlow[i] = z.SumPtSrcFlow[i] / z.SumTotArea
-        z.SumTileDrain[i] = z.SumTileDrain[i] / z.SumTotArea
-        z.SumWithdrawal[i] = z.SumWithdrawal[i] / z.SumTotArea
+        output['monthly'].append({
+            'AvPrecipitation': z.AvPrecipitation[i],
+            'AvEvapoTrans': z.AvEvapoTrans[i],
+            'AvGroundWater': z.AvGroundWater[i],
+            'AvRunoff': z.AvRunoff[i],
+            'AvStreamFlow': z.AvStreamFlow[i],
+            'AvPtSrcFlow': z.AvPtSrcFlow[i],
+            'AvTileDrain': z.AvTileDrain[i],
+            'AvWithdrawal': z.AvWithdrawal[i],
+        })
 
-        output_sum[i] = [
-            z.SumPrecipitation[i],
-            z.SumEvapoTrans[i],
-            z.SumGroundWater[i],
-            z.SumRunoff[i],
-            z.SumStreamFlow[i],
-            z.SumPtSrcFlow[i],
-            z.SumTileDrain[i],
-            z.SumWithdrawal[i],
-        ]
+    return output
 
-    return output_sum
+
+def WriteOutputSumFiles():
+    print('WriteOutputSumFiles')
 
 
 def UrbanAreasOutput():
