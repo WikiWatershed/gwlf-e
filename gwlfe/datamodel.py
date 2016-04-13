@@ -176,7 +176,6 @@ class DataModel(object):
             'FCOrgsPerDay': np.zeros(9),
             'AvgAnimalWt': np.zeros(9),
 
-            'Month': np.zeros(12),
             'NGPctManApp': np.zeros(12),
             'NGAppNRate': np.zeros(12),
             'NGAppPRate': np.zeros(12),
@@ -316,15 +315,21 @@ class DataModel(object):
             'AreaSum': np.zeros(12),
 
             # Variables that were initialized
-            # in PublicVariables and no where
+            # in PublicVariables.bas and no where
             # else
             'DayYr': 0,
             'FrozenPondNitr': 0,
             'FrozenPondPhos': 0,
 
-            # ReDimRunQualVars
-            'ImpervAccum': np.zeros(16),
-            'PervAccum': np.zeros(16),
+            # ReadInputFiles.bas
+            'NgAWMSCoeffN': 0.14,
+            'RunConCoeffN': 0.15,
+            'NgAWMSCoeffP': 0.14,
+            'RunConCoeffP': 0.15,
+            'GrAWMSCoeffN': 0.75,
+            'GrAWMSCoeffP': 0.75,
+            'PhytaseCoeff': 0.16,
+
         }
 
     def __str__(self):

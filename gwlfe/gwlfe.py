@@ -106,7 +106,8 @@ def run(z):
                     z.CNum = 0
 
                     if z.Water > 0.01:
-                        CalcCnErosRunoffSed.CalcCN(z, i, y, j)
+                        pass
+                        # CalcCnErosRunoffSed.CalcCN(z, i, y, j)
 
                     # DAILY CN
                     z.DailyCN[y, i, j] = z.CNum

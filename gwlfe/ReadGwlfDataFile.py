@@ -184,7 +184,7 @@ def ReadAllData(z):
     z.OrgConc = np.zeros((z.DimYrs, 12))
 
     # If RunQual output is requested, then redim RunQual values
-    PrelimQualCalculations.ReDimRunQualVars()
+    PrelimQualCalculations.ReDimRunQualVars(z)
 
     # Set the Total AEU to the value from the Animal Density layer
     if not VersionMatch(z.TranVersionNo, '1.[0-9].[0-9]'):

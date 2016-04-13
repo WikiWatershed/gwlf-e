@@ -81,7 +81,7 @@ def CalculateStreamBankEros(z, Y):
         z.PCBMPAC = 0
         z.HPBMPAC = 0
         z.BMPACRES = 0
-        z.z.PCTAG = 0
+        z.PCTAG = 0
         z.RCNMAC = 0
         z.HPNMAC = 0
 
