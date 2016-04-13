@@ -159,8 +159,9 @@ def WriteOutput(z):
     z.n7b = z.AvAnimalN[0]
     z.n14b = z.AvAnimalP[0]
 
-    InitialAnimalN = z.n7b
-    InitialAnimalP = z.n14b
+    # XXX: These are not used in our port.
+    # InitialAnimalN = z.n7b
+    # InitialAnimalP = z.n14b
 
     # Get the AEUs
     z.n41j = round(z.TotLAEU)
@@ -213,8 +214,9 @@ def WriteOutput(z):
     z.n7b = z.n7b * NPConvert
     z.n14b = z.n14b * NPConvert
 
-    FinalAnimalN = z.n7b
-    FinalAnimalP = z.n14b
+    # XXX: These are not used in our port
+    # FinalAnimalN = z.n7b
+    # FinalAnimalP = z.n14b
 
     z.GRLBN = z.GRLBN * NPConvert
     z.NGLBN = z.NGLBN * NPConvert
@@ -333,12 +335,13 @@ def WriteOutput(z):
     z.n6b = round(z.n6b * NPConvert)
     z.n13b = round(z.n13b * NPConvert)
 
+    # XXX: These are not used in our port
     # Final Upland loads
-    FinalUplandN = z.n5 + z.n6 + z.n6b + z.n6c + z.n6d + AvOtherLuNitr
-    FinalUplandP = z.n12 + z.n13 + z.n13b + z.n13c + z.n13d + AvOtherLuPhos
-    FinalUplandSed = z.n1 + z.n2 + z.n2b + z.n2c + z.n2d + AvOtherLuSed
+    # FinalUplandN = z.n5 + z.n6 + z.n6b + z.n6c + z.n6d + AvOtherLuNitr
+    # FinalUplandP = z.n12 + z.n13 + z.n13b + z.n13c + z.n13d + AvOtherLuPhos
+    # FinalUplandSed = z.n1 + z.n2 + z.n2b + z.n2c + z.n2d + AvOtherLuSed
 
-    TotalAreaAc = 0
+    # TotalAreaAc = 0
 
     # FORMAT VALUES FOR PREDICT SCENARIO FILE
     z.n22 = round(z.AreaTotal, 0)
@@ -370,38 +373,39 @@ def WriteOutput(z):
         AvMonDisP = AvMonDisP + (z.AvDisPhos[i] * z.RetentFactorP * (1 - z.AttenP))
         AvMonTotP = AvMonTotP + (z.AvTotPhos[i] * z.RetentFactorP * (1 - z.AttenP))
 
+    # XXX: These values are not used in our port
     # Obtain the reduction factor to adjust the monthly loads if Scenario reductions applied
-    AvErosFrac = 1
-    AvSedFrac = 1
-    AvTotNFrac = 1
-    AvTotPFrac = 1
-    AvDisNFrac = 1
-    AvDisPFrac = 1
+    # AvErosFrac = 1
+    # AvSedFrac = 1
+    # AvTotNFrac = 1
+    # AvTotPFrac = 1
+    # AvDisNFrac = 1
+    # AvDisPFrac = 1
 
-    if AvMonEros > 0:
-        AvErosFrac = TotAvLuErosion / AvMonEros
-    else:
-        AvErosFrac = 0
-    if AvMonSed > 0:
-        AvSedFrac = AvTotalSed / AvMonSed
-    else:
-        AvSedFrac = 0
-    if AvMonDisN > 0:
-        AvDisNFrac = AvDisN / AvMonDisN
-    else:
-        AvDisNFrac = 0
-    if AvMonTotN > 0:
-        AvTotNFrac = AvTotalN / AvMonTotN
-    else:
-        AvTotNFrac = 0
-    if AvMonDisP > 0:
-        AvDisPFrac = AvDisP / AvMonDisP
-    else:
-        AvDisPFrac = 0
-    if AvMonTotP > 0:
-        AvTotPFrac = AvTotalP / AvMonTotP
-    else:
-        AvTotPFrac = 0
+    # if AvMonEros > 0:
+    #    AvErosFrac = TotAvLuErosion / AvMonEros
+    # else:
+    #    AvErosFrac = 0
+    # if AvMonSed > 0:
+    #    AvSedFrac = AvTotalSed / AvMonSed
+    # else:
+    #    AvSedFrac = 0
+    # if AvMonDisN > 0:
+    #    AvDisNFrac = AvDisN / AvMonDisN
+    # else:
+    #    AvDisNFrac = 0
+    # if AvMonTotN > 0:
+    #    AvTotNFrac = AvTotalN / AvMonTotN
+    # else:
+    #    AvTotNFrac = 0
+    # if AvMonDisP > 0:
+    #    AvDisPFrac = AvDisP / AvMonDisP
+    # else:
+    #    AvDisPFrac = 0
+    # if AvMonTotP > 0:
+    #    AvTotPFrac = AvTotalP / AvMonTotP
+    # else:
+    #    AvTotPFrac = 0
 
     # OBTAIN THE MONTHLY SEPTIC SYSTEM AND SEWER POPULATION VALUES
     z.n47 = round(TotSeptSys / 12)
@@ -444,7 +448,7 @@ def WriteOutput(z):
     z.n20 = z.n5 + z.n6 + z.n6b + z.n6c + z.n6d + z.n7 + z.n7b + z.n8 + z.n9 + z.n10 + z.n11
     z.n21 = z.n12 + z.n13 + z.n13b + z.n13c + z.n13d + z.n14 + z.n14b + z.n15 + z.n16 + z.n17 + z.n18
 
-    # TODO: Skipping for now
+    # TODO: Port WriteDailyFlowFile if needed
     # WRITE OUTPUT TO THE FILE FOR DAILy Flow
     # WriteDailyFlowFile
 
@@ -658,7 +662,36 @@ def WriteOutput(z):
     # WRITE THE SUMARY FILES TO THE OUTPUT DIRECTORY IN METRIC UNITS
     # TODO: For now, we are only writing the first chunk of AvgFile
 
+    # Sum Variables for Aggregate Summary Ouput Files
+    # if FirstRun: XXX: Commented out because we don't
+    # have the concept of a "first run" in the port.
+    SumNYrs = z.NYrs
+    SumNRur = z.NRur
+    SumNUrb = z.NUrb
+    SumNLU = z.NLU
+    # SumOpt = z.Opt
+    SumWxYrBeg = z.WxYrBeg
+    SumWxYrEnd = z.WxYrEnd
+
+    if z.NYrs > SumNYrs:
+        SumNYrs = z.NYrs
+    if z.NRur > SumNRur:
+        SumNRur = z.NRur
+    if z.NUrb > SumNUrb:
+        SumNUrb = z.NUrb
+    if z.NLU > SumNLU:
+        SumNLU = z.NLU
+    # if z.Opt > SumOpt:
+    #    SumOpt = z.Opt
+    if z.WxYrBeg < SumWxYrBeg:
+        SumWxYrBeg = z.WxYrBeg
+    if z.WxYrEnd > SumWxYrEnd:
+        SumWxYrEnd = z.WxYrEnd
+    z.SumSedDelivRatio = z.SumSedDelivRatio + (z.SedDelivRatio * z.TotArea)
+
     output = {}
+
+    # Equivalent to Line 927 of source
     output['meta'] = {
         'NYrs': z.NYrs,
         'NRur': z.NRur,
@@ -671,6 +704,7 @@ def WriteOutput(z):
 
     output['monthly'] = []
 
+    # Equivalent to lines 965 - 988 of source
     for i in range(0, 12):
         output['monthly'].append({
             'AvPrecipitation': z.AvPrecipitation[i],
