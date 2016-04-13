@@ -6,8 +6,6 @@ from __future__ import division
 import csv
 import logging
 
-from collections import defaultdict
-
 import numpy as np
 
 from .enums import YesOrNo, ETflag, GrowFlag, LandUse, SweepType
@@ -41,13 +39,15 @@ class GmsReader(object):
         self.fp = iterate_csv_values(fp)
 
     def read(self):
-        result = defaultdict(list)
+        result = {}
 
         # Line 1:
         result['NRur'] = self.next(int)  # Number of Rural Land Use Categories
         result['NUrb'] = self.next(int)  # Number Urban Land Use Categories
         result['BasinId'] = self.next(int)  # Basin ID
         self.next(EOL)
+
+        NLU = result['NRur'] + result['NUrb']
 
         # Line 2:
         result['TranVersionNo'] = self.next(str)  # GWLF-E Version
@@ -78,47 +78,69 @@ class GmsReader(object):
 
         # Lines 3 - 7: (each line represents 1 day)
         # Antecedent Rain + Melt Moisture Condition for Days 1 to 5
+        result['AntMoist'] = np.zeros(5)
+
         for i in range(5):
-            result['AntMoist'].append(self.next(float))
+            result['AntMoist'][i] = self.next(float)
             self.next(EOL)
 
         # Lines 8 - 19: (each line represents 1 month)
+        result['Month'] = np.zeros(12, dtype=object)
+        result['KV'] = np.zeros(12)
+        result['DayHrs'] = np.zeros(12)
+        result['Grow'] = np.zeros(12, dtype=object)
+        result['Acoef'] = np.zeros(12)
+        result['StreamWithdrawal'] = np.zeros(12)
+        result['GroundWithdrawal'] = np.zeros(12)
+        result['PcntET'] = np.zeros(12)
+
         for i in range(12):
-            result['Month'].append(self.next(str))  # Month (Jan - Dec)
-            result['KV'].append(self.next(float))  # KET (Flow Factor)
-            result['DayHrs'].append(self.next(float))  # Day Length (hours)
-            result['Grow'].append(self.next(GrowFlag.parse))  # Growing season flag
-            result['Acoef'].append(self.next(float))  # Erosion Coefficient
-            result['StreamWithdrawal'].append(self.next(float))  # Surface Water Withdrawal/Extraction
-            result['GroundWithdrawal'].append(self.next(float))  # Groundwater Withdrawal/Extraction
-            result['PcntET'].append(self.next(float))  # Percent monthly adjustment for ET calculation
+            result['Month'][i] = self.next(str)  # Month (Jan - Dec)
+            result['KV'][i] = self.next(float)  # KET (Flow Factor)
+            result['DayHrs'][i] = self.next(float)  # Day Length (hours)
+            result['Grow'][i] = self.next(GrowFlag.parse)  # Growing season flag
+            result['Acoef'][i] = self.next(float)  # Erosion Coefficient
+            result['StreamWithdrawal'][i] = self.next(float)  # Surface Water Withdrawal/Extraction
+            result['GroundWithdrawal'][i] = self.next(float)  # Groundwater Withdrawal/Extraction
+            result['PcntET'][i] = self.next(float)  # Percent monthly adjustment for ET calculation
             self.next(EOL)
 
         # Lines 20 - 29: (for each Rural Land Use Category)
+        result['Landuse'] = np.zeros(NLU, dtype=object)
+        result['Area'] = np.zeros(NLU)
+        result['CN'] = np.zeros(NLU)
+        result['KF'] = np.zeros(NLU)
+        result['LS'] = np.zeros(NLU)
+        result['C'] = np.zeros(NLU)
+        result['P'] = np.zeros(NLU)
+
         for i in range(result['NRur']):
-            result['Landuse'].append(self.next(LandUse.parse))  # Rural Land Use Category
-            result['Area'].append(self.next(float))  # Area (Ha)
-            result['CN'].append(self.next(float))  # Curve Number
-            result['KF'].append(self.next(float))  # K Factor
-            result['LS'].append(self.next(float))  # LS Factor
-            result['C'].append(self.next(float))   # C Factor
-            result['P'].append(self.next(float))   # P Factor
+            result['Landuse'][i] = self.next(LandUse.parse)  # Rural Land Use Category
+            result['Area'][i] = self.next(float)  # Area (Ha)
+            result['CN'][i] = self.next(float)  # Curve Number
+            result['KF'][i] = self.next(float)  # K Factor
+            result['LS'][i] = self.next(float)  # LS Factor
+            result['C'][i] = self.next(float)   # C Factor
+            result['P'][i] = self.next(float)   # P Factor
             self.next(EOL)
 
         # Lines 30 - 35: (for each Urban Land Use Category)
         # CNI and CNP are 1-based in VB, so although the first dimension
         # should be size 3, we increase it by 1 because the model
         # references indexes 1, 2, and 3. The first index is never used.
-        result['CNI'] = np.zeros((4, 16))
-        result['CNP'] = np.zeros((4, 16))
+        result['CNI'] = np.zeros((4, NLU))
+        result['CNP'] = np.zeros((4, NLU))
+
+        result['Imper'] = np.zeros(NLU)
+        result['TotSusSolids'] = np.zeros(NLU)
 
         for i in range(result['NUrb']):
-            result['Landuse'].append(self.next(LandUse.parse))  # Urban Land Use Category
-            result['Area'].append(self.next(float))  # Area (Ha)
-            result['Imper'].append(self.next(float))  # Impervious Surface %
+            result['Landuse'][i] = self.next(LandUse.parse)  # Urban Land Use Category
+            result['Area'][i] = self.next(float)  # Area (Ha)
+            result['Imper'][i] = self.next(float)  # Impervious Surface %
             result['CNI'][2, i] = self.next(float)  # Curve Number(Impervious Surfaces)
             result['CNP'][2, i] = self.next(float)  # Curve Number(Pervious Surfaces)
-            result['TotSusSolids'].append(self.next(float))  # Total Suspended Solids Factor
+            result['TotSusSolids'][i] = self.next(float)  # Total Suspended Solids Factor
             self.next(EOL)
 
         # Line 36:
@@ -159,24 +181,26 @@ class GmsReader(object):
         self.next(EOL)
 
         # Lines 50 - 52:
+        result['Contaminant'] = np.zeros(result['Nqual'], dtype=object)
+
         for i in range(result['Nqual']):
-            result['Contaminant'].append(self.next(str))
+            result['Contaminant'][i] = self.next(str)
             self.next(EOL)
 
-        result['LoadRateImp'] = [[] for i in range(result['NUrb'])]
-        result['LoadRatePerv'] = [[] for i in range(result['NUrb'])]
-        result['DisFract'] = [[] for i in range(result['NUrb'])]
-        result['UrbBMPRed'] = [[] for i in range(result['NUrb'])]
+        result['LoadRateImp'] = np.zeros((result['NUrb'], result['Nqual']))
+        result['LoadRatePerv'] = np.zeros((result['NUrb'], result['Nqual']))
+        result['DisFract'] = np.zeros((result['NUrb'], result['Nqual']))
+        result['UrbBMPRed'] = np.zeros((result['NUrb'], result['Nqual']))
 
         # Lines 53 - 58 (for each Urban Land Use Category, Nitrogen Contaminant)
         # Lines 59 - 64: (for each Urban Land Use Category, Phosphorus Contaminant)
         # Lines 65 - 70: (for each Urban Land Use Category, Sediment Contaminant)
         for u in range(result['NUrb']):
             for q in range(result['Nqual']):
-                result['LoadRateImp'][u].append(self.next(float))  # Loading Rate Impervious Surface
-                result['LoadRatePerv'][u].append(self.next(float))  # Loading Rate Pervious Surface
-                result['DisFract'][u].append(self.next(float))  # Dissolved Fraction
-                result['UrbBMPRed'][u].append(self.next(float))  # Urban BMP Reduction
+                result['LoadRateImp'][u][q] = self.next(float)  # Loading Rate Impervious Surface
+                result['LoadRatePerv'][u][q] = self.next(float)  # Loading Rate Pervious Surface
+                result['DisFract'][u][q] = self.next(float)  # Dissolved Fraction
+                result['UrbBMPRed'][u][q] = self.next(float)  # Urban BMP Reduction
                 self.next(EOL)
 
         # Lines 71 - 72: (for the 2 Manure Spreading Periods)
@@ -187,10 +211,14 @@ class GmsReader(object):
         self.next(EOL)
 
         # Lines 73 - 84: (Point Source data for each Month)
+        result['PointNitr'] = np.zeros(12)
+        result['PointPhos'] = np.zeros(12)
+        result['PointFlow'] = np.zeros(12)
+
         for i in range(12):
-            result['PointNitr'].append(self.next(float))  # N Load (kg)
-            result['PointPhos'].append(self.next(float))  # P Load (kg)
-            result['PointFlow'].append(self.next(float))  # Discharge (Millions of Gallons per Day)
+            result['PointNitr'][i] = self.next(float)  # N Load (kg)
+            result['PointPhos'][i] = self.next(float)  # P Load (kg)
+            result['PointFlow'][i] = self.next(float)  # Discharge (Millions of Gallons per Day)
             self.next(EOL)
 
         # Line 85:
@@ -198,12 +226,18 @@ class GmsReader(object):
         self.next(EOL)
 
         # Lines 86 - 97: (Septic System data for each Month)
+        result['NumNormalSys'] = np.zeros(12)
+        result['NumPondSys'] = np.zeros(12)
+        result['NumShortSys'] = np.zeros(12)
+        result['NumDischargeSys'] = np.zeros(12)
+        result['NumSewerSys'] = np.zeros(12)
+
         for i in range(12):
-            result['NumNormalSys'].append(self.next(int))  # Number of People on Normal Systems
-            result['NumPondSys'].append(self.next(int))  # Number of People on Pond Systems
-            result['NumShortSys'].append(self.next(int))  # Number of People on Short Circuit Systems
-            result['NumDischargeSys'].append(self.next(int))  # Number of People on Discharge Systems
-            result['NumSewerSys'].append(self.next(int))  # Number of People on Public Sewer Systems
+            result['NumNormalSys'][i] = self.next(int)  # Number of People on Normal Systems
+            result['NumPondSys'][i] = self.next(int)  # Number of People on Pond Systems
+            result['NumShortSys'][i] = self.next(int)  # Number of People on Short Circuit Systems
+            result['NumDischargeSys'][i] = self.next(int)  # Number of People on Discharge Systems
+            result['NumSewerSys'][i] = self.next(int)  # Number of People on Public Sewer Systems
             self.next(EOL)
 
         # Line 98: (if Septic System flag = 1)
@@ -561,25 +595,32 @@ class GmsReader(object):
         result['PctAreaInfil'] = self.next(float)  # Infiltration/Bioretention: Fraction of area treated (0-1)
         result['PctStrmBuf'] = self.next(float)  # Stream Protection: Fraction of streams treated (0-1)
         result['UrbBankStab'] = self.next(float)  # Stream Protection: Streams w/bank stabilization (km)
-        result['ISRR(0)'] = self.next(float)  # Impervious Surface Reduction: Low Density Mixed (% Reduction)
-        result['ISRA(0)'] = self.next(float)  # Impervious Surface Reduction: Low Density Mixed (% Area)
-        result['ISRR(1)'] = self.next(float)  # Impervious Surface Reduction: Medium Density Mixed (% Reduction)
-        result['ISRA(1)'] = self.next(float)  # Impervious Surface Reduction: Medium Density Mixed (% Area)
-        result['ISRR(2)'] = self.next(float)  # Impervious Surface Reduction: High Density Mixed (% Reduction)
-        result['ISRA(2)'] = self.next(float)  # Impervious Surface Reduction: High Density Mixed (% Area)
-        result['ISRR(3)'] = self.next(float)  # Impervious Surface Reduction: Low Density Residential (% Reduction)
-        result['ISRA(3)'] = self.next(float)  # Impervious Surface Reduction: Low Density Residential (% Area)
-        result['ISRR(4)'] = self.next(float)  # Impervious Surface Reduction: Medium Density Residential (% Reduction)
-        result['ISRA(4)'] = self.next(float)  # Impervious Surface Reduction: Medium Density Residential (% Area)
-        result['ISRR(5)'] = self.next(float)  # Impervious Surface Reduction: High Density Residential (% Reduction)
-        result['ISRA(5)'] = self.next(float)  # Impervious Surface Reduction: High Density Residential (% Area)
+
+        result['ISRR'] = np.zeros(6)
+        result['ISRA'] = np.zeros(6)
+
+        result['ISRR'][0] = self.next(float)  # Impervious Surface Reduction: Low Density Mixed (% Reduction)
+        result['ISRA'][0] = self.next(float)  # Impervious Surface Reduction: Low Density Mixed (% Area)
+        result['ISRR'][1] = self.next(float)  # Impervious Surface Reduction: Medium Density Mixed (% Reduction)
+        result['ISRA'][1] = self.next(float)  # Impervious Surface Reduction: Medium Density Mixed (% Area)
+        result['ISRR'][2] = self.next(float)  # Impervious Surface Reduction: High Density Mixed (% Reduction)
+        result['ISRA'][2] = self.next(float)  # Impervious Surface Reduction: High Density Mixed (% Area)
+        result['ISRR'][3] = self.next(float)  # Impervious Surface Reduction: Low Density Residential (% Reduction)
+        result['ISRA'][3] = self.next(float)  # Impervious Surface Reduction: Low Density Residential (% Area)
+        result['ISRR'][4] = self.next(float)  # Impervious Surface Reduction: Medium Density Residential (% Reduction)
+        result['ISRA'][4] = self.next(float)  # Impervious Surface Reduction: Medium Density Residential (% Area)
+        result['ISRR'][5] = self.next(float)  # Impervious Surface Reduction: High Density Residential (% Reduction)
+        result['ISRA'][5] = self.next(float)  # Impervious Surface Reduction: High Density Residential (% Area)
+
         result['SweepType'] = self.next(SweepType.parse)  # Street Sweeping: Sweep Type (1-2)
         result['UrbSweepFrac'] = self.next(float)  # Street Sweeping: Fraction of area treated (0-1)
         self.next(EOL)
 
         # Lines 122 - 133: (Street Sweeping data for each Month)
+        result['StreetSweepNo'] = np.zeros(12)
+
         for i in range(12):
-            result['StreetSweepNo'].append(self.next(float))  # Street sweeping times per month
+            result['StreetSweepNo'][i] = self.next(float)  # Street sweeping times per month
             self.next(EOL)
 
         # Line 134:
@@ -707,47 +748,80 @@ class GmsReader(object):
 
         # Line 148-156: (For each Animal type)
         # TODO: Where is the number of animal types defined?
-        for i in range(9):
-            result['AnimalName'].append(self.next(str))  # Animal Name
-            result['NumAnimals'].append(self.next(int))  # Number of Animals
-            result['GrazingAnimal'].append(self.next(YesOrNo.parse))  # Flag: Grazing Animal (“N” No, “Y” Yes)
-            result['AvgAnimalWt'].append(self.next(float))  # Average Animal Weight (kg)
-            result['AnimalDailyN'].append(self.next(float))  # Animal Daily Loads: Nitrogen (kg/AEU)
-            result['AnimalDailyP'].append(self.next(float))  # Animal Daily Loads: Phosphorus (kg/AEU)
-            result['FCOrgsPerDay'].append(self.next(float))  # Fecal Coliforms (orgs/day)
+        NAnimalTypes = 9
+
+        result['AnimalName'] = np.zeros(NAnimalTypes, dtype=object)
+        result['NumAnimals'] = np.zeros(NAnimalTypes)
+        result['GrazingAnimal'] = np.zeros(NAnimalTypes, dtype=object)
+        result['AvgAnimalWt'] = np.zeros(NAnimalTypes)
+        result['AnimalDailyN'] = np.zeros(NAnimalTypes)
+        result['AnimalDailyP'] = np.zeros(NAnimalTypes)
+        result['FCOrgsPerDay'] = np.zeros(NAnimalTypes)
+
+        for i in range(NAnimalTypes):
+            result['AnimalName'][i] = self.next(str)  # Animal Name
+            result['NumAnimals'][i] = self.next(int)  # Number of Animals
+            result['GrazingAnimal'][i] = self.next(YesOrNo.parse)  # Flag: Grazing Animal (“N” No, “Y” Yes)
+            result['AvgAnimalWt'][i] = self.next(float)  # Average Animal Weight (kg)
+            result['AnimalDailyN'][i] = self.next(float)  # Animal Daily Loads: Nitrogen (kg/AEU)
+            result['AnimalDailyP'][i] = self.next(float)  # Animal Daily Loads: Phosphorus (kg/AEU)
+            result['FCOrgsPerDay'][i] = self.next(float)  # Fecal Coliforms (orgs/day)
             self.next(EOL)
 
         # Line 157-168: (For each month: Non-Grazing Animal Worksheet values)
+        result['NGPctManApp'] = np.zeros(12)
+        result['NGAppNRate'] = np.zeros(12)
+        result['NGAppPRate'] = np.zeros(12)
+        result['NGAppFCRate'] = np.zeros(12)
+        result['NGPctSoilIncRate'] = np.zeros(12)
+        result['NGBarnNRate'] = np.zeros(12)
+        result['NGBarnPRate'] = np.zeros(12)
+        result['NGBarnFCRate'] = np.zeros(12)
+
         for i in range(12):
             # Month is already populated on lines 8 - 19
             self.next(str)  # Month (Jan-Dec)
-            result['NGPctManApp'].append(self.next(float))  # Manure Spreading: % Of Annual Load Applied To Crops/Pasture
-            result['NGAppNRate'].append(self.next(float))  # Manure Spreading: Base Nitrogen Loss Rate
-            result['NGAppPRate'].append(self.next(float))  # Manure Spreading: Base Phosphorus Loss Rate
-            result['NGAppFCRate'].append(self.next(float))  # Manure Spreading: Base Fecal Coliform Loss Rate
-            result['NGPctSoilIncRate'].append(self.next(float))  # Manure Spreading: % Of Manure Load Incorporated Into Soil
-            result['NGBarnNRate'].append(self.next(float))  # Barnyard/Confined Area: Base Nitrogen Loss Rate
-            result['NGBarnPRate'].append(self.next(float))  # Barnyard/Confined Area: Base Phosphorus Loss Rate
-            result['NGBarnFCRate'].append(self.next(float))  # Barnyard/Confined Area: Base Fecal Coliform Loss Rate
+            result['NGPctManApp'][i] = self.next(float)  # Manure Spreading: % Of Annual Load Applied To Crops/Pasture
+            result['NGAppNRate'][i] = self.next(float)  # Manure Spreading: Base Nitrogen Loss Rate
+            result['NGAppPRate'][i] = self.next(float)  # Manure Spreading: Base Phosphorus Loss Rate
+            result['NGAppFCRate'][i] = self.next(float)  # Manure Spreading: Base Fecal Coliform Loss Rate
+            result['NGPctSoilIncRate'][i] = self.next(float)  # Manure Spreading: % Of Manure Load Incorporated Into Soil
+            result['NGBarnNRate'][i] = self.next(float)  # Barnyard/Confined Area: Base Nitrogen Loss Rate
+            result['NGBarnPRate'][i] = self.next(float)  # Barnyard/Confined Area: Base Phosphorus Loss Rate
+            result['NGBarnFCRate'][i] = self.next(float)  # Barnyard/Confined Area: Base Fecal Coliform Loss Rate
             self.next(EOL)
 
         # Line 169-180: (For each month: Grazing Animal Worksheet values)
+        result['PctGrazing'] = np.zeros(12)
+        result['PctStreams'] = np.zeros(12)
+        result['GrazingNRate'] = np.zeros(12)
+        result['GrazingPRate'] = np.zeros(12)
+        result['GrazingFCRate'] = np.zeros(12)
+        result['GRPctManApp'] = np.zeros(12)
+        result['GRAppNRate'] = np.zeros(12)
+        result['GRAppPRate'] = np.zeros(12)
+        result['GRAppFCRate'] = np.zeros(12)
+        result['GRPctSoilIncRate'] = np.zeros(12)
+        result['GRBarnNRate'] = np.zeros(12)
+        result['GRBarnPRate'] = np.zeros(12)
+        result['GRBarnFCRate'] = np.zeros(12)
+
         for i in range(12):
             # Month is already populated on lines 8 - 19
             self.next(str)  # Month (Jan-Dec)
-            result['PctGrazing'].append(self.next(float))  # Grazing Land: % Of Time Spent Grazing
-            result['PctStreams'].append(self.next(float))  # Grazing Land: % Of Time Spent In Streams
-            result['GrazingNRate'].append(self.next(float))  # Grazing Land: Base Nitrogen Loss Rate
-            result['GrazingPRate'].append(self.next(float))  # Grazing Land: Base Phosphorus Loss Rate
-            result['GrazingFCRate'].append(self.next(float))  # Grazing Land: Base Fecal Coliform Loss Rate
-            result['GRPctManApp'].append(self.next(float))  # Manure Spreading: % Of Annual Load Applied To Crops/Pasture
-            result['GRAppNRate'].append(self.next(float))  # Manure Spreading: Base Nitrogen Loss Rate
-            result['GRAppPRate'].append(self.next(float))  # Manure Spreading: Base Phosphorus Loss Rate
-            result['GRAppFCRate'].append(self.next(float))  # Manure Spreading: Base Fecal Coliform Loss Rate
-            result['GRPctSoilIncRate'].append(self.next(float))  # Manure Spreading: % Of Manure Load Incorporated Into Soil
-            result['GRBarnNRate'].append(self.next(float))  # Barnyard/Confined Area: Base Nitrogen Loss Rate
-            result['GRBarnPRate'].append(self.next(float))  # Barnyard/Confined Area: Base Phosphorus Loss Rate
-            result['GRBarnFCRate'].append(self.next(float))  # Barnyard/Confined Area: Base Fecal Coliform Loss Rate
+            result['PctGrazing'][i] = self.next(float)  # Grazing Land: % Of Time Spent Grazing
+            result['PctStreams'][i] = self.next(float)  # Grazing Land: % Of Time Spent In Streams
+            result['GrazingNRate'][i] = self.next(float)  # Grazing Land: Base Nitrogen Loss Rate
+            result['GrazingPRate'][i] = self.next(float)  # Grazing Land: Base Phosphorus Loss Rate
+            result['GrazingFCRate'][i] = self.next(float)  # Grazing Land: Base Fecal Coliform Loss Rate
+            result['GRPctManApp'][i] = self.next(float)  # Manure Spreading: % Of Annual Load Applied To Crops/Pasture
+            result['GRAppNRate'][i] = self.next(float)  # Manure Spreading: Base Nitrogen Loss Rate
+            result['GRAppPRate'][i] = self.next(float)  # Manure Spreading: Base Phosphorus Loss Rate
+            result['GRAppFCRate'][i] = self.next(float)  # Manure Spreading: Base Fecal Coliform Loss Rate
+            result['GRPctSoilIncRate'][i] = self.next(float)  # Manure Spreading: % Of Manure Load Incorporated Into Soil
+            result['GRBarnNRate'][i] = self.next(float)  # Barnyard/Confined Area: Base Nitrogen Loss Rate
+            result['GRBarnPRate'][i] = self.next(float)  # Barnyard/Confined Area: Base Phosphorus Loss Rate
+            result['GRBarnFCRate'][i] = self.next(float)  # Barnyard/Confined Area: Base Fecal Coliform Loss Rate
             self.next(EOL)
 
         # Line 181: (Nutrient Retention data)
@@ -765,27 +839,23 @@ class GmsReader(object):
         self.next(EOL)
 
         # Line 182 – Last Weather Day: (Weather data)
+        result['DaysMonth'] = np.zeros((result['WxYrs'], 12))
+        result['WxMonth'] = np.zeros((result['WxYrs'], 12), dtype=object)
+        result['WxYear'] = np.zeros((result['WxYrs'], 12))
+        result['Temp'] = np.zeros((result['WxYrs'], 12, 31))
+        result['Prec'] = np.zeros((result['WxYrs'], 12, 31))
+
         for year in range(result['WxYrs']):
-            result['DaysMonth'].append([])
-            result['WxMonth'].append([])
-            result['WxYear'].append([])
-
-            result['Temp'].append([])
-            result['Prec'].append([])
-
             for month in range(12):
                 num_days = self.next(int)
-                result['DaysMonth'][year].append(num_days)  # Days
-                result['WxMonth'][year].append(self.next(str))  # Month (Jan-Dec)
-                result['WxYear'][year].append(self.next(int))  # Year
+                result['DaysMonth'][year][month] = num_days  # Days
+                result['WxMonth'][year][month] = self.next(str)  # Month (Jan-Dec)
+                result['WxYear'][year][month] = self.next(int)  # Year
                 self.next(EOL)
 
-                result['Temp'][year].append([])
-                result['Prec'][year].append([])
-
                 for day in range(num_days):
-                    result['Temp'][year][month].append(self.next(int))  # Average Temperature (C)
-                    result['Prec'][year][month].append(self.next(float))  # Precipitation (cm)
+                    result['Temp'][year][month][day] = self.next(int)  # Average Temperature (C)
+                    result['Prec'][year][month][day] = self.next(float)  # Precipitation (cm)
                     self.next(EOL)
 
         # Line Beginning After Weather: (Urban Area data)
@@ -794,53 +864,69 @@ class GmsReader(object):
         self.next(EOL)
 
         # Lines if Number of Urban Areas > 0: (for each Urban Area)
-        for ua in range(result['NumUAs']):
+        result['UAId'] = np.zeros(result['NumUAs'])
+        result['UAName'] = np.zeros(result['NumUAs'], dtype=object)
+        result['UAArea'] = np.zeros(result['NumUAs'])
+
+        result['UAfa'] = np.zeros(result['NumUAs'], dtype=object)
+        result['UAfaAreaFrac'] = np.zeros(result['NumUAs'])
+        result['UATD'] = np.zeros(result['NumUAs'], dtype=object)
+        result['UATDAreaFrac'] = np.zeros(result['NumUAs'])
+        result['UASB'] = np.zeros(result['NumUAs'], dtype=object)
+        result['UASBAreaFrac'] = np.zeros(result['NumUAs'])
+        result['UAGW'] = np.zeros(result['NumUAs'], dtype=object)
+        result['UAGWAreaFrac'] = np.zeros(result['NumUAs'])
+        result['UAPS'] = np.zeros(result['NumUAs'], dtype=object)
+        result['UAPSAreaFrac'] = np.zeros(result['NumUAs'])
+        result['UASS'] = np.zeros(result['NumUAs'], dtype=object)
+        result['UASSAreaFrac'] = np.zeros(result['NumUAs'])
+
+        # +1 for "Water"
+        num_land_use_categories = NLU + 1
+        result['UALU'] = np.zeros((result['NumUAs'], num_land_use_categories), dtype=object)
+        result['UALUArea'] = np.zeros((result['NumUAs'], num_land_use_categories))
+
+        for i in range(result['NumUAs']):
             # Line 1:
-            result['UAId'].append(self.next(int))  # Urban Area ID
-            result['UAName'].append(self.next(str))  # Urban Area Name
-            result['UAArea'].append(self.next(float))  # Urban Area Area (Ha)
+            result['UAId'][i] = self.next(int)  # Urban Area ID
+            result['UAName'][i] = self.next(str)  # Urban Area Name
+            result['UAArea'][i] = self.next(float)  # Urban Area Area (Ha)
             self.next(EOL)
 
-            result['UALU'].append([])
-            result['UALUArea'].append([])
-
-            # +1 for "Water"
-            num_land_use_categories = result['NRur'] + result['NUrb'] + 1
-
             # Lines 2 - 17: (For each Land Use Category)
-            for i in range(num_land_use_categories):
-                result['UALU'][ua].append(self.next(LandUse.parse))  # Land Use Category
-                result['UALUArea'][ua].append(self.next(float))  # Urban Land Use Area (Ha)
+            for l in range(num_land_use_categories):
+                result['UALU'][i][l] = self.next(LandUse.parse)  # Land Use Category
+                result['UALUArea'][i][l] = self.next(float)  # Urban Land Use Area (Ha)
                 self.next(EOL)
 
             # Line 18:
-            result['UAfa'].append(self.next('Farm Animals'))
-            result['UAfaAreaFrac'].append(self.next(float))  # Area Fraction
+            result['UAfa'][i] = self.next('Farm Animals')
+            result['UAfaAreaFrac'][i] = self.next(float)  # Area Fraction
             self.next(EOL)
 
             # Line 19:
-            result['UATD'].append(self.next('Tile Drainage'))
-            result['UATDAreaFrac'].append(self.next(float))  # Area Fraction
+            result['UATD'][i] = self.next('Tile Drainage')
+            result['UATDAreaFrac'][i] = self.next(float)  # Area Fraction
             self.next(EOL)
 
             # Line 20:
-            result['UASB'].append(self.next('Stream Bank'))
-            result['UASBAreaFrac'].append(self.next(float))  # Area Fraction
+            result['UASB'][i] = self.next('Stream Bank')
+            result['UASBAreaFrac'][i] = self.next(float)  # Area Fraction
             self.next(EOL)
 
             # Line 21:
-            result['UAGW'].append(self.next('Groundwater'))
-            result['UAGWAreaFrac'].append(self.next(float))  # Area Fraction
+            result['UAGW'][i] = self.next('Groundwater')
+            result['UAGWAreaFrac'][i] = self.next(float)  # Area Fraction
             self.next(EOL)
 
             # Line 22:
-            result['UAPS'].append(self.next('Point Sources'))
-            result['UAPSAreaFrac'].append(self.next(float))  # Area Fraction
+            result['UAPS'][i] = self.next('Point Sources')
+            result['UAPSAreaFrac'][i] = self.next(float)  # Area Fraction
             self.next(EOL)
 
             # Line 23:
-            result['UASS'].append(self.next('Septic Systems'))
-            result['UASSAreaFrac'].append(self.next(float))  # Area Fraction
+            result['UASS'][i] = self.next('Septic Systems')
+            result['UASSAreaFrac'][i] = self.next(float)  # Area Fraction
             self.next(EOL)
 
         return result
