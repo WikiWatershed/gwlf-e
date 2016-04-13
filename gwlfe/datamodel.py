@@ -314,6 +314,17 @@ class DataModel(object):
             'SumTileDrain': np.zeros(12),
             'SumWithdrawal': np.zeros(12),
             'AreaSum': np.zeros(12),
+
+            # Variables that were initialized
+            # in PublicVariables and no where
+            # else
+            'DayYr': 0,
+            'FrozenPondNitr': 0,
+            'FrozenPondPhos': 0,
+
+            # ReDimRunQualVars
+            'ImpervAccum': np.zeros(16),
+            'PervAccum': np.zeros(16),
         }
 
     def __str__(self):
