@@ -99,18 +99,25 @@ def run(z):
 
                     # IF WATER AVAILABLE, THEN CALL SUB TO COMPUTE CN, RUNOFF,
                     # EROSION AND SEDIMENT
+
+                    # XXX: This variable is set conditionally in CalcCnErosRunoffSed.CalcCN,
+                    # but is referenced later even if it wasn't set. So we initialize here
+                    # for safety.
+                    z.CNum = 0
+
                     if z.Water > 0.01:
-                        CalcCnErosRunoffSed.CalcCN(z, i, y, j)
+                        pass
+                        # CalcCnErosRunoffSed.CalcCN(z, i, y, j)
 
                     # DAILY CN
                     z.DailyCN[y, i, j] = z.CNum
 
                     # UPDATE ANTECEDENT RAIN+MELT CONDITION
-                    z.AMC5 = z.AMC5 - z.AntMoist[5] + z.Water
+                    z.AMC5 = z.AMC5 - z.AntMoist[4] + z.Water
                     z.DailyAMC5[y, i, j] = z.AMC5
-                    for k in range(4):
-                        z.AntMoist[6 - k] = z.AntMoist[5 - k]
-                    z.AntMoist[1] = z.Water
+                    for k in range(1, 4):
+                        z.AntMoist[5 - k] = z.AntMoist[4 - k]
+                    z.AntMoist[0] = z.Water
 
                     # CALCULATE ET FROM SATURATED VAPOR PRESSURE,
                     # HAMON (1961) METHOD
