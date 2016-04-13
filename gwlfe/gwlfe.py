@@ -51,7 +51,7 @@ def run(z):
             # TODO: J should start at 1, but I changed
             # it to 0 so that the code executes with fake
             # data. Otherwise range is 1 to 1.
-            for j in range(z.DaysMonth[y, i]):
+            for j in range(z.DaysMonth[y][i]):
                 # GET THE DAYS OF THE YEAR
                 if (z.DayYr + 1) > z.DaysYear[y]:
                     z.DayYr = 0
@@ -59,10 +59,10 @@ def run(z):
 
                 # DAILYWEATHERANALY TEMP[y, I, J], PREC[y, I, J]
                 # ***** BEGIN WEATHER DATA ANALYSIS *****
-                z.DailyTemp = z.Temp[y, i, j]
-                z.DailyPrec = z.Prec[y, i, j]
-                z.PestTemp[y, i, j] = z.Temp[y, i, j]
-                z.PestPrec[y, i, j] = z.Prec[y, i, j]
+                z.DailyTemp = z.Temp[y][i][j]
+                z.DailyPrec = z.Prec[y][i][j]
+                z.PestTemp[y][i][j] = z.Temp[y][i][j]
+                z.PestPrec[y][i][j] = z.Prec[y][i][j]
                 z.Melt = 0
                 z.Rain = 0
                 z.Water = 0
@@ -181,10 +181,10 @@ def run(z):
                     z.MonthFlow[y, i] = z.MonthFlow[y, i] + z.DailyFlow[y, i, j]
 
                     # CALCULATE TOTALS
-                    z.Precipitation[y, i] = z.Precipitation[y, i] + z.Prec[y, i, j]
-                    z.Evapotrans[y, i] = z.Evapotrans[y, i] + z.ET
-                    z.StreamFlow[y, i] = z.StreamFlow[y, i] + z.Flow
-                    z.GroundWatLE[y, i] = z.GroundWatLE[y, i] + z.GrFlow
+                    z.Precipitation[y][i] = z.Precipitation[y][i] + z.Prec[y][i][j]
+                    z.Evapotrans[y][i] = z.Evapotrans[y][i] + z.ET
+                    z.StreamFlow[y][i] = z.StreamFlow[y][i] + z.Flow
+                    z.GroundWatLE[y][i] = z.GroundWatLE[y][i] + z.GrFlow
 
                     # CALCULATE DAILY NUTRIENT LOAD FROM PONDING SYSTEMS
                     z.PondNitrLoad = (z.NumPondSys[i] *
@@ -193,7 +193,7 @@ def run(z):
                                       (z.PhosSepticLoad - z.PhosPlantUptake * z.Grow[i]))
 
                     # UPDATE MASS BALANCE ON PONDED EFFLUENT
-                    if z.Temp[y, i, j] <= 0 or z.InitSnow > 0:
+                    if z.Temp[y][i][j] <= 0 or z.InitSnow > 0:
 
                         # ALL INPUTS GO TO FROZEN STORAGE
                         z.FrozenPondNitr = z.FrozenPondNitr + z.PondNitrLoad

@@ -149,9 +149,11 @@ class GmsReader(object):
         self.next(EOL)
 
         # Lines 39 - 48: (for each Rural Land Use Category)
+        # result['NitrsConc'].append([])
+        # result['PhosConc'].append([])
         for i in range(result['NRur']):
-            result['NitrConc'] = self.next(float)  # Dissolved Runoff Coefficient: N (mg/l)
-            result['PhosConc'] = self.next(float)  # Dissolved Runoff Coefficient: P (mg/l)
+            result['NitrConc'].append(self.next(float))  # Dissolved Runoff Coefficient: N (mg/l)
+            result['PhosConc'].append(self.next(float))  # Dissolved Runoff Coefficient: P (mg/l)
             self.next(EOL)
 
         # Line 49:
@@ -178,12 +180,11 @@ class GmsReader(object):
                 result['DisFract'][u].append(self.next(float))  # Dissolved Fraction
                 result['UrbBMPRed'][u].append(self.next(float))  # Urban BMP Reduction
                 self.next(EOL)
-
         # Lines 71 - 72: (for the 2 Manure Spreading Periods)
-        result['ManNitr'] = (self.next(float), self.next(float))  # Manured N Concentration
+        result['ManNitr'] = [self.next(float), self.next(float)]  # Manured N Concentration
         self.next(EOL)
 
-        result['ManPhos'] = (self.next(float), self.next(float))  # Manured P Concentration
+        result['ManPhos'] = [self.next(float), self.next(float)]  # Manured P Concentration
         self.next(EOL)
 
         # Lines 73 - 84: (Point Source data for each Month)

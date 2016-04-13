@@ -182,4 +182,4 @@ def CalculateLoads(z, Y):
         z.OrgConc[Y, 0] += z.OrgConc[Y, i]
 
         # CALCULATE THE VOLUMETRIC STREAM Flow
-        z.StreamFlowVol[Y, i] = ((z.StreamFlowLE[Y, i] / 100) * z.TotAreaMeters) / (86400 * z.DaysMonth[Y, i])
+        z.StreamFlowVol[Y][i] = ((z.StreamFlowLE[Y][i] / 100) * z.TotAreaMeters) / (86400 * z.DaysMonth[Y][i])
