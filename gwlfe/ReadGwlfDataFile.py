@@ -126,7 +126,9 @@ def ReadAllData(z):
     z.Runoff = np.zeros((z.DimYrs, 12))
     z.Erosion = np.zeros((z.DimYrs, 12))
     z.SedYield = np.zeros((z.DimYrs, 12))
-    z.DaysMonth = np.zeros((z.DimYrs, 12), dtype=int)
+    # XXX: This is initialized correctly in the parser
+    # and should not be reinitialized
+    # z.DaysMonth = np.zeros((z.DimYrs, 12), dtype=int)
     z.WxMonth = np.zeros((z.DimYrs, 12))
     z.WxYear = np.zeros((z.DimYrs, 12))
     z.GroundNitr = np.zeros((z.DimYrs, 12))
@@ -182,7 +184,7 @@ def ReadAllData(z):
     z.OrgConc = np.zeros((z.DimYrs, 12))
 
     # If RunQual output is requested, then redim RunQual values
-    PrelimQualCalculations.ReDimRunQualVars()
+    PrelimQualCalculations.ReDimRunQualVars(z)
 
     # Set the Total AEU to the value from the Animal Density layer
     if not VersionMatch(z.TranVersionNo, '1.[0-9].[0-9]'):
