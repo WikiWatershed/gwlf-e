@@ -39,9 +39,9 @@ class GrowFlag(object):
     def parse(value):
         value = int(value)
         if value == 0:
-            return GrowFlag.NON_GROWING_SEASON
+            return 0 # GrowFlag.NON_GROWING_SEASON
         elif value == 1:
-            return GrowFlag.GROWING_SEASON
+            return 1 # GrowFlag.GROWING_SEASON
         raise ValueError('Unexpected value: ' + str(value))
 
 

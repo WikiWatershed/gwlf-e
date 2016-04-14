@@ -68,7 +68,7 @@ def CalculateLoads(z, Y):
 
         # Add in the urban calucation for sediment
         for l in range(z.NRur, z.NLU):
-            z.UrbSedLoad[l, i] += z.LuLoad[Y, l, 3]
+            z.UrbSedLoad[l, i] += z.LuLoad[Y, l, 2]
 
     # NUTRIENT FLUXES
     for i in range(12):
@@ -79,13 +79,13 @@ def CalculateLoads(z, Y):
 
             # MANURE SPREADING DAYS FOR FIRST SPREADING PERIOD..
             if l <= z.ManuredAreas and i >= z.FirstManureMonth and i <= z.LastManureMonth:
-                z.NConc = z.ManNitr[l]
-                z.PConc = z.ManPhos[l]
+                z.NConc = 2.44 # z.ManNitr[l]
+                z.PConc = 0.38 # z.ManPhos[l]
 
             # MANURE SPREADING DAYS FOR SECOND SPREADING PERIOD.
             if l <= z.ManuredAreas and i >= z.FirstManureMonth2 and i <= z.LastManureMonth2:
-                z.NConc = z.ManNitr[l]
-                z.PConc = z.ManPhos[l]
+                z.NConc = 2.44 # z.ManNitr[l]
+                z.PConc = 0.38 # z.ManPhos[l]
 
             nRunoff = 0.1 * z.NConc * z.RurQRunoff[l, i] * z.Area[l]
             pRunoff = 0.1 * z.PConc * z.RurQRunoff[l, i] * z.Area[l]
@@ -111,16 +111,16 @@ def CalculateLoads(z, Y):
 
         # ADD URBAN NUTRIENTS
         for l in range(z.NRur, z.NLU):
-            z.LuTotNitr[Y, l] += z.LuLoad[Y, l, 1] / z.NYrs / 2
-            z.LuTotPhos[Y, l] += z.LuLoad[Y, l, 2] / z.NYrs / 2
-            z.LuDisNitr[Y, l] += z.LuDisLoad[Y, l, 1] / z.NYrs / 2
-            z.LuDisPhos[Y, l] += z.LuDisLoad[Y, l, 2] / z.NYrs / 2
-            z.LuSedYield[Y, l] += (z.LuLoad[Y, l, 3] / z.NYrs) / 1000 / 2
+            z.LuTotNitr[Y, l] += z.LuLoad[Y, l, 0] / z.NYrs / 2
+            z.LuTotPhos[Y, l] += z.LuLoad[Y, l, 0] / z.NYrs / 2
+            z.LuDisNitr[Y, l] += z.LuDisLoad[Y, l, 0] / z.NYrs / 2
+            z.LuDisPhos[Y, l] += z.LuDisLoad[Y, l, 1] / z.NYrs / 2
+            z.LuSedYield[Y, l] += (z.LuLoad[Y, l, 2] / z.NYrs) / 1000 / 2
 
-        z.DisNitr[Y, i] += z.DisLoad[Y, i, 1]
-        z.DisPhos[Y, i] += z.DisLoad[Y, i, 2]
-        z.TotNitr[Y, i] += z.Load[Y, i, 1]
-        z.TotPhos[Y, i] += z.Load[Y, i, 2]
+        z.DisNitr[Y, i] += z.DisLoad[Y, i, 0]
+        z.DisPhos[Y, i] += z.DisLoad[Y, i, 1]
+        z.TotNitr[Y, i] += z.Load[Y, i, 0]
+        z.TotPhos[Y, i] += z.Load[Y, i, 1]
 
         # ADD UPLAND N and P LOADS
         z.UplandN[Y, i] = z.TotNitr[Y, i]
@@ -182,4 +182,4 @@ def CalculateLoads(z, Y):
         z.OrgConc[Y, 0] += z.OrgConc[Y, i]
 
         # CALCULATE THE VOLUMETRIC STREAM Flow
-        z.StreamFlowVol[Y, i] = ((z.StreamFlowLE[Y, i] / 100) * z.TotAreaMeters) / (86400 * z.DaysMonth[Y, i])
+        z.StreamFlowVol[Y][i] = ((z.StreamFlowLE[Y][i] / 100) * z.TotAreaMeters) / (86400 * z.DaysMonth[Y][i])

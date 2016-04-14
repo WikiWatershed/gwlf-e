@@ -51,7 +51,7 @@ def run(z):
             # TODO: J should start at 1, but I changed
             # it to 0 so that the code executes with fake
             # data. Otherwise range is 1 to 1.
-            for j in range(z.DaysMonth[y, i]):
+            for j in range(z.DaysMonth[y][i]):
                 # GET THE DAYS OF THE YEAR
                 if (z.DayYr + 1) > z.DaysYear[y]:
                     z.DayYr = 0
@@ -59,10 +59,10 @@ def run(z):
 
                 # DAILYWEATHERANALY TEMP[y, I, J], PREC[y, I, J]
                 # ***** BEGIN WEATHER DATA ANALYSIS *****
-                z.DailyTemp = z.Temp[y, i, j]
-                z.DailyPrec = z.Prec[y, i, j]
-                z.PestTemp[y, i, j] = z.Temp[y, i, j]
-                z.PestPrec[y, i, j] = z.Prec[y, i, j]
+                z.DailyTemp = z.Temp[y][i][j]
+                z.DailyPrec = z.Prec[y][i][j]
+                z.PestTemp[y][i][j] = z.Temp[y][i][j]
+                z.PestPrec[y][i][j] = z.Prec[y][i][j]
                 z.Melt = 0
                 z.Rain = 0
                 z.Water = 0
@@ -99,18 +99,25 @@ def run(z):
 
                     # IF WATER AVAILABLE, THEN CALL SUB TO COMPUTE CN, RUNOFF,
                     # EROSION AND SEDIMENT
+
+                    # XXX: This variable is set conditionally in CalcCnErosRunoffSed.CalcCN,
+                    # but is referenced later even if it wasn't set. So we initialize here
+                    # for safety.
+                    z.CNum = 0
+
                     if z.Water > 0.01:
-                        CalcCnErosRunoffSed.CalcCN(z, i, y, j)
+                        pass
+                        # CalcCnErosRunoffSed.CalcCN(z, i, y, j)
 
                     # DAILY CN
                     z.DailyCN[y, i, j] = z.CNum
 
                     # UPDATE ANTECEDENT RAIN+MELT CONDITION
-                    z.AMC5 = z.AMC5 - z.AntMoist[5] + z.Water
+                    z.AMC5 = z.AMC5 - z.AntMoist[4] + z.Water
                     z.DailyAMC5[y, i, j] = z.AMC5
-                    for k in range(4):
-                        z.AntMoist[6 - k] = z.AntMoist[5 - k]
-                    z.AntMoist[1] = z.Water
+                    for k in range(1, 4):
+                        z.AntMoist[5 - k] = z.AntMoist[4 - k]
+                    z.AntMoist[0] = z.Water
 
                     # CALCULATE ET FROM SATURATED VAPOR PRESSURE,
                     # HAMON (1961) METHOD
@@ -174,10 +181,10 @@ def run(z):
                     z.MonthFlow[y, i] = z.MonthFlow[y, i] + z.DailyFlow[y, i, j]
 
                     # CALCULATE TOTALS
-                    z.Precipitation[y, i] = z.Precipitation[y, i] + z.Prec[y, i, j]
-                    z.Evapotrans[y, i] = z.Evapotrans[y, i] + z.ET
-                    z.StreamFlow[y, i] = z.StreamFlow[y, i] + z.Flow
-                    z.GroundWatLE[y, i] = z.GroundWatLE[y, i] + z.GrFlow
+                    z.Precipitation[y][i] = z.Precipitation[y][i] + z.Prec[y][i][j]
+                    z.Evapotrans[y][i] = z.Evapotrans[y][i] + z.ET
+                    z.StreamFlow[y][i] = z.StreamFlow[y][i] + z.Flow
+                    z.GroundWatLE[y][i] = z.GroundWatLE[y][i] + z.GrFlow
 
                     # CALCULATE DAILY NUTRIENT LOAD FROM PONDING SYSTEMS
                     z.PondNitrLoad = (z.NumPondSys[i] *
@@ -186,7 +193,7 @@ def run(z):
                                       (z.PhosSepticLoad - z.PhosPlantUptake * z.Grow[i]))
 
                     # UPDATE MASS BALANCE ON PONDED EFFLUENT
-                    if z.Temp[y, i, j] <= 0 or z.InitSnow > 0:
+                    if z.Temp[y][i][j] <= 0 or z.InitSnow > 0:
 
                         # ALL INPUTS GO TO FROZEN STORAGE
                         z.FrozenPondNitr = z.FrozenPondNitr + z.PondNitrLoad
@@ -277,7 +284,8 @@ def run(z):
 
     print("Model run complete for " + str(z.NYrs) + " years of data.")
 
-    WriteOutputFiles.WriteOutput()
-    WriteOutputFiles.WriteOutputSumFiles()
+    output = WriteOutputFiles.WriteOutput(z)
+    # WriteOutputFiles.WriteOutputSumFiles()
 
+    print(output)
     print('Done')

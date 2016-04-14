@@ -177,7 +177,6 @@ class DataModel(object):
             'FCOrgsPerDay': np.zeros(9),
             'AvgAnimalWt': np.zeros(9),
 
-            'Month': np.zeros(12),
             'NGPctManApp': np.zeros(12),
             'NGAppNRate': np.zeros(12),
             'NGAppPRate': np.zeros(12),
@@ -289,6 +288,49 @@ class DataModel(object):
             'AttenLossRateTSS': 0,
             'AttenLossRatePath': 0,
             'StreamFlowVolAdj': 1,
+
+            # Referenced in LoadReductions
+            # Mostly initialized in PublicVariables.bas
+            'SMCheck': 'Both',
+            'n5dn': 0,
+            'n12dp': 0,
+            'n13dp': 0,
+            'n6dn': 0,
+            'n6bdn': 0,
+            'n6cdn': 0,
+            'n13bdp': 0,
+            'n13cdp': 0,
+            'RetentEff': 0,
+
+            # Referenced in WriteOutputFiles
+            'SumSedDelivRatio': 0,
+            'SumTotArea': 1,
+            'SumPrecipitation': np.zeros(12),
+            'SumEvapoTrans': np.zeros(12),
+            'SumGroundWater': np.zeros(12),
+            'SumRunoff': np.zeros(12),
+            'SumStreamFlow': np.zeros(12),
+            'SumPtSrcFlow': np.zeros(12),
+            'SumTileDrain': np.zeros(12),
+            'SumWithdrawal': np.zeros(12),
+            'AreaSum': np.zeros(12),
+
+            # Variables that were initialized
+            # in PublicVariables.bas and no where
+            # else
+            'DayYr': 0,
+            'FrozenPondNitr': 0,
+            'FrozenPondPhos': 0,
+
+            # ReadInputFiles.bas
+            'NgAWMSCoeffN': 0.14,
+            'RunConCoeffN': 0.15,
+            'NgAWMSCoeffP': 0.14,
+            'RunConCoeffP': 0.15,
+            'GrAWMSCoeffN': 0.75,
+            'GrAWMSCoeffP': 0.75,
+            'PhytaseCoeff': 0.16,
+
         }
 
     def __str__(self):
