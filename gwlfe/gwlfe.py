@@ -12,6 +12,7 @@ Imported from GWLF-E.frm
 
 import numpy as np
 
+from enums import GrowFlag
 from . import ReadGwlfDataFile
 from . import PrelimCalculations
 from . import CalcCnErosRunoffSed
@@ -178,11 +179,13 @@ def run(z):
                     z.StreamFlow[y, i] = z.StreamFlow[y, i] + z.Flow
                     z.GroundWatLE[y, i] = z.GroundWatLE[y, i] + z.GrFlow
 
+                    grow_factor = GrowFlag.intval(z.Grow[i])
+
                     # CALCULATE DAILY NUTRIENT LOAD FROM PONDING SYSTEMS
                     z.PondNitrLoad = (z.NumPondSys[i] *
-                                      (z.NitrSepticLoad - z.NitrPlantUptake * z.Grow[i]))
+                                      (z.NitrSepticLoad - z.NitrPlantUptake * grow_factor))
                     z.PondPhosLoad = (z.NumPondSys[i] *
-                                      (z.PhosSepticLoad - z.PhosPlantUptake * z.Grow[i]))
+                                      (z.PhosSepticLoad - z.PhosPlantUptake * grow_factor))
 
                     # UPDATE MASS BALANCE ON PONDED EFFLUENT
                     if z.Temp[y, i, j] <= 0 or z.InitSnow > 0:
@@ -204,16 +207,18 @@ def run(z):
                     z.MonthPondNitr[i] = z.MonthPondNitr[i] + z.NitrPondOverflow
                     z.MonthPondPhos[i] = z.MonthPondPhos[i] + z.PhosPondOverflow
 
+                    grow_factor = GrowFlag.intval(z.Grow[i])
+
                     # Obtain the monthly Normal Nitrogen
                     z.MonthNormNitr[i] = (z.MonthNormNitr[i] + z.NitrSepticLoad -
-                                          z.NitrPlantUptake * z.Grow[i])
+                                          z.NitrPlantUptake * grow_factor)
 
                     # 0.56 IS ATTENUATION FACTOR FOR SOIL LOSS
                     # 0.66 IS ATTENUATION FACTOR FOR SUBSURFACE FLOW LOSS
                     z.MonthShortNitr[i] = (z.MonthShortNitr[i] + z.NitrSepticLoad -
-                                           z.NitrPlantUptake * z.Grow[i])
+                                           z.NitrPlantUptake * grow_factor)
                     z.MonthShortPhos[i] = (z.MonthShortPhos[i] + z.PhosSepticLoad -
-                                           z.PhosPlantUptake * z.Grow[i])
+                                           z.PhosPlantUptake * grow_factor)
                     z.MonthDischargeNitr[i] = z.MonthDischargeNitr[i] + z.NitrSepticLoad
                     z.MonthDischargePhos[i] = z.MonthDischargePhos[i] + z.PhosSepticLoad
 

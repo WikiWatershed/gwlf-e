@@ -44,6 +44,14 @@ class GrowFlag(object):
             return GrowFlag.GROWING_SEASON
         raise ValueError('Unexpected value: ' + str(value))
 
+    @staticmethod
+    def intval(value):
+        if value == GrowFlag.NON_GROWING_SEASON:
+            return 0
+        elif value == GrowFlag.GROWING_SEASON:
+            return 1
+        raise ValueError('Unexpected value: ' + str(value))
+
 
 class SweepType(object):
     VACUUM = '<Vacuum>'
