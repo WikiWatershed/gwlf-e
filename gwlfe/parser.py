@@ -987,8 +987,13 @@ class GmsReader(object):
         z.ISRR[5] = self.next(float)  # Impervious Surface Reduction: High Density Residential (% Reduction)
         z.ISRA[5] = self.next(float)  # Impervious Surface Reduction: High Density Residential (% Area)
 
-        result['SweepType'] = self.next(SweepType.parse)  # Street Sweeping: Sweep Type (1-2)
-        result['UrbSweepFrac'] = self.next(float)  # Street Sweeping: Fraction of area treated (0-1)
+        if self.version_match(z.TranVersionNo, '1.[0-3].[0-9]'):
+            z.SweepType = SweepType.MECHANICAL
+            z.UrbSweepFrac = 1
+        else:
+            z.SweepType = self.next(SweepType.parse)  # Street Sweeping: Sweep Type (1-2)
+            z.UrbSweepFrac = self.next(float)  # Street Sweeping: Fraction of area treated (0-1)
+
         self.next(EOL)
 
         # Lines 122 - 133: (Street Sweeping data for each Month)
