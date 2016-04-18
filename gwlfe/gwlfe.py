@@ -48,33 +48,28 @@ def run(z):
                 z.LuErosion[y, l] = 0
 
             # DAILY CALCULATIONS
-            # TODO: J should start at 1, but I changed
-            # it to 0 so that the code executes with fake
-            # data. Otherwise range is 1 to 1.
+            DayYr = 0
             for j in range(z.DaysMonth[y, i]):
                 # GET THE DAYS OF THE YEAR
-                if (z.DayYr + 1) > z.DaysYear[y]:
-                    z.DayYr = 0
-                z.DayYr = z.DayYr + 1
+                if (DayYr + 1) > z.DaysYear[y]:
+                    DayYr = 0
+                DayYr += 1
 
                 # DAILYWEATHERANALY TEMP[y, I, J], PREC[y, I, J]
                 # ***** BEGIN WEATHER DATA ANALYSIS *****
                 z.DailyTemp = z.Temp[y, i, j]
                 z.DailyPrec = z.Prec[y, i, j]
-                z.PestTemp[y, i, j] = z.Temp[y, i, j]
-                z.PestPrec[y, i, j] = z.Prec[y, i, j]
                 z.Melt = 0
                 z.Rain = 0
                 z.Water = 0
                 z.ET = 0
                 z.QTotal = 0
+                z.RuralQTotal = 0
                 z.MeltPest[y, i, j] = 0
 
                 for l in range(z.NLU):
-                    z.ImpervAccum[l] = (z.ImpervAccum[l] * np.exp(-0.12) +
-                                        (1 / 0.12) * (1 - np.exp(-0.12)))
-                    z.PervAccum[l] = (z.PervAccum[l] * np.exp(-0.12) +
-                                      (1 / 0.12) * (1 - np.exp(-0.12)))
+                    z.ImpervAccum[l] *= np.exp(-0.12) + (1 / 0.12) * (1 - np.exp(-0.12))
+                    z.PervAccum[l] *= np.exp(-0.12) + (1 / 0.12) * (1 - np.exp(-0.12))
 
                 # RAIN , SNOWMELT, EVAPOTRANSPIRATION (ET)
                 if z.DailyTemp <= 0:

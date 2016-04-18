@@ -9,10 +9,7 @@ Initialize variables and perfom some preliminary calculations.
 Imported from ReadAllDataFiles.bas
 """
 
-import re
 import logging
-
-import numpy as np
 
 from .enums import SweepType, YesOrNo
 from . import PrelimQualCalculations
@@ -23,170 +20,10 @@ log.setLevel(logging.DEBUG)
 
 
 def ReadAllData(z):
-    z.NLU = z.NRur + z.NUrb
-
-    z.NYrs = z.WxYrs
-    z.DimYrs = z.WxYrs
-
-    z.Load = np.zeros((z.DimYrs, 12, 3))
-    z.DisLoad = np.zeros((z.DimYrs, 12, 3))
-    z.UplandN = np.zeros((z.DimYrs, 12))
-    z.UplandP = np.zeros((z.DimYrs, 12))
-    z.UrbRunoffCm = np.zeros((z.DimYrs, 12))
-    z.UrbRunoffLiter = np.zeros((z.DimYrs, 12))
-    z.DailyFlow = np.zeros((z.DimYrs, 12, 31))
-    z.DailyFlowMGD = np.zeros((z.DimYrs, 12, 31))
-    z.DailyFlowGPM = np.zeros((z.DimYrs, 12, 31))
-    z.DailyPtSrcFlow = np.zeros((z.DimYrs, 12, 31))
-
-    # Declare the daily values as ReDimensional arrays in
-    # to Pesticide components
-    z.DailyUplandSed = np.zeros((z.DimYrs, 12, 31))
-    z.DailyUplandN = np.zeros((z.DimYrs, 12, 31))
-    z.DailyUplandP = np.zeros((z.DimYrs, 12, 31))
-    z.DailyTileDrainN = np.zeros((z.DimYrs, 12, 31))
-    z.DailyTileDrainP = np.zeros((z.DimYrs, 12, 31))
-    z.DailyStrmSed = np.zeros((z.DimYrs, 12, 31))
-    z.DailySepticN = np.zeros((z.DimYrs, 12, 31))
-    z.DailySepticP = np.zeros((z.DimYrs, 12, 31))
-    z.DailyStrmN = np.zeros((z.DimYrs, 12, 31))
-    z.DailyStrmP = np.zeros((z.DimYrs, 12, 31))
-    z.DailyGroundN = np.zeros((z.DimYrs, 12, 31))
-    z.DailyGroundP = np.zeros((z.DimYrs, 12, 31))
-    z.DayGroundNitr = np.zeros((z.DimYrs, 12, 31))
-    z.DayGroundPhos = np.zeros((z.DimYrs, 12, 31))
-    z.DayDisPhos = np.zeros((z.DimYrs, 12, 31))
-    z.DayDisNitr = np.zeros((z.DimYrs, 12, 31))
-    z.DayTotNitr = np.zeros((z.DimYrs, 12, 31))
-    z.DailyPointN = np.zeros((z.DimYrs, 12, 31))
-    z.DailyPointP = np.zeros((z.DimYrs, 12, 31))
-    z.DayTotPhos = np.zeros((z.DimYrs, 12, 31))
-    z.DayLuTotN = np.zeros((16, z.DimYrs, 12, 31))
-    z.DayLuTotP = np.zeros((16, z.DimYrs, 12, 31))
-    z.DayLuDisN = np.zeros((16, z.DimYrs, 12, 31))
-    z.DayLuDisP = np.zeros((16, z.DimYrs, 12, 31))
-    z.DayErWashoff = np.zeros((16, z.DimYrs, 12, 31))
-    z.Perc = np.zeros((z.DimYrs, 12, 31))
-    z.DeepFlow = np.zeros((z.DimYrs, 12, 31))
-    z.DayQRunoff = np.zeros((z.DimYrs, 12, 31))
-    z.SdYld = np.zeros((z.DimYrs, 12, 31))
-    z.Erosn = np.zeros((z.DimYrs, 12, 31))
-    z.DayErosion = np.zeros((z.DimYrs, 12, 31))
-    z.DayLuErosion = np.zeros((16, z.DimYrs, 12, 31))
-    z.DaySed = np.zeros((z.DimYrs, 12, 31))
-    z.DayLuSed = np.zeros((16, z.DimYrs, 12, 31))
-    z.DayRunoff = np.zeros((z.DimYrs, 12, 31))
-    z.DayLuRunoff = np.zeros((16, z.DimYrs, 12, 31))
-    z.MeltPest = np.zeros((z.DimYrs, 12, 31))
-    z.PrecPest = np.zeros((z.DimYrs, 12, 31))
-    z.DailyGrFlow = np.zeros((z.DimYrs, 12, 31))
-    z.DailyETCm = np.zeros((z.DimYrs, 12, 31))
-    z.DailyETShal = np.zeros((z.DimYrs, 12, 31))
-    z.PercCm = np.zeros((z.DimYrs, 12, 31))
-    z.PercShal = np.zeros((z.DimYrs, 12, 31))
-    z.DailyUnsatStorCm = np.zeros((z.DimYrs, 12, 31))
-    z.DailyUnsatStorShal = np.zeros((z.DimYrs, 12, 31))
-    z.DailyET = np.zeros((z.DimYrs, 12, 31))
-    z.DailyRetent = np.zeros((z.DimYrs, 12, 31))
-    z.SatStorPest = np.zeros((z.DimYrs, 12, 31))
-    z.UrbanRunoff = np.zeros((z.DimYrs, 12))
-    z.RuralRunoff = np.zeros((z.DimYrs, 12))
-    z.DailyInfilt = np.zeros((z.DimYrs, 12, 31))
-    z.StreamFlowVol = np.zeros((z.DimYrs, 12))
-    z.DailyCN = np.zeros((z.DimYrs, 12, 31))
-    z.DailyWater = np.zeros((z.DimYrs, 12, 31))
-    z.LE = np.zeros((z.DimYrs, 12))
-    z.StreamBankEros = np.zeros((z.DimYrs, 12))
-    z.StreamBankN = np.zeros((z.DimYrs, 12))
-    z.StreamBankP = np.zeros((z.DimYrs, 12))
-    z.DailyAMC5 = np.zeros((z.DimYrs, 12, 31))
-    z.MonthFlow = np.zeros((z.DimYrs, 12))
-    z.LuGrFlow = np.zeros((16, z.DimYrs, 12, 31))
-    z.LuDeepSeep = np.zeros((16, z.DimYrs, 12, 31))
-    z.LuInfiltration = np.zeros((16, z.DimYrs, 12, 31))
-    z.PestTemp = np.zeros((z.DimYrs, 12, 31))
-    z.PestPrec = np.zeros((z.DimYrs, 12, 31))
-
-    # Tile Drainage and Flow Variables
-    z.TileDrainN = np.zeros((z.DimYrs, 12))
-    z.TileDrainP = np.zeros((z.DimYrs, 12))
-    z.TileDrainSed = np.zeros((z.DimYrs, 12))
-    z.TileDrain = np.zeros((z.DimYrs, 12))
-    z.TileDrainRO = np.zeros((z.DimYrs, 12))
-    z.TileDrainGW = np.zeros((z.DimYrs, 12))
-    z.GwAgLE = np.zeros((z.DimYrs, 12))
-    z.Withdrawal = np.zeros((z.DimYrs, 12))
-    z.PtSrcFlow = np.zeros((z.DimYrs, 12))
-    z.StreamFlow = np.zeros((z.DimYrs, 12))
-    z.StreamFlowLE = np.zeros((z.DimYrs, 12))
-    z.Precipitation = np.zeros((z.DimYrs, 12))
-    z.Evapotrans = np.zeros((z.DimYrs, 12))
-    z.GroundWatLE = np.zeros((z.DimYrs, 12))
-    z.AgRunoff = np.zeros((z.DimYrs, 12))
-    z.Runoff = np.zeros((z.DimYrs, 12))
-    z.Erosion = np.zeros((z.DimYrs, 12))
-    z.SedYield = np.zeros((z.DimYrs, 12))
-    z.DaysMonth = np.zeros((z.DimYrs, 12), dtype=int)
-    z.WxMonth = np.zeros((z.DimYrs, 12))
-    z.WxYear = np.zeros((z.DimYrs, 12))
-    z.GroundNitr = np.zeros((z.DimYrs, 12))
-    z.GroundPhos = np.zeros((z.DimYrs, 12))
-    z.DisNitr = np.zeros((z.DimYrs, 12))
-    z.SepticN = np.zeros((z.DimYrs, 12))
-    z.SepticP = np.zeros((z.DimYrs, 12))
-    z.TotNitr = np.zeros((z.DimYrs, 12))
-    z.DisPhos = np.zeros((z.DimYrs, 12))
-    z.TotPhos = np.zeros((z.DimYrs, 12))
-    z.LuRunoff = np.zeros((z.DimYrs, 16))
-    z.LuErosion = np.zeros((z.DimYrs, 16))
-    z.LuSedYield = np.zeros((z.DimYrs, 16))
-    z.LuDisNitr = np.zeros((z.DimYrs, 16))
-    z.LuTotNitr = np.zeros((z.DimYrs, 16))
-    z.LuDisPhos = np.zeros((z.DimYrs, 16))
-    z.LuTotPhos = np.zeros((z.DimYrs, 16))
-    z.SedTrans = np.zeros((z.DimYrs, 16))
-    z.SepticNitr = np.zeros(z.DimYrs)
-    z.SepticPhos = np.zeros(z.DimYrs)
-
-    # ANIMAL FEEDING OPERATIONS VARIABLES
-    z.DailyAnimalN = np.zeros((z.DimYrs, 12, 31))
-    z.DailyAnimalP = np.zeros((z.DimYrs, 12, 31))
-
-    # Calculated Values for Animal Feeding Operations
-    z.NGLostManN = np.zeros((z.DimYrs, 12))
-    z.NGLostBarnN = np.zeros((z.DimYrs, 12))
-    z.NGLostManP = np.zeros((z.DimYrs, 12))
-    z.NGLostBarnP = np.zeros((z.DimYrs, 12))
-    z.NGLostManFC = np.zeros((z.DimYrs, 12))
-    z.NGLostBarnFC = np.zeros((z.DimYrs, 12))
-
-    z.GRLostManN = np.zeros((z.DimYrs, 12))
-    z.GRLostBarnN = np.zeros((z.DimYrs, 12))
-    z.GRLossN = np.zeros((z.DimYrs, 12))
-    z.GRLostManP = np.zeros((z.DimYrs, 12))
-    z.GRLostBarnP = np.zeros((z.DimYrs, 12))
-    z.GRLossP = np.zeros((z.DimYrs, 12))
-    z.GRLostManFC = np.zeros((z.DimYrs, 12))
-    z.GRLostBarnFC = np.zeros((z.DimYrs, 12))
-    z.GRLossFC = np.zeros((z.DimYrs, 12))
-    z.LossFactAdj = np.zeros((z.DimYrs, 12))
-    z.AnimalN = np.zeros((z.DimYrs, 12))
-    z.AnimalP = np.zeros((z.DimYrs, 12))
-    z.AnimalFC = np.zeros((z.DimYrs, 12))
-    z.WWOrgs = np.zeros((z.DimYrs, 12))
-    z.SSOrgs = np.zeros((z.DimYrs, 12))
-    z.UrbOrgs = np.zeros((z.DimYrs, 12))
-    z.WildOrgs = np.zeros((z.DimYrs, 12))
-    z.TotalOrgs = np.zeros((z.DimYrs, 12))
-    z.CMStream = np.zeros((z.DimYrs, 12))
-    z.OrgConc = np.zeros((z.DimYrs, 12))
-
     # If RunQual output is requested, then redim RunQual values
     PrelimQualCalculations.ReDimRunQualVars()
 
     # Set the Total AEU to the value from the Animal Density layer
-    if not VersionMatch(z.TranVersionNo, '1.[0-9].[0-9]'):
-        raise Exception('Input data file is not in the correct format or is no longer supported')
 
     for i in range(12):
         z.AnnDayHrs += z.DayHrs[i]
@@ -195,9 +32,9 @@ def ReadAllData(z):
         z.AreaTotal += z.Area[l]
         z.RurAreaTotal += z.Area[l]
 
-    for l in range(z.NUrb):
-        z.AreaTotal += z.Area[l + z.NRur]
-        z.UrbAreaTotal += z.Area[l + z.NRur]
+    for l in range(z.NRur, z.NLU):
+        z.AreaTotal += z.Area[l]
+        z.UrbAreaTotal += z.Area[l]
 
     z.TotAreaMeters = z.AreaTotal * 10000
 
@@ -226,21 +63,6 @@ def ReadAllData(z):
         for i in range(12):
             z.SepticsDay[i] = (z.NumNormalSys[i] + z.NumPondSys[i] +
                                z.NumShortSys[i] + z.NumDischargeSys[i])
-
-    if VersionMatch(z.TranVersionNo, '1.[0-2].[0-9]'):
-        z.Storm = 0
-        z.CSNAreaSim = 0
-        z.CSNDevType = "None"
-
-    if VersionMatch(z.TranVersionNo, '1.[0-1].[0-9]'):
-        for i in range(6):
-            z.ISRR[i] = 0
-            z.ISRA[i] = 0
-        z.SweepType = 1
-        z.UrbSweepFrac = 1
-    elif VersionMatch(z.TranVersionNo, '1.[2-3].[0-9]'):
-        z.SweepType = 1
-        z.UrbSweepFrac = 1
 
     for i in range(12):
         if z.SweepType is SweepType.VACUUM:
@@ -419,8 +241,3 @@ def ReadAllData(z):
     z.RetentFactorN = (1 - (z.ShedAreaDrainLake * z.RetentNLake))
     z.RetentFactorP = (1 - (z.ShedAreaDrainLake * z.RetentPLake))
     z.RetentFactorSed = (1 - (z.ShedAreaDrainLake * z.RetentSedLake))
-
-
-def VersionMatch(TranVersionNo, VersionPatternRegex):
-    pattern = '^{}$'.format(VersionPatternRegex)
-    return re.match(pattern, TranVersionNo)
