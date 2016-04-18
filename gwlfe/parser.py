@@ -567,11 +567,16 @@ class GmsReader(object):
                 z.UrbBMPRed[u][q] = self.next(float)  # Urban BMP Reduction
                 self.next(EOL)
 
+        z.ManNitr = np.zeros(z.ManuredAreas)
+        z.ManPhos = np.zeros(z.ManuredAreas)
+
         # Lines 71 - 72: (for the 2 Manure Spreading Periods)
-        z.ManNitr = (self.next(float), self.next(float))  # Manured N Concentration
+        for i in range(z.ManuredAreas):
+            z.ManNitr[i] = self.next(float)  # Manured N Concentration
         self.next(EOL)
 
-        z.ManPhos = (self.next(float), self.next(float))  # Manured P Concentration
+        for i in range(z.ManuredAreas):
+            z.ManPhos[i] = self.next(float)  # Manured P Concentration
         self.next(EOL)
 
         # Lines 73 - 84: (Point Source data for each Month)
