@@ -125,11 +125,8 @@ class GmsReader(object):
             self.next(EOL)
 
         # Lines 30 - 35: (for each Urban Land Use Category)
-        # CNI and CNP are 1-based in VB, so although the first dimension
-        # should be size 3, we increase it by 1 because the model
-        # references indexes 1, 2, and 3. The first index is never used.
-        result['CNI'] = np.zeros((4, NLU))
-        result['CNP'] = np.zeros((4, NLU))
+        result['CNI'] = np.zeros((3, NLU))
+        result['CNP'] = np.zeros((3, NLU))
 
         result['Imper'] = np.zeros(NLU)
         result['TotSusSolids'] = np.zeros(NLU)

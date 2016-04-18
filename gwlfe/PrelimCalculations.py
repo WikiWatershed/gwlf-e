@@ -39,10 +39,10 @@ def InitialCalculations(z):
             z.NewCN[3, l] = 100
 
     for l in range(z.NRur, z.NLU):
-        z.CNI[1, l] = z.CNI[2, l] / (2.334 - 0.01334 * z.CNI[2, 1])
-        z.CNI[3, l] = z.CNI[2, l] / (0.4036 + 0.0059 * z.CNI[2, l])
-        z.CNP[1, l] = z.CNP[2, l] / (2.334 - 0.01334 * z.CNP[2, 1])
-        z.CNP[3, l] = z.CNP[2, l] / (0.4036 + 0.0059 * z.CNP[2, l])
+        z.CNI[0, l] = z.CNI[1, l] / (2.334 - 0.01334 * z.CNI[1, 1])
+        z.CNI[2, l] = z.CNI[1, l] / (0.4036 + 0.0059 * z.CNI[1, l])
+        z.CNP[0, l] = z.CNP[1, l] / (2.334 - 0.01334 * z.CNP[1, 1])
+        z.CNP[2, l] = z.CNP[1, l] / (0.4036 + 0.0059 * z.CNP[1, l])
 
         for q in range(z.Nqual):
             z.AvLuLoad[l, q] = 0

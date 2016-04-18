@@ -106,10 +106,14 @@ def run(z):
                     z.DailyCN[y, i, j] = z.CNum
 
                     # UPDATE ANTECEDENT RAIN+MELT CONDITION
-                    z.AMC5 = z.AMC5 - z.AntMoist[5] + z.Water
+                    # Subtract AMC5 by the sum of AntMoist (day 5) and Water
+                    z.AMC5 -= z.AntMoist[4] + z.Water
                     z.DailyAMC5[y, i, j] = z.AMC5
-                    for k in range(4):
-                        z.AntMoist[6 - k] = z.AntMoist[5 - k]
+
+                    # Shift AntMoist values to the right.
+                    z.AntMoist[4] = z.AntMoist[3]
+                    z.AntMoist[3] = z.AntMoist[2]
+                    z.AntMoist[2] = z.AntMoist[1]
                     z.AntMoist[1] = z.Water
 
                     # CALCULATE ET FROM SATURATED VAPOR PRESSURE,
