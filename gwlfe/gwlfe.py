@@ -97,6 +97,11 @@ def run(z):
                     # EROSION AND SEDIMENT
                     if z.Water > 0.01:
                         CalcCnErosRunoffSed.CalcCN(z, i, y, j)
+                    else:
+                        # TODO: If Water is <= 0.01, then CalcCNErosRunoffSed
+                        # never executes, and CNum will remain undefined.
+                        # What should the default value for CNum be in this case?
+                        z.CNum = 0
 
                     # DAILY CN
                     z.DailyCN[y, i, j] = z.CNum
