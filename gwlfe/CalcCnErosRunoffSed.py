@@ -272,9 +272,9 @@ def BasinWater(z, i, Y, j):
 
                 if z.Area[l] > 0:
                     z.SurfaceLoad = (((z.LoadRateImp[l, q] * z.WashImperv[l] * ((z.Imper[l] * (1 - z.ISRR[lu]) * (1 - z.ISRA[lu]))
-                                     * (z.SweepFrac[i] + ((1 - z.SweepFrac[i]) * ((1 - z.UrbSweepFrac) * z.Area[l]) / z.Area[l])))
-                                     + z.LoadRatePerv[l, q] * z.WashPerv[l] * (1 - (z.Imper[l] * (1 - z.ISRR[lu]) * (1 - z.ISRA[lu]))))
-                                     * z.Area[l]) - z.UrbLoadRed)
+                                       * (z.SweepFrac[i] + ((1 - z.SweepFrac[i]) * ((1 - z.UrbSweepFrac) * z.Area[l]) / z.Area[l])))
+                                      + z.LoadRatePerv[l, q] * z.WashPerv[l] * (1 - (z.Imper[l] * (1 - z.ISRR[lu]) * (1 - z.ISRA[lu]))))
+                                      * z.Area[l]) - z.UrbLoadRed)
                 else:
                     z.SurfaceLoad = 0
 
