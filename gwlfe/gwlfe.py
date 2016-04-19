@@ -11,6 +11,7 @@ Imported from GWLF-E.frm
 """
 
 import numpy as np
+import json
 
 from enums import ETflag, GrowFlag
 from . import ReadGwlfDataFile
@@ -289,5 +290,5 @@ def run(z):
     output = WriteOutputFiles.WriteOutput(z)
     # WriteOutputFiles.WriteOutputSumFiles()
 
-    print(output)
+    print(json.dumps(output))
     print('Done')
