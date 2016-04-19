@@ -32,21 +32,21 @@ def CalcCN(z, i, Y, j):
                 if z.Grow[i] > 0:
                     # growing season
                     if z.AMC5 >= 5.33:
-                        z.CNum = z.NewCN[3, l]
+                        z.CNum = z.NewCN[2, l]
                     elif z.AMC5 < 3.56:
-                        z.CNum = z.NewCN[1, l] + (z.CN[l] - z.NewCN[1, l]) * z.AMC5 / 3.56
+                        z.CNum = z.NewCN[0, l] + (z.CN[l] - z.NewCN[0, l]) * z.AMC5 / 3.56
                     else:
-                        z.CNum = z.CN[l] + (z.NewCN[3, l] - z.CN[l]) * (z.AMC5 - 3.56) / 1.77
+                        z.CNum = z.CN[l] + (z.NewCN[2, l] - z.CN[l]) * (z.AMC5 - 3.56) / 1.77
                 else:
                     # dormant season
                     if z.AMC5 >= 2.79:
-                        z.CNum = z.NewCN[3, l]
+                        z.CNum = z.NewCN[2, l]
                     elif z.AMC5 < 1.27:
-                        z.CNum = z.NewCN[1, l] + (z.CN[l] - z.NewCN[1, l]) * z.AMC5 / 1.27
+                        z.CNum = z.NewCN[0, l] + (z.CN[l] - z.NewCN[0, l]) * z.AMC5 / 1.27
                     else:
-                        z.CNum = z.CN[l] + (z.NewCN[3, l] - z.CN[l]) * (z.AMC5 - 1.27) / 1.52
+                        z.CNum = z.CN[l] + (z.NewCN[2, l] - z.CN[l]) * (z.AMC5 - 1.27) / 1.52
             else:
-                z.CNum = z.NewCN[3, l]
+                z.CNum = z.NewCN[2, l]
 
             z.Retention = 2540 / z.CNum - 25.4
             if z.Retention < 0:
