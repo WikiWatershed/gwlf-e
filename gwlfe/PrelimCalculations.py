@@ -8,12 +8,16 @@ Imported from PrelimCalculations.bas
 """
 
 import math
+import logging
 
 from .enums import LandUse
 
 
+log = logging.getLogger(__name__)
+
+
 def InitialCalculations(z):
-    print('InitialCalculations')
+    log.debug('InitialCalculations')
 
     # SIMULATION INITIALIZATION
     z.AgAreaTotal = 0

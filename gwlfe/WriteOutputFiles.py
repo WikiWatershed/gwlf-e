@@ -3,11 +3,18 @@ from __future__ import print_function
 from __future__ import unicode_literals
 from __future__ import division
 
+import logging
+
 from . import LoadReductions
 from .enums import YesOrNo, LandUse
 
 
+log = logging.getLogger(__name__)
+
+
 def WriteOutput(z):
+    log.debug('WriteOutput')
+
     # DIMENSION VARIABLES FOR PREDICT CALCULATION AND SCENARIO FILE
     AvOtherLuSed = 0
     AvOtherLuNitr = 0
@@ -726,8 +733,8 @@ def WriteOutput(z):
 
 
 def WriteOutputSumFiles():
-    print('WriteOutputSumFiles')
+    log.debug('WriteOutputSumFiles')
 
 
 def UrbanAreasOutput():
-    print('UrbanAreasOutput')
+    log.debug('UrbanAreasOutput')

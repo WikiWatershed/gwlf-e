@@ -7,9 +7,14 @@ from __future__ import division
 Imported from CalcLoads.bas
 """
 
+import logging
+
+
+log = logging.getLogger(__name__)
+
 
 def CalculateLoads(z, Y):
-    print('CalculateLoads')
+    log.debug('CalculateLoads')
 
     # CALCULATE THE MONTHLY WATER BALANCE FOR STREAM Flow FOR EACH YEAR OF THE ANALYSIS
     for i in range(12):

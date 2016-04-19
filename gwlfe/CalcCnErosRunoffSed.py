@@ -8,8 +8,12 @@ Imported from CalcCNErosRunoffSed.bas
 """
 
 import math
+import logging
 
 from .enums import LandUse
+
+
+log = logging.getLogger(__name__)
 
 
 def CalcCN(z, i, Y, j):
@@ -19,7 +23,7 @@ def CalcCN(z, i, Y, j):
     Y - year
     j - number of days in month
     """
-    print('CalcCN')
+    log.debug('CalcCN')
 
     z.UncontrolledQ = 0
     z.RetentionEff = 0

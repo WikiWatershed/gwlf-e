@@ -7,9 +7,14 @@ from __future__ import division
 Imported from AnnualMeans.bas
 """
 
+import logging
+
+
+log = logging.getLogger(__name__)
+
 
 def CalculateAnnualMeanLoads(z, Y):
-    print('CalculateAnnualMeanLoads')
+    log.debug('CalculateAnnualMeanLoads')
 
     # UPDATE SEPTIC SYSTEM AVERAGES
     z.AvSeptNitr += z.SepticNitr[Y] / z.NYrs

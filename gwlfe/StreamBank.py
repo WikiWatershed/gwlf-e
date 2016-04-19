@@ -7,9 +7,14 @@ from __future__ import division
 Imported from StreamBank.bas
 """
 
+import logging
+
+
+log = logging.getLogger(__name__)
+
 
 def CalculateStreamBankEros(z, Y):
-    print('CalculateStreamBankEros')
+    log.debug('CalculateStreamBankEros')
 
     # CALCULATE THE STREAM BANK SEDIMENT AND N AND P
     for i in range(12):

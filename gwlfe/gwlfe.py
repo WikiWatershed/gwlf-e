@@ -10,6 +10,8 @@ Runs the GWLF-E MapShed model.
 Imported from GWLF-E.frm
 """
 
+import logging
+
 import numpy as np
 import json
 
@@ -24,8 +26,11 @@ from . import AnnualMeans
 from . import WriteOutputFiles
 
 
+log = logging.getLogger(__name__)
+
+
 def run(z):
-    print('Running model...')
+    log.debug('Running model...')
 
     ReadGwlfDataFile.ReadAllData(z)
 
@@ -279,10 +284,11 @@ def run(z):
                     z.AvOrgConc[i] = 0
             z.AvOrgConc[0] = 0
 
-    print("Model run complete for " + str(z.NYrs) + " years of data.")
+    log.debug("Model run complete for " + str(z.NYrs) + " years of data.")
 
     output = WriteOutputFiles.WriteOutput(z)
     # WriteOutputFiles.WriteOutputSumFiles()
 
-    print(json.dumps(output))
-    print('Done')
+    log.debug('Done')
+
+    return output

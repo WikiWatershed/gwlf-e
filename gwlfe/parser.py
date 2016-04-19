@@ -14,7 +14,6 @@ from .enums import YesOrNo, ETflag, GrowFlag, LandUse, SweepType
 
 
 log = logging.getLogger(__name__)
-log.setLevel(logging.DEBUG)
 
 
 EOL = '<EOL>'
