@@ -12,7 +12,7 @@ Imported from GWLF-E.frm
 
 import numpy as np
 
-from enums import GrowFlag
+from enums import ETflag, GrowFlag
 from . import ReadGwlfDataFile
 from . import PrelimCalculations
 from . import CalcCnErosRunoffSed
@@ -119,7 +119,7 @@ def run(z):
 
                     # CALCULATE ET FROM SATURATED VAPOR PRESSURE,
                     # HAMON (1961) METHOD
-                    if z.ETFlag == 0:
+                    if z.ETFlag is ETflag.HAMON_METHOD:
                         if z.DailyTemp > 0:
                             z.SatVaPressure = (33.8639 * ((0.00738 * z.DailyTemp +
                                                0.8072)**8 - 0.000019 *

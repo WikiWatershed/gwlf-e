@@ -18,14 +18,14 @@ class YesOrNo(object):
 
 
 class ETflag(object):
-    HAMMON_METHOD = '<Hammon method>'
+    HAMON_METHOD = '<Hamon method>'
     BLAINY_CRIDDLE_METHOD = '<Blainy-Criddle method>'
 
     @staticmethod
     def parse(value):
         value = int(value)
         if value == 0:
-            return ETflag.HAMMON_METHOD
+            return ETflag.HAMON_METHOD
         elif value == 1:
             return ETflag.BLAINY_CRIDDLE_METHOD
         raise ValueError('Unexpected value: ' + str(value))
