@@ -240,6 +240,32 @@ class GmsReader(object):
         z.FrozenPondNitr = 0
         z.FrozenPondPhos = 0
 
+        # Referenced in LoadReductions
+        # Mostly initialized in PublicVariables.bas
+        z.SMCheck = 'Both'
+        z.n5dn = 0
+        z.n12dp = 0
+        z.n13dp = 0
+        z.n6dn = 0
+        z.n6bdn = 0
+        z.n6cdn = 0
+        z.n13bdp = 0
+        z.n13cdp = 0
+        z.RetentEff = 0
+
+        # Referenced in WriteOutputFiles
+        z.SumSedDelivRatio = 0
+        z.SumTotArea = 1
+        z.SumPrecipitation = np.zeros(12)
+        z.SumEvapoTrans = np.zeros(12)
+        z.SumGroundWater = np.zeros(12)
+        z.SumRunoff = np.zeros(12)
+        z.SumStreamFlow = np.zeros(12)
+        z.SumPtSrcFlow = np.zeros(12)
+        z.SumTileDrain = np.zeros(12)
+        z.SumWithdrawal = np.zeros(12)
+        z.AreaSum = np.zeros(12)
+
         # Line 1:
         z.NRur = self.next(int)  # Number of Rural Land Use Categories
         z.NUrb = self.next(int)  # Number Urban Land Use Categories
