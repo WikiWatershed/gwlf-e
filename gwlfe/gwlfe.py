@@ -58,9 +58,14 @@ def run(z):
                 z.QTotal = 0
                 z.RuralQTotal = 0
 
+                # Question: Are these values supposed to accumulate for each
+                # day, each month, and each year? Or should these be
+                # re-initialized to a default value at some point?
                 for l in range(z.NLU):
-                    z.ImpervAccum[l] *= np.exp(-0.12) + (1 / 0.12) * (1 - np.exp(-0.12))
-                    z.PervAccum[l] *= np.exp(-0.12) + (1 / 0.12) * (1 - np.exp(-0.12))
+                    z.ImpervAccum[l] = (z.ImpervAccum[l] * np.exp(-0.12) +
+                                        (1 / 0.12) * (1 - np.exp(-0.12)))
+                    z.PervAccum[l] = (z.PervAccum[l] * np.exp(-0.12) +
+                                      (1 / 0.12) * (1 - np.exp(-0.12)))
 
                 # RAIN , SNOWMELT, EVAPOTRANSPIRATION (ET)
                 if z.DailyTemp <= 0:
