@@ -12,6 +12,7 @@ Imported from GWLF-E.frm
 
 import numpy as np
 
+from enums import GrowFlag
 from . import ReadGwlfDataFile
 from . import PrelimCalculations
 from . import CalcCnErosRunoffSed
@@ -48,33 +49,28 @@ def run(z):
                 z.LuErosion[y, l] = 0
 
             # DAILY CALCULATIONS
-            # TODO: J should start at 1, but I changed
-            # it to 0 so that the code executes with fake
-            # data. Otherwise range is 1 to 1.
+            DayYr = 0
             for j in range(z.DaysMonth[y, i]):
                 # GET THE DAYS OF THE YEAR
-                if (z.DayYr + 1) > z.DaysYear[y]:
-                    z.DayYr = 0
-                z.DayYr = z.DayYr + 1
+                if (DayYr + 1) > z.DaysYear[y]:
+                    DayYr = 0
+                DayYr += 1
 
                 # DAILYWEATHERANALY TEMP[y, I, J], PREC[y, I, J]
                 # ***** BEGIN WEATHER DATA ANALYSIS *****
                 z.DailyTemp = z.Temp[y, i, j]
                 z.DailyPrec = z.Prec[y, i, j]
-                z.PestTemp[y, i, j] = z.Temp[y, i, j]
-                z.PestPrec[y, i, j] = z.Prec[y, i, j]
                 z.Melt = 0
                 z.Rain = 0
                 z.Water = 0
                 z.ET = 0
                 z.QTotal = 0
+                z.RuralQTotal = 0
                 z.MeltPest[y, i, j] = 0
 
                 for l in range(z.NLU):
-                    z.ImpervAccum[l] = (z.ImpervAccum[l] * np.exp(-0.12) +
-                                        (1 / 0.12) * (1 - np.exp(-0.12)))
-                    z.PervAccum[l] = (z.PervAccum[l] * np.exp(-0.12) +
-                                      (1 / 0.12) * (1 - np.exp(-0.12)))
+                    z.ImpervAccum[l] *= np.exp(-0.12) + (1 / 0.12) * (1 - np.exp(-0.12))
+                    z.PervAccum[l] *= np.exp(-0.12) + (1 / 0.12) * (1 - np.exp(-0.12))
 
                 # RAIN , SNOWMELT, EVAPOTRANSPIRATION (ET)
                 if z.DailyTemp <= 0:
@@ -101,15 +97,24 @@ def run(z):
                     # EROSION AND SEDIMENT
                     if z.Water > 0.01:
                         CalcCnErosRunoffSed.CalcCN(z, i, y, j)
+                    else:
+                        # TODO: If Water is <= 0.01, then CalcCNErosRunoffSed
+                        # never executes, and CNum will remain undefined.
+                        # What should the default value for CNum be in this case?
+                        z.CNum = 0
 
                     # DAILY CN
                     z.DailyCN[y, i, j] = z.CNum
 
                     # UPDATE ANTECEDENT RAIN+MELT CONDITION
-                    z.AMC5 = z.AMC5 - z.AntMoist[5] + z.Water
+                    # Subtract AMC5 by the sum of AntMoist (day 5) and Water
+                    z.AMC5 -= z.AntMoist[4] + z.Water
                     z.DailyAMC5[y, i, j] = z.AMC5
-                    for k in range(4):
-                        z.AntMoist[6 - k] = z.AntMoist[5 - k]
+
+                    # Shift AntMoist values to the right.
+                    z.AntMoist[4] = z.AntMoist[3]
+                    z.AntMoist[3] = z.AntMoist[2]
+                    z.AntMoist[2] = z.AntMoist[1]
                     z.AntMoist[1] = z.Water
 
                     # CALCULATE ET FROM SATURATED VAPOR PRESSURE,
@@ -179,11 +184,13 @@ def run(z):
                     z.StreamFlow[y, i] = z.StreamFlow[y, i] + z.Flow
                     z.GroundWatLE[y, i] = z.GroundWatLE[y, i] + z.GrFlow
 
+                    grow_factor = GrowFlag.intval(z.Grow[i])
+
                     # CALCULATE DAILY NUTRIENT LOAD FROM PONDING SYSTEMS
                     z.PondNitrLoad = (z.NumPondSys[i] *
-                                      (z.NitrSepticLoad - z.NitrPlantUptake * z.Grow[i]))
+                                      (z.NitrSepticLoad - z.NitrPlantUptake * grow_factor))
                     z.PondPhosLoad = (z.NumPondSys[i] *
-                                      (z.PhosSepticLoad - z.PhosPlantUptake * z.Grow[i]))
+                                      (z.PhosSepticLoad - z.PhosPlantUptake * grow_factor))
 
                     # UPDATE MASS BALANCE ON PONDED EFFLUENT
                     if z.Temp[y, i, j] <= 0 or z.InitSnow > 0:
@@ -205,16 +212,18 @@ def run(z):
                     z.MonthPondNitr[i] = z.MonthPondNitr[i] + z.NitrPondOverflow
                     z.MonthPondPhos[i] = z.MonthPondPhos[i] + z.PhosPondOverflow
 
+                    grow_factor = GrowFlag.intval(z.Grow[i])
+
                     # Obtain the monthly Normal Nitrogen
                     z.MonthNormNitr[i] = (z.MonthNormNitr[i] + z.NitrSepticLoad -
-                                          z.NitrPlantUptake * z.Grow[i])
+                                          z.NitrPlantUptake * grow_factor)
 
                     # 0.56 IS ATTENUATION FACTOR FOR SOIL LOSS
                     # 0.66 IS ATTENUATION FACTOR FOR SUBSURFACE FLOW LOSS
                     z.MonthShortNitr[i] = (z.MonthShortNitr[i] + z.NitrSepticLoad -
-                                           z.NitrPlantUptake * z.Grow[i])
+                                           z.NitrPlantUptake * grow_factor)
                     z.MonthShortPhos[i] = (z.MonthShortPhos[i] + z.PhosSepticLoad -
-                                           z.PhosPlantUptake * z.Grow[i])
+                                           z.PhosPlantUptake * grow_factor)
                     z.MonthDischargeNitr[i] = z.MonthDischargeNitr[i] + z.NitrSepticLoad
                     z.MonthDischargePhos[i] = z.MonthDischargePhos[i] + z.PhosSepticLoad
 

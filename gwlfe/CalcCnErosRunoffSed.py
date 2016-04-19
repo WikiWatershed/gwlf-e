@@ -99,26 +99,26 @@ def CalcCN(z, i, Y, j):
 
     for l in range(z.NRur, z.NLU):
         # Find curve number
-        if z.CNI[2, l] > 0:
+        if z.CNI[1, l] > 0:
             if z.Melt <= 0:
                 if z.Grow[i] > 0:
                     # Growing season
                     if z.AMC5 >= 5.33:
-                        z.CNumImperv = z.CNI[3, l]
+                        z.CNumImperv = z.CNI[2, l]
                     elif z.AMC5 < 3.56:
-                        z.CNumImperv = z.CNI[1, l] + (z.CNI[2, l] - z.CNI[1, l]) * z.AMC5 / 3.56
+                        z.CNumImperv = z.CNI[0, l] + (z.CNI[1, l] - z.CNI[0, l]) * z.AMC5 / 3.56
                     else:
-                        z.CNumImperv = z.CNI[2, l] + (z.CNI[3, l] - z.CNI[2, l]) * (z.AMC5 - 3.56) / 1.77
+                        z.CNumImperv = z.CNI[1, l] + (z.CNI[2, l] - z.CNI[1, l]) * (z.AMC5 - 3.56) / 1.77
                 else:
                     # Dormant season
                     if z.AMC5 >= 2.79:
-                        z.CNumImperv = z.CNI[3, l]
+                        z.CNumImperv = z.CNI[2, l]
                     elif z.AMC5 < 1.27:
-                        z.CNumImperv = z.CNI[1, l] + (z.CNI[2, l] - z.CNI[1, l]) * z.AMC5 / 1.27
+                        z.CNumImperv = z.CNI[0, l] + (z.CNI[1, l] - z.CNI[0, l]) * z.AMC5 / 1.27
                     else:
-                        z.CNumImperv = z.CNI[2, l] + (z.CNI[3, l] - z.CNI[2, l]) * (z.AMC5 - 1.27) / 1.52
+                        z.CNumImperv = z.CNI[1, l] + (z.CNI[2, l] - z.CNI[1, l]) * (z.AMC5 - 1.27) / 1.52
             else:
-                z.CNumImperv = z.CNI[3, l]
+                z.CNumImperv = z.CNI[2, l]
 
             z.CNumImpervReten = 2540 / z.CNumImperv - 25.4
             if z.CNumImpervReten < 0:
@@ -127,26 +127,26 @@ def CalcCN(z, i, Y, j):
             if z.Water >= 0.2 * z.CNumImpervReten:
                 z.QrunI[l] = (z.Water - 0.2 * z.CNumImpervReten) ** 2 / (z.Water + 0.8 * z.CNumImpervReten)
 
-        if z.CNP[2, l] > 0:
+        if z.CNP[1, l] > 0:
             if z.Melt <= 0:
                 if z.Grow[i] > 0:
                     # Growing season
                     if z.AMC5 >= 5.33:
-                        z.CNumPerv = z.CNP[3, l]
+                        z.CNumPerv = z.CNP[2, l]
                     elif z.AMC5 < 3.56:
-                        z.CNumPerv = z.CNP[1, l] + (z.CNP[2, l] - z.CNP[1, l]) * z.AMC5 / 3.56
+                        z.CNumPerv = z.CNP[0, l] + (z.CNP[1, l] - z.CNP[0, l]) * z.AMC5 / 3.56
                     else:
-                        z.CNumPerv = z.CNP[2, l] + (z.CNP[3, l] - z.CNP[2, l]) * (z.AMC5 - 3.56) / 1.77
+                        z.CNumPerv = z.CNP[1, l] + (z.CNP[2, l] - z.CNP[1, l]) * (z.AMC5 - 3.56) / 1.77
                 else:
                     # Dormant season
                     if z.AMC5 >= 2.79:
-                        z.CNumPerv = z.CNP[3, l]
+                        z.CNumPerv = z.CNP[2, l]
                     elif z.AMC5 < 1.27:
-                        z.CNumPerv = z.CNP[1, l] + (z.CNP[2, l] - z.CNP[1, l]) * z.AMC5 / 1.27
+                        z.CNumPerv = z.CNP[0, l] + (z.CNP[1, l] - z.CNP[0, l]) * z.AMC5 / 1.27
                     else:
-                        z.CNumPerv = z.CNP[2, l] + (z.CNP[3, l] - z.CNP[2, l]) * (z.AMC5 - 1.27) / 1.52
+                        z.CNumPerv = z.CNP[1, l] + (z.CNP[2, l] - z.CNP[1, l]) * (z.AMC5 - 1.27) / 1.52
             else:
-                z.CNumPerv = z.CNP[3, l]
+                z.CNumPerv = z.CNP[2, l]
 
             z.CNumPervReten = 2540 / z.CNumPerv - 25.4
             if z.CNumPervReten < 0:

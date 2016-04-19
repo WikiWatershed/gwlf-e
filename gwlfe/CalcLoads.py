@@ -68,7 +68,7 @@ def CalculateLoads(z, Y):
 
         # Add in the urban calucation for sediment
         for l in range(z.NRur, z.NLU):
-            z.UrbSedLoad[l, i] += z.LuLoad[Y, l, 3]
+            z.UrbSedLoad[l, i] += z.LuLoad[Y, l, 2]
 
     # NUTRIENT FLUXES
     for i in range(12):
@@ -77,13 +77,13 @@ def CalculateLoads(z, Y):
             z.NConc = z.NitrConc[l]
             z.PConc = z.PhosConc[l]
 
-            # MANURE SPREADING DAYS FOR FIRST SPREADING PERIOD..
-            if l <= z.ManuredAreas and i >= z.FirstManureMonth and i <= z.LastManureMonth:
+            # MANURE SPREADING DAYS FOR FIRST SPREADING PERIOD
+            if l < z.ManuredAreas and i >= z.FirstManureMonth and i <= z.LastManureMonth:
                 z.NConc = z.ManNitr[l]
                 z.PConc = z.ManPhos[l]
 
-            # MANURE SPREADING DAYS FOR SECOND SPREADING PERIOD.
-            if l <= z.ManuredAreas and i >= z.FirstManureMonth2 and i <= z.LastManureMonth2:
+            # MANURE SPREADING DAYS FOR SECOND SPREADING PERIOD
+            if l < z.ManuredAreas and i >= z.FirstManureMonth2 and i <= z.LastManureMonth2:
                 z.NConc = z.ManNitr[l]
                 z.PConc = z.ManPhos[l]
 
@@ -111,11 +111,11 @@ def CalculateLoads(z, Y):
 
         # ADD URBAN NUTRIENTS
         for l in range(z.NRur, z.NLU):
-            z.LuTotNitr[Y, l] += z.LuLoad[Y, l, 1] / z.NYrs / 2
-            z.LuTotPhos[Y, l] += z.LuLoad[Y, l, 2] / z.NYrs / 2
+            z.LuTotNitr[Y, l] += z.LuLoad[Y, l, 0] / z.NYrs / 2
+            z.LuTotPhos[Y, l] += z.LuLoad[Y, l, 1] / z.NYrs / 2
             z.LuDisNitr[Y, l] += z.LuDisLoad[Y, l, 1] / z.NYrs / 2
             z.LuDisPhos[Y, l] += z.LuDisLoad[Y, l, 2] / z.NYrs / 2
-            z.LuSedYield[Y, l] += (z.LuLoad[Y, l, 3] / z.NYrs) / 1000 / 2
+            z.LuSedYield[Y, l] += (z.LuLoad[Y, l, 2] / z.NYrs) / 1000 / 2
 
         z.DisNitr[Y, i] += z.DisLoad[Y, i, 1]
         z.DisPhos[Y, i] += z.DisLoad[Y, i, 2]
