@@ -32,6 +32,10 @@ log = logging.getLogger(__name__)
 def run(z):
     log.debug('Running model...')
 
+    # Raise exception instead of printing a warning for floating point
+    # overflow, underflow, and division by 0 errors.
+    np.seterr(all='raise')
+
     ReadGwlfDataFile.ReadAllData(z)
 
     # CALCLULATE PRELIMINARY INITIALIZATIONS AND VALUES FOR
