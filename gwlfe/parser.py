@@ -519,7 +519,7 @@ class GmsReader(object):
         z.CNP = np.zeros((3, z.NLU))
         z.NewCN = np.zeros((3, z.NLU))
 
-        for i in range(z.NUrb):
+        for i in range(z.NRur, z.NLU):
             z.Landuse[i] = self.next(LandUse.parse)  # Urban Land Use Category
             z.Area[i] = self.next(float)  # Area (Ha)
             z.Imper[i] = self.next(float)  # Impervious Surface %
@@ -570,6 +570,8 @@ class GmsReader(object):
 
         # Lines 50 - 52:
         z.Contaminant = np.zeros(z.Nqual, dtype=object)
+        z.SolidBasinMass = np.zeros(z.Nqual)
+        z.DisBasinMass = np.zeros(z.Nqual)
 
         for i in range(z.Nqual):
             z.Contaminant[i] = self.next(str)
@@ -578,12 +580,12 @@ class GmsReader(object):
         # Lines 53 - 58 (for each Urban Land Use Category, Nitrogen Contaminant)
         # Lines 59 - 64: (for each Urban Land Use Category, Phosphorus Contaminant)
         # Lines 65 - 70: (for each Urban Land Use Category, Sediment Contaminant)
-        z.LoadRateImp = np.zeros((z.NUrb, z.Nqual))
-        z.LoadRatePerv = np.zeros((z.NUrb, z.Nqual))
-        z.DisFract = np.zeros((z.NUrb, z.Nqual))
-        z.UrbBMPRed = np.zeros((z.NUrb, z.Nqual))
+        z.LoadRateImp = np.zeros((z.NLU, z.Nqual))
+        z.LoadRatePerv = np.zeros((z.NLU, z.Nqual))
+        z.DisFract = np.zeros((z.NLU, z.Nqual))
+        z.UrbBMPRed = np.zeros((z.NLU, z.Nqual))
 
-        for u in range(z.NUrb):
+        for u in range(z.NRur, z.NLU):
             for q in range(z.Nqual):
                 z.LoadRateImp[u][q] = self.next(float)  # Loading Rate Impervious Surface
                 z.LoadRatePerv[u][q] = self.next(float)  # Loading Rate Pervious Surface

@@ -47,12 +47,12 @@ def ReadAllData(z):
 
     # Get the area weighted average CN for urban areas
     z.AvCNUrb = 0
-    for l in range(z.NUrb):
+    for l in range(z.NRur, z.NLU):
         # Calculate average area-weighted CN for urban areas
         if z.UrbAreaTotal > 0:
             z.AvCNUrb += ((z.Imper[l] * z.CNI[1, l]
                           + (1 - z.Imper[l]) * z.CNP[1, l])
-                          * z.Area[l + z.NRur] / z.UrbAreaTotal)
+                          * z.Area[l] / z.UrbAreaTotal)
 
     # Calculate the average CN and percent urban area
     z.AvCN = ((z.AvCNRur * z.RurAreaTotal / z.AreaTotal) +
