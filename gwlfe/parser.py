@@ -63,7 +63,7 @@ class GmsReader(object):
         z.AvGRStreamFC = 0
         z.AvGRStreamN = 0
         z.AvGRStreamP = 0
-        z.AvTileDrain = np.zeros(100)
+        z.AvTileDrain = np.zeros(12)
         z.RurAreaTotal = 0
         z.UrbAreaTotal = 0
         z.d = np.zeros(12)
@@ -221,6 +221,7 @@ class GmsReader(object):
         z.AvNGLostManP = np.zeros(12)
         z.AvNGLostBarnFC = np.zeros(12)
         z.AvGRLostBarnFC = np.zeros(12)
+        z.SweepFrac = np.zeros(12)
 
         z.q = 0
         z.k = 0
@@ -235,9 +236,12 @@ class GmsReader(object):
         z.DetentFlow = 0
         z.AnnDayHrs = 0
         z.AreaTotal = 0
-        z.SweepFrac = np.zeros(12)
         z.FrozenPondNitr = 0
         z.FrozenPondPhos = 0
+        z.AvSeptNitr = 0
+        z.AvSeptPhos = 0
+        z.AgAreaTotal = 0
+        z.ForestAreaTotal = 0
 
         # Referenced in LoadReductions
         # Mostly initialized in PublicVariables.bas
