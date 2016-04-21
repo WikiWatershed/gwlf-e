@@ -49,13 +49,7 @@ def run(z):
         # FOR EACH MONTH...
         for i in range(12):
             # DAILY CALCULATIONS
-            DayYr = 0
             for j in range(z.DaysMonth[Y, i]):
-                # GET THE DAYS OF THE YEAR
-                if (DayYr + 1) > z.DaysYear[Y]:
-                    DayYr = 0
-                DayYr += 1
-
                 # DAILYWEATHERANALY TEMP[Y, I, J], PREC[Y, I, J]
                 # ***** BEGIN WEATHER DATA ANALYSIS *****
                 z.DailyTemp = z.Temp[Y, i, j]

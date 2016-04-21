@@ -124,7 +124,6 @@ class GmsReader(object):
         z.DayShortPhos = np.zeros((12, 31))
         z.DayDischargeNitr = np.zeros((12, 31))
         z.DayDischargePhos = np.zeros((12, 31))
-        z.DaysYear = np.zeros(40)
         z.PestAppMonth1 = np.zeros(16)
         z.PestAppYear1 = np.zeros(16)
         z.PestAppDate1 = np.zeros(16)
