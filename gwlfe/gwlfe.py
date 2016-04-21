@@ -46,6 +46,15 @@ def run(z):
     # NUTRIENTS AND SEDIMENT LOADS
 
     for Y in range(z.NYrs):
+        # Initialize monthly septic system variables
+        z.MonthPondNitr = np.zeros(12)
+        z.MonthPondPhos = np.zeros(12)
+        z.MonthNormNitr = np.zeros(12)
+        z.MonthShortNitr = np.zeros(12)
+        z.MonthShortPhos = np.zeros(12)
+        z.MonthDischargeNitr = np.zeros(12)
+        z.MonthDischargePhos = np.zeros(12)
+
         # FOR EACH MONTH...
         for i in range(12):
             # DAILY CALCULATIONS

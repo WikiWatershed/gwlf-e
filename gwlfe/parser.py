@@ -162,15 +162,6 @@ class GmsReader(object):
         z.AvTileDrainSed = np.zeros(12)
         z.AvPtSrcFlow = np.zeros(12)
 
-        # DIMENSION LOCAL SEPTIC SYSTEM MODEL ARRAYS
-        z.MonthPondNitr = np.zeros(12)
-        z.MonthPondPhos = np.zeros(12)
-        z.MonthNormNitr = np.zeros(12)
-        z.MonthShortNitr = np.zeros(12)
-        z.MonthShortPhos = np.zeros(12)
-        z.MonthDischargeNitr = np.zeros(12)
-        z.MonthDischargePhos = np.zeros(12)
-
         # Calculated Values for Animal Feeding Operations
         z.NGLoadN = np.zeros(9)
         z.NGLoadP = np.zeros(9)
