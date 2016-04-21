@@ -80,6 +80,11 @@ def run(z):
                     z.PervAccum[l] = (z.PervAccum[l] * np.exp(-0.12) +
                                       (1 / 0.12) * (1 - np.exp(-0.12)))
 
+                # TODO: If Water is <= 0.01, then CalcCNErosRunoffSed
+                # never executes, and CNum will remain undefined.
+                # What should the default value for CNum be in this case?
+                z.CNum = 0
+
                 # RAIN , SNOWMELT, EVAPOTRANSPIRATION (ET)
                 if z.DailyTemp <= 0:
                     z.InitSnow = z.InitSnow + z.DailyPrec
@@ -105,11 +110,6 @@ def run(z):
                     # EROSION AND SEDIMENT
                     if z.Water > 0.01:
                         CalcCnErosRunoffSed.CalcCN(z, i, Y, j)
-                    else:
-                        # TODO: If Water is <= 0.01, then CalcCNErosRunoffSed
-                        # never executes, and CNum will remain undefined.
-                        # What should the default value for CNum be in this case?
-                        z.CNum = 0
 
                 # DAILY CN
                 z.DailyCN[Y, i, j] = z.CNum
