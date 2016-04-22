@@ -1,0 +1,7 @@
+env/
+*.pyc
+*.bak
+.idea/*
+.coverage
+*,cover
+htmlcov/
