@@ -16,7 +16,7 @@ tests_require = ['nose >= 1.3.4']
 
 setup(
     name='gwlf-e',
-    version='0.1.0',
+    version='0.1.1',
     description='A Python port of Generalized Watersheds Loading Functions - Enhanced (MapShed)',
     long_description=long_description,
     url='https://github.com/WikiWatershed/gwlf-e',
