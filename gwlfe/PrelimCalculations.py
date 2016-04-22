@@ -8,16 +8,16 @@ Imported from PrelimCalculations.bas
 """
 
 import math
+import logging
 
 from .enums import LandUse
 
 
-def InitialCalculations(z):
-    print('InitialCalculations')
+log = logging.getLogger(__name__)
 
-    # SIMULATION INITIALIZATION
-    z.AgAreaTotal = 0
-    z.ForestAreaTotal = 0
+
+def InitialCalculations(z):
+    log.debug('InitialCalculations')
 
     # OBTAIN THE LENGTH OF STREAMS IN AGRICULTURAL AREAS
     z.AGSTRM = z.AgLength / z.StreamLength
@@ -33,23 +33,16 @@ def InitialCalculations(z):
         elif z.Landuse[l] is LandUse.TURFGRASS:
             z.AgAreaTotal += z.Area[l]
 
-        z.NewCN[1, l] = z.CN[l] / (2.334 - 0.01334 * z.CN[l])
-        z.NewCN[3, l] = z.CN[l] / (0.4036 + 0.0059 * z.CN[l])
-        if z.NewCN[3, l] > 100:
-            z.NewCN[3, l] = 100
+        z.NewCN[0, l] = z.CN[l] / (2.334 - 0.01334 * z.CN[l])
+        z.NewCN[2, l] = z.CN[l] / (0.4036 + 0.0059 * z.CN[l])
+        if z.NewCN[2, l] > 100:
+            z.NewCN[2, l] = 100
 
     for l in range(z.NRur, z.NLU):
         z.CNI[0, l] = z.CNI[1, l] / (2.334 - 0.01334 * z.CNI[1, 1])
         z.CNI[2, l] = z.CNI[1, l] / (0.4036 + 0.0059 * z.CNI[1, l])
         z.CNP[0, l] = z.CNP[1, l] / (2.334 - 0.01334 * z.CNP[1, 1])
         z.CNP[2, l] = z.CNP[1, l] / (0.4036 + 0.0059 * z.CNP[1, l])
-
-        for q in range(z.Nqual):
-            z.AvLuLoad[l, q] = 0
-            z.AvLuDisLoad[l, q] = 0
-
-    z.FilterEff = 0
-    z.OutletCoef = 0
 
     if z.FilterWidth <= 30:
         z.FilterEff = z.FilterWidth / 30
@@ -58,10 +51,6 @@ def InitialCalculations(z):
 
     if z.BasinArea > 0:
         z.BasinVol = z.BasinDeadStorage
-        for q in range(z.Nqual):
-            z.SolidBasinMass[q] = 0
-            z.DisBasinMass[q] = 0
-
         z.Difference = z.Capacity - z.BasinDeadStorage
         z.OutletCoef = 0
 
@@ -93,44 +82,3 @@ def InitialCalculations(z):
     z.AMC5 = 0
     for k in range(5):
         z.AMC5 += z.AntMoist[k]
-
-    # INITIALIZE VARIABLES IN SUMMARY FILE
-    for i in range(12):
-        z.AvPrecipitation[i] = 0
-        z.AvEvapoTrans[i] = 0
-        z.AvGroundWater[i] = 0
-        z.AvRunoff[i] = 0
-        z.AvStreamFlow[i] = 0
-        z.AvErosion[i] = 0
-        z.AvSedYield[i] = 0
-        z.AvDisNitr[i] = 0
-        z.AvTotNitr[i] = 0
-        z.AvDisPhos[i] = 0
-        z.AvTotPhos[i] = 0
-        z.AvGroundNitr[i] = 0
-        z.AvGroundPhos[i] = 0
-        z.AvStreamBankEros[i] = 0
-        z.AvStreamBankN[i] = 0
-        z.AvStreamBankP[i] = 0
-        z.AvTileDrain[i] = 0
-        z.AvTileDrainN[i] = 0
-        z.AvWithdrawal[i] = 0
-        z.AvTileDrainP[i] = 0
-        z.AvTileDrainSed[i] = 0
-
-        for q in range(z.Nqual):
-            z.AvLoad[i, q] = 0
-            z.AvDisLoad[i, q] = 0
-
-    for i in range(z.NLU):
-        z.AvLuRunoff[l] = 0
-        z.AvLuErosion[l] = 0
-        z.AvLuDisNitr[l] = 0
-        z.AvLuTotNitr[l] = 0
-        z.AvLuDisPhos[l] = 0
-        z.AvLuTotPhos[l] = 0
-        z.UrbanSed[l] = 0
-
-    # INITIALIZE VARIABLES FOR SEPTIC SYSTEMS MODEL
-    z.AvSeptNitr = 0
-    z.AvSeptPhos = 0

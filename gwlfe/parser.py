@@ -14,7 +14,6 @@ from .enums import YesOrNo, ETflag, GrowFlag, LandUse, SweepType
 
 
 log = logging.getLogger(__name__)
-log.setLevel(logging.DEBUG)
 
 
 EOL = '<EOL>'
@@ -64,7 +63,7 @@ class GmsReader(object):
         z.AvGRStreamFC = 0
         z.AvGRStreamN = 0
         z.AvGRStreamP = 0
-        z.AvTileDrain = np.zeros(100)
+        z.AvTileDrain = np.zeros(12)
         z.RurAreaTotal = 0
         z.UrbAreaTotal = 0
         z.d = np.zeros(12)
@@ -125,7 +124,6 @@ class GmsReader(object):
         z.DayShortPhos = np.zeros((12, 31))
         z.DayDischargeNitr = np.zeros((12, 31))
         z.DayDischargePhos = np.zeros((12, 31))
-        z.DaysYear = np.zeros(40)
         z.PestAppMonth1 = np.zeros(16)
         z.PestAppYear1 = np.zeros(16)
         z.PestAppDate1 = np.zeros(16)
@@ -163,15 +161,6 @@ class GmsReader(object):
         z.AvTileDrainP = np.zeros(12)
         z.AvTileDrainSed = np.zeros(12)
         z.AvPtSrcFlow = np.zeros(12)
-
-        # DIMENSION LOCAL SEPTIC SYSTEM MODEL ARRAYS
-        z.MonthPondNitr = np.zeros(12)
-        z.MonthPondPhos = np.zeros(12)
-        z.MonthNormNitr = np.zeros(12)
-        z.MonthShortNitr = np.zeros(12)
-        z.MonthShortPhos = np.zeros(12)
-        z.MonthDischargeNitr = np.zeros(12)
-        z.MonthDischargePhos = np.zeros(12)
 
         # Calculated Values for Animal Feeding Operations
         z.NGLoadN = np.zeros(9)
@@ -222,6 +211,7 @@ class GmsReader(object):
         z.AvNGLostManP = np.zeros(12)
         z.AvNGLostBarnFC = np.zeros(12)
         z.AvGRLostBarnFC = np.zeros(12)
+        z.SweepFrac = np.zeros(12)
 
         z.q = 0
         z.k = 0
@@ -236,9 +226,12 @@ class GmsReader(object):
         z.DetentFlow = 0
         z.AnnDayHrs = 0
         z.AreaTotal = 0
-        z.SweepFrac = np.zeros(12)
         z.FrozenPondNitr = 0
         z.FrozenPondPhos = 0
+        z.AvSeptNitr = 0
+        z.AvSeptPhos = 0
+        z.AgAreaTotal = 0
+        z.ForestAreaTotal = 0
 
         # Referenced in LoadReductions
         # Mostly initialized in PublicVariables.bas
@@ -502,8 +495,6 @@ class GmsReader(object):
         z.C = np.zeros(z.NLU)
         z.P = np.zeros(z.NLU)
 
-        z.NewCN = np.zeros((12, 25))
-
         for i in range(z.NRur):
             z.Landuse[i] = self.next(LandUse.parse)  # Rural Land Use Category
             z.Area[i] = self.next(float)  # Area (Ha)
@@ -520,8 +511,9 @@ class GmsReader(object):
 
         z.CNI = np.zeros((3, z.NLU))
         z.CNP = np.zeros((3, z.NLU))
+        z.NewCN = np.zeros((3, z.NLU))
 
-        for i in range(z.NUrb):
+        for i in range(z.NRur, z.NLU):
             z.Landuse[i] = self.next(LandUse.parse)  # Urban Land Use Category
             z.Area[i] = self.next(float)  # Area (Ha)
             z.Imper[i] = self.next(float)  # Impervious Surface %
@@ -572,6 +564,8 @@ class GmsReader(object):
 
         # Lines 50 - 52:
         z.Contaminant = np.zeros(z.Nqual, dtype=object)
+        z.SolidBasinMass = np.zeros(z.Nqual)
+        z.DisBasinMass = np.zeros(z.Nqual)
 
         for i in range(z.Nqual):
             z.Contaminant[i] = self.next(str)
@@ -580,12 +574,12 @@ class GmsReader(object):
         # Lines 53 - 58 (for each Urban Land Use Category, Nitrogen Contaminant)
         # Lines 59 - 64: (for each Urban Land Use Category, Phosphorus Contaminant)
         # Lines 65 - 70: (for each Urban Land Use Category, Sediment Contaminant)
-        z.LoadRateImp = np.zeros((z.NUrb, z.Nqual))
-        z.LoadRatePerv = np.zeros((z.NUrb, z.Nqual))
-        z.DisFract = np.zeros((z.NUrb, z.Nqual))
-        z.UrbBMPRed = np.zeros((z.NUrb, z.Nqual))
+        z.LoadRateImp = np.zeros((z.NLU, z.Nqual))
+        z.LoadRatePerv = np.zeros((z.NLU, z.Nqual))
+        z.DisFract = np.zeros((z.NLU, z.Nqual))
+        z.UrbBMPRed = np.zeros((z.NLU, z.Nqual))
 
-        for u in range(z.NUrb):
+        for u in range(z.NRur, z.NLU):
             for q in range(z.Nqual):
                 z.LoadRateImp[u][q] = self.next(float)  # Loading Rate Impervious Surface
                 z.LoadRatePerv[u][q] = self.next(float)  # Loading Rate Pervious Surface

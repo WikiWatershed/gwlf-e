@@ -7,8 +7,15 @@ from __future__ import division
 Imported from LoadReductions.bas
 """
 
+import logging
+
+
+log = logging.getLogger(__name__)
+
 
 def AdjustScnLoads(z):
+    log.debug('AdjustScnLoads')
+
     # Check for zero values
     if z.n23 == 0:
         z.n23 = 0.0000001

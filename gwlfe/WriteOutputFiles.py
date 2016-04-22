@@ -3,11 +3,18 @@ from __future__ import print_function
 from __future__ import unicode_literals
 from __future__ import division
 
+import logging
+
 from . import LoadReductions
 from .enums import YesOrNo, LandUse
 
 
+log = logging.getLogger(__name__)
+
+
 def WriteOutput(z):
+    log.debug('WriteOutput')
+
     # DIMENSION VARIABLES FOR PREDICT CALCULATION AND SCENARIO FILE
     AvOtherLuSed = 0
     AvOtherLuNitr = 0
@@ -712,22 +719,22 @@ def WriteOutput(z):
     # Equivalent to lines 965 - 988 of source
     for i in range(0, 12):
         output['monthly'].append({
-            'AvPrecipitation': z.AvPrecipitation[i],
-            'AvEvapoTrans': z.AvEvapoTrans[i],
-            'AvGroundWater': z.AvGroundWater[i],
-            'AvRunoff': z.AvRunoff[i],
-            'AvStreamFlow': z.AvStreamFlow[i],
-            'AvPtSrcFlow': z.AvPtSrcFlow[i],
-            'AvTileDrain': z.AvTileDrain[i],
-            'AvWithdrawal': z.AvWithdrawal[i],
+            'AvPrecipitation': '{:.2f}'.format(z.AvPrecipitation[i]),
+            'AvEvapoTrans': '{:.2f}'.format(z.AvEvapoTrans[i]),
+            'AvGroundWater': '{:.2f}'.format(z.AvGroundWater[i]),
+            'AvRunoff': '{:.2f}'.format(z.AvRunoff[i]),
+            'AvStreamFlow': '{:.2f}'.format(z.AvStreamFlow[i]),
+            'AvPtSrcFlow': '{:.2f}'.format(z.AvPtSrcFlow[i]),
+            'AvTileDrain': '{:.2f}'.format(z.AvTileDrain[i]),
+            'AvWithdrawal': '{:.2f}'.format(z.AvWithdrawal[i]),
         })
 
     return output
 
 
 def WriteOutputSumFiles():
-    print('WriteOutputSumFiles')
+    log.debug('WriteOutputSumFiles')
 
 
 def UrbanAreasOutput():
-    print('UrbanAreasOutput')
+    log.debug('UrbanAreasOutput')

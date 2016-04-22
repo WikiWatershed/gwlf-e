@@ -8,8 +8,12 @@ Imported from CalcCNErosRunoffSed.bas
 """
 
 import math
+import logging
 
-from .enums import LandUse
+from .enums import GrowFlag, LandUse
+
+
+log = logging.getLogger(__name__)
 
 
 def CalcCN(z, i, Y, j):
@@ -19,7 +23,7 @@ def CalcCN(z, i, Y, j):
     Y - year
     j - number of days in month
     """
-    print('CalcCN')
+    log.debug('CalcCN')
 
     z.UncontrolledQ = 0
     z.RetentionEff = 0
@@ -27,26 +31,28 @@ def CalcCN(z, i, Y, j):
     # Calculate Curve Number (CN)
     for l in range(z.NRur):
         z.Qrun = 0
+        grow_factor = GrowFlag.intval(z.Grow[i])
+
         if z.CN[l] > 0:
             if z.Melt <= 0:
-                if z.Grow[i] > 0:
+                if grow_factor > 0:
                     # growing season
                     if z.AMC5 >= 5.33:
-                        z.CNum = z.NewCN[3, l]
+                        z.CNum = z.NewCN[2, l]
                     elif z.AMC5 < 3.56:
-                        z.CNum = z.NewCN[1, l] + (z.CN[l] - z.NewCN[1, l]) * z.AMC5 / 3.56
+                        z.CNum = z.NewCN[0, l] + (z.CN[l] - z.NewCN[0, l]) * z.AMC5 / 3.56
                     else:
-                        z.CNum = z.CN[l] + (z.NewCN[3, l] - z.CN[l]) * (z.AMC5 - 3.56) / 1.77
+                        z.CNum = z.CN[l] + (z.NewCN[2, l] - z.CN[l]) * (z.AMC5 - 3.56) / 1.77
                 else:
                     # dormant season
                     if z.AMC5 >= 2.79:
-                        z.CNum = z.NewCN[3, l]
+                        z.CNum = z.NewCN[2, l]
                     elif z.AMC5 < 1.27:
-                        z.CNum = z.NewCN[1, l] + (z.CN[l] - z.NewCN[1, l]) * z.AMC5 / 1.27
+                        z.CNum = z.NewCN[0, l] + (z.CN[l] - z.NewCN[0, l]) * z.AMC5 / 1.27
                     else:
-                        z.CNum = z.CN[l] + (z.NewCN[3, l] - z.CN[l]) * (z.AMC5 - 1.27) / 1.52
+                        z.CNum = z.CN[l] + (z.NewCN[2, l] - z.CN[l]) * (z.AMC5 - 1.27) / 1.52
             else:
-                z.CNum = z.NewCN[3, l]
+                z.CNum = z.NewCN[2, l]
 
             z.Retention = 2540 / z.CNum - 25.4
             if z.Retention < 0:
@@ -98,10 +104,12 @@ def CalcCN(z, i, Y, j):
         return
 
     for l in range(z.NRur, z.NLU):
+        grow_factor = GrowFlag.intval(z.Grow[i])
+
         # Find curve number
         if z.CNI[1, l] > 0:
             if z.Melt <= 0:
-                if z.Grow[i] > 0:
+                if grow_factor > 0:
                     # Growing season
                     if z.AMC5 >= 5.33:
                         z.CNumImperv = z.CNI[2, l]
@@ -129,7 +137,7 @@ def CalcCN(z, i, Y, j):
 
         if z.CNP[1, l] > 0:
             if z.Melt <= 0:
-                if z.Grow[i] > 0:
+                if grow_factor > 0:
                     # Growing season
                     if z.AMC5 >= 5.33:
                         z.CNumPerv = z.CNP[2, l]
@@ -268,9 +276,9 @@ def BasinWater(z, i, Y, j):
 
                 if z.Area[l] > 0:
                     z.SurfaceLoad = (((z.LoadRateImp[l, q] * z.WashImperv[l] * ((z.Imper[l] * (1 - z.ISRR[lu]) * (1 - z.ISRA[lu]))
-                                     * (z.SweepFrac[i] + ((1 - z.SweepFrac[i]) * ((1 - z.UrbSweepFrac) * z.Area[l]) / z.Area[l])))
-                                     + z.LoadRatePerv[l, q] * z.WashPerv[l] * (1 - (z.Imper[l] * (1 - z.ISRR[lu]) * (1 - z.ISRA[lu]))))
-                                     * z.Area[l]) - z.UrbLoadRed)
+                                       * (z.SweepFrac[i] + ((1 - z.SweepFrac[i]) * ((1 - z.UrbSweepFrac) * z.Area[l]) / z.Area[l])))
+                                      + z.LoadRatePerv[l, q] * z.WashPerv[l] * (1 - (z.Imper[l] * (1 - z.ISRR[lu]) * (1 - z.ISRA[lu]))))
+                                      * z.Area[l]) - z.UrbLoadRed)
                 else:
                     z.SurfaceLoad = 0
 
