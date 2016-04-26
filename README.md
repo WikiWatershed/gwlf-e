@@ -5,6 +5,8 @@ Port of Generalized Watersheds Loading Functions - Enhanced (MapShed)
 
 Run `python setup.py test` from within the project directory.
 
+To run a manual test againt the model output and the expected output from a known gms file, you can run `python compare_output.py` or `python compare_output.py results.json` from within the test directory.
+
 
 ## Deployments
 
