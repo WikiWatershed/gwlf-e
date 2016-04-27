@@ -123,7 +123,8 @@ def run(z):
                 z.AntMoist[4] = z.AntMoist[3]
                 z.AntMoist[3] = z.AntMoist[2]
                 z.AntMoist[2] = z.AntMoist[1]
-                z.AntMoist[1] = z.Water
+                z.AntMoist[1] = z.AntMoist[0]
+                z.AntMoist[0] = z.Water
 
                 # CALCULATE ET FROM SATURATED VAPOR PRESSURE,
                 # HAMON (1961) METHOD
