@@ -13,7 +13,6 @@ Imported from GWLF-E.frm
 import logging
 
 import numpy as np
-import json
 
 from enums import ETflag, GrowFlag
 from . import ReadGwlfDataFile
@@ -106,6 +105,10 @@ def run(z):
                     z.Water = z.Rain + z.Melt
                     z.DailyWater[Y, i, j] = z.Water
 
+                    # Compute erosivity when erosion occurs, i.e., with rain and no InitSnow left
+                    if z.Rain > 0 and z.InitSnow < 0.001:
+                        z.Erosiv = 6.46 * z.Acoef[i] * z.Rain**1.81
+
                     # IF WATER AVAILABLE, THEN CALL SUB TO COMPUTE CN, RUNOFF,
                     # EROSION AND SEDIMENT
                     if z.Water > 0.01:
@@ -116,7 +119,7 @@ def run(z):
 
                 # UPDATE ANTECEDENT RAIN+MELT CONDITION
                 # Subtract AMC5 by the sum of AntMoist (day 5) and Water
-                z.AMC5 -= z.AntMoist[4] + z.Water
+                z.AMC5 = z.AMC5 - z.AntMoist[4] + z.Water
                 z.DailyAMC5[Y, i, j] = z.AMC5
 
                 # Shift AntMoist values to the right.
@@ -190,6 +193,7 @@ def run(z):
                 # CALCULATE TOTALS
                 z.Precipitation[Y, i] = z.Precipitation[Y, i] + z.Prec[Y, i, j]
                 z.Evapotrans[Y, i] = z.Evapotrans[Y, i] + z.ET
+
                 z.StreamFlow[Y, i] = z.StreamFlow[Y, i] + z.Flow
                 z.GroundWatLE[Y, i] = z.GroundWatLE[Y, i] + z.GrFlow
 
@@ -236,35 +240,35 @@ def run(z):
                 z.MonthDischargeNitr[i] = z.MonthDischargeNitr[i] + z.NitrSepticLoad
                 z.MonthDischargePhos[i] = z.MonthDischargePhos[i] + z.PhosSepticLoad
 
-                # CALCULATE WITHDRAWAL AND POINT SOURCE FLOW VALUES
-                z.Withdrawal[Y, i] = (z.Withdrawal[Y, i] + z.StreamWithdrawal[i] +
-                                      z.GroundWithdrawal[i])
-                z.PtSrcFlow[Y, i] = z.PtSrcFlow[Y, i] + z.PointFlow[i]
+            # CALCULATE WITHDRAWAL AND POINT SOURCE FLOW VALUES
+            z.Withdrawal[Y, i] = (z.Withdrawal[Y, i] + z.StreamWithdrawal[i] +
+                                  z.GroundWithdrawal[i])
+            z.PtSrcFlow[Y, i] = z.PtSrcFlow[Y, i] + z.PointFlow[i]
 
-                # CALCULATE THE SURFACE RUNOFF PORTION OF TILE DRAINAGE
-                z.TileDrainRO[Y, i] = (z.TileDrainRO[Y, i] + [z.AgRunoff[Y, i] *
-                                       z.TileDrainDensity])
+            # CALCULATE THE SURFACE RUNOFF PORTION OF TILE DRAINAGE
+            z.TileDrainRO[Y, i] = (z.TileDrainRO[Y, i] + [z.AgRunoff[Y, i] *
+                                   z.TileDrainDensity])
 
-                # CALCULATE SUBSURFACE PORTION OF TILE DRAINAGE
-                z.GwAgLE[Y, i] = (z.GwAgLE[Y, i] + (z.GroundWatLE[Y, i] *
-                                  (z.AgAreaTotal / z.AreaTotal)))
-                z.TileDrainGW[Y, i] = (z.TileDrainGW[Y, i] + [z.GwAgLE[Y, i] *
-                                       z.TileDrainDensity])
+            # CALCULATE SUBSURFACE PORTION OF TILE DRAINAGE
+            z.GwAgLE[Y, i] = (z.GwAgLE[Y, i] + (z.GroundWatLE[Y, i] *
+                              (z.AgAreaTotal / z.AreaTotal)))
+            z.TileDrainGW[Y, i] = (z.TileDrainGW[Y, i] + [z.GwAgLE[Y, i] *
+                                   z.TileDrainDensity])
 
-                # ADD THE TWO COMPONENTS OF TILE DRAINAGE FLOW
-                z.TileDrain[Y, i] = (z.TileDrain[Y, i] + z.TileDrainRO[Y, i] +
-                                     z.TileDrainGW[Y, i])
+            # ADD THE TWO COMPONENTS OF TILE DRAINAGE FLOW
+            z.TileDrain[Y, i] = (z.TileDrain[Y, i] + z.TileDrainRO[Y, i] +
+                                 z.TileDrainGW[Y, i])
 
-                # ADJUST THE GROUNDWATER FLOW
-                z.GroundWatLE[Y, i] = z.GroundWatLE[Y, i] - z.TileDrainGW[Y, i]
-                if z.GroundWatLE[Y, i] < 0:
-                    z.GroundWatLE[Y, i] = 0
+            # ADJUST THE GROUNDWATER FLOW
+            z.GroundWatLE[Y, i] = z.GroundWatLE[Y, i] - z.TileDrainGW[Y, i]
+            if z.GroundWatLE[Y, i] < 0:
+                z.GroundWatLE[Y, i] = 0
 
-                # ADJUST THE SURFACE RUNOFF
-                z.Runoff[Y, i] = z.Runoff[Y, i] - z.TileDrainRO[Y, i]
+            # ADJUST THE SURFACE RUNOFF
+            z.Runoff[Y, i] = z.Runoff[Y, i] - z.TileDrainRO[Y, i]
 
-                if z.Runoff[Y, i] < 0:
-                    z.Runoff[Y, i] = 0
+            if z.Runoff[Y, i] < 0:
+                z.Runoff[Y, i] = 0
 
         # CALCULATE ANIMAL FEEDING OPERATIONS OUTPUT
         AFOS.AnimalOperations(z, Y)

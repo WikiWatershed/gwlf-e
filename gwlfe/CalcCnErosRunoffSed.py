@@ -163,8 +163,7 @@ def CalcCN(z, i, Y, j):
             if z.Water >= 0.2 * z.CNumPervReten:
                 z.QrunP[l] = (z.Water - 0.2 * z.CNumPervReten) ** 2 / (z.Water + 0.8 * z.CNumPervReten)
 
-        # TODO: Should 11 be NRur + 1? What is this trying to do?
-        lu = l - 11
+        lu = l - z.NRur
 
         if z.UrbAreaTotal > 0:
             z.UrbanQTotal += ((z.QrunI[l] * (z.Imper[l] * (1 - z.ISRR[lu]) * (1 - z.ISRA[lu]))
