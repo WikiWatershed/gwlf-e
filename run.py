@@ -23,7 +23,7 @@ def main():
     fp = open(gms_filename, 'r')
     z = parser.GmsReader(fp).read()
     result = gwlfe.run(z)
-    print(json.dumps(result))
+    print(json.dumps(result, indent=4))
 
 
 if __name__ == '__main__':
