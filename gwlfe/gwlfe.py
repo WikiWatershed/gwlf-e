@@ -56,6 +56,15 @@ def run(z):
 
         # FOR EACH MONTH...
         for i in range(12):
+            # LOOP THROUGH NUMBER OF LANDUSES IN THE BASIN TO GET QRUNOFF
+            for l in range(z.NLU):
+                z.QRunoff[l, i] = 0
+                z.AgQRunoff[l, i] = 0
+                z.ErosWashoff[l, i] = 0
+                z.RurQRunoff[l, i] = 0
+                z.UrbQRunoff[l, i] = 0
+                z.LuErosion[Y, l] = 0
+
             # DAILY CALCULATIONS
             for j in range(z.DaysMonth[Y][i]):
                 # DAILYWEATHERANALY TEMP[Y][I][J], PREC[Y][I][J]
