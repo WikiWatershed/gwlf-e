@@ -9,6 +9,8 @@ Imported from CalcLoads.bas
 
 import logging
 
+import numpy as np
+
 
 log = logging.getLogger(__name__)
 
@@ -18,7 +20,7 @@ def CalculateLoads(z, Y):
 
     PrecipitationTotal = 0
     RunoffTotal = 0
-    GroundWatLETotal = 0
+    GroundWatLETotal = np.zeros(z.WxYrs)
     EvapotransTotal = 0
     PtSrcFlowTotal = 0
     WithdrawalTotal = 0
@@ -162,10 +164,10 @@ def CalculateLoads(z, Y):
         z.TotPhos[Y][i] += z.GroundPhos[Y][i] + z.PointPhos[i]
 
         # ADD SEPTIC SYSTEM SOURCES TO MONTHLY DISSOLVED NUTRIENT TOTALS
-        if GroundWatLETotal <= 0:
-            GroundWatLETotal = 0.0001
+        if GroundWatLETotal[Y] <= 0:
+            GroundWatLETotal[Y] = 0.0001
 
-        z.MonthNormNitr[i] = AnNormNitr * z.GroundWatLE[Y][i] / GroundWatLETotal
+        z.MonthNormNitr[i] = AnNormNitr * z.GroundWatLE[Y][i] / GroundWatLETotal[Y]
 
         z.DisSeptNitr = (z.MonthNormNitr[i]
                          + z.MonthPondNitr[i]
