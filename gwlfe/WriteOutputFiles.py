@@ -76,8 +76,6 @@ def WriteOutput(z):
             AvOtherLuNitr = AvOtherLuNitr + z.AvLuTotNitr[l]
             AvOtherLuPhos = AvOtherLuPhos + z.AvLuTotPhos[l]
 
-    LoadReductions.AdjustScnLoads(z)
-
     z.n2c = 0
     z.n6c = 0
     z.n13c = 0
