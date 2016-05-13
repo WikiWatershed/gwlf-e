@@ -180,8 +180,8 @@ def CalculateLoads(z, Y):
 
         # 0.59 IS ATTENUATION FACTOR FOR SOIL LOSS
         # 0.66 IS ATTENUATION FACTOR FOR SUBSURFACE FLOW LOSS
-        z.DisSeptNitr /= 1000 * 0.59 * 0.66
-        z.DisSeptPhos /= 1000
+        z.DisSeptNitr = z.DisSeptNitr / 1000 * 0.59 * 0.66
+        z.DisSeptPhos = z.DisSeptPhos / 1000
 
         z.DisNitr[Y][i] += z.DisSeptNitr
         z.DisPhos[Y][i] += z.DisSeptPhos
