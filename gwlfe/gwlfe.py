@@ -306,6 +306,10 @@ def run(z):
             z.AvOrgConc[i] = 0
     z.AvOrgConc[0] = 0
 
+    z.AvStreamFlowSum = (z.AvRunoffSum + z.AvGroundWaterSum +
+                             z.AvPtSrcFlowSum + z.AvTileDrainSum -
+                             z.AvWithdrawalSum)
+
     log.debug("Model run complete for " + str(z.NYrs) + " years of data.")
 
     output = WriteOutputFiles.WriteOutput(z)

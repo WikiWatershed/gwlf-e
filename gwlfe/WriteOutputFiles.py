@@ -139,32 +139,32 @@ def WriteOutput(z):
     NPConvert = 1
 
     # Get the animal nuntient loads
-    z.GRLBN = z.AvGRLostBarnN[0]
-    z.NGLBN = z.AvNGLostBarnN[0]
-    z.GRLBP = z.AvGRLostBarnP[0]
-    z.NGLBP = z.AvNGLostBarnP[0]
-    z.NGLManP = z.AvNGLostManP[0]
+    z.GRLBN = z.AvGRLostBarnNSum
+    z.NGLBN = z.AvNGLostBarnNSum
+    z.GRLBP = z.AvGRLostBarnPSum
+    z.NGLBP = z.AvNGLostBarnPSum
+    z.NGLManP = z.AvNGLostManPSum
 
     # Get the fecal coliform values
-    z.NGLBFC = z.AvNGLostBarnFC[0]
-    z.GRLBFC = z.AvGRLostBarnFC[0]
+    z.NGLBFC = z.AvNGLostBarnFCSum
+    z.GRLBFC = z.AvGRLostBarnFCSum
     z.GRSFC = z.AvGRStreamFC
     z.GRSN = z.AvGRStreamN
     z.GRSP = z.AvGRStreamP
 
     # Get the initial pathogen loads
-    z.n139 = z.AvAnimalFC[0]
-    z.n140 = z.AvWWOrgs[0]
-    z.n146 = z.AvWWOrgs[0]
-    z.n141 = z.AvSSOrgs[0]
-    z.n147 = z.AvSSOrgs[0]
-    z.n142 = z.AvUrbOrgs[0]
-    z.n143 = z.AvWildOrgs[0]
-    z.n149 = z.AvWildOrgs[0]
+    z.n139 = z.AvAnimalFCSum
+    z.n140 = z.AvWWOrgsSum
+    z.n146 = z.AvWWOrgsSum
+    z.n141 = z.AvSSOrgsSum
+    z.n147 = z.AvSSOrgsSum
+    z.n142 = z.AvUrbOrgsSum
+    z.n143 = z.AvWildOrgsSum
+    z.n149 = z.AvWildOrgsSum
 
     # FARM ANIMAL LOADS
-    z.n7b = z.AvAnimalN[0]
-    z.n14b = z.AvAnimalP[0]
+    z.n7b = z.AvAnimalNSum
+    z.n14b = z.AvAnimalPSum
 
     # XXX: These are not used in our port.
     # InitialAnimalN = z.n7b
@@ -176,20 +176,20 @@ def WriteOutput(z):
     z.n41l = round(z.TotAEU)
 
     # CONVERT AVERAGE STREAM BANK ERIOSION, N AND P TO ENGLISH UNITS
-    z.n4 = round(z.AvStreamBankEros[0] * z.RetentFactorSed * (1 - z.AttenTSS) * SedConvert)
-    z.n8 = round(z.AvStreamBankN[0] * NPConvert * z.RetentFactorN * (1 - z.AttenN))
-    z.n15 = round(z.AvStreamBankP[0] * NPConvert * z.RetentFactorP * (1 - z.AttenP))
+    z.n4 = round(z.AvStreamBankErosSum * z.RetentFactorSed * (1 - z.AttenTSS) * SedConvert)
+    z.n8 = round(z.AvStreamBankNSum * NPConvert * z.RetentFactorN * (1 - z.AttenN))
+    z.n15 = round(z.AvStreamBankPSum * NPConvert * z.RetentFactorP * (1 - z.AttenP))
 
     # PERFORM LOAD REDUCTIONS BASED ON BMPS IN SCENARIO FILE
     LoadReductions.AdjustScnLoads(z)
 
     # CONVERT AVERAGE STREAM BANK ERIOSION, N AND P TO ENGLISH UNITS
-    z.AvStreamBankEros[0] = z.n4
-    z.AvStreamBankN[0] = z.n8
-    z.AvStreamBankP[0] = z.n15
+    z.AvStreamBankErosSum = z.n4
+    z.AvStreamBankNSum = z.n8
+    z.AvStreamBankPSum = z.n15
 
-    z.AvAnimalFC[0] = z.n145
-    z.AvUrbOrgs[0] = z.n148
+    z.AvAnimalFCSum = z.n145
+    z.AvUrbOrgsSum = z.n148
 
     # Get the FC reduction for monthly loads
     UrbanFCFrac = 0
@@ -213,11 +213,11 @@ def WriteOutput(z):
 
     # Reduced total pathogen loads
     z.n150 = z.n145 + z.n146 + z.n147 + z.n148 + z.n149
-    z.AvTotalOrgs[0] = z.n150
+    z.AvTotalOrgsSum = z.n150
 
     # FARM ANIMAL LOAD REDUCTION FOR N AND P
-    z.AvAnimalN[0] = z.n7b
-    z.AvAnimalP[0] = z.n14b
+    z.AvAnimalNSum = z.n7b
+    z.AvAnimalPSum = z.n14b
     z.n7b = z.n7b * NPConvert
     z.n14b = z.n14b * NPConvert
 
@@ -355,15 +355,15 @@ def WriteOutput(z):
     z.n22 = round(z.AreaTotal, 0)
 
     # COMPLETE CALCULATING THE TOTAL SOURCE LOADS FOR SEDIMENT, N AND P
-    AvTotalSed = (AvTotalSed + (((z.AvStreamBankEros[0] / 1000) +
-                  ((z.AvTileDrainSed[0] / 1000)) * z.RetentFactorSed * (1 - z.AttenTSS))))
-    AvDisN = (AvDisN + ((z.AvGroundNitr[0] + YrPointNitr + z.AvSeptNitr) *
+    AvTotalSed = (AvTotalSed + (((z.AvStreamBankErosSum / 1000) +
+                  ((z.AvTileDrainSedSum / 1000)) * z.RetentFactorSed * (1 - z.AttenTSS))))
+    AvDisN = (AvDisN + ((z.AvGroundNitrSum + YrPointNitr + z.AvSeptNitr) *
               z.RetentFactorN * (1 - z.AttenN)))
-    AvTotalN = (AvTotalN + ((z.AvStreamBankN[0] + (z.AvGroundNitr[0] + z.AvTileDrainN[0] +
-                z.AvAnimalN[0] + YrPointNitr + z.AvSeptNitr) * z.RetentFactorN * (1 - z.AttenN))))
-    AvDisP = AvDisP + ((z.AvGroundPhos[0] + YrPointPhos + z.AvSeptPhos) * z.RetentFactorP * (1 - z.AttenP))
-    AvTotalP = (AvTotalP + ((z.AvStreamBankP[0] + (z.AvGroundPhos[0] + z.AvTileDrainP[0] +
-                z.AvAnimalP[0] + YrPointPhos + z.AvSeptPhos) * z.RetentFactorP * (1 - z.AttenP))))
+    AvTotalN = (AvTotalN + ((z.AvStreamBankNSum + (z.AvGroundNitrSum + z.AvTileDrainNSum +
+                z.AvAnimalNSum + YrPointNitr + z.AvSeptNitr) * z.RetentFactorN * (1 - z.AttenN))))
+    AvDisP = AvDisP + ((z.AvGroundPhosSum + YrPointPhos + z.AvSeptPhos) * z.RetentFactorP * (1 - z.AttenP))
+    AvTotalP = (AvTotalP + ((z.AvStreamBankPSum + (z.AvGroundPhosSum + z.AvTileDrainPSum +
+                z.AvAnimalPSum + YrPointPhos + z.AvSeptPhos) * z.RetentFactorP * (1 - z.AttenP))))
 
     # OBTAIN THE AVERAGE TOTAL MONTHLY LOADS
     AvMonDisN = 0
@@ -421,8 +421,8 @@ def WriteOutput(z):
     z.n53 = round(TotSewerSys / 12)
 
     # CONVERT GROUNDWATER N AND P REDUCED LOADS INTO ENGLISH UNIST FOR THE PREDICT SCENARIO FILE
-    z.n9 = round(((z.AvGroundNitr[0] + z.AvTileDrainN[0]) * NPConvert * z.RetentFactorN * (1 - z.AttenN)))
-    z.n16 = round(((z.AvGroundPhos[0] + z.AvTileDrainP[0]) * NPConvert * z.RetentFactorP * (1 - z.AttenP)))
+    z.n9 = round(((z.AvGroundNitrSum + z.AvTileDrainNSum) * NPConvert * z.RetentFactorN * (1 - z.AttenN)))
+    z.n16 = round(((z.AvGroundPhosSum + z.AvTileDrainPSum) * NPConvert * z.RetentFactorP * (1 - z.AttenP)))
 
     # CONVERT ANNUAL POINT N AND P TO ENGLISH UNITS
     z.n10 = round((YrPointNitr * NPConvert * z.RetentFactorN * (1 - z.AttenN)))
@@ -433,7 +433,7 @@ def WriteOutput(z):
     z.n18 = round((z.AvSeptPhos * NPConvert * z.RetentFactorP * (1 - z.AttenP)))
 
     # ENTER THE OTHER SEDIMENT, N AND P INTO FIELDS
-    z.n3 = round(((AvOtherLuSed + ((z.AvTileDrainSed[0] * z.RetentFactorSed * (1 - z.AttenTSS)) / 1000)) * SedConvert))
+    z.n3 = round(((AvOtherLuSed + ((z.AvTileDrainSedSum * z.RetentFactorSed * (1 - z.AttenTSS)) / 1000)) * SedConvert))
     z.n7 = round((AvOtherLuNitr * z.RetentFactorN * (1 - z.AttenN) * NPConvert))
     z.n14 = round((AvOtherLuPhos * z.RetentFactorP * (1 - z.AttenP) * NPConvert))
 
@@ -528,51 +528,53 @@ def WriteOutput(z):
                 z.n13bdp = z.n13bdp + z.LuDisPhos[y][l]
 
         # Convert animal loads into English units
-        z.GRLBN = z.GRLostBarnN[y][0]
-        z.NGLBN = z.NGLostBarnN[y][0]
-        z.GRLBP = z.GRLostBarnP[y][0]
-        z.NGLBP = z.NGLostBarnP[y][0]
-        z.NGLManP = z.NGLostManP[y][0]
+        z.GRLBN = z.GRLostBarnNSum[y]
+        z.NGLBN = z.NGLostBarnNSum[y]
+        z.GRLBP = z.GRLostBarnPSum[y]
+        z.NGLBP = z.NGLostBarnPSum[y]
+        z.NGLManP = z.NGLostManPSum[y]
 
         # Get the fecal coliform values
-        z.NGLBFC = z.NGLostBarnFC[y][0]
-        z.GRLBFC = z.GRLostBarnFC[y][0]
+        z.NGLBFC = z.NGLostBarnFCSum[y]
+        z.GRLBFC = z.GRLostBarnFCSum[y]
         z.GRSFC = z.AvGRStreamFC
         z.GRSN = z.AvGRStreamN
         z.GRSP = z.AvGRStreamP
 
         # Get the initial pathogen loads
-        z.n139 = z.AnimalFC[y][0]
-        z.n140 = z.WWOrgs[y][0]
-        z.n146 = z.WWOrgs[y][0]
-        z.n141 = z.SSOrgs[y][0]
-        z.n147 = z.SSOrgs[y][0]
-        z.n142 = z.UrbOrgs[y][0]
-        z.n143 = z.WildOrgs[y][0]
-        z.n149 = z.WildOrgs[y][0]
+        z.n139 = z.AnimalFCSum[y]
+        z.n140 = z.WWOrgsSum[y]
+        z.n146 = z.WWOrgsSum[y]
+        z.n141 = z.SSOrgsSum[y]
+        z.n147 = z.SSOrgsSum[y]
+        z.n142 = z.UrbOrgsSum[y]
+        z.n143 = z.WildOrgsSum[y]
+        z.n149 = z.WildOrgsSum[y]
 
         # Initial pathogen total load
         z.n144 = z.n139 + z.n140 + z.n141 + z.n142 + z.n143
 
         # FARM ANIMAL LOADS
-        n7b = z.AnimalN[y][0]
-        n14b = z.AnimalN[y][0]
+        n7b = z.AnimalNSum[y]
+        # BUG: This is a bug in the original code.
+        # This should be AnimalPSum
+        n14b = z.AnimalNSum[y]
 
         # CONVERT AVERAGE STREAM BANK ERIOSION, N AND P TO ENGLISH UNITS
-        z.n4 = round((z.StreamBankEros[y][0] * z.RetentFactorSed * (1 - z.AttenTSS) * SedConvert))
-        z.n8 = round((z.StreamBankN[y][0] * NPConvert * z.RetentFactorN * (1 - z.AttenN)))
-        z.n15 = round((z.StreamBankP[y][0] * NPConvert * z.RetentFactorP * (1 - z.AttenP)))
+        z.n4 = round((z.StreamBankErosSum[y] * z.RetentFactorSed * (1 - z.AttenTSS) * SedConvert))
+        z.n8 = round((z.StreamBankNSum[y] * NPConvert * z.RetentFactorN * (1 - z.AttenN)))
+        z.n15 = round((z.StreamBankPSum[y] * NPConvert * z.RetentFactorP * (1 - z.AttenP)))
 
         # PERFORM LOAD REDUCTIONS BASED ON BMPS IN SCENARIO FILE
         LoadReductions.AdjustScnLoads(z)
 
         # CONVERT AVERAGE STREAM BANK ERIOSION, N AND P TO ENGLISH UNITS
-        z.StreamBankEros[y][0] = z.n4
-        z.StreamBankN[y][0] = z.n8
-        z.StreamBankP[y][0] = z.n15
+        z.StreamBankErosSum[y] = z.n4
+        z.StreamBankNSum[y] = z.n8
+        z.StreamBankPSum[y] = z.n15
 
-        z.AnimalFC[y][0] = z.n145
-        z.UrbOrgs[y][0] = z.n148
+        z.AnimalFCSum[y] = z.n145
+        z.UrbOrgsSum[y] = z.n148
 
         # Get the FC reduction for monthly loads
         UrbanFCFrac = 0
@@ -584,16 +586,18 @@ def WriteOutput(z):
             UrbanFCFrac = z.n148 / z.n142
 
         for i in range(12):
-            z.AnimalFC[y][0] = z.AnimalFC[y][0] * FarmFCFrac
-            z.UrbOrgs[y][0] = z.UrbOrgs[y][0] * UrbanFCFrac
+            z.AnimalFCSum[y] *= FarmFCFrac
+            z.UrbOrgsSum[y] *= UrbanFCFrac
 
         # Reduced total pathogen loads
         n150 = z.n145 + z.n146 + z.n147 + z.n148 + z.n149
-        z.TotalOrgs[y][0] = n150
+        z.TotalOrgsSum[y] = n150
 
         # FARM ANIMAL LOADS
-        z.AnimalN[y][0] = n7b
-        z.AnimalN[y][0] = n14b
+        z.AnimalNSum[y] = n7b
+        # BUG: This is a bug in the original code.
+        # This should be AnimalPSum
+        z.AnimalNSum[y] = n14b
 
         # FOR ALL LAND USES
         z.TotDisNitr = 0
