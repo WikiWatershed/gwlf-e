@@ -118,13 +118,13 @@ def ReadAllData(z):
             raise ValueError('Unexpected value for GrazingAnimal')
 
     # Obtain AEU for each farm animal
-    z.AEU1 = ((z.NumAnimals[3] / 2) * (z.AvgAnimalWt[3]) / 1000) + ((z.NumAnimals[4] / 2) * (z.AvgAnimalWt[4]) / 1000)
-    z.AEU2 = (z.NumAnimals[8] * z.AvgAnimalWt[8]) / 1000
-    z.AEU3 = (z.NumAnimals[6] * z.AvgAnimalWt[6]) / 1000
-    z.AEU4 = (z.NumAnimals[5] * z.AvgAnimalWt[5]) / 1000
-    z.AEU5 = (z.NumAnimals[7] * z.AvgAnimalWt[7]) / 1000
-    z.AEU6 = (z.NumAnimals[1] * z.AvgAnimalWt[1]) / 1000
-    z.AEU7 = (z.NumAnimals[2] * z.AvgAnimalWt[2]) / 1000
+    z.AEU1 = ((z.NumAnimals[2] / 2) * (z.AvgAnimalWt[2]) / 1000) + ((z.NumAnimals[3] / 2) * (z.AvgAnimalWt[3]) / 1000)
+    z.AEU2 = (z.NumAnimals[7] * z.AvgAnimalWt[7]) / 1000
+    z.AEU3 = (z.NumAnimals[5] * z.AvgAnimalWt[5]) / 1000
+    z.AEU4 = (z.NumAnimals[4] * z.AvgAnimalWt[4]) / 1000
+    z.AEU5 = (z.NumAnimals[6] * z.AvgAnimalWt[6]) / 1000
+    z.AEU6 = (z.NumAnimals[0] * z.AvgAnimalWt[0]) / 1000
+    z.AEU7 = (z.NumAnimals[1] * z.AvgAnimalWt[1]) / 1000
 
     # Get the total AEU, Total livestock and poultry AEU
     z.TotAEU = z.AEU1 + z.AEU2 + z.AEU3 + z.AEU4 + z.AEU5 + z.AEU6 + z.AEU7
