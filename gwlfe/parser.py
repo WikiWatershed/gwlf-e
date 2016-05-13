@@ -58,7 +58,6 @@ class GmsReader(object):
         z.QrunP = np.zeros(16)
         z.WashPerv = np.zeros(16)
         z.NetDisLoad = np.zeros(3)
-        z.UrbanQTotal = 0
 
         z.AvGRStreamFC = 0
         z.AvGRStreamN = 0

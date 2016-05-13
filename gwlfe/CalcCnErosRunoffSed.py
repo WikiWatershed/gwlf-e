@@ -25,6 +25,7 @@ def CalcCN(z, i, Y, j):
     """
     log.debug('CalcCN')
 
+    z.UrbanQTotal = 0
     z.UncontrolledQ = 0
     z.RetentionEff = 0
 
