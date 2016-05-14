@@ -125,8 +125,8 @@ def WriteOutput(z):
         YrPointPhos = YrPointPhos + z.PointPhos[i]
 
     # GET THE AVERAGE SEPTIC SYSTEM INFORMATION
-    if z.SepticFlag == YesOrNo.YES:
-        for i in range(0, 12):
+    if z.SepticFlag is YesOrNo.YES:
+        for i in range(12):
             TotSewerSys = TotSewerSys + z.NumSewerSys[i]
             TotNormSys = TotNormSys + z.NumNormalSys[i]
             TotShortSys = TotShortSys + z.NumShortSys[i]
