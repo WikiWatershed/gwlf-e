@@ -33,16 +33,16 @@ def InitialCalculations(z):
         elif z.Landuse[l] is LandUse.TURFGRASS:
             z.AgAreaTotal += z.Area[l]
 
-        z.NewCN[0, l] = z.CN[l] / (2.334 - 0.01334 * z.CN[l])
-        z.NewCN[2, l] = z.CN[l] / (0.4036 + 0.0059 * z.CN[l])
-        if z.NewCN[2, l] > 100:
-            z.NewCN[2, l] = 100
+        z.NewCN[0][l] = z.CN[l] / (2.334 - 0.01334 * z.CN[l])
+        z.NewCN[2][l] = z.CN[l] / (0.4036 + 0.0059 * z.CN[l])
+        if z.NewCN[2][l] > 100:
+            z.NewCN[2][l] = 100
 
     for l in range(z.NRur, z.NLU):
-        z.CNI[0, l] = z.CNI[1, l] / (2.334 - 0.01334 * z.CNI[1, 1])
-        z.CNI[2, l] = z.CNI[1, l] / (0.4036 + 0.0059 * z.CNI[1, l])
-        z.CNP[0, l] = z.CNP[1, l] / (2.334 - 0.01334 * z.CNP[1, 1])
-        z.CNP[2, l] = z.CNP[1, l] / (0.4036 + 0.0059 * z.CNP[1, l])
+        z.CNI[0][l] = z.CNI[1][l] / (2.334 - 0.01334 * z.CNI[1][1])
+        z.CNI[2][l] = z.CNI[1][l] / (0.4036 + 0.0059 * z.CNI[1][l])
+        z.CNP[0][l] = z.CNP[1][l] / (2.334 - 0.01334 * z.CNP[1][1])
+        z.CNP[2][l] = z.CNP[1][l] / (0.4036 + 0.0059 * z.CNP[1][l])
 
     if z.FilterWidth <= 30:
         z.FilterEff = z.FilterWidth / 30

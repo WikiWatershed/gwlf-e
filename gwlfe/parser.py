@@ -517,8 +517,8 @@ class GmsReader(object):
             z.Landuse[i] = self.next(LandUse.parse)  # Urban Land Use Category
             z.Area[i] = self.next(float)  # Area (Ha)
             z.Imper[i] = self.next(float)  # Impervious Surface %
-            z.CNI[1, i] = self.next(float)  # Curve Number(Impervious Surfaces)
-            z.CNP[1, i] = self.next(float)  # Curve Number(Pervious Surfaces)
+            z.CNI[1][i] = self.next(float)  # Curve Number(Impervious Surfaces)
+            z.CNP[1][i] = self.next(float)  # Curve Number(Pervious Surfaces)
             z.TotSusSolids[i] = self.next(float)  # Total Suspended Solids Factor
             self.next(EOL)
 
