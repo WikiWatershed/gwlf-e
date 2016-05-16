@@ -57,11 +57,11 @@ def run(z):
         # FOR EACH MONTH...
         for i in range(12):
             # DAILY CALCULATIONS
-            for j in range(z.DaysMonth[Y, i]):
-                # DAILYWEATHERANALY TEMP[Y, I, J], PREC[Y, I, J]
+            for j in range(z.DaysMonth[Y][i]):
+                # DAILYWEATHERANALY TEMP[Y][I][J], PREC[Y][I][J]
                 # ***** BEGIN WEATHER DATA ANALYSIS *****
-                z.DailyTemp = z.Temp[Y, i, j]
-                z.DailyPrec = z.Prec[Y, i, j]
+                z.DailyTemp = z.Temp[Y][i][j]
+                z.DailyPrec = z.Prec[Y][i][j]
                 z.Melt = 0
                 z.Rain = 0
                 z.Water = 0
@@ -93,17 +93,17 @@ def run(z):
                         # A DEGREE-DAY INITSNOW MELT, BUT NO MORE THAN EXISTED
                         # INITSNOW
                         z.Melt = 0.45 * z.DailyTemp
-                        z.MeltPest[Y, i, j] = z.Melt
+                        z.MeltPest[Y][i][j] = z.Melt
                         if z.Melt > z.InitSnow:
                             z.Melt = z.InitSnow
-                            z.MeltPest[Y, i, j] = z.InitSnow
+                            z.MeltPest[Y][i][j] = z.InitSnow
                         z.InitSnow = z.InitSnow - z.Melt
                     else:
-                        z.MeltPest[Y, i, j] = 0
+                        z.MeltPest[Y][i][j] = 0
 
                     # AVAILABLE WATER CALCULATION
                     z.Water = z.Rain + z.Melt
-                    z.DailyWater[Y, i, j] = z.Water
+                    z.DailyWater[Y][i][j] = z.Water
 
                     # Compute erosivity when erosion occurs, i.e., with rain and no InitSnow left
                     if z.Rain > 0 and z.InitSnow < 0.001:
@@ -115,12 +115,12 @@ def run(z):
                         CalcCnErosRunoffSed.CalcCN(z, i, Y, j)
 
                 # DAILY CN
-                z.DailyCN[Y, i, j] = z.CNum
+                z.DailyCN[Y][i][j] = z.CNum
 
                 # UPDATE ANTECEDENT RAIN+MELT CONDITION
                 # Subtract AMC5 by the sum of AntMoist (day 5) and Water
                 z.AMC5 = z.AMC5 - z.AntMoist[4] + z.Water
-                z.DailyAMC5[Y, i, j] = z.AMC5
+                z.DailyAMC5[Y][i][j] = z.AMC5
 
                 # Shift AntMoist values to the right.
                 z.AntMoist[4] = z.AntMoist[3]
@@ -142,7 +142,7 @@ def run(z):
                         z.ET = z.KV[i] * z.PotenET * z.PcntET[i]
 
                 # Daily ET calculation
-                z.DailyET[Y, i, j] = z.ET
+                z.DailyET[Y][i][j] = z.ET
 
                 # ***** END WEATHER DATA ANALYSIS *****
 
@@ -169,12 +169,12 @@ def run(z):
                 # Obtain the Percolation, adjust precip and UnsatStor values
                 if z.UnsatStor > z.MaxWaterCap:
                     z.Percolation = z.UnsatStor - z.MaxWaterCap
-                    z.Perc[Y, i, j] = z.UnsatStor - z.MaxWaterCap
+                    z.Perc[Y][i][j] = z.UnsatStor - z.MaxWaterCap
                     z.UnsatStor = z.UnsatStor - z.Percolation
                 else:
                     z.Percolation = 0
-                    z.Perc[Y, i, j] = 0
-                z.PercCm[Y, i, j] = z.Percolation / 100
+                    z.Perc[Y][i][j] = 0
+                z.PercCm[Y][i][j] = z.Percolation / 100
 
                 # CALCULATE STORAGE IN SATURATED ZONES AND GROUNDWATER
                 # DISCHARGE
@@ -182,20 +182,20 @@ def run(z):
                 if z.SatStor < 0:
                     z.SatStor = 0
                 z.Flow = z.QTotal + z.GrFlow
-                z.DailyFlow[Y, i, j] = z.DayRunoff[Y, i, j] + z.GrFlow
+                z.DailyFlow[Y][i][j] = z.DayRunoff[Y][i][j] + z.GrFlow
 
-                z.DailyFlowGPM[Y, i, j] = z.Flow * 0.00183528 * z.TotAreaMeters
-                z.DailyGrFlow[Y, i, j] = z.GrFlow  # (for daily load calculations)
+                z.DailyFlowGPM[Y][i][j] = z.Flow * 0.00183528 * z.TotAreaMeters
+                z.DailyGrFlow[Y][i][j] = z.GrFlow  # (for daily load calculations)
 
                 # MONTHLY FLOW
-                z.MonthFlow[Y, i] = z.MonthFlow[Y, i] + z.DailyFlow[Y, i, j]
+                z.MonthFlow[Y][i] = z.MonthFlow[Y][i] + z.DailyFlow[Y][i][j]
 
                 # CALCULATE TOTALS
-                z.Precipitation[Y, i] = z.Precipitation[Y, i] + z.Prec[Y, i, j]
-                z.Evapotrans[Y, i] = z.Evapotrans[Y, i] + z.ET
+                z.Precipitation[Y][i] = z.Precipitation[Y][i] + z.Prec[Y][i][j]
+                z.Evapotrans[Y][i] = z.Evapotrans[Y][i] + z.ET
 
-                z.StreamFlow[Y, i] = z.StreamFlow[Y, i] + z.Flow
-                z.GroundWatLE[Y, i] = z.GroundWatLE[Y, i] + z.GrFlow
+                z.StreamFlow[Y][i] = z.StreamFlow[Y][i] + z.Flow
+                z.GroundWatLE[Y][i] = z.GroundWatLE[Y][i] + z.GrFlow
 
                 grow_factor = GrowFlag.intval(z.Grow[i])
 
@@ -206,7 +206,7 @@ def run(z):
                                   (z.PhosSepticLoad - z.PhosPlantUptake * grow_factor))
 
                 # UPDATE MASS BALANCE ON PONDED EFFLUENT
-                if z.Temp[Y, i, j] <= 0 or z.InitSnow > 0:
+                if z.Temp[Y][i][j] <= 0 or z.InitSnow > 0:
 
                     # ALL INPUTS GO TO FROZEN STORAGE
                     z.FrozenPondNitr = z.FrozenPondNitr + z.PondNitrLoad
@@ -241,34 +241,34 @@ def run(z):
                 z.MonthDischargePhos[i] = z.MonthDischargePhos[i] + z.PhosSepticLoad
 
             # CALCULATE WITHDRAWAL AND POINT SOURCE FLOW VALUES
-            z.Withdrawal[Y, i] = (z.Withdrawal[Y, i] + z.StreamWithdrawal[i] +
+            z.Withdrawal[Y][i] = (z.Withdrawal[Y][i] + z.StreamWithdrawal[i] +
                                   z.GroundWithdrawal[i])
-            z.PtSrcFlow[Y, i] = z.PtSrcFlow[Y, i] + z.PointFlow[i]
+            z.PtSrcFlow[Y][i] = z.PtSrcFlow[Y][i] + z.PointFlow[i]
 
             # CALCULATE THE SURFACE RUNOFF PORTION OF TILE DRAINAGE
-            z.TileDrainRO[Y, i] = (z.TileDrainRO[Y, i] + [z.AgRunoff[Y, i] *
+            z.TileDrainRO[Y][i] = (z.TileDrainRO[Y][i] + [z.AgRunoff[Y][i] *
                                    z.TileDrainDensity])
 
             # CALCULATE SUBSURFACE PORTION OF TILE DRAINAGE
-            z.GwAgLE[Y, i] = (z.GwAgLE[Y, i] + (z.GroundWatLE[Y, i] *
+            z.GwAgLE[Y][i] = (z.GwAgLE[Y][i] + (z.GroundWatLE[Y][i] *
                               (z.AgAreaTotal / z.AreaTotal)))
-            z.TileDrainGW[Y, i] = (z.TileDrainGW[Y, i] + [z.GwAgLE[Y, i] *
+            z.TileDrainGW[Y][i] = (z.TileDrainGW[Y][i] + [z.GwAgLE[Y][i] *
                                    z.TileDrainDensity])
 
             # ADD THE TWO COMPONENTS OF TILE DRAINAGE FLOW
-            z.TileDrain[Y, i] = (z.TileDrain[Y, i] + z.TileDrainRO[Y, i] +
-                                 z.TileDrainGW[Y, i])
+            z.TileDrain[Y][i] = (z.TileDrain[Y][i] + z.TileDrainRO[Y][i] +
+                                 z.TileDrainGW[Y][i])
 
             # ADJUST THE GROUNDWATER FLOW
-            z.GroundWatLE[Y, i] = z.GroundWatLE[Y, i] - z.TileDrainGW[Y, i]
-            if z.GroundWatLE[Y, i] < 0:
-                z.GroundWatLE[Y, i] = 0
+            z.GroundWatLE[Y][i] = z.GroundWatLE[Y][i] - z.TileDrainGW[Y][i]
+            if z.GroundWatLE[Y][i] < 0:
+                z.GroundWatLE[Y][i] = 0
 
             # ADJUST THE SURFACE RUNOFF
-            z.Runoff[Y, i] = z.Runoff[Y, i] - z.TileDrainRO[Y, i]
+            z.Runoff[Y][i] = z.Runoff[Y][i] - z.TileDrainRO[Y][i]
 
-            if z.Runoff[Y, i] < 0:
-                z.Runoff[Y, i] = 0
+            if z.Runoff[Y][i] < 0:
+                z.Runoff[Y][i] = 0
 
         # CALCULATE ANIMAL FEEDING OPERATIONS OUTPUT
         AFOS.AnimalOperations(z, Y)
