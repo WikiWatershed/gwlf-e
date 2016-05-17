@@ -74,10 +74,12 @@ def run(z):
                 z.Melt = 0
                 z.Rain = 0
                 z.Water = 0
+                z.Erosiv = 0
                 z.ET = 0
                 z.QTotal = 0
                 z.AgQTotal = 0
                 z.RuralQTotal = 0
+                z.UrbanQTotal = 0
 
                 # Question: Are these values supposed to accumulate for each
                 # day, each month, and each year? Or should these be
