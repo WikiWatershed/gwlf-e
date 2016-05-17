@@ -5,11 +5,20 @@ from __future__ import division
 
 import logging
 
+import numpy as np
+
 from . import LoadReductions
 from .enums import YesOrNo, LandUse
 
 
 log = logging.getLogger(__name__)
+
+
+CM_TO_M = 1 / 100
+HA_TO_M2 = 10000
+KG_TO_MG = 1000000
+M3_TO_L = 1000
+TONNE_TO_KG = 1000
 
 
 def WriteOutput(z):
@@ -703,6 +712,59 @@ def WriteOutput(z):
     if z.WxYrEnd > SumWxYrEnd:
         SumWxYrEnd = z.WxYrEnd
 
+    # Which land use sources to include in the totals.
+    sources = (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
+
+    # ha
+    AreaTotal = sum(z.Area[l] for l in sources)
+
+    # kg
+    SumSed = sum(z.AvLuSedYield[l] for l in sources) * TONNE_TO_KG
+    SumSed += z.AvStreamBankErosSum
+
+    # kg
+    SumNitr = sum(z.AvLuTotNitr[l] for l in sources)
+    SumNitr += z.AvStreamBankNSum
+    SumNitr += z.AvAnimalNSum * z.RetentFactorN * (1 - z.AttenN)
+    SumNitr += z.AvGroundNitrSum * z.RetentFactorN * (1 - z.AttenN)
+    SumNitr += YrPointNitr * z.RetentFactorN * (1 - z.AttenN)
+    SumNitr += z.AvSeptNitr * z.RetentFactorN * (1 - z.AttenN)
+
+    # kg
+    SumPhos = sum(z.AvLuTotPhos[l] for l in sources)
+    SumPhos += z.AvStreamBankPSum
+    SumPhos += z.AvAnimalPSum * z.RetentFactorP * (1 - z.AttenP)
+    SumPhos += z.AvGroundPhosSum * z.RetentFactorP * (1 - z.AttenP)
+    SumPhos += YrPointPhos * z.RetentFactorP * (1 - z.AttenP)
+    SumPhos += z.AvSeptPhos * z.RetentFactorP * (1 - z.AttenP)
+
+    # m^3/year
+    MeanFlow = (z.AvStreamFlowSum * CM_TO_M) * (AreaTotal * HA_TO_M2)
+
+    # Find index of month with lowest mean flow.
+    LowFlowMonth = z.AvStreamFlow.tolist().index(min(z.AvStreamFlow))
+
+    # m^3/year
+    MeanLowFlow = (z.AvStreamFlow[LowFlowMonth] * CM_TO_M) * (AreaTotal * HA_TO_M2)
+
+    # m^3/second
+    MeanFlowPS = MeanFlow / 31536000
+
+    # kg/ha
+    LoadingRateSed = SumSed / AreaTotal
+    LoadingRateN = SumNitr / AreaTotal
+    LoadingRateP = SumPhos / AreaTotal
+
+    # mg/l
+    ConcSed = (SumSed * KG_TO_MG) / (MeanFlow * M3_TO_L)
+    ConcN = (SumNitr * KG_TO_MG) / (MeanFlow * M3_TO_L)
+    ConcP = (SumPhos * KG_TO_MG) / (MeanFlow * M3_TO_L)
+
+    # mg/l
+    LFConcSed = (z.AvLuSedYield[LowFlowMonth] * KG_TO_MG) / (MeanLowFlow * M3_TO_L)
+    LFConcN = (z.AvTotNitr[LowFlowMonth] * KG_TO_MG) / (MeanLowFlow * M3_TO_L)
+    LFConcP = (z.AvTotPhos[LowFlowMonth] * KG_TO_MG) / (MeanLowFlow * M3_TO_L)
+
     output = {}
 
     # Equivalent to Line 927 of source
@@ -716,9 +778,12 @@ def WriteOutput(z):
         'WxYrEnd': z.WxYrEnd,
     }
 
-    output['monthly'] = []
+    output['AreaTotal'] = AreaTotal
+    output['MeanFlow'] = MeanFlow
+    output['MeanFlowPerSecond'] = MeanFlowPS
 
     # Equivalent to lines 965 - 988 of source
+    output['monthly'] = []
     for i in range(0, 12):
         output['monthly'].append({
             'AvPrecipitation': z.AvPrecipitation[i],
@@ -730,6 +795,125 @@ def WriteOutput(z):
             'AvTileDrain': z.AvTileDrain[i],
             'AvWithdrawal': z.AvWithdrawal[i],
         })
+
+    output['Loads'] = []
+    output['Loads'].append({
+        'Source': 'Hay/Pasture',
+        'Sediment': z.AvLuSedYield[0] * TONNE_TO_KG,
+        'TotalN': z.AvLuTotNitr[0],
+        'TotalP': z.AvLuTotPhos[0],
+    })
+    output['Loads'].append({
+        'Source': 'Cropland',
+        'Sediment': z.AvLuSedYield[1] * TONNE_TO_KG,
+        'TotalN': z.AvLuTotNitr[1],
+        'TotalP': z.AvLuTotPhos[1],
+    })
+    # Forest
+    output['Loads'].append({
+        'Source': 'Wooded Areas',
+        'Sediment': z.AvLuSedYield[2] * TONNE_TO_KG,
+        'TotalN': z.AvLuTotNitr[2],
+        'TotalP': z.AvLuTotPhos[2],
+    })
+    output['Loads'].append({
+        'Source': 'Wetlands',
+        'Sediment': z.AvLuSedYield[3] * TONNE_TO_KG,
+        'TotalN': z.AvLuTotNitr[3],
+        'TotalP': z.AvLuTotPhos[3],
+    })
+    output['Loads'].append({
+        'Source': 'Open Land',
+        'Sediment': z.AvLuSedYield[6] * TONNE_TO_KG,
+        'TotalN': z.AvLuTotNitr[6],
+        'TotalP': z.AvLuTotPhos[6],
+    })
+    # Bare Rock, Sandy Areas
+    output['Loads'].append({
+        'Source': 'Barren Areas',
+        'Sediment': sum(z.AvLuSedYield[l] * TONNE_TO_KG for l in (7, 8)),
+        'TotalN': sum(z.AvLuTotNitr[l] for l in (7, 8)),
+        'TotalP': sum(z.AvLuTotPhos[l] for l in (7, 8)),
+    })
+    output['Loads'].append({
+        'Source': 'Low-Density Mixed',
+        'Sediment': z.AvLuSedYield[10] * TONNE_TO_KG,
+        'TotalN': z.AvLuTotNitr[10],
+        'TotalP': z.AvLuTotPhos[10],
+    })
+    output['Loads'].append({
+        'Source': 'Medium-Density Mixed',
+        'Sediment': z.AvLuSedYield[11] * TONNE_TO_KG,
+        'TotalN': z.AvLuTotNitr[11],
+        'TotalP': z.AvLuTotPhos[11],
+    })
+    output['Loads'].append({
+        'Source': 'High-Density Mixed',
+        'Sediment': z.AvLuSedYield[12] * TONNE_TO_KG,
+        'TotalN': z.AvLuTotNitr[12],
+        'TotalP': z.AvLuTotPhos[12],
+    })
+    # Disturbed, Turfgrass, Unpaved Road
+    output['Loads'].append({
+        'Source': 'Other Upland Areas',
+        'Sediment': sum(z.AvLuSedYield[l] * TONNE_TO_KG for l in (4, 5, 9)),
+        'TotalN': sum(z.AvLuTotNitr[l] for l in (4, 5, 9)),
+        'TotalP': sum(z.AvLuTotPhos[l] for l in (4, 5, 9)),
+    })
+    output['Loads'].append({
+        'Source': 'Farm Animals',
+        'Sediment': 0,
+        'TotalN': z.AvAnimalNSum * z.RetentFactorN * (1 - z.AttenN),
+        'TotalP': z.AvAnimalPSum * z.RetentFactorP * (1 - z.AttenP),
+    })
+    output['Loads'].append({
+        'Source': 'Stream Bank Erosion',
+        'Sediment': z.AvStreamBankErosSum,
+        'TotalN': z.AvStreamBankNSum,
+        'TotalP': z.AvStreamBankPSum,
+    })
+    output['Loads'].append({
+        'Source': 'Subsurface Flow',
+        'Sediment': 0,
+        'TotalN': z.AvGroundNitrSum * z.RetentFactorN * (1 - z.AttenN),
+        'TotalP': z.AvGroundPhosSum * z.RetentFactorP * (1 - z.AttenP),
+    })
+    output['Loads'].append({
+        'Source': 'Point Sources',
+        'Sediment': 0,
+        'TotalN': YrPointNitr * z.RetentFactorN * (1 - z.AttenN),
+        'TotalP': YrPointPhos * z.RetentFactorP * (1 - z.AttenP),
+    })
+    output['Loads'].append({
+        'Source': 'Septic Systems',
+        'Sediment': 0,
+        'TotalN': z.AvSeptNitr * z.RetentFactorN * (1 - z.AttenN),
+        'TotalP': z.AvSeptPhos * z.RetentFactorP * (1 - z.AttenP),
+    })
+    output['Loads'].append({
+        'Source': 'Total Loads',
+        'Sediment': SumSed,
+        'TotalN': SumNitr,
+        'TotalP': SumPhos,
+    })
+    output['Loads'].append({
+        'Source': 'Loading Rates',
+        'Sediment': LoadingRateSed,
+        'TotalN': LoadingRateN,
+        'TotalP': LoadingRateP,
+    })
+    output['Loads'].append({
+        'Source': 'Mean Annual Concentration',
+        'Sediment': ConcSed,
+        'TotalN': ConcN,
+        'TotalP': ConcP,
+    })
+    output['Loads'].append({
+        'Source': 'Mean Low-Flow Concentration',
+        'Sediment': LFConcSed,
+        'TotalN': LFConcN,
+        'TotalP': LFConcP,
+    })
 
     return output
 
