@@ -82,7 +82,7 @@ def CalculateLoads(z, Y):
         z.BSed[i] = 0
         for m in range(i, 12):
             z.BSed[i] += z.SedTrans[Y][m]
-        for m in range(i):
+        for m in range(i + 1):
             if z.BSed[m] > 0:
                 z.SedYield[Y][i] += z.Erosion[Y][m] / z.BSed[m]
 
