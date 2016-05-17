@@ -34,7 +34,7 @@ def WriteOutput(z):
     n13t = 0
     n24t = 0
 
-    z.SumTotArea = z.SumTotArea + z.TotArea
+    AreaSum = np.zeros(12)
 
     # INSERT VALUES FOR BMP SCENARIO FILE FOR PREDICT APPLICATION
     for l in range(z.NLU):
@@ -252,7 +252,7 @@ def WriteOutput(z):
             z.n13 = round(z.AvLuTotPhos[l] * NPConvert)
 
             if z.Area[l] > 0:
-                z.AreaSum[2] = z.AreaSum[2] + z.Area[l]
+                AreaSum[2] = AreaSum[2] + z.Area[l]
         elif z.Landuse[l] is LandUse.CROPLAND:
             z.AvLuSedYield[l] = z.n1
             z.AvLuTotNitr[l] = z.n5
@@ -270,7 +270,7 @@ def WriteOutput(z):
             z.n12 = round(z.AvLuTotPhos[l] * NPConvert)
 
             if z.Area[l] > 0:
-                z.AreaSum[3] = z.AreaSum[3] + z.Area[l]
+                AreaSum[3] = AreaSum[3] + z.Area[l]
         elif z.Landuse[l] is LandUse.UNPAVED_ROAD:
             z.AvLuSedYield[l] = z.n2d
             z.AvLuTotNitr[l] = z.n6d
@@ -288,7 +288,7 @@ def WriteOutput(z):
             z.n13d = round(z.AvLuTotPhos[l] * NPConvert)
 
             if z.Area[l] > 0:
-                z.AreaSum[6] = z.AreaSum[6] + z.Area[l]
+                AreaSum[6] = AreaSum[6] + z.Area[l]
 
         if z.AvLuDisNitr[l] > z.AvLuTotNitr[l]:
             z.AvLuDisNitr[l] = z.AvLuTotNitr[l]
@@ -318,7 +318,7 @@ def WriteOutput(z):
                 z.AvLuDisPhos[l] = z.AvLuTotPhos[l]
 
             if z.Area[l] > 0:
-                z.AreaSum[0] = z.AreaSum[0] + z.Area[l]
+                AreaSum[0] = AreaSum[0] + z.Area[l]
         elif z.n23b > 0 and z.Landuse[l] in [LandUse.MD_MIXED, LandUse.HD_MIXED,
                                              LandUse.MD_RESIDENTIAL, LandUse.HD_RESIDENTIAL]:
             z.AvLuSedYield[l] = z.n2b * z.Area[l] / z.n23b
@@ -333,7 +333,7 @@ def WriteOutput(z):
                 z.AvLuDisPhos[l] = z.AvLuTotPhos[l]
 
             if z.Area[l] > 0:
-                z.AreaSum[1] = z.AreaSum[1] + z.Area[l]
+                AreaSum[1] = AreaSum[1] + z.Area[l]
 
     z.n2c = round(z.n2c * SedConvert)
     z.n6c = round(z.n6c * NPConvert)
@@ -701,7 +701,6 @@ def WriteOutput(z):
         SumWxYrBeg = z.WxYrBeg
     if z.WxYrEnd > SumWxYrEnd:
         SumWxYrEnd = z.WxYrEnd
-    z.SumSedDelivRatio = z.SumSedDelivRatio + (z.SedDelivRatio * z.TotArea)
 
     output = {}
 
