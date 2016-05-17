@@ -48,7 +48,6 @@ def CalculateAnnualMeanLoads(z, Y):
     z.ErosSum = 0
     for i in range(12):
         z.ErosSum += z.Erosion[Y][i]
-    z.Erosion[Y][0] = z.ErosSum
 
     # COMPUTE ANNUAL MEANS
     for i in range(12):
