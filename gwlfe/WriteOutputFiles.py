@@ -443,7 +443,7 @@ def WriteOutput(z):
     z.n13 = z.n13 + (n13t * NPConvert)
     z.n24 = z.n24 + n24t
 
-    # Multiply sedimez.nt loads by 1000 to get them iz.nto Kg before writiz.ng to PRedICT sectioz.n of file
+    # Multiply sediment loads by 1000 to get them into Kg before writing to PRedICT section of file
     z.n1 = z.n1 * 1000
     z.n2 = z.n2 * 1000
     z.n2b = z.n2b * 1000
@@ -452,6 +452,7 @@ def WriteOutput(z):
     z.n3 = z.n3 * 1000
 
     # Obtain the totals for sed, z.n az.nd P
+    # Obtain the totals for sed, N and P
     z.n19 = z.n1 + z.n2 + z.n2b + z.n2c + z.n2d + z.n3 + z.n4
     z.n20 = z.n5 + z.n6 + z.n6b + z.n6c + z.n6d + z.n7 + z.n7b + z.n8 + z.n9 + z.n10 + z.n11
     z.n21 = z.n12 + z.n13 + z.n13b + z.n13c + z.n13d + z.n14 + z.n14b + z.n15 + z.n16 + z.n17 + z.n18
