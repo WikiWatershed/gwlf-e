@@ -142,14 +142,14 @@ def CalculateLoads(z, Y):
         for l in range(z.NRur, z.NLU):
             z.LuTotNitr[Y][l] += z.LuLoad[Y][l][0] / z.NYrs / 2
             z.LuTotPhos[Y][l] += z.LuLoad[Y][l][1] / z.NYrs / 2
-            z.LuDisNitr[Y][l] += z.LuDisLoad[Y][l][1] / z.NYrs / 2
-            z.LuDisPhos[Y][l] += z.LuDisLoad[Y][l][2] / z.NYrs / 2
+            z.LuDisNitr[Y][l] += z.LuDisLoad[Y][l][0] / z.NYrs / 2
+            z.LuDisPhos[Y][l] += z.LuDisLoad[Y][l][1] / z.NYrs / 2
             z.LuSedYield[Y][l] += (z.LuLoad[Y][l][2] / z.NYrs) / 1000 / 2
 
-        z.DisNitr[Y][i] += z.DisLoad[Y][i][1]
-        z.DisPhos[Y][i] += z.DisLoad[Y][i][2]
-        z.TotNitr[Y][i] += z.Load[Y][i][1]
-        z.TotPhos[Y][i] += z.Load[Y][i][2]
+        z.DisNitr[Y][i] += z.DisLoad[Y][i][0]
+        z.DisPhos[Y][i] += z.DisLoad[Y][i][1]
+        z.TotNitr[Y][i] += z.Load[Y][i][0]
+        z.TotPhos[Y][i] += z.Load[Y][i][1]
 
         # ADD UPLAND N and P LOADS
         z.UplandN[Y][i] = z.TotNitr[Y][i]

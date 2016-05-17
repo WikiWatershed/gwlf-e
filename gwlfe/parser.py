@@ -577,6 +577,12 @@ class GmsReader(object):
         z.LastManureMonth2 = self.next(int)  # MS Period 2: Last Month
         self.next(EOL)
 
+        # Convert 1-based indexes to 0-based.
+        z.FirstManureMonth -= 1
+        z.FirstManureMonth2 -= 1
+        z.LastManureMonth -= 1
+        z.LastManureMonth2 -= 1
+
         # Lines 39 - 48: (for each Rural Land Use Category)
         z.NitrConc = np.zeros(16)
         z.PhosConc = np.zeros(16)
