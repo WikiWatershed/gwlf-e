@@ -12,7 +12,10 @@ with open(path.join(path.abspath(path.dirname(__file__)),
           'DESCRIPTION.rst'), encoding='utf-8') as f:
     long_description = f.read()
 
-tests_require = ['nose >= 1.3.4']
+tests_require = [
+    'nose == 1.3.4',
+    'coverage == 4.0.3'
+]
 
 setup(
     name='gwlf-e',
@@ -21,6 +24,7 @@ setup(
     long_description=long_description,
     url='https://github.com/WikiWatershed/gwlf-e',
     author='Azavea Inc.',
+    author_email='systems@azavea.com',
     license='Apache License 2.0',
     classifiers=[
         'Development Status :: 1 - Planning',
@@ -32,7 +36,9 @@ setup(
     ],
     keywords='gwlf-e watershed hydrology',
     packages=find_packages(exclude=['tests']),
-    install_requires=[],
+    install_requires=[
+        'numpy == 1.11.0'
+    ],
     extras_require={
         'dev': [],
         'test': tests_require,
