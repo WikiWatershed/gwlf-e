@@ -4,15 +4,23 @@ from setuptools import setup, find_packages
 from codecs import open
 from os import path
 # Added to fix error.
-# See http://stackoverflow.com/questions/9352656/python-assertionerror-when-running-nose-tests-with-coverage #NOQA
-from multiprocessing import util #NOQA
+# See http://stackoverflow.com/questions/9352656/python-assertionerror-when-running-nose-tests-with-coverage # NOQA
+from multiprocessing import util  # NOQA
 
 # Get the long description from DESCRIPTION.rst
 with open(path.join(path.abspath(path.dirname(__file__)),
           'DESCRIPTION.rst'), encoding='utf-8') as f:
     long_description = f.read()
 
-tests_require = ['nose >= 1.3.4']
+base_requirements = (
+    'argparse == 1.2.1',
+    'numpy == 1.11.0',
+    'wsgiref == 0.1.2',
+)
+test_requirements = (
+    'nose == 1.3.4',
+    'coverage == 4.0.3'
+)
 
 setup(
     name='gwlf-e',
@@ -31,12 +39,8 @@ setup(
         'Programming Language :: Python :: 3',
     ],
     keywords='gwlf-e watershed hydrology',
-    packages=find_packages(exclude=['tests']),
-    install_requires=[],
-    extras_require={
-        'dev': [],
-        'test': tests_require,
-    },
+    packages=find_packages('gwlfe'),
+    install_requires=base_requirements + test_requirements,
     test_suite='nose.collector',
-    tests_require=tests_require,
+    tests_require=test_requirements,
 )
