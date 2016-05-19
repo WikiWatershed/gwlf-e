@@ -4,8 +4,8 @@ from setuptools import setup, find_packages
 from codecs import open
 from os import path
 # Added to fix error.
-# See http://stackoverflow.com/questions/9352656/python-assertionerror-when-running-nose-tests-with-coverage #NOQA
-from multiprocessing import util #NOQA
+# See http://stackoverflow.com/questions/9352656/python-assertionerror-when-running-nose-tests-with-coverage  # NOQA
+from multiprocessing import util  # NOQA
 
 # Get the long description from DESCRIPTION.rst
 with open(path.join(path.abspath(path.dirname(__file__)),
