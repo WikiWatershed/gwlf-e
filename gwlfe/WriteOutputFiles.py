@@ -22,8 +22,6 @@ TONNE_TO_KG = 1000
 
 
 def WriteOutput(z):
-    log.debug('WriteOutput')
-
     # DIMENSION VARIABLES FOR PREDICT CALCULATION AND SCENARIO FILE
     AvOtherLuSed = 0
     AvOtherLuNitr = 0
@@ -919,8 +917,8 @@ def WriteOutput(z):
 
 
 def WriteOutputSumFiles():
-    log.debug('WriteOutputSumFiles')
+    pass
 
 
 def UrbanAreasOutput():
-    log.debug('UrbanAreasOutput')
+    pass

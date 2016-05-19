@@ -10,4 +10,4 @@ log = logging.getLogger(__name__)
 
 
 def ReDimRunQualVars():
-    log.debug('ReDimRunQualVars')
+    pass

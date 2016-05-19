@@ -317,6 +317,4 @@ def run(z):
     output = WriteOutputFiles.WriteOutput(z)
     # WriteOutputFiles.WriteOutputSumFiles()
 
-    log.debug('Done')
-
     return output

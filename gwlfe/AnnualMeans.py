@@ -14,8 +14,6 @@ log = logging.getLogger(__name__)
 
 
 def CalculateAnnualMeanLoads(z, Y):
-    log.debug('CalculateAnnualMeanLoads')
-
     # UPDATE SEPTIC SYSTEM AVERAGES
     z.AvSeptNitr += z.SepticNitr[Y] / z.NYrs
     z.AvSeptPhos += z.SepticPhos[Y] / z.NYrs

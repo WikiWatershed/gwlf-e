@@ -19,8 +19,6 @@ log = logging.getLogger(__name__)
 
 
 def ReadAllData(z):
-    log.debug('ReadAllData')
-
     # If RunQual output is requested, then redim RunQual values
     PrelimQualCalculations.ReDimRunQualVars()
 
