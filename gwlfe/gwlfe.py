@@ -56,6 +56,15 @@ def run(z):
 
         # FOR EACH MONTH...
         for i in range(12):
+            # LOOP THROUGH NUMBER OF LANDUSES IN THE BASIN TO GET QRUNOFF
+            for l in range(z.NLU):
+                z.QRunoff[l, i] = 0
+                z.AgQRunoff[l, i] = 0
+                z.ErosWashoff[l, i] = 0
+                z.RurQRunoff[l, i] = 0
+                z.UrbQRunoff[l, i] = 0
+                z.LuErosion[Y, l] = 0
+
             # DAILY CALCULATIONS
             for j in range(z.DaysMonth[Y][i]):
                 # DAILYWEATHERANALY TEMP[Y][I][J], PREC[Y][I][J]
@@ -65,10 +74,12 @@ def run(z):
                 z.Melt = 0
                 z.Rain = 0
                 z.Water = 0
+                z.Erosiv = 0
                 z.ET = 0
                 z.QTotal = 0
                 z.AgQTotal = 0
                 z.RuralQTotal = 0
+                z.UrbanQTotal = 0
 
                 # Question: Are these values supposed to accumulate for each
                 # day, each month, and each year? Or should these be
@@ -296,6 +307,10 @@ def run(z):
         else:
             z.AvOrgConc[i] = 0
     z.AvOrgConc[0] = 0
+
+    z.AvStreamFlowSum = (z.AvRunoffSum + z.AvGroundWaterSum +
+                         z.AvPtSrcFlowSum + z.AvTileDrainSum -
+                         z.AvWithdrawalSum)
 
     log.debug("Model run complete for " + str(z.NYrs) + " years of data.")
 

@@ -19,11 +19,7 @@ def CalculateStreamBankEros(z, Y):
     # CALCULATE THE STREAM BANK SEDIMENT AND N AND P
     for i in range(12):
         # CALCULATE ER FACTOR FOR STREAMBANK EROSION
-        # TODO: Should LE for this day default to 0 when StreamFlowVol is 0?
-        if z.StreamFlowVol[Y][i] == 0:
-            z.LE[Y][i] = 0
-        else:
-            z.LE[Y][i] = z.SedAFactor * (z.StreamFlowVolAdj * (z.StreamFlowVol[Y][i] ** -1.6))
+        z.LE[Y][i] = z.SedAFactor * (z.StreamFlowVolAdj * (z.StreamFlowVol[Y][i] ** 0.6))
 
         z.StreamBankEros[Y][i] = z.LE[Y][i] * z.StreamLength * 1500 * 1.5
 
@@ -71,9 +67,9 @@ def CalculateStreamBankEros(z, Y):
             z.StreamBankP[Y][i] = 0
 
         # CALCULATE ANNUAL STREAMBANK N AND P AND SEDIMENT
-        z.StreamBankN[Y][0] = z.StreamBankN[Y][0] + z.StreamBankN[Y][i]
-        z.StreamBankP[Y][0] = z.StreamBankP[Y][0] + z.StreamBankP[Y][i]
-        z.StreamBankEros[Y][0] = z.StreamBankEros[Y][0] + z.StreamBankEros[Y][i]
+        z.StreamBankNSum[Y] += z.StreamBankN[Y][i]
+        z.StreamBankPSum[Y] += z.StreamBankP[Y][i]
+        z.StreamBankErosSum[Y] += z.StreamBankEros[Y][i]
 
         # GROUNDWATER N LOADS ARE REDUCED BASED ON SPECIFIC BMPS
         z.GWNRF = 0
@@ -113,25 +109,31 @@ def CalculateStreamBankEros(z, Y):
 
         z.GroundPhos[Y][i] -= (((z.RCNMAC + z.HPNMAC) / z.AreaTotal) * z.GroundPhos[Y][i] * z.n78)
 
-        z.GroundNitr[Y][0] += z.GroundNitr[Y][i]
-        z.GroundPhos[Y][0] += z.GroundPhos[Y][i]
+        z.GroundNitrSum[Y] += z.GroundNitr[Y][i]
+        z.GroundPhosSum[Y] += z.GroundPhos[Y][i]
 
-        z.TileDrain[Y][0] += z.TileDrain[Y][i]
-        z.TileDrainN[Y][0] += z.TileDrainN[Y][i]
-        z.TileDrainP[Y][0] += z.TileDrainP[Y][i]
-        z.TileDrainSed[Y][0] += z.TileDrainSed[Y][i]
-        z.AnimalN[Y][0] += z.AnimalN[Y][i]
-        z.AnimalP[Y][0] += z.AnimalP[Y][i]
+        z.TileDrainSum[Y] += z.TileDrain[Y][i]
+        z.TileDrainNSum[Y] += z.TileDrainN[Y][i]
+        z.TileDrainPSum[Y] += z.TileDrainP[Y][i]
+        z.TileDrainSedSum[Y] += z.TileDrainSed[Y][i]
+        z.AnimalNSum[Y] += z.AnimalN[Y][i]
+        z.AnimalPSum[Y] += z.AnimalP[Y][i]
+        z.AnimalFCSum[Y] += z.AnimalFC[Y][i]
+        z.WWOrgsSum[Y] += z.WWOrgs[Y][i]
+        z.SSOrgsSum[Y] += z.SSOrgs[Y][i]
+        z.UrbOrgsSum[Y] += z.UrbOrgs[Y][i]
+        z.TotalOrgsSum[Y] += z.TotalOrgs[Y][i]
+        z.WildOrgsSum[Y] += z.WildOrgs[Y][i]
 
-        z.GRLostBarnN[Y][0] += z.GRLostBarnN[Y][i]
-        z.GRLostBarnP[Y][0] += z.GRLostBarnP[Y][i]
-        z.GRLostBarnFC[Y][0] += z.GRLostBarnFC[Y][i]
-        z.NGLostBarnN[Y][0] += z.NGLostBarnN[Y][i]
-        z.NGLostBarnP[Y][0] += z.NGLostBarnP[Y][i]
-        z.NGLostBarnFC[Y][0] += z.NGLostBarnFC[Y][i]
-        z.NGLostManP[Y][0] += z.NGLostManP[Y][i]
+        z.GRLostBarnNSum[Y] += z.GRLostBarnN[Y][i]
+        z.GRLostBarnPSum[Y] += z.GRLostBarnP[Y][i]
+        z.GRLostBarnFCSum[Y] += z.GRLostBarnFC[Y][i]
+        z.NGLostBarnNSum[Y] += z.NGLostBarnN[Y][i]
+        z.NGLostBarnPSum[Y] += z.NGLostBarnP[Y][i]
+        z.NGLostBarnFCSum[Y] += z.NGLostBarnFC[Y][i]
+        z.NGLostManPSum[Y] += z.NGLostManP[Y][i]
 
         z.TotNitr[Y][i] += z.StreamBankN[Y][i] + z.TileDrainN[Y][i] + z.AnimalN[Y][i]
         z.TotPhos[Y][i] += z.StreamBankP[Y][i] + z.TileDrainP[Y][i] + z.AnimalP[Y][i]
-        z.TotNitr[Y][0] += z.StreamBankN[Y][i] + z.TileDrainN[Y][i] + z.AnimalN[Y][i]
-        z.TotPhos[Y][0] += z.StreamBankP[Y][i] + z.TileDrainP[Y][i] + z.AnimalP[Y][i]
+        z.TotNitrSum[Y] += z.StreamBankN[Y][i] + z.TileDrainN[Y][i] + z.AnimalN[Y][i]
+        z.TotPhosSum[Y] += z.StreamBankP[Y][i] + z.TileDrainP[Y][i] + z.AnimalP[Y][i]

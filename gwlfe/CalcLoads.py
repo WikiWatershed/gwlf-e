@@ -9,6 +9,8 @@ Imported from CalcLoads.bas
 
 import logging
 
+import numpy as np
+
 
 log = logging.getLogger(__name__)
 
@@ -18,7 +20,7 @@ def CalculateLoads(z, Y):
 
     PrecipitationTotal = 0
     RunoffTotal = 0
-    GroundWatLETotal = 0
+    GroundWatLETotal = np.zeros(z.WxYrs)
     EvapotransTotal = 0
     PtSrcFlowTotal = 0
     WithdrawalTotal = 0
@@ -80,7 +82,7 @@ def CalculateLoads(z, Y):
         z.BSed[i] = 0
         for m in range(i, 12):
             z.BSed[i] += z.SedTrans[Y][m]
-        for m in range(i):
+        for m in range(i + 1):
             if z.BSed[m] > 0:
                 z.SedYield[Y][i] += z.Erosion[Y][m] / z.BSed[m]
 
@@ -140,14 +142,14 @@ def CalculateLoads(z, Y):
         for l in range(z.NRur, z.NLU):
             z.LuTotNitr[Y][l] += z.LuLoad[Y][l][0] / z.NYrs / 2
             z.LuTotPhos[Y][l] += z.LuLoad[Y][l][1] / z.NYrs / 2
-            z.LuDisNitr[Y][l] += z.LuDisLoad[Y][l][1] / z.NYrs / 2
-            z.LuDisPhos[Y][l] += z.LuDisLoad[Y][l][2] / z.NYrs / 2
+            z.LuDisNitr[Y][l] += z.LuDisLoad[Y][l][0] / z.NYrs / 2
+            z.LuDisPhos[Y][l] += z.LuDisLoad[Y][l][1] / z.NYrs / 2
             z.LuSedYield[Y][l] += (z.LuLoad[Y][l][2] / z.NYrs) / 1000 / 2
 
-        z.DisNitr[Y][i] += z.DisLoad[Y][i][1]
-        z.DisPhos[Y][i] += z.DisLoad[Y][i][2]
-        z.TotNitr[Y][i] += z.Load[Y][i][1]
-        z.TotPhos[Y][i] += z.Load[Y][i][2]
+        z.DisNitr[Y][i] += z.DisLoad[Y][i][0]
+        z.DisPhos[Y][i] += z.DisLoad[Y][i][1]
+        z.TotNitr[Y][i] += z.Load[Y][i][0]
+        z.TotPhos[Y][i] += z.Load[Y][i][1]
 
         # ADD UPLAND N and P LOADS
         z.UplandN[Y][i] = z.TotNitr[Y][i]
@@ -162,10 +164,10 @@ def CalculateLoads(z, Y):
         z.TotPhos[Y][i] += z.GroundPhos[Y][i] + z.PointPhos[i]
 
         # ADD SEPTIC SYSTEM SOURCES TO MONTHLY DISSOLVED NUTRIENT TOTALS
-        if GroundWatLETotal <= 0:
-            GroundWatLETotal = 0.0001
+        if GroundWatLETotal[Y] <= 0:
+            GroundWatLETotal[Y] = 0.0001
 
-        z.MonthNormNitr[i] = AnNormNitr * z.GroundWatLE[Y][i] / GroundWatLETotal
+        z.MonthNormNitr[i] = AnNormNitr * z.GroundWatLE[Y][i] / GroundWatLETotal[Y]
 
         z.DisSeptNitr = (z.MonthNormNitr[i]
                          + z.MonthPondNitr[i]
@@ -178,8 +180,8 @@ def CalculateLoads(z, Y):
 
         # 0.59 IS ATTENUATION FACTOR FOR SOIL LOSS
         # 0.66 IS ATTENUATION FACTOR FOR SUBSURFACE FLOW LOSS
-        z.DisSeptNitr /= 1000 * 0.59 * 0.66
-        z.DisSeptPhos /= 1000
+        z.DisSeptNitr = z.DisSeptNitr / 1000 * 0.59 * 0.66
+        z.DisSeptPhos = z.DisSeptPhos / 1000
 
         z.DisNitr[Y][i] += z.DisSeptNitr
         z.DisPhos[Y][i] += z.DisSeptPhos

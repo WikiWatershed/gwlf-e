@@ -53,12 +53,10 @@ class GmsReader(object):
 
         z.ImpervAccum = np.zeros(16)
         z.PervAccum = np.zeros(16)
-        z.Erosiv = 6.46
         z.QrunI = np.zeros(16)
         z.QrunP = np.zeros(16)
         z.WashPerv = np.zeros(16)
         z.NetDisLoad = np.zeros(3)
-        z.UrbanQTotal = 0
 
         z.AvGRStreamFC = 0
         z.AvGRStreamN = 0
@@ -155,7 +153,7 @@ class GmsReader(object):
         z.PestSoilAwcCm = np.zeros(12)
 
         # Tile Drainage and Flow Variables
-        z.vTileDrain = np.zeros(12)
+        z.AvTileDrain = np.zeros(12)
         z.AvWithdrawal = np.zeros(12)
         z.AvTileDrainN = np.zeros(12)
         z.AvTileDrainP = np.zeros(12)
@@ -245,19 +243,6 @@ class GmsReader(object):
         z.n13bdp = 0
         z.n13cdp = 0
         z.RetentEff = 0
-
-        # Referenced in WriteOutputFiles
-        z.SumSedDelivRatio = 0
-        z.SumTotArea = 1
-        z.SumPrecipitation = np.zeros(12)
-        z.SumEvapoTrans = np.zeros(12)
-        z.SumGroundWater = np.zeros(12)
-        z.SumRunoff = np.zeros(12)
-        z.SumStreamFlow = np.zeros(12)
-        z.SumPtSrcFlow = np.zeros(12)
-        z.SumTileDrain = np.zeros(12)
-        z.SumWithdrawal = np.zeros(12)
-        z.AreaSum = np.zeros(12)
 
         # Line 1:
         z.NRur = self.next(int)  # Number of Rural Land Use Categories
@@ -453,6 +438,35 @@ class GmsReader(object):
         z.CMStream = np.zeros((z.DimYrs, 12))
         z.OrgConc = np.zeros((z.DimYrs, 12))
 
+        z.StreamBankNSum = np.zeros(z.WxYrs)
+        z.StreamBankPSum = np.zeros(z.WxYrs)
+        z.StreamBankErosSum = np.zeros(z.WxYrs)
+        z.StreamBankNSum = np.zeros(z.WxYrs)
+        z.StreamBankPSum = np.zeros(z.WxYrs)
+        z.GroundNitrSum = np.zeros(z.WxYrs)
+        z.GroundPhosSum = np.zeros(z.WxYrs)
+        z.TileDrainSum = np.zeros(z.WxYrs)
+        z.TileDrainNSum = np.zeros(z.WxYrs)
+        z.TileDrainPSum = np.zeros(z.WxYrs)
+        z.TileDrainSedSum = np.zeros(z.WxYrs)
+        z.AnimalNSum = np.zeros(z.WxYrs)
+        z.AnimalPSum = np.zeros(z.WxYrs)
+        z.AnimalFCSum = np.zeros(z.WxYrs)
+        z.WWOrgsSum = np.zeros(z.WxYrs)
+        z.SSOrgsSum = np.zeros(z.WxYrs)
+        z.UrbOrgsSum = np.zeros(z.WxYrs)
+        z.WildOrgsSum = np.zeros(z.WxYrs)
+        z.TotalOrgsSum = np.zeros(z.WxYrs)
+        z.GRLostBarnNSum = np.zeros(z.WxYrs)
+        z.GRLostBarnPSum = np.zeros(z.WxYrs)
+        z.GRLostBarnFCSum = np.zeros(z.WxYrs)
+        z.NGLostBarnNSum = np.zeros(z.WxYrs)
+        z.NGLostBarnPSum = np.zeros(z.WxYrs)
+        z.NGLostBarnFCSum = np.zeros(z.WxYrs)
+        z.NGLostManPSum = np.zeros(z.WxYrs)
+        z.TotNitrSum = np.zeros(z.WxYrs)
+        z.TotPhosSum = np.zeros(z.WxYrs)
+
         # Set the Total AEU to the value from the Animal Density layer
         if not self.version_match(z.TranVersionNo, '1.[0-9].[0-9]'):
             raise Exception('Input data file is not in the correct format or is no longer supported')
@@ -548,6 +562,12 @@ class GmsReader(object):
         z.FirstManureMonth2 = self.next(int)  # MS Period 2: First Month
         z.LastManureMonth2 = self.next(int)  # MS Period 2: Last Month
         self.next(EOL)
+
+        # Convert 1-based indexes to 0-based.
+        z.FirstManureMonth -= 1
+        z.FirstManureMonth2 -= 1
+        z.LastManureMonth -= 1
+        z.LastManureMonth2 -= 1
 
         # Lines 39 - 48: (for each Rural Land Use Category)
         z.NitrConc = np.zeros(16)

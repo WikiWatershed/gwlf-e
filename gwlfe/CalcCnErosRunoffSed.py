@@ -25,6 +25,7 @@ def CalcCN(z, i, Y, j):
     """
     log.debug('CalcCN')
 
+    z.UrbanQTotal = 0
     z.UncontrolledQ = 0
     z.RetentionEff = 0
 
@@ -74,7 +75,7 @@ def CalcCN(z, i, Y, j):
                     z.AgQTotal += z.Qrun * z.Area[l]
                     z.AgQRunoff[l][i] += z.Qrun
                 elif z.Landuse[l] is LandUse.TURFGRASS:
-                    z.AgQTotal = z.Qrun * z.Area[l]
+                    z.AgQTotal += z.Qrun * z.Area[l]
                     z.AgQRunoff[l][i] += z.Qrun
             else:
                 z.Qrun = 0
