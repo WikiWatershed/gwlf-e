@@ -16,8 +16,6 @@ log = logging.getLogger(__name__)
 
 
 def CalculateLoads(z, Y):
-    log.debug('CalculateLoads')
-
     PrecipitationTotal = 0
     RunoffTotal = 0
     GroundWatLETotal = np.zeros(z.WxYrs)

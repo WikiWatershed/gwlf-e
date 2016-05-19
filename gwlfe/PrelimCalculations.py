@@ -17,8 +17,6 @@ log = logging.getLogger(__name__)
 
 
 def InitialCalculations(z):
-    log.debug('InitialCalculations')
-
     # OBTAIN THE LENGTH OF STREAMS IN AGRICULTURAL AREAS
     z.AGSTRM = z.AgLength / z.StreamLength
 

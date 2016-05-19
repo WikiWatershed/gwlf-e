@@ -14,8 +14,6 @@ log = logging.getLogger(__name__)
 
 
 def AnimalOperations(z, Y):
-    log.debug('AnimalOperations')
-
     for i in range(12):
         z.LossFactAdj[Y][i] = (z.Precipitation[Y][i] / z.DaysMonth[Y][i]) / 0.3301
 

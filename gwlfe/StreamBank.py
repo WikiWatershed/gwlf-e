@@ -14,8 +14,6 @@ log = logging.getLogger(__name__)
 
 
 def CalculateStreamBankEros(z, Y):
-    log.debug('CalculateStreamBankEros')
-
     # CALCULATE THE STREAM BANK SEDIMENT AND N AND P
     for i in range(12):
         # CALCULATE ER FACTOR FOR STREAMBANK EROSION

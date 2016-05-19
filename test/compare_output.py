@@ -24,7 +24,7 @@ with open('compare-4_sum.dat', 'r') as expected:
                     result_row = ['Title', key['NYrs'], key['NRur'], key['NUrb'], key['NLU'],
                                   'Unset', key['SedDelivRatio'], key['WxYrBeg'], key['WxYrEnd']]
                 else:
-                    key = results_json['monthly'][i-1]
+                    key = results_json['monthly'][i - 1]
                     month = '%s (ours)' % row[0]
                     result_row = [month, key['AvPrecipitation'], key['AvEvapoTrans'], key['AvGroundWater'],
                                   key['AvRunoff'], key['AvStreamFlow'], key['AvPtSrcFlow'], key['AvTileDrain'], key['AvWithdrawal']]

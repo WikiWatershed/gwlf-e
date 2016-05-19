@@ -118,7 +118,7 @@ def run(z):
 
                     # Compute erosivity when erosion occurs, i.e., with rain and no InitSnow left
                     if z.Rain > 0 and z.InitSnow < 0.001:
-                        z.Erosiv = 6.46 * z.Acoef[i] * z.Rain**1.81
+                        z.Erosiv = 6.46 * z.Acoef[i] * z.Rain ** 1.81
 
                     # IF WATER AVAILABLE, THEN CALL SUB TO COMPUTE CN, RUNOFF,
                     # EROSION AND SEDIMENT
@@ -145,10 +145,10 @@ def run(z):
                 if z.ETFlag is ETflag.HAMON_METHOD:
                     if z.DailyTemp > 0:
                         z.SatVaPressure = (33.8639 * ((0.00738 * z.DailyTemp +
-                                           0.8072)**8 - 0.000019 *
+                                           0.8072) ** 8 - 0.000019 *
                                            np.absolute(1.8 * z.DailyTemp + 48) +
                                            0.001316))
-                        z.PotenET = (0.021 * z.DayHrs[i]**2 * z.SatVaPressure
+                        z.PotenET = (0.021 * z.DayHrs[i] ** 2 * z.SatVaPressure
                                      / (z.DailyTemp + 273))
                         z.ET = z.KV[i] * z.PotenET * z.PcntET[i]
 
@@ -316,7 +316,5 @@ def run(z):
 
     output = WriteOutputFiles.WriteOutput(z)
     # WriteOutputFiles.WriteOutputSumFiles()
-
-    log.debug('Done')
 
     return output

@@ -23,8 +23,6 @@ def CalcCN(z, i, Y, j):
     Y - year
     j - number of days in month
     """
-    log.debug('CalcCN')
-
     z.UrbanQTotal = 0
     z.UncontrolledQ = 0
     z.RetentionEff = 0
