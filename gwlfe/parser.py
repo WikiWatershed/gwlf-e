@@ -1168,7 +1168,7 @@ class GmsReader(object):
 
         # Line 148-156: (For each Animal type)
         z.AnimalName = np.zeros(z.NAnimals, dtype=object)
-        z.NumAnimals = np.zeros(z.NAnimals)
+        z.NumAnimals = np.zeros(z.NAnimals, dtype=int)
         z.GrazingAnimal = np.zeros(z.NAnimals, dtype=object)
         z.AvgAnimalWt = np.zeros(z.NAnimals)
         z.AnimalDailyN = np.zeros(z.NAnimals)
@@ -1268,7 +1268,7 @@ class GmsReader(object):
                 self.next(EOL)
 
                 for day in range(z.DaysMonth[year][month]):
-                    z.Temp[year][month][day] = self.next(int)  # Average Temperature (C)
+                    z.Temp[year][month][day] = self.next(float)  # Average Temperature (C)
                     z.Prec[year][month][day] = self.next(float)  # Precipitation (cm)
                     self.next(EOL)
 
