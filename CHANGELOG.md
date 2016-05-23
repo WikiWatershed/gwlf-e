@@ -1,3 +1,9 @@
+## 0.3.0
+
+ - Removed unhelpful debug logging statements
+ - Added GmsWriter to output GMS files
+ - Added defaults to support loading MapShed data
+
 ## 0.2.0
 
  - Corrections to match VB version
