@@ -1196,8 +1196,7 @@ class GmsReader(object):
         z.NGBarnFCRate = np.zeros(12)
 
         for i in range(12):
-            # Month is already populated on lines 8 - 19
-            self.next(str)  # Month (Jan-Dec)
+            z.Month[i] = self.next(str)  # Month (Jan-Dec)
             z.NGPctManApp[i] = self.next(float)  # Manure Spreading: % Of Annual Load Applied To Crops/Pasture
             z.NGAppNRate[i] = self.next(float)  # Manure Spreading: Base Nitrogen Loss Rate
             z.NGAppPRate[i] = self.next(float)  # Manure Spreading: Base Phosphorus Loss Rate
@@ -1224,8 +1223,7 @@ class GmsReader(object):
         z.GRBarnFCRate = np.zeros(12)
 
         for i in range(12):
-            # Month is already populated on lines 8 - 19
-            self.next(str)  # Month (Jan-Dec)
+            z.Month[i] = self.next(str)  # Month (Jan-Dec)
             z.PctGrazing[i] = self.next(float)  # Grazing Land: % Of Time Spent Grazing
             z.PctStreams[i] = self.next(float)  # Grazing Land: % Of Time Spent In Streams
             z.GrazingNRate[i] = self.next(float)  # Grazing Land: Base Nitrogen Loss Rate
@@ -1264,14 +1262,12 @@ class GmsReader(object):
 
         for year in range(z.WxYrs):
             for month in range(12):
-                num_days = self.next(int)
-
-                z.DaysMonth[year][month] = num_days  # Days
+                z.DaysMonth[year][month] = self.next(int)  # Days
                 z.WxMonth[year][month] = self.next(str)  # Month (Jan-Dec)
                 z.WxYear[year][month] = self.next(int)  # Year
                 self.next(EOL)
 
-                for day in range(num_days):
+                for day in range(z.DaysMonth[year][month]):
                     z.Temp[year][month][day] = self.next(int)  # Average Temperature (C)
                     z.Prec[year][month][day] = self.next(float)  # Precipitation (cm)
                     self.next(EOL)
@@ -1371,3 +1367,774 @@ class GmsReader(object):
     def version_match(self, TranVersionNo, VersionPatternRegex):
         pattern = '^{}$'.format(VersionPatternRegex)
         return re.match(pattern, TranVersionNo)
+
+
+class GmsWriter(object):
+    ENUMS = (YesOrNo, ETflag, GrowFlag, SweepType, LandUse)
+
+    def __init__(self, fp):
+        self.fp = csv.writer(fp)
+
+    def write(self, z):
+        self.writerow([
+            z.NRur,
+            z.NUrb,
+            z.BasinId,
+        ])
+
+        self.writerow([
+            z.TranVersionNo,
+            z.RecessionCoef,
+            z.SeepCoef,
+            z.UnsatStor,
+            z.SatStor,
+            z.InitSnow,
+            z.SedDelivRatio,
+            z.MaxWaterCap,
+            z.StreamLength,
+            z.AgLength,
+            z.UrbLength,
+            z.AgSlope3,
+            z.AgSlope3to8,
+            z.AvSlope,
+            z.AEU,
+            z.WxYrs,
+            z.WxYrBeg,
+            z.WxYrEnd,
+            z.SedAFactor,
+            z.TotArea,
+            z.TileDrainRatio,
+            z.TileDrainDensity,
+            z.ETFlag,
+            z.AvKF,
+        ])
+
+        for i in range(5):
+            self.writerow([z.AntMoist[i]])
+
+        for i in range(12):
+            self.writerow([
+                z.Month[i],
+                z.KV[i],
+                z.DayHrs[i],
+                z.Grow[i],
+                z.Acoef[i],
+                z.StreamWithdrawal[i],
+                z.GroundWithdrawal[i],
+                z.PcntET[i],
+            ])
+
+        for i in range(z.NRur):
+            self.writerow([
+                z.Landuse[i],
+                z.Area[i],
+                z.CN[i],
+                z.KF[i],
+                z.LS[i],
+                z.C[i],
+                z.P[i],
+            ])
+
+        for i in range(z.NRur, z.NLU):
+            self.writerow([
+                z.Landuse[i],
+                z.Area[i],
+                z.Imper[i],
+                z.CNI[1][i],
+                z.CNP[1][i],
+                z.TotSusSolids[i],
+            ])
+
+        self.writerow([
+            YesOrNo.intval(z.PhysFlag),
+            YesOrNo.intval(z.PointFlag),
+            YesOrNo.intval(z.SeptSysFlag),
+            YesOrNo.intval(z.CountyFlag),
+            YesOrNo.intval(z.SoilPFlag),
+            YesOrNo.intval(z.GWNFlag),
+            z.SedAAdjust,
+        ])
+
+        self.writerow([
+            z.SedNitr,
+            z.SedPhos,
+            z.GrNitrConc,
+            z.GrPhosConc,
+            z.BankNFrac,
+            z.BankPFrac,
+        ])
+
+        # Convert 0-based indexes to 1-based.
+        self.writerow([
+            z.ManuredAreas,
+            z.FirstManureMonth + 1,
+            z.LastManureMonth + 1,
+            z.FirstManureMonth2 + 1,
+            z.LastManureMonth2 + 1,
+        ])
+
+        for i in range(z.NRur):
+            self.writerow([
+                z.NitrConc[i],
+                z.PhosConc[i],
+            ])
+
+        self.writerow([z.Nqual])
+
+        for i in range(z.Nqual):
+            self.writerow([z.Contaminant[i]])
+
+        for u in range(z.NRur, z.NLU):
+            for q in range(z.Nqual):
+                self.writerow([
+                    z.LoadRateImp[u][q],
+                    z.LoadRatePerv[u][q],
+                    z.DisFract[u][q],
+                    z.UrbBMPRed[u][q],
+                ])
+
+        self.writerow(z.ManNitr)
+        self.writerow(z.ManPhos)
+
+        for i in range(12):
+            self.writerow([
+                z.PointNitr[i],
+                z.PointPhos[i],
+                z.PointFlow[i],
+            ])
+
+        self.writerow([YesOrNo.intval(z.SepticFlag)])
+
+        for i in range(12):
+            self.writerow([
+                z.NumNormalSys[i],
+                z.NumPondSys[i],
+                z.NumShortSys[i],
+                z.NumDischargeSys[i],
+                z.NumSewerSys[i],
+            ])
+
+        self.writerow([
+            z.NitrSepticLoad,
+            z.PhosSepticLoad,
+            z.NitrPlantUptake,
+            z.PhosPlantUptake,
+        ])
+
+        self.writerow([
+            z.TileNconc,
+            z.TilePConc,
+            z.TileSedConc,
+        ])
+
+        self.writerow([
+            z.InName,
+            z.UnitsFileFlag,
+            z.AssessDate,
+            z.VersionNo,
+        ])
+
+        self.writerow([z.ProjName])
+
+        self.writerow([
+            z.n1,
+            z.n2,
+            z.n2b,
+            z.n2c,
+            z.n2d,
+            z.n3,
+            z.n4,
+        ])
+
+        self.writerow([
+            z.n5,
+            z.n6,
+            z.n6b,
+            z.n6c,
+            z.n6d,
+            z.n7,
+            z.n7b,
+            z.n8,
+            z.n9,
+            z.n10,
+            z.n11,
+        ])
+
+        self.writerow([
+            z.n12,
+            z.n13,
+            z.n13b,
+            z.n13c,
+            z.n13d,
+            z.n14,
+            z.n14b,
+            z.n15,
+            z.n16,
+            z.n17,
+            z.n18,
+        ])
+
+        self.writerow([
+            z.n19,
+            z.n20,
+            z.n21,
+            z.n22,
+        ])
+
+        self.writerow([
+            z.n23,
+            z.n23b,
+            z.n23c,
+            z.n24,
+            z.n24b,
+            z.n24c,
+            z.n24d,
+            z.n24e,
+        ])
+
+        self.writerow([
+            z.n25,
+            z.n25b,
+            z.n25c,
+            z.n25d,
+            z.n25e,
+            z.n26,
+            z.n26b,
+            z.n26c,
+            z.n27,
+            z.n27b,
+            z.n28,
+            z.n28b,
+            z.n29,
+        ])
+
+        self.writerow([
+            z.n30,
+            z.n30b,
+            z.n30c,
+            z.n30d,
+            z.n30e,
+            z.n31,
+            z.n31b,
+            z.n31c,
+            z.n32,
+            z.n32b,
+            z.n32c,
+            z.n32d,
+            z.n33,
+            z.n33b,
+            z.n33c,
+            z.n33d,
+        ])
+
+        self.writerow([
+            z.n34,
+            z.n35,
+            z.n35b,
+            z.n36,
+            z.n37,
+            z.n38,
+            z.n38b,
+            z.n39,
+            z.n40,
+        ])
+
+        self.writerow([
+            z.n41,
+            z.n41b,
+            z.n41c,
+            z.n41d,
+            z.n41e,
+            z.n41f,
+            z.n41g,
+            z.n41h,
+            z.n41i,
+            z.n41j,
+            z.n41k,
+            z.n41l,
+            z.n42,
+            z.n42b,
+            z.n42c,
+            z.n43,
+            z.GRLBN,
+            z.NGLBN,
+            z.GRLBP,
+            z.NGLBP,
+            z.NGLManP,
+            z.NGLBFC,
+            z.GRLBFC,
+            z.GRSFC,
+            z.GRSN,
+            z.GRSP,
+        ])
+
+        self.writerow([
+            z.n43b,
+            z.n43c,
+            z.n43d,
+            z.n43e,
+            z.n43f,
+            z.n43g,
+            z.n43h,
+            z.n43i,
+            z.n43j,
+            z.n44,
+            z.n44b,
+            z.n45,
+            z.n45b,
+            z.n45c,
+            z.n45d,
+            z.n45e,
+            z.n45f,
+        ])
+
+        self.writerow([
+            z.n46,
+            z.n46b,
+            z.n46c,
+            z.n46d,
+            z.n46e,
+            z.n46f,
+            z.n46g,
+            z.n46h,
+            z.n46i,
+            z.n46j,
+            z.n46k,
+            z.n46l,
+            z.n46m,
+            z.n46n,
+            z.n46o,
+            z.n46p,
+        ])
+
+        self.writerow([
+            z.n47,
+            z.n48,
+            z.n49,
+            z.n50,
+            z.n51,
+            z.n52,
+            z.n53,
+            z.n54,
+            z.n55,
+            z.n56,
+            z.n57,
+            z.n58,
+            z.n59,
+            z.n60,
+            z.n61,
+            z.n62,
+        ])
+
+        self.writerow([
+            z.n63,
+            z.n64,
+            z.n65,
+            z.n66,
+            z.n66b,
+            z.n67,
+            z.n68,
+            z.n68b,
+            z.n69,
+            z.n69b,
+            z.n69c,
+            z.n70,
+            z.n70b,
+        ])
+
+        self.writerow([
+            z.n71,
+            z.n71b,
+            z.n72,
+            z.n73,
+            z.n74,
+            z.n74b,
+            z.n75,
+            z.n76,
+            z.n76b,
+            z.n77,
+            z.n77b,
+            z.n77c,
+            z.n78,
+            z.n78b,
+        ])
+
+        self.writerow([
+            z.n79,
+            z.n79b,
+            z.n79c,
+            z.n80,
+            z.n81,
+            z.n82,
+            z.n82b,
+            z.n83,
+            z.n84,
+            z.n84b,
+            z.n85,
+            z.n85b,
+            z.n85c,
+            z.n85d,
+            z.n85e,
+            z.n85f,
+            z.n85g,
+        ])
+
+        self.writerow([
+            z.n85h,
+            z.n85i,
+            z.n85j,
+            z.n85k,
+            z.n85l,
+            z.n85m,
+            z.n85n,
+            z.n85o,
+            z.n85p,
+            z.n85q,
+            z.n85r,
+            z.n85s,
+            z.n85t,
+            z.n85u,
+            z.n85v,
+        ])
+
+        self.writerow([
+            z.n86,
+            z.n87,
+            z.n88,
+            z.n89,
+            z.n90,
+            z.n91,
+            z.n92,
+            z.n93,
+            z.n94,
+            z.n95,
+            z.n95b,
+            z.n95c,
+            z.n95d,
+            z.n95e,
+        ])
+
+        self.writerow([
+            z.n96,
+            z.n97,
+            z.n98,
+            z.n99,
+            z.n99b,
+            z.n99c,
+            z.n99d,
+            z.n99e,
+            z.n100,
+            z.n101,
+            z.n101b,
+            z.n101c,
+            z.n101d,
+            z.n101e,
+            z.n102,
+            z.n103a,
+            z.n103b,
+            z.n103c,
+            z.n103d,
+        ])
+
+        self.writerow([
+            z.n104,
+            z.n105,
+            z.n106,
+            z.n106b,
+            z.n106c,
+            z.n106d,
+            z.n107,
+            z.n107b,
+            z.n107c,
+            z.n107d,
+            z.n107e,
+            z.Storm,
+            z.CSNAreaSim,
+            z.CSNDevType,
+        ])
+
+        self.writerow([
+            z.Qretention,
+            z.FilterWidth,
+            z.Capacity,
+            z.BasinDeadStorage,
+            z.BasinArea,
+            z.DaysToDrain,
+            z.CleanMon,
+            z.PctAreaInfil,
+            z.PctStrmBuf,
+            z.UrbBankStab,
+            z.ISRR[0],
+            z.ISRA[0],
+            z.ISRR[1],
+            z.ISRA[1],
+            z.ISRR[2],
+            z.ISRA[2],
+            z.ISRR[3],
+            z.ISRA[3],
+            z.ISRR[4],
+            z.ISRA[4],
+            z.ISRR[5],
+            z.ISRA[5],
+            z.SweepType,
+            z.UrbSweepFrac,
+        ])
+
+        for i in range(12):
+            self.writerow([z.StreetSweepNo[i]])
+
+        self.writerow([z.OutName])
+
+        self.writerow([
+            z.n108,
+            z.n109,
+            z.n110,
+        ])
+
+        self.writerow([
+            z.n111,
+            z.n111b,
+            z.n111c,
+            z.n111d,
+            z.n112,
+            z.n112b,
+            z.n112c,
+            z.n112d,
+            z.n113,
+            z.n113b,
+            z.n113c,
+            z.n113d,
+        ])
+
+        self.writerow([
+            z.n114,
+            z.n115,
+            z.n115b,
+            z.n116,
+            z.n116b,
+        ])
+
+        self.writerow([
+            z.n117,
+            z.n118,
+            z.n119,
+        ])
+
+        self.writerow([
+            z.n120,
+            z.n121,
+        ])
+
+        self.writerow([
+            z.n122,
+            z.n123,
+        ])
+
+        self.writerow([
+            z.n124,
+            z.n125,
+        ])
+
+        self.writerow([
+            z.n126,
+            z.n127,
+            z.n128,
+        ])
+
+        self.writerow([
+            z.n129,
+            z.n130,
+            z.n131,
+        ])
+
+        self.writerow([
+            z.n132,
+            z.n133,
+            z.n134,
+            z.n135,
+            z.n136,
+            z.n137,
+            z.n138,
+            z.n139,
+            z.n140,
+        ])
+
+        self.writerow([
+            z.n141,
+            z.n142,
+            z.n143,
+            z.n144,
+            z.n145,
+            z.n146,
+            z.n147,
+            z.n148,
+            z.n149,
+            z.n150,
+            z.n151,
+        ])
+
+        self.writerow([
+            z.InitNgN,
+            z.InitNgP,
+            z.InitNgFC,
+            z.NGAppSum,
+            z.NGBarnSum,
+            z.NGTotSum,
+            z.InitGrN,
+            z.InitGrP,
+            z.InitGrFC,
+            z.GRAppSum,
+            z.GRBarnSum,
+            z.GRTotSum,
+            YesOrNo.intval(z.AnimalFlag),
+        ])
+
+        self.writerow([
+            z.WildOrgsDay,
+            z.WildDensity,
+            z.WuDieoff,
+            z.UrbEMC,
+            z.SepticOrgsDay,
+            z.SepticFailure,
+            z.WWTPConc,
+            z.InstreamDieoff,
+            z.AWMSGrPct,
+            z.AWMSNgPct,
+            z.RunContPct,
+            z.PhytasePct,
+        ])
+
+        for i in range(z.NAnimals):
+            self.writerow([
+                z.AnimalName[i],
+                z.NumAnimals[i],
+                z.GrazingAnimal[i],
+                z.AvgAnimalWt[i],
+                z.AnimalDailyN[i],
+                z.AnimalDailyP[i],
+                z.FCOrgsPerDay[i],
+            ])
+
+        for i in range(12):
+            self.writerow([
+                z.Month[i],
+                z.NGPctManApp[i],
+                z.NGAppNRate[i],
+                z.NGAppPRate[i],
+                z.NGAppFCRate[i],
+                z.NGPctSoilIncRate[i],
+                z.NGBarnNRate[i],
+                z.NGBarnPRate[i],
+                z.NGBarnFCRate[i],
+            ])
+
+        for i in range(12):
+            self.writerow([
+                z.Month[i],
+                z.PctGrazing[i],
+                z.PctStreams[i],
+                z.GrazingNRate[i],
+                z.GrazingPRate[i],
+                z.GrazingFCRate[i],
+                z.GRPctManApp[i],
+                z.GRAppNRate[i],
+                z.GRAppPRate[i],
+                z.GRAppFCRate[i],
+                z.GRPctSoilIncRate[i],
+                z.GRBarnNRate[i],
+                z.GRBarnPRate[i],
+                z.GRBarnFCRate[i],
+            ])
+
+        self.writerow([
+            z.ShedAreaDrainLake,
+            z.RetentNLake,
+            z.RetentPLake,
+            z.RetentSedLake,
+            z.AttenFlowDist,
+            z.AttenFlowVel,
+            z.AttenLossRateN,
+            z.AttenLossRateP,
+            z.AttenLossRateTSS,
+            z.AttenLossRatePath,
+            z.StreamFlowVolAdj,
+        ])
+
+        for year in range(z.WxYrs):
+            for month in range(12):
+                self.writerow([
+                    z.DaysMonth[year][month],
+                    z.WxMonth[year][month],
+                    z.WxYear[year][month],
+                ])
+                for day in range(z.DaysMonth[year][month]):
+                    self.writerow([
+                        z.Temp[year][month][day],
+                        z.Prec[year][month][day],
+                    ])
+
+        self.writerow([
+            z.NumUAs,
+            z.UABasinArea,
+        ])
+
+        for i in range(z.NumUAs):
+            self.writerow([
+                z.UAId[i],
+                z.UAName[i],
+                z.UAArea[i],
+            ])
+
+            # +1 for "Water"
+            for l in range(z.NLU + 1):
+                self.writerow([
+                    z.UALU[i][l],
+                    z.UALUArea[i][l],
+                ])
+
+            self.writerow([
+                z.UAfa[i],
+                z.UAfaAreaFrac[i],
+            ])
+
+            self.writerow([
+                z.UATD[i],
+                z.UATDAreaFrac[i],
+            ])
+
+            self.writerow([
+                z.UASB[i],
+                z.UASBAreaFrac[i],
+            ])
+
+            self.writerow([
+                z.UAGW[i],
+                z.UAGWAreaFrac[i],
+            ])
+
+            self.writerow([
+                z.UAPS[i],
+                z.UAPSAreaFrac[i],
+            ])
+
+            self.writerow([
+                z.UASS[i],
+                z.UASSAreaFrac[i],
+            ])
+
+    def writerow(self, row):
+        self.fp.writerow([self.serialize_value(col) for col in row])
+
+    def serialize_value(self, value):
+        if isinstance(value, basestring):
+            return self.serialize_enum(value)
+        return value
+
+    def serialize_enum(self, value):
+        # Find the first valid enum that can parse this value.
+        for enm in self.ENUMS:
+            try:
+                return enm.gmsval(value)
+            except ValueError:
+                pass
+        return value
