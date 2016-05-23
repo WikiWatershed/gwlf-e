@@ -1,6 +1,8 @@
 # gwlf-e
 Port of Generalized Watersheds Loading Functions - Enhanced (MapShed)
 
+[![Build Status](https://travis-ci.org/WikiWatershed/gwlf-e.svg?branch=develop)](https://travis-ci.org/WikiWatershed/gwlf-e)
+
 ## Testing
 
 Run `python setup.py test` from within the project directory.
