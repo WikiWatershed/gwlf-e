@@ -252,9 +252,6 @@ class GmsReader(object):
 
         z.NLU = z.NRur + z.NUrb
 
-        # This is hard-coded to 9 in the original GWLF-E code.
-        z.NAnimals = 9
-
         # Line 2:
         z.TranVersionNo = self.next(str)  # GWLF-E Version
         z.RecessionCoef = self.next(float)  # Recession Coefficient
@@ -501,14 +498,6 @@ class GmsReader(object):
             self.next(EOL)
 
         # Lines 20 - 29: (for each Rural Land Use Category)
-        z.Landuse = np.zeros(z.NLU, dtype=object)
-        z.Area = np.zeros(z.NLU)
-        z.CN = np.zeros(z.NLU)
-        z.KF = np.zeros(z.NLU)
-        z.LS = np.zeros(z.NLU)
-        z.C = np.zeros(z.NLU)
-        z.P = np.zeros(z.NLU)
-
         for i in range(z.NRur):
             z.Landuse[i] = self.next(LandUse.parse)  # Rural Land Use Category
             z.Area[i] = self.next(float)  # Area (Ha)
@@ -635,12 +624,6 @@ class GmsReader(object):
         self.next(EOL)
 
         # Lines 86 - 97: (Septic System data for each Month)
-        z.NumNormalSys = np.zeros(12)
-        z.NumPondSys = np.zeros(12)
-        z.NumShortSys = np.zeros(12)
-        z.NumDischargeSys = np.zeros(12)
-        z.NumSewerSys = np.zeros(12)
-
         for i in range(12):
             z.NumNormalSys[i] = self.next(int)  # Number of People on Normal Systems
             z.NumPondSys[i] = self.next(int)  # Number of People on Pond Systems
@@ -1168,7 +1151,7 @@ class GmsReader(object):
 
         # Line 148-156: (For each Animal type)
         z.AnimalName = np.zeros(z.NAnimals, dtype=object)
-        z.NumAnimals = np.zeros(z.NAnimals)
+        z.NumAnimals = np.zeros(z.NAnimals, dtype=int)
         z.GrazingAnimal = np.zeros(z.NAnimals, dtype=object)
         z.AvgAnimalWt = np.zeros(z.NAnimals)
         z.AnimalDailyN = np.zeros(z.NAnimals)
@@ -1268,7 +1251,7 @@ class GmsReader(object):
                 self.next(EOL)
 
                 for day in range(z.DaysMonth[year][month]):
-                    z.Temp[year][month][day] = self.next(int)  # Average Temperature (C)
+                    z.Temp[year][month][day] = self.next(float)  # Average Temperature (C)
                     z.Prec[year][month][day] = self.next(float)  # Precipitation (cm)
                     self.next(EOL)
 
