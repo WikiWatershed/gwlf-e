@@ -31,10 +31,13 @@ def CalculateStreamBankEros(z, Y):
         z.PURBBANK = 0
         z.FCURBBANK = 0
 
+        z.SEDSTAB = 0
+        z.SURBBANK = 0
         if z.n42b > 0:
             z.SEDSTAB = (z.n46c / z.n42b) * z.StreamBankEros[Y][i] * z.n85d
             z.SURBBANK = (z.UrbBankStab / z.n42b) * z.StreamBankEros[Y][i] * z.n85d
 
+        z.SEDFEN = 0
         if z.n42 > 0:
             z.SEDFEN = (z.n45 / z.n42) * z.StreamBankEros[Y][i] * z.AGSTRM * z.n85
 
@@ -42,10 +45,13 @@ def CalculateStreamBankEros(z, Y):
         if z.StreamBankEros[Y][i] < 0:
             z.StreamBankEros[Y][i] = 0
 
+        z.NSTAB = 0
+        z.NURBBANK = 0
         if z.n42b > 0:
             z.NSTAB = (z.n46c / z.n42b) * z.StreamBankN[Y][i] * z.n69c
             z.NURBBANK = (z.UrbBankStab / z.n42b) * z.StreamBankN[Y][i] * z.n69c
 
+        z.NFEN = 0
         if z.n42 > 0:
             z.NFEN = (z.n45 / z.n42) * z.StreamBankN[Y][i] * z.AGSTRM * z.n69
 
@@ -53,10 +59,13 @@ def CalculateStreamBankEros(z, Y):
         if z.StreamBankN[Y][i] < 0:
             z.StreamBankN[Y][i] = 0
 
+        z.PSTAB = 0
+        z.PURBBANK = 0
         if z.n42b > 0:
             z.PSTAB = (z.n46c / z.n42b) * z.StreamBankP[Y][i] * z.n77c
             z.PURBBANK = (z.UrbBankStab / z.n42b) * z.StreamBankP[Y][i] * z.n77c
 
+        z.PFEN = 0
         if z.n42 > 0:
             z.PFEN = (z.n45 / z.n42) * z.StreamBankP[Y][i] * z.AGSTRM * z.n77
 
