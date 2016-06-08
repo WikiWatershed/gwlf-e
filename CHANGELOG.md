@@ -1,3 +1,8 @@
+## 0.4.0
+
+ - Added defaults to support input GMS files with missing stream data.  
+   **NOTE** The output may not be accurate for these files.
+
 ## 0.3.0
 
  - Removed unhelpful debug logging statements
