@@ -41,7 +41,8 @@ def ReadAllData(z):
     z.AvCNRur = 0
     for l in range(z.NRur):
         # Calculate average area weighted CN and KF
-        z.AvCNRur += z.CN[l] * z.Area[l] / z.RurAreaTotal
+        z.AvCNRur += (z.CN[l] * z.Area[l] / z.RurAreaTotal) \
+            if z.RurAreaTotal > 0 else 0
 
     # Get the area weighted average CN for urban areas
     z.AvCNUrb = 0
