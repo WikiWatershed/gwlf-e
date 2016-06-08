@@ -18,7 +18,7 @@ log = logging.getLogger(__name__)
 
 def InitialCalculations(z):
     # OBTAIN THE LENGTH OF STREAMS IN AGRICULTURAL AREAS
-    z.AGSTRM = z.AgLength / z.StreamLength
+    z.AGSTRM = z.AgLength / z.StreamLength if z.StreamLength > 0 else 0
 
     # Obtain areas in Ha for Urban, Agricultural and Forested landuse
     for l in range(z.NRur):
