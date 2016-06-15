@@ -1,3 +1,7 @@
+## 0.5.0
+
+- Added Unit field to SummaryLoads
+
 ## 0.4.0
 
  - Added defaults to support input GMS files with missing stream data.  
