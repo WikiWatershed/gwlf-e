@@ -888,26 +888,32 @@ def WriteOutput(z):
         'TotalN': z.AvSeptNitr * z.RetentFactorN * (1 - z.AttenN),
         'TotalP': z.AvSeptPhos * z.RetentFactorP * (1 - z.AttenP),
     })
-    output['Loads'].append({
+
+    output['SummaryLoads'] = []    
+    output['SummaryLoads'].append({
         'Source': 'Total Loads',
+        'Unit': 'kg',
         'Sediment': SumSed,
         'TotalN': SumNitr,
         'TotalP': SumPhos,
     })
-    output['Loads'].append({
+    output['SummaryLoads'].append({
         'Source': 'Loading Rates',
+        'Unit': 'kg/ha',
         'Sediment': LoadingRateSed,
         'TotalN': LoadingRateN,
         'TotalP': LoadingRateP,
     })
-    output['Loads'].append({
+    output['SummaryLoads'].append({
         'Source': 'Mean Annual Concentration',
+        'Unit': 'mg/l',
         'Sediment': ConcSed,
         'TotalN': ConcN,
         'TotalP': ConcP,
     })
-    output['Loads'].append({
+    output['SummaryLoads'].append({
         'Source': 'Mean Low-Flow Concentration',
+        'Unit': 'mg/l',
         'Sediment': LFConcSed,
         'TotalN': LFConcN,
         'TotalP': LFConcP,

@@ -133,6 +133,36 @@
     }, 
     "MeanFlowPerSecond": 0.6541908802879981, 
     "AreaTotal": 3952.0, 
+    "SummaryLoads": [
+        {
+            "Source": "Total Loads", 
+            "TotalN": 173586.74868105561, 
+            "TotalP": 8395.6579146152235, 
+            "Sediment": 2407902.8677433841, 
+            "Unit": "kg"
+        }, 
+        {
+            "Source": "Loading Rates", 
+            "TotalN": 43.923772439538361, 
+            "TotalP": 2.1244073670585082, 
+            "Sediment": 609.28716289053239, 
+            "Unit": "kg/ha"
+        }, 
+        {
+            "Source": "Mean Annual Concentration", 
+            "TotalN": 8.4140575139033782, 
+            "TotalP": 0.40695242636536605, 
+            "Sediment": 116.71532171105648, 
+            "Unit": "mg/l"
+        }, 
+        {
+            "Source": "Mean Low-Flow Concentration", 
+            "TotalN": 14.804110709397358, 
+            "TotalP": 1.3626915312075798, 
+            "Sediment": 0.0, 
+            "Unit": "mg/l"
+        }
+    ], 
     "Loads": [
         {
             "Source": "Hay/Pasture", 
@@ -223,30 +253,6 @@
             "TotalN": 1019.383950492498, 
             "TotalP": 0.0, 
             "Sediment": 0
-        }, 
-        {
-            "Source": "Total Loads", 
-            "TotalN": 173586.74868105561, 
-            "TotalP": 8395.6579146152235, 
-            "Sediment": 2407902.8677433841
-        }, 
-        {
-            "Source": "Loading Rates", 
-            "TotalN": 43.923772439538361, 
-            "TotalP": 2.1244073670585082, 
-            "Sediment": 609.28716289053239
-        }, 
-        {
-            "Source": "Mean Annual Concentration", 
-            "TotalN": 8.4140575139033782, 
-            "TotalP": 0.40695242636536605, 
-            "Sediment": 116.71532171105648
-        }, 
-        {
-            "Source": "Mean Low-Flow Concentration", 
-            "TotalN": 14.804110709397358, 
-            "TotalP": 1.3626915312075798, 
-            "Sediment": 0.0
         }
     ]
 }
