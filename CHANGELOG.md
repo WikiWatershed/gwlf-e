@@ -1,3 +1,11 @@
+## 0.6.0
+
+ - Used `AvSedYield` array to calculate Mean Low Flow Concentration.
+
+## 0.5.0
+
+ - Separated out SummaryLoads and added Unit field
+
 ## 0.4.0
 
  - Added defaults to support input GMS files with missing stream data.  
