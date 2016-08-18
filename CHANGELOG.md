@@ -1,3 +1,7 @@
+## 0.6.0
+
+ - Used `AvSedYield` array to calculate Mean Low Flow Concentration.
+
 ## 0.5.0
 
 - Added Unit field to SummaryLoads
