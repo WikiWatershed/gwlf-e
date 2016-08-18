@@ -1,3 +1,7 @@
+## 0.6.1
+
+ - Updated commit history to include missing release commits (no code changes)
+
 ## 0.6.0
 
  - Used `AvSedYield` array to calculate Mean Low Flow Concentration.
