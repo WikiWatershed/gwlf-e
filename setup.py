@@ -19,7 +19,7 @@ tests_require = [
 
 setup(
     name='gwlf-e',
-    version='0.4.0',
+    version='0.5.0',
     description='A Python port of Generalized Watersheds Loading Functions - Enhanced (MapShed)',
     long_description=long_description,
     url='https://github.com/WikiWatershed/gwlf-e',
