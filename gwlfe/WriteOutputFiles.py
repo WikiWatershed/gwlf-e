@@ -889,7 +889,7 @@ def WriteOutput(z):
         'TotalP': z.AvSeptPhos * z.RetentFactorP * (1 - z.AttenP),
     })
 
-    output['SummaryLoads'] = []    
+    output['SummaryLoads'] = []
     output['SummaryLoads'].append({
         'Source': 'Total Loads',
         'Unit': 'kg',
