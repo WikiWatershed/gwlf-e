@@ -759,7 +759,7 @@ def WriteOutput(z):
     ConcP = (SumPhos * KG_TO_MG) / (MeanFlow * M3_TO_L)
 
     # mg/l
-    LFConcSed = (z.AvSedYield[LowFlowMonth] * KG_TO_MG) / (MeanLowFlow * M3_TO_L)
+    LFConcSed = (z.AvSedYield[LowFlowMonth] * TONNE_TO_KG * KG_TO_MG) / (MeanLowFlow * M3_TO_L)
     LFConcN = (z.AvTotNitr[LowFlowMonth] * KG_TO_MG) / (MeanLowFlow * M3_TO_L)
     LFConcP = (z.AvTotPhos[LowFlowMonth] * KG_TO_MG) / (MeanLowFlow * M3_TO_L)
 
@@ -889,7 +889,7 @@ def WriteOutput(z):
         'TotalP': z.AvSeptPhos * z.RetentFactorP * (1 - z.AttenP),
     })
 
-    output['SummaryLoads'] = []    
+    output['SummaryLoads'] = []
     output['SummaryLoads'].append({
         'Source': 'Total Loads',
         'Unit': 'kg',
