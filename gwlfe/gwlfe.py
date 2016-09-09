@@ -261,8 +261,9 @@ def run(z):
                                    z.TileDrainDensity])
 
             # CALCULATE SUBSURFACE PORTION OF TILE DRAINAGE
-            z.GwAgLE[Y][i] = (z.GwAgLE[Y][i] + (z.GroundWatLE[Y][i] *
-                              (z.AgAreaTotal / z.AreaTotal)))
+            if z.AreaTotal > 0:
+                z.GwAgLE[Y][i] = (z.GwAgLE[Y][i] + (z.GroundWatLE[Y][i] *
+                                  (z.AgAreaTotal / z.AreaTotal)))
             z.TileDrainGW[Y][i] = (z.TileDrainGW[Y][i] + [z.GwAgLE[Y][i] *
                                    z.TileDrainDensity])
 

@@ -749,19 +749,37 @@ def WriteOutput(z):
     MeanFlowPS = MeanFlow / 31536000
 
     # kg/ha
-    LoadingRateSed = SumSed / AreaTotal
-    LoadingRateN = SumNitr / AreaTotal
-    LoadingRateP = SumPhos / AreaTotal
+    if AreaTotal > 0:
+        LoadingRateSed = SumSed / AreaTotal
+        LoadingRateN = SumNitr / AreaTotal
+        LoadingRateP = SumPhos / AreaTotal
+    else:
+        LoadingRateSed = 0
+        LoadingRateN = 0
+        LoadingRateP = 0
 
     # mg/l
-    ConcSed = (SumSed * KG_TO_MG) / (MeanFlow * M3_TO_L)
-    ConcN = (SumNitr * KG_TO_MG) / (MeanFlow * M3_TO_L)
-    ConcP = (SumPhos * KG_TO_MG) / (MeanFlow * M3_TO_L)
+    if MeanFlow > 0:
+        ConcSed = (SumSed * KG_TO_MG) / (MeanFlow * M3_TO_L)
+        ConcN = (SumNitr * KG_TO_MG) / (MeanFlow * M3_TO_L)
+        ConcP = (SumPhos * KG_TO_MG) / (MeanFlow * M3_TO_L)
+    else:
+        ConcSed = 0
+        ConcN = 0
+        ConcP = 0
 
     # mg/l
-    LFConcSed = (z.AvSedYield[LowFlowMonth] * TONNE_TO_KG * KG_TO_MG) / (MeanLowFlow * M3_TO_L)
-    LFConcN = (z.AvTotNitr[LowFlowMonth] * KG_TO_MG) / (MeanLowFlow * M3_TO_L)
-    LFConcP = (z.AvTotPhos[LowFlowMonth] * KG_TO_MG) / (MeanLowFlow * M3_TO_L)
+    if MeanLowFlow > 0:
+        LFConcSed = ((z.AvSedYield[LowFlowMonth] * TONNE_TO_KG * KG_TO_MG) /
+                     (MeanLowFlow * M3_TO_L))
+        LFConcN = ((z.AvTotNitr[LowFlowMonth] * KG_TO_MG) /
+                   (MeanLowFlow * M3_TO_L))
+        LFConcP = ((z.AvTotPhos[LowFlowMonth] * KG_TO_MG) /
+                   (MeanLowFlow * M3_TO_L))
+    else:
+        LFConcSed = 0
+        LFConcN = 0
+        LFConcP = 0
 
     output = {}
 
