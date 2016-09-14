@@ -169,9 +169,11 @@ def CalcCN(z, i, Y, j):
                               + z.QrunP[l] * (1 - (z.Imper[l] * (1 - z.ISRR[lu]) * (1 - z.ISRA[lu]))))
                               * z.Area[l] / z.UrbAreaTotal)
 
-        z.UncontrolledQ += ((z.QrunI[l] * (z.Imper[l] * (1 - z.ISRR[lu]) * (1 - z.ISRA[lu]))
-                            + z.QrunP[l] * (1 - (z.Imper[l] * (1 - z.ISRR[lu]) * (1 - z.ISRA[lu]))))
-                            * z.Area[l] / z.AreaTotal)
+        if z.AreaTotal > 0:
+            z.UncontrolledQ += ((z.QrunI[l] * (z.Imper[l] * (1 - z.ISRR[lu]) *
+                                (1 - z.ISRA[lu])) + z.QrunP[l] * (1 - (z.Imper[l] *
+                                (1 - z.ISRR[lu]) * (1 - z.ISRA[lu])))) *
+                                z.Area[l] / z.AreaTotal)
 
         z.WashImperv[l] = (1 - math.exp(-1.81 * z.QrunI[l])) * z.ImpervAccum[l]
         z.ImpervAccum[l] -= z.WashImperv[l]
