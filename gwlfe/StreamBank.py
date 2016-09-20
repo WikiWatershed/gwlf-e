@@ -114,7 +114,9 @@ def CalculateStreamBankEros(z, Y):
         z.RCNMAC = (z.n28b / 100) * z.n23
         z.HPNMAC = (z.n35b / 100) * z.n24
 
-        z.GroundPhos[Y][i] -= (((z.RCNMAC + z.HPNMAC) / z.AreaTotal) * z.GroundPhos[Y][i] * z.n78)
+        if z.AreaTotal > 0:
+            z.GroundPhos[Y][i] -= (((z.RCNMAC + z.HPNMAC) / z.AreaTotal) *
+                                   z.GroundPhos[Y][i] * z.n78)
 
         z.GroundNitrSum[Y] += z.GroundNitr[Y][i]
         z.GroundPhosSum[Y] += z.GroundPhos[Y][i]

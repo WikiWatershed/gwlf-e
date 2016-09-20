@@ -54,10 +54,13 @@ def ReadAllData(z):
                           * z.Area[l] / z.UrbAreaTotal)
 
     # Calculate the average CN and percent urban area
-    z.AvCN = ((z.AvCNRur * z.RurAreaTotal / z.AreaTotal) +
-              (z.AvCNUrb * z.UrbAreaTotal / z.AreaTotal))
-
-    z.PcntUrbanArea = z.UrbAreaTotal / z.AreaTotal
+    if z.AreaTotal == 0:
+        z.AvCN = 0
+        z.PcntUrbanArea = 0
+    else:
+        z.AvCN = ((z.AvCNRur * z.RurAreaTotal / z.AreaTotal) +
+                  (z.AvCNUrb * z.UrbAreaTotal / z.AreaTotal))
+        z.PcntUrbanArea = z.UrbAreaTotal / z.AreaTotal
 
     if z.SepticFlag is YesOrNo.YES:
         for i in range(12):
@@ -212,7 +215,7 @@ def ReadAllData(z):
             z.GRInitBarnFC[i] = 0
 
     # Recalculate AEU using the TotAEU from the animal file and the total area of the basin in Acres
-    if z.TotLAEU > 0:
+    if z.TotLAEU > 0 and z.AreaTotal > 0:
         z.AEU = z.TotLAEU / (z.AreaTotal * 2.471)
     else:
         z.AEU = 0

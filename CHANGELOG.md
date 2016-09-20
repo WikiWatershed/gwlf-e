@@ -1,3 +1,10 @@
+## 0.6.2
+
+- Set initial default for `AdjUrbanQTotal`
+- Fix nitrogen/phosphorus conc transposition
+- Handle input GMS file with no land cover
+- Adjust low flow sediment value calculation and test
+
 ## 0.6.1
 
  - Updated commit history to include missing release commits (no code changes)

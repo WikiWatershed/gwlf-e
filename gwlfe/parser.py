@@ -602,11 +602,8 @@ class GmsReader(object):
         # Lines 71 - 72: (for the 2 Manure Spreading Periods)
         for i in range(z.ManuredAreas):
             z.ManNitr[i] = self.next(float)  # Manured N Concentration
-        self.next(EOL)
-
-        for i in range(z.ManuredAreas):
             z.ManPhos[i] = self.next(float)  # Manured P Concentration
-        self.next(EOL)
+            self.next(EOL)
 
         # Lines 73 - 84: (Point Source data for each Month)
         z.PointNitr = np.zeros(12)
@@ -1476,8 +1473,8 @@ class GmsWriter(object):
                     z.UrbBMPRed[u][q],
                 ])
 
-        self.writerow(z.ManNitr)
-        self.writerow(z.ManPhos)
+        for i in range(z.ManuredAreas):
+            self.writerow([z.ManNitr[i], z.ManPhos[i]])
 
         for i in range(12):
             self.writerow([
