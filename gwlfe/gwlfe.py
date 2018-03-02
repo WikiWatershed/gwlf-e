@@ -23,6 +23,8 @@ from . import CalcLoads
 from . import StreamBank
 from . import AnnualMeans
 from . import WriteOutputFiles
+from . import Precipitation
+from . import ET
 
 
 log = logging.getLogger(__name__)
@@ -43,6 +45,15 @@ def run(z):
 
     # MODEL CALCULATIONS FOR EACH YEAR OF ANALYSIS - WATER BALANCE,
     # NUTRIENTS AND SEDIMENT LOADS
+
+    z.Precipitation = Precipitation.Precipitation(z.NYrs,z.DaysMonth,z.Prec)
+    z.Precipitation_2 = Precipitation.Precipitation_2(Precipitation.Prec_to_numpy(z.Prec))
+    print(z.Precipitation)
+    print(z.Precipitation_2)
+    #DailyET_Part1 = ET.DailyET(z.NYrs,z.DaysMonth,z.Temp,z.DayHrs,z.KV,z.PcntET,z.ETFlag)
+    DailyET_Part1 = ET.DailyET_2(z.Temp,z.KV,z.PcntET,z.DayHrs)
+
+    # z.AvPrecipitation2 = Precipitation.AvPrecipitation(z.NYrs,z.Precipitation)
 
     for Y in range(z.NYrs):
         # Initialize monthly septic system variables
@@ -142,17 +153,18 @@ def run(z):
 
                 # CALCULATE ET FROM SATURATED VAPOR PRESSURE,
                 # HAMON (1961) METHOD
-                if z.ETFlag is ETflag.HAMON_METHOD:
-                    if z.DailyTemp > 0:
-                        z.SatVaPressure = (33.8639 * ((0.00738 * z.DailyTemp +
-                                           0.8072) ** 8 - 0.000019 *
-                                           np.absolute(1.8 * z.DailyTemp + 48) +
-                                           0.001316))
-                        z.PotenET = (0.021 * z.DayHrs[i] ** 2 * z.SatVaPressure
-                                     / (z.DailyTemp + 273))
-                        z.ET = z.KV[i] * z.PotenET * z.PcntET[i]
+                # if z.ETFlag is ETflag.HAMON_METHOD:
+                #     if z.DailyTemp > 0:
+                #         z.SatVaPressure = (33.8639 * ((0.00738 * z.DailyTemp +
+                #                            0.8072) ** 8 - 0.000019 *
+                #                            np.absolute(1.8 * z.DailyTemp + 48) +
+                #                            0.001316))
+                #         z.PotenET = (0.021 * z.DayHrs[i] ** 2 * z.SatVaPressure
+                #                      / (z.DailyTemp + 273))
+                #         z.ET = z.KV[i] * z.PotenET * z.PcntET[i]
 
                 # Daily ET calculation
+                z.ET = DailyET_Part1[Y][i][j]
                 z.DailyET[Y][i][j] = z.ET
 
                 # ***** END WEATHER DATA ANALYSIS *****
@@ -202,7 +214,7 @@ def run(z):
                 z.MonthFlow[Y][i] = z.MonthFlow[Y][i] + z.DailyFlow[Y][i][j]
 
                 # CALCULATE TOTALS
-                z.Precipitation[Y][i] = z.Precipitation[Y][i] + z.Prec[Y][i][j]
+                # z.Precipitation[Y][i] = z.Precipitation[Y][i] + z.Prec[Y][i][j]
                 z.Evapotrans[Y][i] = z.Evapotrans[Y][i] + z.ET
 
                 z.StreamFlow[Y][i] = z.StreamFlow[Y][i] + z.Flow
