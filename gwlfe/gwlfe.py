@@ -51,7 +51,7 @@ def run(z):
     print(z.Precipitation)
     print(z.Precipitation_2)
     #DailyET_Part1 = ET.DailyET(z.NYrs,z.DaysMonth,z.Temp,z.DayHrs,z.KV,z.PcntET,z.ETFlag)
-    DailyET_Part1 = ET.DailyET_2(z.Temp,z.KV,z.PcntET,z.DayHrs)
+    # DailyET_Part1 = ET.DailyET_2(z.Temp,z.KV,z.PcntET,z.DayHrs)
 
     # z.AvPrecipitation2 = Precipitation.AvPrecipitation(z.NYrs,z.Precipitation)
 
@@ -153,18 +153,18 @@ def run(z):
 
                 # CALCULATE ET FROM SATURATED VAPOR PRESSURE,
                 # HAMON (1961) METHOD
-                # if z.ETFlag is ETflag.HAMON_METHOD:
-                #     if z.DailyTemp > 0:
-                #         z.SatVaPressure = (33.8639 * ((0.00738 * z.DailyTemp +
-                #                            0.8072) ** 8 - 0.000019 *
-                #                            np.absolute(1.8 * z.DailyTemp + 48) +
-                #                            0.001316))
-                #         z.PotenET = (0.021 * z.DayHrs[i] ** 2 * z.SatVaPressure
-                #                      / (z.DailyTemp + 273))
-                #         z.ET = z.KV[i] * z.PotenET * z.PcntET[i]
+                if z.ETFlag is ETflag.HAMON_METHOD:
+                    if z.DailyTemp > 0:
+                        z.SatVaPressure = (33.8639 * ((0.00738 * z.DailyTemp +
+                                           0.8072) ** 8 - 0.000019 *
+                                           np.absolute(1.8 * z.DailyTemp + 48) +
+                                           0.001316))
+                        z.PotenET = (0.021 * z.DayHrs[i] ** 2 * z.SatVaPressure
+                                     / (z.DailyTemp + 273))
+                        z.ET = z.KV[i] * z.PotenET * z.PcntET[i]
 
                 # Daily ET calculation
-                z.ET = DailyET_Part1[Y][i][j]
+                # z.ET = DailyET_Part1[Y][i][j]
                 z.DailyET[Y][i][j] = z.ET
 
                 # ***** END WEATHER DATA ANALYSIS *****
