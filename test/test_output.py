@@ -9,7 +9,7 @@ import numpy as np
 
 from StringIO import StringIO
 
-from gwlfe import gwlfe, parser
+from gwlfe import gwlfe, Parser
 
 
 class TestOutput(unittest.TestCase):
@@ -21,7 +21,7 @@ class TestOutput(unittest.TestCase):
     def test_constants(self):
         constant_keys = ["MeanFlow", "MeanFlowPerSecond", "AreaTotal"]
         input_file = open('input_4.gms', 'r')
-        z = parser.GmsReader(input_file).read()
+        z = Parser.GmsReader(input_file).read()
         generated_output = gwlfe.run(z)
 
         static_output = json.load(open('input_4.output', 'r'))
@@ -33,7 +33,7 @@ class TestOutput(unittest.TestCase):
 
     def test_check_monthly(self):
         input_file = open('input_4.gms', 'r')
-        z = parser.GmsReader(input_file).read()
+        z = Parser.GmsReader(input_file).read()
         generated_output = gwlfe.run(z)
 
         static_output = json.load(open('input_4.output', 'r'))
@@ -47,7 +47,7 @@ class TestOutput(unittest.TestCase):
 
     def test_meta(self):
         input_file = open('input_4.gms', 'r')
-        z = parser.GmsReader(input_file).read()
+        z = Parser.GmsReader(input_file).read()
         generated_output = gwlfe.run(z)
 
         static_output = json.load(open('input_4.output', 'r'))
@@ -60,7 +60,7 @@ class TestOutput(unittest.TestCase):
 
     def test_summary_loads(self):
         input_file = open('input_4.gms', 'r')
-        z = parser.GmsReader(input_file).read()
+        z = Parser.GmsReader(input_file).read()
         generated_output = gwlfe.run(z)
 
         static_output = json.load(open('input_4.output', 'r'))
@@ -78,7 +78,7 @@ class TestOutput(unittest.TestCase):
 
     def test_loads(self):
         input_file = open('input_4.gms', 'r')
-        z = parser.GmsReader(input_file).read()
+        z = Parser.GmsReader(input_file).read()
         generated_output = gwlfe.run(z)
 
         static_output = json.load(open('input_4.output', 'r'))
@@ -113,10 +113,10 @@ class TestOutput(unittest.TestCase):
         from MapShed.
         """
         input_file = open('input_4.gms', 'r')
-        z = parser.GmsReader(input_file).read()
+        z = Parser.GmsReader(input_file).read()
 
         output = StringIO()
-        writer = parser.GmsWriter(output)
+        writer = Parser.GmsWriter(output)
         writer.write(z)
 
         input_file.seek(0)
@@ -128,8 +128,8 @@ class TestOutput(unittest.TestCase):
         """
         Assert that 2 GMS files match.
         """
-        left = parser.iterate_csv_values(gms1)
-        right = parser.iterate_csv_values(gms2)
+        left = Parser.iterate_csv_values(gms1)
+        right = Parser.iterate_csv_values(gms2)
 
         done = False
 

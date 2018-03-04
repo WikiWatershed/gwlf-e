@@ -1,14 +1,14 @@
 import timeit
-from gwlfe import parser
+import os
+from gwlfe import Parser
 from gwlfe import ET
 
-
+basepath = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 setup = """
 from __main__ import ET
 from __main__ import parser
-fp = open('C:/Users/Austin/Documents/GitHub/gwlf-e/test/input_4.gms', 'r')
+fp = open('"""+basepath+'/test/input_4.gms'+"""', 'r')
 z = parser.GmsReader(fp).read()
-
 """
 
 if __name__ == "__main__":
