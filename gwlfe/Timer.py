@@ -1,20 +1,13 @@
 import timeit
-import os
+import numpy as np
 
-basepath = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-setup = """
-from __main__ import parser
-fp = open('""" + basepath + '/test/input_4.gms' + """', 'r')
-z = parser.GmsReader(fp).read()
-"""
+def time_function(method):
+   def timed(*args, **kw):
+       """return the result of the function as well as timing results for it"""
+       function_to_time = timeit.Timer(lambda: method(*args))
+       runs = function_to_time.repeat(number=1,repeat=100)
+       print("100 loops of %r, average time per loop: %f, best: %f, worst: %f"%(method.__name__,np.average(runs),np.min(runs),np.max(runs)))
+       result = method(*args, **kw)
+       return result
 
-def compare_function_calls(call_1,call_2):
-    old_fun = timeit.Timer(call_1, setup=setup)
-    new_fun = timeit.Timer(call_2, setup=setup)
-    try:
-        print("10000 loops, time per loop: " + str(old_fun.timeit(number=100) / 100))
-        print("10000 loops, time per loop: " + str(new_fun.timeit(number=100) / 100))
-    except:
-        old_fun.print_exc()
-        new_fun.print_exc()
-    pass
+   return timed
