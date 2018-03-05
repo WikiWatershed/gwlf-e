@@ -28,7 +28,7 @@ class TestOutput(unittest.TestCase):
 
         for key in constant_keys:
             self.assertIn(key, generated_output)
-            np.testing.assert_almost_equal(generated_output[key], static_output[key], decimal=7, err_msg='',
+            np.testing.assert_almost_equal(generated_output[key], static_output[key], decimal=7, err_msg='%',
                                            verbose=True)
 
     def test_check_monthly(self):
