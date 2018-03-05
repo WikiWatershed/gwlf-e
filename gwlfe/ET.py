@@ -3,7 +3,6 @@ import numpy as np
 from Timer import time_function
 
 
-@time_function
 def DailyET(NYrs, DaysMonth, Temp, DayHrs, KV, PcntET, ETFlag):
     result = np.zeros((NYrs, 12, 31))
     # CALCULATE ET FROM SATURATED VAPOR PRESSURE,
@@ -23,7 +22,6 @@ def DailyET(NYrs, DaysMonth, Temp, DayHrs, KV, PcntET, ETFlag):
                         result[Y][i][j] = ET
     return result
 
-@time_function
 def DailyET_2(Temp, KV, PcntET, DayHrs):
     SatVaPressure = (33.8639 * ((0.00738 * Temp + 0.8072) ** 8 - 0.000019 * np.absolute(1.8 * Temp + 48) + 0.001316))
     PotentET = np.multiply(0.021*((DayHrs ** 2).reshape(12, 1)), SatVaPressure) / (Temp + 273)

@@ -8,6 +8,8 @@ Imported from AnnualMeans.bas
 """
 
 import logging
+from Precipitation import AvPrecipitation
+from Precipitation import AvPrecipitation_2
 
 
 log = logging.getLogger(__name__)
@@ -47,9 +49,12 @@ def CalculateAnnualMeanLoads(z, Y):
     for i in range(12):
         z.ErosSum += z.Erosion[Y][i]
 
+
     # COMPUTE ANNUAL MEANS
+    #z.AvPrecipitation = AvPrecipitation(z.NYrs,z.Precipitation)
+    z.AvPrecipitation = AvPrecipitation_2(z.Precipitation)
     for i in range(12):
-        z.AvPrecipitation[i] += z.Precipitation[Y][i] / z.NYrs
+        # z.AvPrecipitation[i] += z.Precipitation[Y][i] / z.NYrs
         z.AvEvapoTrans[i] += z.Evapotrans[Y][i] / z.NYrs
         z.AvGroundWater[i] += z.GroundWatLE[Y][i] / z.NYrs
 
@@ -114,7 +119,7 @@ def CalculateAnnualMeanLoads(z, Y):
     z.AvTileDrainNSum = sum(z.AvTileDrainN)
     z.AvTileDrainPSum = sum(z.AvTileDrainP)
     z.AvTileDrainSedSum = sum(z.AvTileDrainSed)
-    z.AvPrecipitationSum = sum(z.AvPrecipitation)
+    # z.AvPrecipitationSum = sum(z.AvPrecipitation)
     z.AvEvapoTransSum = sum(z.AvEvapoTrans)
     z.AvGroundWaterSum = sum(z.AvGroundWater)
     z.AvRunoffSum = sum(z.AvRunoff)

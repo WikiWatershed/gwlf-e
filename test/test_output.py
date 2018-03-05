@@ -28,8 +28,7 @@ class TestOutput(unittest.TestCase):
 
         for key in constant_keys:
             self.assertIn(key, generated_output)
-            np.testing.assert_almost_equal(generated_output[key], static_output[key], decimal=7, err_msg='%',
-                                           verbose=True)
+            np.testing.assert_almost_equal(generated_output[key], static_output[key], decimal=7, verbose=True)
 
     def test_check_monthly(self):
         input_file = open('input_4.gms', 'r')
@@ -41,8 +40,9 @@ class TestOutput(unittest.TestCase):
         for i, month in enumerate(generated_output["monthly"]):
             self.assertItemsEqual(generated_output["monthly"][i], static_output["monthly"][i])
             for (key, val) in month.iteritems():
+                print(i)
                 np.testing.assert_almost_equal(generated_output["monthly"][i][key], static_output["monthly"][i][key],
-                                               decimal=7, err_msg='',
+                                               decimal=7,
                                                verbose=True)
 
     def test_meta(self):
