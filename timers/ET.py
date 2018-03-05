@@ -4,6 +4,7 @@ from gwlfe import Parser
 from gwlfe import ET
 
 basepath = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+print basepath
 setup = """
 from __main__ import ET
 from __main__ import parser

@@ -1,4 +1,4 @@
-from enums import ETflag
+from .enums import ETflag
 import numpy as np
 import Timer
 
@@ -25,8 +25,9 @@ def DailyET(NYrs, DaysMonth, Temp, DayHrs, KV, PcntET, ETFlag):
 def DailyET_2(Temp, KV, PcntET, DayHrs):
     SatVaPressure = (33.8639 * ((0.00738 * Temp + 0.8072) ** 8 - 0.000019 * np.absolute(1.8 * Temp + 48) + 0.001316))
     PotentET = np.multiply((DayHrs ** 2).reshape(12, 1), SatVaPressure) / (Temp + 273)
-    return np.multiply((KV * PcntET).reshape(12, 1), PotentET)
-
+    ET = np.multiply((KV * PcntET).reshape(12, 1), PotentET)
+    TempCondition = np.where(Temp>0, ET, 0)
+    return TempCondition
 
 if __name__ == "__main__":
     from os import sys, path
