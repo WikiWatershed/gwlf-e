@@ -29,11 +29,3 @@ def DailyET_2(Temp, KV, PcntET, DayHrs):
     ET = np.multiply((KV * PcntET).reshape(12, 1), PotentET)
     TempCondition = np.where(Temp>0, ET, 0)
     return TempCondition
-
-if __name__ == "__main__":
-    from os import sys, path
-    print(path.dirname(path.dirname(path.abspath(__file__))))
-    sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
-    from gwlfe import Parser
-    Timer.compare_function_calls('DailyET(z.NYrs,z.DaysMonth,z.Temp,z.DayHrs,z.KV,z.PcntET,z.ETFlag)','ET.DailyET_2(z.Temp,z.KV,z.PcntET,z.DayHrs)')
-    pass
