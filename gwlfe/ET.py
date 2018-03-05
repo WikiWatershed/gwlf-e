@@ -2,6 +2,7 @@ from .enums import ETflag
 import numpy as np
 from Timer import time_function
 
+
 @time_function
 def DailyET(NYrs, DaysMonth, Temp, DayHrs, KV, PcntET, ETFlag):
     result = np.zeros((NYrs, 12, 31))
@@ -29,3 +30,6 @@ def DailyET_2(Temp, KV, PcntET, DayHrs):
     ET = np.multiply((KV * PcntET).reshape(12, 1), PotentET)
     TempCondition = np.where(Temp>0, ET, 0)
     return TempCondition
+
+
+

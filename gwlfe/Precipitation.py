@@ -1,5 +1,7 @@
 import numpy as np
+from Timer import time_function
 
+@time_function
 def Precipitation(NYrs, DaysMonth, Prec):
     Precipitation = np.zeros((NYrs,12))
     for Y in range(NYrs):
@@ -16,11 +18,12 @@ def AvPrecipitation(NYrs, precipitation):
             result[i] += precipitation[Y][i] / NYrs
     return result
 
-def Prec_to_numpy(Prec):
-    return np.array(Prec)
-    # result = np.array((NYrs,31))
-
+@time_function
 def Precipitation_2(Prec):
     fastPrecipitation = np.sum(Prec, axis=(2))
     return fastPrecipitation
+
+def AvPrecipitation_2(Precipitation):
+    print(Precipitation)
+    pass
 

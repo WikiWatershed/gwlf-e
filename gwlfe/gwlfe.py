@@ -46,8 +46,8 @@ def run(z):
     # MODEL CALCULATIONS FOR EACH YEAR OF ANALYSIS - WATER BALANCE,
     # NUTRIENTS AND SEDIMENT LOADS
 
-    #z.Precipitation = Precipitation.Precipitation(z.NYrs,z.DaysMonth,z.Prec)
-    z.Precipitation = Precipitation.Precipitation_2(Precipitation.Prec_to_numpy(z.Prec))
+    # z.Precipitation = Precipitation.Precipitation(z.NYrs,z.DaysMonth,z.Prec)
+    z.Precipitation = Precipitation.Precipitation_2(z.Prec)
     #if (z.Precipitation.any() == z.Precipitation_vect.any()):
         #print ('True')
 
