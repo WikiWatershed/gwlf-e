@@ -18,81 +18,74 @@ class TestOutput(unittest.TestCase):
     static output.
     """
 
+    def setUp(self):
+
+        input_file = open('input_4.gms', 'r')
+        self.z = Parser.GmsReader(input_file).read()
+        self.generated_output = gwlfe.run(self.z)
+        self.static_output = json.load(open('input_4.output', 'r'))
+
     def test_constants(self):
         constant_keys = ["MeanFlow", "MeanFlowPerSecond", "AreaTotal"]
-        input_file = open('input_4.gms', 'r')
-        z = Parser.GmsReader(input_file).read()
-        generated_output = gwlfe.run(z)
-
-        static_output = json.load(open('input_4.output', 'r'))
-
         for key in constant_keys:
-            self.assertIn(key, generated_output)
-            np.testing.assert_almost_equal(generated_output[key], static_output[key], decimal=7, verbose=True)
+            self.assertIn(key, self.generated_output)
+            np.testing.assert_almost_equal(self.generated_output[key], self.static_output[key], decimal=7, verbose=True)
 
     def test_check_monthly(self):
-        input_file = open('input_4.gms', 'r')
-        z = Parser.GmsReader(input_file).read()
-        generated_output = gwlfe.run(z)
-
-        static_output = json.load(open('input_4.output', 'r'))
-        self.assertEqual(len(generated_output["monthly"]), len(static_output["monthly"]))
-        for i, month in enumerate(generated_output["monthly"]):
-            self.assertItemsEqual(generated_output["monthly"][i], static_output["monthly"][i])
+        self.assertEqual(len(self.generated_output["monthly"]), len(self.static_output["monthly"]))
+        for i, month in enumerate(self.generated_output["monthly"]):
+            self.assertItemsEqual(self.generated_output["monthly"][i], self.static_output["monthly"][i])
             for (key, val) in month.iteritems():
-                print(i)
-                np.testing.assert_almost_equal(generated_output["monthly"][i][key], static_output["monthly"][i][key],
-                                               decimal=7,
-                                               verbose=True)
+                try:
+                    np.testing.assert_almost_equal(self.generated_output["monthly"][i][key],
+                                                   self.static_output["monthly"][i][key],
+                                                   decimal=7,
+                                                   verbose=True)
+                except AssertionError as e:
+                    print("AssertionError on %s (month %i)" % (key, i))
+                    raise e
 
     def test_meta(self):
-        input_file = open('input_4.gms', 'r')
-        z = Parser.GmsReader(input_file).read()
-        generated_output = gwlfe.run(z)
-
-        static_output = json.load(open('input_4.output', 'r'))
-
-        for key in static_output["meta"].keys():
-            self.assertIn(key, generated_output["meta"])
-            np.testing.assert_almost_equal(generated_output["meta"][key], static_output["meta"][key], decimal=7,
-                                           err_msg='',
+        for key in self.static_output["meta"].keys():
+            self.assertIn(key, self.generated_output["meta"])
+            np.testing.assert_almost_equal(self.generated_output["meta"][key], self.static_output["meta"][key],
+                                           decimal=7,
                                            verbose=True)
 
     def test_summary_loads(self):
-        input_file = open('input_4.gms', 'r')
-        z = Parser.GmsReader(input_file).read()
-        generated_output = gwlfe.run(z)
-
-        static_output = json.load(open('input_4.output', 'r'))
-        self.assertEqual(len(generated_output["SummaryLoads"]), len(static_output["SummaryLoads"]))
-        for i, month in enumerate(generated_output["SummaryLoads"]):
-            self.assertItemsEqual(generated_output["SummaryLoads"][i], static_output["SummaryLoads"][i])
+        self.assertEqual(len(self.generated_output["SummaryLoads"]), len(self.static_output["SummaryLoads"]))
+        for i, month in enumerate(self.generated_output["SummaryLoads"]):
+            self.assertItemsEqual(self.generated_output["SummaryLoads"][i], self.static_output["SummaryLoads"][i])
             for (key, val) in month.iteritems():
-                if (type(key) == float):
-                    np.testing.assert_almost_equal(generated_output["SummaryLoads"][i][key],
-                                                   static_output["SummaryLoads"][i][key],
-                                                   decimal=7, err_msg='',
-                                                   verbose=True)
-                else:
-                    self.assertEqual(generated_output["SummaryLoads"][i][key], static_output["SummaryLoads"][i][key])
+                try:
+                    if (type(key) == float):
+                        np.testing.assert_almost_equal(self.generated_output["SummaryLoads"][i][key],
+                                                       self.static_output["SummaryLoads"][i][key],
+                                                       decimal=7, err_msg='',
+                                                       verbose=True)
+                    else:
+                        self.assertEqual(self.generated_output["SummaryLoads"][i][key],
+                                         self.static_output["SummaryLoads"][i][key])
+                except AssertionError as e:
+                    print("AssertionError on %s (month %i)" % (key, i))
+                    raise e
 
     def test_loads(self):
-        input_file = open('input_4.gms', 'r')
-        z = Parser.GmsReader(input_file).read()
-        generated_output = gwlfe.run(z)
-
-        static_output = json.load(open('input_4.output', 'r'))
-        self.assertEqual(len(generated_output["Loads"]), len(static_output["Loads"]))
-        for i, month in enumerate(generated_output["Loads"]):
-            self.assertItemsEqual(generated_output["Loads"][i], static_output["Loads"][i])
+        self.assertEqual(len(self.generated_output["Loads"]), len(self.static_output["Loads"]))
+        for i, month in enumerate(self.generated_output["Loads"]):
+            self.assertItemsEqual(self.generated_output["Loads"][i], self.static_output["Loads"][i])
             for (key, val) in month.iteritems():
-                if (type(key) == float):
-                    np.testing.assert_almost_equal(generated_output["Loads"][i][key],
-                                                   static_output["Loads"][i][key],
-                                                   decimal=7, err_msg='',
-                                                   verbose=True)
-                else:
-                    self.assertEqual(generated_output["Loads"][i][key], static_output["Loads"][i][key])
+                try:
+                    if (type(key) == float):
+                        np.testing.assert_almost_equal(self.generated_output["Loads"][i][key],
+                                                       self.static_output["Loads"][i][key],
+                                                       decimal=7, err_msg='',
+                                                       verbose=True)
+                    else:
+                        self.assertEqual(self.generated_output["Loads"][i][key], self.static_output["Loads"][i][key])
+                except AssertionError as e:
+                    print("AssertionError on %s (month %i)" % (key, i))
+                    raise e
 
     # def test_generated_output_matches_static_output(self):
     #     """
