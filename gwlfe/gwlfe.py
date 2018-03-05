@@ -14,7 +14,7 @@ import logging
 
 import numpy as np
 
-from enums import ETflag, GrowFlag
+from .enums import ETflag, GrowFlag
 from . import ReadGwlfDataFile
 from . import PrelimCalculations
 from . import CalcCnErosRunoffSed
@@ -48,10 +48,13 @@ def run(z):
 
     #z.Precipitation = Precipitation.Precipitation(z.NYrs,z.DaysMonth,z.Prec)
     z.Precipitation = Precipitation.Precipitation_2(Precipitation.Prec_to_numpy(z.Prec))
+    #if (z.Precipitation.any() == z.Precipitation_vect.any()):
+        #print ('True')
 
     #DailyET_Part1 = ET.DailyET(z.NYrs,z.DaysMonth,z.Temp,z.DayHrs,z.KV,z.PcntET,z.ETFlag)
     DailyET_Part1 = ET.DailyET_2(z.Temp,z.KV,z.PcntET,z.DayHrs)
-
+    #if (DailyET_Part1_vect.any() == DailyET_Part1.any()):
+        #print ('True')
     # z.AvPrecipitation2 = Precipitation.AvPrecipitation(z.NYrs,z.Precipitation)
 
     for Y in range(z.NYrs):
@@ -152,7 +155,7 @@ def run(z):
 
                 # CALCULATE ET FROM SATURATED VAPOR PRESSURE,
                 # HAMON (1961) METHOD
-                # if z.ETFlag is ETflag.HAMON_METHOD:
+                #if z.ETFlag is ETflag.HAMON_METHOD:
                 #     if z.DailyTemp > 0:
                 #         z.SatVaPressure = (33.8639 * ((0.00738 * z.DailyTemp +
                 #                            0.8072) ** 8 - 0.000019 *
@@ -163,6 +166,9 @@ def run(z):
                 #         z.ET = z.KV[i] * z.PotenET * z.PcntET[i]
 
                 # Daily ET calculation
+                #z.DailyET[Y][i][j] = z.ET
+                #if (z.DailyET.any() == DailyET_Part1.any()):
+                    #print ('True')
                 z.ET = DailyET_Part1[Y][i][j]
                 z.DailyET[Y][i][j] = z.ET
 
