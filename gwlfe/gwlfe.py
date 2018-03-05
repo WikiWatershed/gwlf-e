@@ -51,9 +51,10 @@ def run(z):
     #if (z.Precipitation.any() == z.Precipitation_vect.any()):
         #print ('True')
 
-    #DailyET_Part1 = ET.DailyET(z.NYrs,z.DaysMonth,z.Temp,z.DayHrs,z.KV,z.PcntET,z.ETFlag)
-    DailyET_Part1 = ET.DailyET_2(z.Temp,z.KV,z.PcntET,z.DayHrs)
-    #if (DailyET_Part1_vect.any() == DailyET_Part1.any()):
+    DailyET_Part1 = ET.DailyET(z.NYrs,z.DaysMonth,z.Temp,z.DayHrs,z.KV,z.PcntET,z.ETFlag)
+    DailyET_Part1_vect = ET.DailyET_2(z.Temp,z.KV,z.PcntET,z.DayHrs)
+    print (DailyET_Part1_vect - DailyET_Part1_vect)
+    #if (np.array_equal(DailyET_Part1_vect ,DailyET_Part1)):
         #print ('True')
     # z.AvPrecipitation2 = Precipitation.AvPrecipitation(z.NYrs,z.Precipitation)
 

@@ -26,7 +26,7 @@ def DailyET(NYrs, DaysMonth, Temp, DayHrs, KV, PcntET, ETFlag):
 @time_function
 def DailyET_2(Temp, KV, PcntET, DayHrs):
     SatVaPressure = (33.8639 * ((0.00738 * Temp + 0.8072) ** 8 - 0.000019 * np.absolute(1.8 * Temp + 48) + 0.001316))
-    PotentET = np.multiply((DayHrs ** 2).reshape(12, 1), SatVaPressure) / (Temp + 273)
+    PotentET = np.multiply(0.021*((DayHrs ** 2).reshape(12, 1)), SatVaPressure) / (Temp + 273)
     ET = np.multiply((KV * PcntET).reshape(12, 1), PotentET)
     TempCondition = np.where(Temp>0, ET, 0)
     return TempCondition
