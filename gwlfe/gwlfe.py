@@ -26,7 +26,6 @@ from . import WriteOutputFiles
 from . import Precipitation
 from . import ET
 
-
 log = logging.getLogger(__name__)
 
 
@@ -46,15 +45,15 @@ def run(z):
     # MODEL CALCULATIONS FOR EACH YEAR OF ANALYSIS - WATER BALANCE,
     # NUTRIENTS AND SEDIMENT LOADS
 
-    z.Precipitation = Precipitation.Precipitation(z.NYrs,z.DaysMonth,z.Prec)
-    #z.Precipitation = Precipitation.Precipitation_2(z.Prec)
-    #if (z.Precipitation.any() == z.Precipitation_vect.any()):
-        #print ('True')
+    z.Precipitation = Precipitation.Precipitation(z.NYrs, z.DaysMonth, z.Prec)
+    # z.Precipitation = Precipitation.Precipitation_2(z.Prec)
+    # if (z.Precipitation.any() == z.Precipitation_vect.any()):
+    # print ('True')
 
-    DailyET_Part1 = ET.DailyET(z.NYrs,z.DaysMonth,z.Temp,z.DayHrs,z.KV,z.PcntET,z.ETFlag)
-    #DailyET_Part1 = ET.DailyET_2(z.Temp,z.KV,z.PcntET,z.DayHrs)
-    #if (DailyET_Part1_vect.any() == DailyET_Part1.any()):
-        #print ('True')
+    # DailyET_Part1 = ET.DailyET(z.NYrs,z.DaysMonth,z.Temp,z.DayHrs,z.KV,z.PcntET,z.ETFlag)
+    DailyET_Part1 = ET.DailyET_2(z.Temp, z.KV, z.PcntET, z.DayHrs)
+    # if (DailyET_Part1_vect.any() == DailyET_Part1.any()):
+    # print ('True')
 
     for Y in range(z.NYrs):
         # Initialize monthly septic system variables
@@ -154,7 +153,7 @@ def run(z):
 
                 # CALCULATE ET FROM SATURATED VAPOR PRESSURE,
                 # HAMON (1961) METHOD
-                #if z.ETFlag is ETflag.HAMON_METHOD:
+                # if z.ETFlag is ETflag.HAMON_METHOD:
                 #     if z.DailyTemp > 0:
                 #         z.SatVaPressure = (33.8639 * ((0.00738 * z.DailyTemp +
                 #                            0.8072) ** 8 - 0.000019 *
@@ -165,9 +164,9 @@ def run(z):
                 #         z.ET = z.KV[i] * z.PotenET * z.PcntET[i]
 
                 # Daily ET calculation
-                #z.DailyET[Y][i][j] = z.ET
-                #if (z.DailyET.any() == DailyET_Part1.any()):
-                    #print ('True')
+                # z.DailyET[Y][i][j] = z.ET
+                # if (z.DailyET.any() == DailyET_Part1.any()):
+                # print ('True')
                 z.ET = DailyET_Part1[Y][i][j]
                 z.DailyET[Y][i][j] = z.ET
 
@@ -274,14 +273,14 @@ def run(z):
 
             # CALCULATE THE SURFACE RUNOFF PORTION OF TILE DRAINAGE
             z.TileDrainRO[Y][i] = (z.TileDrainRO[Y][i] + [z.AgRunoff[Y][i] *
-                                   z.TileDrainDensity])
+                                                          z.TileDrainDensity])
 
             # CALCULATE SUBSURFACE PORTION OF TILE DRAINAGE
             if z.AreaTotal > 0:
                 z.GwAgLE[Y][i] = (z.GwAgLE[Y][i] + (z.GroundWatLE[Y][i] *
-                                  (z.AgAreaTotal / z.AreaTotal)))
+                                                    (z.AgAreaTotal / z.AreaTotal)))
             z.TileDrainGW[Y][i] = (z.TileDrainGW[Y][i] + [z.GwAgLE[Y][i] *
-                                   z.TileDrainDensity])
+                                                          z.TileDrainDensity])
 
             # ADD THE TWO COMPONENTS OF TILE DRAINAGE FLOW
             z.TileDrain[Y][i] = (z.TileDrain[Y][i] + z.TileDrainRO[Y][i] +
