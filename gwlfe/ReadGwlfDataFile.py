@@ -17,6 +17,9 @@ from . import PrelimQualCalculations
 log = logging.getLogger(__name__)
 
 from GrazingAnimalWorksheet import GRAppManN
+from GrazingAnimalWorksheet import GrazingN
+from GrazingAnimalWorksheet import GRAccManAppN
+from GrazingAnimalWorksheet import GRInitBarnN
 
 
 def ReadAllData(z):
@@ -172,8 +175,10 @@ def ReadAllData(z):
 
     # Read the Grazing Animal Worksheet values
     z.GRAppManN = GRAppManN(z.GRPctManApp, z.InitGrN)
+    z.GrazingN = GrazingN(z.PctGrazing, z.InitGrN)
+    z.GRInitBarnN = GRInitBarnN(z.GRAppManN, z.InitGrN, z.GRPctManApp, z.GrazingN)
     for i in range(12):
-        z.GrazingN[i] = z.PctGrazing[i] * (z.InitGrN / 12)
+        # z.GrazingN[i] = z.PctGrazing[i] * (z.InitGrN / 12)
         z.GrazingP[i] = z.PctGrazing[i] * (z.InitGrP / 12)
         z.GrazingFC[i] = z.PctGrazing[i] * (z.InitGrFC / 12)
 
@@ -186,10 +191,10 @@ def ReadAllData(z):
         z.AvGRStreamN += z.GRStreamN[i]
         z.AvGRStreamP += z.GRStreamP[i]
 
-        z.GRAccManAppN[i] = (z.GRAccManAppN[i] + (z.InitGrN / 12)
-                             - (z.GRPctManApp[i] * z.InitGrN) - z.GrazingN[i])
-        if z.GRAccManAppN[i] < 0:
-            z.GRAccManAppN[i] = 0
+        # z.GRAccManAppN[i] = (z.GRAccManAppN[i] + (z.InitGrN / 12)
+        #                      - (z.GRPctManApp[i] * z.InitGrN) - z.GrazingN[i])
+        # if z.GRAccManAppN[i] < 0:
+        #     z.GRAccManAppN[i] = 0
 
         z.GRAccManAppP[i] = (z.GRAccManAppP[i] + (z.InitGrP / 12)
                              - (z.GRPctManApp[i] * z.InitGrP) - z.GrazingP[i])
@@ -202,9 +207,9 @@ def ReadAllData(z):
             z.GRAccManAppFC[i] = 0
 
         # z.GRAppManN[i] = z.GRPctManApp[i] * z.InitGrN
-        z.GRInitBarnN[i] = z.GRAccManAppN[i] - z.GRAppManN[i]
-        if z.GRInitBarnN[i] < 0:
-            z.GRInitBarnN[i] = 0
+        # z.GRInitBarnN[i] = z.GRAccManAppN[i] - z.GRAppManN[i]
+        # if z.GRInitBarnN[i] < 0:
+        #     z.GRInitBarnN[i] = 0
 
         z.GRAppManP[i] = z.GRPctManApp[i] * z.InitGrP
         z.GRInitBarnP[i] = z.GRAccManAppP[i] - z.GRAppManP[i]
