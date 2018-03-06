@@ -23,8 +23,9 @@ from . import CalcLoads
 from . import StreamBank
 from . import AnnualMeans
 from . import WriteOutputFiles
-from . import Precipitation
-from . import ET
+import Precipitation
+import ET
+import PtSrcFlow
 
 log = logging.getLogger(__name__)
 
@@ -54,6 +55,9 @@ def run(z):
     DailyET_Part1 = ET.DailyET_2(z.Temp, z.KV, z.PcntET, z.DayHrs)
     # if (DailyET_Part1_vect.any() == DailyET_Part1.any()):
     # print ('True')
+
+    # z.PtSrcFlow = PtSrcFlow.PtSrcFlow(z.NYrs,z.PointFlow)
+    z.PtSrcFlow = PtSrcFlow.PtSrcFlow_2(z.NYrs,z.PointFlow)
 
     for Y in range(z.NYrs):
         # Initialize monthly septic system variables
@@ -269,7 +273,7 @@ def run(z):
             # CALCULATE WITHDRAWAL AND POINT SOURCE FLOW VALUES
             z.Withdrawal[Y][i] = (z.Withdrawal[Y][i] + z.StreamWithdrawal[i] +
                                   z.GroundWithdrawal[i])
-            z.PtSrcFlow[Y][i] = z.PtSrcFlow[Y][i] + z.PointFlow[i]
+            # z.PtSrcFlow[Y][i] = z.PtSrcFlow[Y][i] + z.PointFlow[i]
 
             # CALCULATE THE SURFACE RUNOFF PORTION OF TILE DRAINAGE
             z.TileDrainRO[Y][i] = (z.TileDrainRO[Y][i] + [z.AgRunoff[Y][i] *
