@@ -42,10 +42,6 @@ def AnimalOperations(z, Y):
         if z.NGLostManFC[Y][i] < 0:
             z.NGLostManFC[Y][i] = 0
 
-        z.NGLostBarnN[Y][i] = (z.NGInitBarnN[i] * z.NGBarnNRate[i] * z.LossFactAdj[Y][i]
-                               - z.NGInitBarnN[i] * z.NGBarnNRate[i] * z.LossFactAdj[Y][i] * z.AWMSNgPct * z.NgAWMSCoeffN
-                               + z.NGInitBarnN[i] * z.NGBarnNRate[i] * z.LossFactAdj[Y][i] * z.RunContPct * z.RunConCoeffN)
-
         if z.NGLostBarnN[Y][i] > z.NGInitBarnN[i]:
             z.NGLostBarnN[Y][i] = z.NGInitBarnN[i]
         if z.NGLostBarnN[Y][i] < 0:

@@ -61,7 +61,11 @@ def run(z):
     z.PtSrcFlow = PtSrcFlow.PtSrcFlow_2(z.NYrs, z.PointFlow)
 
     z.LossFactAdj = GrazingAnimalWorksheet.LossFactAdj(z.NYrs, z.Precipitation, z.DaysMonth)
-    # z.LossFactAdj_2 = GrazingAnimalWorksheet.LossFactAdj_2()
+    # z.LossFactAdj = GrazingAnimalWorksheet.LossFactAdj_2()
+
+    z.NGLostBarnN = GrazingAnimalWorksheet.NGLostBarnN(z.NYrs,z.NGInitBarnN,z.NGBarnNRate,z.LossFactAdj,z.AWMSNgPct,z.NgAWMSCoeffN,z.RunContPct,z.RunConCoeffN)
+    # z.NGLostBarnN = GrazingAnimalWorksheet.NGLostBarnN_2()
+
     for Y in range(z.NYrs):
         # Initialize monthly septic system variables
         z.MonthPondNitr = np.zeros(12)

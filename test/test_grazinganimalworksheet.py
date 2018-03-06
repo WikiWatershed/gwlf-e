@@ -35,3 +35,9 @@ class TestGrazingAnimalWorksheet(unittest.TestCase):
         np.testing.assert_array_almost_equal(
             GrazingAnimalWorksheet.LossFactAdj(),
             GrazingAnimalWorksheet.LossFactAdj_2(), decimal=7)
+
+    def test_NGLostBarnN(self):
+        z = self.z
+        np.testing.assert_array_almost_equal(
+            GrazingAnimalWorksheet.NGLostBarnN(),
+            GrazingAnimalWorksheet.NGLostBarnN_2(), decimal=7)

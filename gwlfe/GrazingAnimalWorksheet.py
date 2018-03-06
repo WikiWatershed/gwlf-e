@@ -60,3 +60,17 @@ def LossFactAdj(NYrs, Precipitation, DaysMonth):
 
 def LossFactAdj_2():
     pass
+
+
+def NGLostBarnN(NYrs,NGInitBarnN,NGBarnNRate,LossFactAdj, AWMSNgPct, NgAWMSCoeffN,RunContPct,RunConCoeffN):
+    result = np.zeros((NYrs, 12))
+    for Y in range(NYrs):
+        for i in range(12):
+            result[Y][i] = (NGInitBarnN[i] * NGBarnNRate[i] * LossFactAdj[Y][i]
+                           - NGInitBarnN[i] * NGBarnNRate[i] * LossFactAdj[Y][i] * AWMSNgPct * NgAWMSCoeffN
+                           + NGInitBarnN[i] * NGBarnNRate[i] * LossFactAdj[Y][i] * RunContPct * RunConCoeffN)
+    return result
+
+
+def NGLostBarnN_2():
+    pass

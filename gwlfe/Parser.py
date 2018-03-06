@@ -408,7 +408,6 @@ class GmsReader(object):
 
         # Calculated Values for Animal Feeding Operations
         z.NGLostManN = np.zeros((z.DimYrs, 12))
-        z.NGLostBarnN = np.zeros((z.DimYrs, 12))
         z.NGLostManP = np.zeros((z.DimYrs, 12))
         z.NGLostBarnP = np.zeros((z.DimYrs, 12))
         z.NGLostManFC = np.zeros((z.DimYrs, 12))
