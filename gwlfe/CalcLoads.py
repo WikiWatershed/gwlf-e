@@ -11,7 +11,6 @@ import logging
 
 import numpy as np
 
-
 log = logging.getLogger(__name__)
 
 
@@ -20,7 +19,7 @@ def CalculateLoads(z, Y):
     RunoffTotal = 0
     GroundWatLETotal = np.zeros(z.WxYrs)
     EvapotransTotal = 0
-    PtSrcFlowTotal = 0
+    # PtSrcFlowTotal = 0
     WithdrawalTotal = 0
     StreamFlowTotal = 0
     SedYieldTotal = 0
@@ -64,7 +63,7 @@ def CalculateLoads(z, Y):
         RunoffTotal += z.Runoff[Y][i]
         GroundWatLETotal += z.GroundWatLE[Y][i]
         EvapotransTotal += z.Evapotrans[Y][i]
-        PtSrcFlowTotal += z.PtSrcFlow[Y][i]
+        # PtSrcFlowTotal += z.PtSrcFlow[Y][i]
         WithdrawalTotal += z.Withdrawal[Y][i]
         StreamFlowTotal += z.StreamFlow[Y][i]
 

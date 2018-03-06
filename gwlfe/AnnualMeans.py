@@ -12,6 +12,8 @@ from Precipitation import AvPrecipitation
 from Precipitation import AvPrecipitation_2
 from ET import AvEvapoTrans
 from ET import AvEvapoTrans_2
+from PtSrcFlow import AvPtSrcFlow
+from PtSrcFlow import AvPtSrcFlow_2
 
 log = logging.getLogger(__name__)
 
@@ -28,6 +30,8 @@ def CalculateAnnualMeanLoads(z, Y):
     z.CalendarYr = z.WxYrBeg + (Y - 1)
 
     # CALCULATE ANNUAL MEANS FOR STREAM BANK AND TILE DRAINAGE VALUES
+    # z.AvPtSrcFlow = AvPtSrcFlow(z.NYrs,z.PtSrcFlow)
+    z.AvPtSrcFlow = AvPtSrcFlow_2(z.PointFlow)
     for i in range(12):
         z.AvStreamBankEros[i] += z.StreamBankEros[Y][i] / z.NYrs
         z.AvStreamBankN[i] += z.StreamBankN[Y][i] / z.NYrs
@@ -38,7 +42,7 @@ def CalculateAnnualMeanLoads(z, Y):
         if z.SedDelivRatio > 0 and z.Erosion[Y][i] < z.SedYield[Y][i]:
             z.Erosion[Y][i] = z.SedYield[Y][i] / z.SedDelivRatio
 
-        z.AvPtSrcFlow[i] += z.PtSrcFlow[Y][i] / z.NYrs
+        # z.AvPtSrcFlow[i] += z.PtSrcFlow[Y][i] / z.NYrs
         z.AvTileDrain[i] += z.TileDrain[Y][i] / z.NYrs
         z.AvWithdrawal[i] += z.Withdrawal[Y][i] / z.NYrs
         z.AvTileDrainN[i] += z.TileDrainN[Y][i] / z.NYrs
