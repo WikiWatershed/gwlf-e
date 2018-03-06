@@ -14,8 +14,9 @@ import logging
 from .enums import SweepType, YesOrNo
 from . import PrelimQualCalculations
 
-
 log = logging.getLogger(__name__)
+
+from GrazingAnimalWorksheet import GRAppManN
 
 
 def ReadAllData(z):
@@ -50,7 +51,7 @@ def ReadAllData(z):
         # Calculate average area-weighted CN for urban areas
         if z.UrbAreaTotal > 0:
             z.AvCNUrb += ((z.Imper[l] * z.CNI[1][l]
-                          + (1 - z.Imper[l]) * z.CNP[1][l])
+                           + (1 - z.Imper[l]) * z.CNP[1][l])
                           * z.Area[l] / z.UrbAreaTotal)
 
     # Calculate the average CN and percent urban area
@@ -170,6 +171,7 @@ def ReadAllData(z):
             z.NGInitBarnFC[i] = 0
 
     # Read the Grazing Animal Worksheet values
+    z.GRAppManN = GRAppManN(z.GRPctManApp, z.InitGrN)
     for i in range(12):
         z.GrazingN[i] = z.PctGrazing[i] * (z.InitGrN / 12)
         z.GrazingP[i] = z.PctGrazing[i] * (z.InitGrP / 12)
@@ -199,7 +201,7 @@ def ReadAllData(z):
         if z.GRAccManAppFC[i] < 0:
             z.GRAccManAppFC[i] = 0
 
-        z.GRAppManN[i] = z.GRPctManApp[i] * z.InitGrN
+        # z.GRAppManN[i] = z.GRPctManApp[i] * z.InitGrN
         z.GRInitBarnN[i] = z.GRAccManAppN[i] - z.GRAppManN[i]
         if z.GRInitBarnN[i] < 0:
             z.GRInitBarnN[i] = 0

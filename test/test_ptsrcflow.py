@@ -16,6 +16,6 @@ class TestPrecipitation(unittest.TestCase):
 
     def test_AvPtSrcFlow(self):
         z = self.z
-        z.PtSrcFlow = PtSrcFlow.PtSrcFlow_2(z.NYrs, z.PointFlow)git
+        z.PtSrcFlow = PtSrcFlow.PtSrcFlow_2(z.NYrs, z.PointFlow)
         np.testing.assert_array_almost_equal(PtSrcFlow.AvPtSrcFlow_2(z.PointFlow),
                                              PtSrcFlow.AvPtSrcFlow(z.NYrs, z.PtSrcFlow), decimal=7)
