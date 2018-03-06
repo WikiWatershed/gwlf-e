@@ -94,14 +94,6 @@ def AnimalOperations(z, Y):
         if z.GRLostBarnFC[Y][i] < 0:
             z.GRLostBarnFC[Y][i] = 0
 
-        z.GRLossN[Y][i] = ((z.GrazingN[i] - z.GRStreamN[i])
-                           * z.GrazingNRate[i] * z.LossFactAdj[Y][i])
-
-        if z.GRLossN[Y][i] > (z.GrazingN[i] - z.GRStreamN[i]):
-            z.GRLossN[Y][i] = (z.GrazingN[i] - z.GRStreamN[i])
-        if z.GRLossN[Y][i] < 0:
-            z.GRLossN[Y][i] = 0
-
         z.GRLossP[Y][i] = ((z.GrazingP[i] - z.GRStreamP[i])
                            * z.GrazingPRate[i] * z.LossFactAdj[Y][i])
 

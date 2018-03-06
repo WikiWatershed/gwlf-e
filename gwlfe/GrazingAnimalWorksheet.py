@@ -1,5 +1,6 @@
 import numpy as np
 from Timer import time_function
+import json
 
 
 def GRAppManN(GRPctManApp, InitGrN):
@@ -9,7 +10,7 @@ def GRAppManN(GRPctManApp, InitGrN):
     return result
 
 
-def GrAppManN_2():
+def GRAppManN_2():
     pass
 
 
@@ -125,4 +126,20 @@ def GRLostBarnN(NYrs, GRInitBarnN, GRBarnNRate, LossFactAdj, AWMSGrPct, GrAWMSCo
 
 
 def GRLostBarnN_2():
+    pass
+
+
+def GRLossN(NYrs, GrazingN, GRStreamN, GrazingNRate, LossFactAdj):
+    result = np.zeros((NYrs, 12))
+    for Y in range(NYrs):
+        for i in range(12):
+            result[Y][i] = ((GrazingN[i] - GRStreamN[i]) * GrazingNRate[i] * LossFactAdj[Y][i])
+            if result[Y][i] > (GrazingN[i] - GRStreamN[i]):
+                result[Y][i] = (GrazingN[i] - GRStreamN[i])
+            if result[Y][i] < 0:
+                result[Y][i] = 0
+    return result
+
+
+def GRLossN_2():
     pass
