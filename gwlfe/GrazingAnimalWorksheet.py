@@ -81,13 +81,12 @@ def NGLostManN(NYrs, NGAppManN, NGAppNRate, LossFactAdj, NGPctSoilIncRate):
     result = np.zeros((NYrs, 12))
     for Y in range(NYrs):
         for i in range(12):
-            # I think all these conditions are unnecessary
+            result[Y][i] = (NGAppManN[i] * NGAppNRate[i] * LossFactAdj[Y][i]
+                            * (1 - NGPctSoilIncRate[i]))
             if result[Y][i] > NGAppManN[i]:
                 result[Y][i] = NGAppManN[i]
             if result[Y][i] < 0:
                 result[Y][i] = 0
-            result[Y][i] = (NGAppManN[i] * NGAppNRate[i] * LossFactAdj[Y][i]
-                            * (1 - NGPctSoilIncRate[i]))
     return result
 
 
@@ -99,13 +98,31 @@ def GRLostManN(NYrs, GRAppManN, GRAppNRate, LossFactAdj, GRPctSoilIncRate):
     result = np.zeros((NYrs, 12))
     for Y in range(NYrs):
         for i in range(12):
+            result[Y][i] = (GRAppManN[i] * GRAppNRate[i] * LossFactAdj[Y][i] * (1 - GRPctSoilIncRate[i]))
             if result[Y][i] > GRAppManN[i]:
                 result[Y][i] = GRAppManN[i]
             if result[Y][i] < 0:
                 result[Y][i] = 0
-            result[Y][i] = (GRAppManN[i] * GRAppNRate[i] * LossFactAdj[Y][i] * (1 - GRPctSoilIncRate[i]))
     return result
 
 
 def GRLostManN_2():
+    pass
+
+
+def GRLostBarnN(NYrs, GRInitBarnN, GRBarnNRate, LossFactAdj, AWMSGrPct, GrAWMSCoeffN, RunContPct, RunConCoeffN):
+    result = np.zeros((NYrs, 12))
+    for Y in range(NYrs):
+        for i in range(12):
+            result[Y][i] = (GRInitBarnN[i] * GRBarnNRate[i] * LossFactAdj[Y][i]
+                            - GRInitBarnN[i] * GRBarnNRate[i] * LossFactAdj[Y][i] * AWMSGrPct * GrAWMSCoeffN
+                            + GRInitBarnN[i] * GRBarnNRate[i] * LossFactAdj[Y][i] * RunContPct * RunConCoeffN)
+            if result[Y][i] > GRInitBarnN[i]:
+                result[Y][i] = GRInitBarnN[i]
+            if result[Y][i] < 0:
+                result[Y][i] = 0
+    return result
+
+
+def GRLostBarnN_2():
     pass

@@ -536,7 +536,7 @@ def WriteOutput(z):
                 z.n13bdp = z.n13bdp + z.LuDisPhos[y][l]
 
         # Convert animal loads into English units
-        z.GRLBN = z.GRLostBarnNSum[y]
+        # z.GRLBN = z.GRLostBarnNSum[y]
         z.NGLBN = z.NGLostBarnNSum[y]
         z.GRLBP = z.GRLostBarnPSum[y]
         z.NGLBP = z.NGLostBarnPSum[y]

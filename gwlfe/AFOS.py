@@ -76,15 +76,6 @@ def AnimalOperations(z, Y):
         if z.GRLostManFC[Y][i] < 0:
             z.GRLostManFC[Y][i] = 0
 
-        z.GRLostBarnN[Y][i] = (z.GRInitBarnN[i] * z.GRBarnNRate[i] * z.LossFactAdj[Y][i]
-                               - z.GRInitBarnN[i] * z.GRBarnNRate[i] * z.LossFactAdj[Y][i] * z.AWMSGrPct * z.GrAWMSCoeffN
-                               + z.GRInitBarnN[i] * z.GRBarnNRate[i] * z.LossFactAdj[Y][i] * z.RunContPct * z.RunConCoeffN)
-
-        if z.GRLostBarnN[Y][i] > z.GRInitBarnN[i]:
-            z.GRLostBarnN[Y][i] = z.GRInitBarnN[i]
-        if z.GRLostBarnN[Y][i] < 0:
-            z.GRLostBarnN[Y][i] = 0
-
         z.GRLostBarnP[Y][i] = (z.GRInitBarnP[i] * z.GRBarnPRate[i] * z.LossFactAdj[Y][i]
                                - z.GRInitBarnP[i] * z.GRBarnPRate[i] * z.LossFactAdj[Y][i] * z.AWMSGrPct * z.GrAWMSCoeffP
                                + z.GRInitBarnP[i] * z.GRBarnPRate[i] * z.LossFactAdj[Y][i] * z.RunContPct * z.RunConCoeffP)

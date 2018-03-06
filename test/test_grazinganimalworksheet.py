@@ -52,5 +52,12 @@ class TestGrazingAnimalWorksheet(unittest.TestCase):
     def test_GRLostManN(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            GrazingAnimalWorksheet.GRLostManN(),
+            GrazingAnimalWorksheet.GRLostManN(z.NYrs, z.GRAppManN, z.GRAppNRate, z.LossFactAdj, z.GRPctSoilIncRate),
             GrazingAnimalWorksheet.GRLostManN_2(), decimal=7)
+
+    def test_GRLostBarnN(self):
+        z = self.z
+        np.testing.assert_array_almost_equal(
+            GrazingAnimalWorksheet.GRLostBarnN(z.NYrs, z.GRInitBarnN, z.GRBarnNRate, z.LossFactAdj, z.AWMSNgPct,
+                                               z.GrAWMSCoeffN, z.RunContPct, z.RunConCoeffN),
+            GrazingAnimalWorksheet.GRLostBarnN_2(), decimal=7)
