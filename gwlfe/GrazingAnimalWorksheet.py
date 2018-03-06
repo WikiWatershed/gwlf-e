@@ -62,15 +62,34 @@ def LossFactAdj_2():
     pass
 
 
-def NGLostBarnN(NYrs,NGInitBarnN,NGBarnNRate,LossFactAdj, AWMSNgPct, NgAWMSCoeffN,RunContPct,RunConCoeffN):
+def NGLostBarnN(NYrs, NGInitBarnN, NGBarnNRate, LossFactAdj, AWMSNgPct, NgAWMSCoeffN, RunContPct, RunConCoeffN):
     result = np.zeros((NYrs, 12))
     for Y in range(NYrs):
         for i in range(12):
             result[Y][i] = (NGInitBarnN[i] * NGBarnNRate[i] * LossFactAdj[Y][i]
-                           - NGInitBarnN[i] * NGBarnNRate[i] * LossFactAdj[Y][i] * AWMSNgPct * NgAWMSCoeffN
-                           + NGInitBarnN[i] * NGBarnNRate[i] * LossFactAdj[Y][i] * RunContPct * RunConCoeffN)
+                            - NGInitBarnN[i] * NGBarnNRate[i] * LossFactAdj[Y][i] * AWMSNgPct * NgAWMSCoeffN
+                            + NGInitBarnN[i] * NGBarnNRate[i] * LossFactAdj[Y][i] * RunContPct * RunConCoeffN)
     return result
 
 
 def NGLostBarnN_2():
+    pass
+
+
+def NGLostManN(NYrs, NGAppManN, NGAppNRate, LossFactAdj, NGPctSoilIncRate):
+    # Non-grazing animal losses
+    result = np.zeros((NYrs, 12))
+    for Y in range(NYrs):
+        for i in range(12):
+            # I think all these conditions are unnecessary
+            if result[Y][i] > NGAppManN[i]:
+                result[Y][i] = NGAppManN[i]
+            if result[Y][i] < 0:
+                result[Y][i] = 0
+            result[Y][i] = (NGAppManN[i] * NGAppNRate[i] * LossFactAdj[Y][i]
+                            * (1 - NGPctSoilIncRate[i]))
+    return result
+
+
+def NGLostManN_s():
     pass

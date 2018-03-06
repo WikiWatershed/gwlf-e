@@ -33,11 +33,17 @@ class TestGrazingAnimalWorksheet(unittest.TestCase):
     def test_LossFactAdj(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            GrazingAnimalWorksheet.LossFactAdj(),
+            GrazingAnimalWorksheet.LossFactAdj(z.NYrs, z.Precipitation, z.DaysMonth),
             GrazingAnimalWorksheet.LossFactAdj_2(), decimal=7)
 
     def test_NGLostBarnN(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            GrazingAnimalWorksheet.NGLostBarnN(),
+            GrazingAnimalWorksheet.NGLostBarnN(z.NYrs,z.NGInitBarnN,z.NGBarnNRate,z.LossFactAdj,z.AWMSNgPct,z.NgAWMSCoeffN,z.RunContPct,z.RunConCoeffN),
             GrazingAnimalWorksheet.NGLostBarnN_2(), decimal=7)
+
+    def test_NGLostManN(self):
+        z = self.z
+        np.testing.assert_array_almost_equal(
+            GrazingAnimalWorksheet.NGLostManN(),
+            GrazingAnimalWorksheet.NGLostManN_2(), decimal=7)

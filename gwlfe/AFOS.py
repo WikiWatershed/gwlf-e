@@ -15,16 +15,10 @@ log = logging.getLogger(__name__)
 
 def AnimalOperations(z, Y):
     for i in range(12):
-        # z.LossFactAdj[Y][i] = (z.Precipitation[Y][i] / z.DaysMonth[Y][i]) / 0.3301
 
         # Non-grazing animal losses
-        z.NGLostManN[Y][i] = (z.NGAppManN[i] * z.NGAppNRate[i] * z.LossFactAdj[Y][i]
-                              * (1 - z.NGPctSoilIncRate[i]))
 
-        if z.NGLostManN[Y][i] > z.NGAppManN[i]:
-            z.NGLostManN[Y][i] = z.NGAppManN[i]
-        if z.NGLostManN[Y][i] < 0:
-            z.NGLostManN[Y][i] = 0
+
 
         z.NGLostManP[Y][i] = (z.NGAppManP[i] * z.NGAppPRate[i] * z.LossFactAdj[Y][i]
                               * (1 - z.NGPctSoilIncRate[i]))
