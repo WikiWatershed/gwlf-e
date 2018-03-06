@@ -35,6 +35,7 @@ def CalculateAnnualMeanLoads(z, Y):
     z.AvPtSrcFlow = AvPtSrcFlow_2(z.PointFlow)
 
     z.AvWithdrawal = AvWithdrawal(z.NYrs,z.Withdrawal)
+    # z.AvWithdrawal = AvWithdrawal_2()
     for i in range(12):
         z.AvStreamBankEros[i] += z.StreamBankEros[Y][i] / z.NYrs
         z.AvStreamBankN[i] += z.StreamBankN[Y][i] / z.NYrs
