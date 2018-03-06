@@ -69,6 +69,9 @@ def run(z):
     z.NGLostManN = GrazingAnimalWorksheet.NGLostManN(z.NYrs,z.NGAppManN, z.NGAppNRate, z.LossFactAdj, z.NGPctSoilIncRate)
     # z.NGLostManN = GrazingAnimalWorksheet.NGLostManN_2()
 
+    z.GRLostManN = GrazingAnimalWorksheet.GRLostManN(z.NYrs,z.GRAppManN,z.GRAppNRate,z.LossFactAdj,z.GRPctSoilIncRate)
+    # z.GRLostManN = GrazingAnimalWorksheet.GRLostManN_2()
+
     for Y in range(z.NYrs):
         # Initialize monthly septic system variables
         z.MonthPondNitr = np.zeros(12)

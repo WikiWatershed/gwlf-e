@@ -91,5 +91,21 @@ def NGLostManN(NYrs, NGAppManN, NGAppNRate, LossFactAdj, NGPctSoilIncRate):
     return result
 
 
-def NGLostManN_s():
+def NGLostManN_2():
+    pass
+
+
+def GRLostManN(NYrs, GRAppManN, GRAppNRate, LossFactAdj, GRPctSoilIncRate):
+    result = np.zeros((NYrs, 12))
+    for Y in range(NYrs):
+        for i in range(12):
+            if result[Y][i] > GRAppManN[i]:
+                result[Y][i] = GRAppManN[i]
+            if result[Y][i] < 0:
+                result[Y][i] = 0
+            result[Y][i] = (GRAppManN[i] * GRAppNRate[i] * LossFactAdj[Y][i] * (1 - GRPctSoilIncRate[i]))
+    return result
+
+
+def GRLostManN_2():
     pass

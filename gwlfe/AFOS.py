@@ -60,14 +60,6 @@ def AnimalOperations(z, Y):
             z.NGLostBarnFC[Y][i] = 0
 
         # Grazing animal losses
-        z.GRLostManN[Y][i] = (z.GRAppManN[i] * z.GRAppNRate[i] * z.LossFactAdj[Y][i]
-                              * (1 - z.GRPctSoilIncRate[i]))
-
-        if z.GRLostManN[Y][i] > z.GRAppManN[i]:
-            z.GRLostManN[Y][i] = z.GRAppManN[i]
-        if z.GRLostManN[Y][i] < 0:
-            z.GRLostManN[Y][i] = 0
-
         z.GRLostManP[Y][i] = (z.GRAppManP[i] * z.GRAppPRate[i] * z.LossFactAdj[Y][i]
                               * (1 - z.GRPctSoilIncRate[i]))
 
