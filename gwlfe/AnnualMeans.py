@@ -14,6 +14,7 @@ from ET import AvEvapoTrans
 from ET import AvEvapoTrans_2
 from PtSrcFlow import AvPtSrcFlow
 from PtSrcFlow import AvPtSrcFlow_2
+from Withdrawal import AvWithdrawal
 
 log = logging.getLogger(__name__)
 
@@ -32,6 +33,8 @@ def CalculateAnnualMeanLoads(z, Y):
     # CALCULATE ANNUAL MEANS FOR STREAM BANK AND TILE DRAINAGE VALUES
     # z.AvPtSrcFlow = AvPtSrcFlow(z.NYrs,z.PtSrcFlow)
     z.AvPtSrcFlow = AvPtSrcFlow_2(z.PointFlow)
+
+    z.AvWithdrawal = AvWithdrawal(z.NYrs,z.Withdrawal)
     for i in range(12):
         z.AvStreamBankEros[i] += z.StreamBankEros[Y][i] / z.NYrs
         z.AvStreamBankN[i] += z.StreamBankN[Y][i] / z.NYrs
@@ -44,7 +47,7 @@ def CalculateAnnualMeanLoads(z, Y):
 
         # z.AvPtSrcFlow[i] += z.PtSrcFlow[Y][i] / z.NYrs
         z.AvTileDrain[i] += z.TileDrain[Y][i] / z.NYrs
-        z.AvWithdrawal[i] += z.Withdrawal[Y][i] / z.NYrs
+        # z.AvWithdrawal[i] += z.Withdrawal[Y][i] / z.NYrs
         z.AvTileDrainN[i] += z.TileDrainN[Y][i] / z.NYrs
         z.AvTileDrainP[i] += z.TileDrainP[Y][i] / z.NYrs
         z.AvTileDrainSed[i] += z.TileDrainSed[Y][i] / z.NYrs

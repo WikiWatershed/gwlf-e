@@ -26,6 +26,7 @@ from . import WriteOutputFiles
 import Precipitation
 import ET
 import PtSrcFlow
+import Withdrawal
 
 log = logging.getLogger(__name__)
 
@@ -58,6 +59,9 @@ def run(z):
 
     # z.PtSrcFlow = PtSrcFlow.PtSrcFlow(z.NYrs,z.PointFlow)
     z.PtSrcFlow = PtSrcFlow.PtSrcFlow_2(z.NYrs,z.PointFlow)
+
+    z.Withdrawal = Withdrawal.Withdrawal(z.NYrs, z.StreamWithdrawal, z.GroundWithdrawal)
+    # z.Withdrawal = Withdrawal.Withdrawal_2(z.NYrs, z.StreamWithdrawal, z.GroundWithdrawal)
 
     for Y in range(z.NYrs):
         # Initialize monthly septic system variables
@@ -271,8 +275,8 @@ def run(z):
                 z.MonthDischargePhos[i] = z.MonthDischargePhos[i] + z.PhosSepticLoad
 
             # CALCULATE WITHDRAWAL AND POINT SOURCE FLOW VALUES
-            z.Withdrawal[Y][i] = (z.Withdrawal[Y][i] + z.StreamWithdrawal[i] +
-                                  z.GroundWithdrawal[i])
+            # z.Withdrawal[Y][i] = (z.Withdrawal[Y][i] + z.StreamWithdrawal[i] +
+            #                       z.GroundWithdrawal[i])
             # z.PtSrcFlow[Y][i] = z.PtSrcFlow[Y][i] + z.PointFlow[i]
 
             # CALCULATE THE SURFACE RUNOFF PORTION OF TILE DRAINAGE

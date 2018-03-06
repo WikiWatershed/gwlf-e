@@ -4,7 +4,7 @@ from gwlfe import Parser
 from gwlfe import PtSrcFlow
 
 
-class TestPrecipitation(unittest.TestCase):
+class TestPtSrcFlow(unittest.TestCase):
     def setUp(self):
         input_file = open('input_4.gms', 'r')
         self.z = Parser.GmsReader(input_file).read()
@@ -16,6 +16,6 @@ class TestPrecipitation(unittest.TestCase):
 
     def test_AvPtSrcFlow(self):
         z = self.z
-        z.PtSrcFlow = PtSrcFlow.PtSrcFlow_2(z.NYrs, z.PointFlow)git
+        z.PtSrcFlow = PtSrcFlow.PtSrcFlow_2(z.NYrs, z.PointFlow)
         np.testing.assert_array_almost_equal(PtSrcFlow.AvPtSrcFlow_2(z.PointFlow),
                                              PtSrcFlow.AvPtSrcFlow(z.NYrs, z.PtSrcFlow), decimal=7)
