@@ -48,3 +48,15 @@ def GRInitBarnN(GRAppManN, InitGrN, GRPctManApp, GrazingN):
 
 def GRInitBarnN_2():
     pass
+
+
+def LossFactAdj(NYrs, Precipitation, DaysMonth):
+    result = np.zeros((NYrs, 12))
+    for Y in range(NYrs):
+        for i in range(12):
+            result[Y][i] = (Precipitation[Y][i] / DaysMonth[Y][i]) / 0.3301
+    return result
+
+
+def LossFactAdj_2():
+    pass

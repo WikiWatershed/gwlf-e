@@ -423,7 +423,7 @@ class GmsReader(object):
         z.GRLostManFC = np.zeros((z.DimYrs, 12))
         z.GRLostBarnFC = np.zeros((z.DimYrs, 12))
         z.GRLossFC = np.zeros((z.DimYrs, 12))
-        z.LossFactAdj = np.zeros((z.DimYrs, 12))
+        # z.LossFactAdj = np.zeros((z.DimYrs, 12))
         z.AnimalN = np.zeros((z.DimYrs, 12))
         z.AnimalP = np.zeros((z.DimYrs, 12))
         z.AnimalFC = np.zeros((z.DimYrs, 12))

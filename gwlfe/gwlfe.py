@@ -26,6 +26,7 @@ from . import WriteOutputFiles
 import Precipitation
 import ET
 import PtSrcFlow
+import GrazingAnimalWorksheet
 
 log = logging.getLogger(__name__)
 
@@ -57,8 +58,10 @@ def run(z):
     # print ('True')
 
     # z.PtSrcFlow = PtSrcFlow.PtSrcFlow(z.NYrs,z.PointFlow)
-    z.PtSrcFlow = PtSrcFlow.PtSrcFlow_2(z.NYrs,z.PointFlow)
+    z.PtSrcFlow = PtSrcFlow.PtSrcFlow_2(z.NYrs, z.PointFlow)
 
+    z.LossFactAdj = GrazingAnimalWorksheet.LossFactAdj(z.NYrs, z.Precipitation, z.DaysMonth)
+    # z.LossFactAdj_2 = GrazingAnimalWorksheet.LossFactAdj_2()
     for Y in range(z.NYrs):
         # Initialize monthly septic system variables
         z.MonthPondNitr = np.zeros(12)
