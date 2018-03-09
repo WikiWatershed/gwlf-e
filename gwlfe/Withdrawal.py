@@ -9,9 +9,12 @@ def Withdrawal(NYrs, StreamWithdrawal, GroundWithdrawal):
             result[Y][i] = (result[Y][i] + StreamWithdrawal[i] + GroundWithdrawal[i])
     return result
 
-
-def Withdrawal_2():
-    pass
+@time_function
+def Withdrawal_2(NYrs, StreamWithdrawal, GroundWithdrawal):
+    # Appears the same for every year by month
+    result = np.zeros(12)
+    result = np.add(StreamWithdrawal,GroundWithdrawal)
+    return np.reshape( np.repeat(result, NYrs),(NYrs,12) )
 
 
 def AvWithdrawal(NYrs, Withdrawal):
@@ -21,6 +24,9 @@ def AvWithdrawal(NYrs, Withdrawal):
             result[i] += Withdrawal[Y][i] / NYrs
     return result
 
-
-def AvWithdrawal_2():
-    pass
+@time_function
+def AvWithdrawal_2(NYrs, Withdrawal):
+    # I am not sure this is necessary as every year will be equal based on the definition of Withdraw
+    result = np.zeros((12,))
+    result = np.average(Withdrawal,axis=0)
+    return result
