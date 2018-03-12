@@ -2,7 +2,7 @@ import numpy as np
 from Timer import time_function
 import json
 
-
+# Grazing animal losses
 def GRAppManN(GRPctManApp, InitGrN):
     result = np.zeros((12,))
     for i in range(12):
@@ -49,51 +49,6 @@ def GRInitBarnN(GRAppManN, InitGrN, GRPctManApp, GrazingN):
 
 def GRInitBarnN_2():
     pass
-
-
-def LossFactAdj(NYrs, Precipitation, DaysMonth):
-    result = np.zeros((NYrs, 12))
-    for Y in range(NYrs):
-        for i in range(12):
-            result[Y][i] = (Precipitation[Y][i] / DaysMonth[Y][i]) / 0.3301
-    return result
-
-
-def LossFactAdj_2():
-    pass
-
-
-def NGLostBarnN(NYrs, NGInitBarnN, NGBarnNRate, LossFactAdj, AWMSNgPct, NgAWMSCoeffN, RunContPct, RunConCoeffN):
-    result = np.zeros((NYrs, 12))
-    for Y in range(NYrs):
-        for i in range(12):
-            result[Y][i] = (NGInitBarnN[i] * NGBarnNRate[i] * LossFactAdj[Y][i]
-                            - NGInitBarnN[i] * NGBarnNRate[i] * LossFactAdj[Y][i] * AWMSNgPct * NgAWMSCoeffN
-                            + NGInitBarnN[i] * NGBarnNRate[i] * LossFactAdj[Y][i] * RunContPct * RunConCoeffN)
-    return result
-
-
-def NGLostBarnN_2():
-    pass
-
-
-def NGLostManN(NYrs, NGAppManN, NGAppNRate, LossFactAdj, NGPctSoilIncRate):
-    # Non-grazing animal losses
-    result = np.zeros((NYrs, 12))
-    for Y in range(NYrs):
-        for i in range(12):
-            result[Y][i] = (NGAppManN[i] * NGAppNRate[i] * LossFactAdj[Y][i]
-                            * (1 - NGPctSoilIncRate[i]))
-            if result[Y][i] > NGAppManN[i]:
-                result[Y][i] = NGAppManN[i]
-            if result[Y][i] < 0:
-                result[Y][i] = 0
-    return result
-
-
-def NGLostManN_2():
-    pass
-
 
 def GRLostManN(NYrs, GRAppManN, GRAppNRate, LossFactAdj, GRPctSoilIncRate):
     result = np.zeros((NYrs, 12))
@@ -142,4 +97,51 @@ def GRLossN(NYrs, GrazingN, GRStreamN, GrazingNRate, LossFactAdj):
 
 
 def GRLossN_2():
+    pass
+
+# Non-grazing animal losses
+def NGLostBarnN(NYrs, NGInitBarnN, NGBarnNRate, LossFactAdj, AWMSNgPct, NgAWMSCoeffN, RunContPct, RunConCoeffN):
+    result = np.zeros((NYrs, 12))
+    for Y in range(NYrs):
+        for i in range(12):
+            result[Y][i] = (NGInitBarnN[i] * NGBarnNRate[i] * LossFactAdj[Y][i]
+                            - NGInitBarnN[i] * NGBarnNRate[i] * LossFactAdj[Y][i] * AWMSNgPct * NgAWMSCoeffN
+                            + NGInitBarnN[i] * NGBarnNRate[i] * LossFactAdj[Y][i] * RunContPct * RunConCoeffN)
+            if result[Y][i] > NGInitBarnN[i]:
+                result[Y][i] = NGInitBarnN[i]
+            if result[Y][i] < 0:
+                result[Y][i] = 0
+    return result
+
+
+def NGLostBarnN_2():
+    pass
+
+
+def NGLostManN(NYrs, NGAppManN, NGAppNRate, LossFactAdj, NGPctSoilIncRate):
+    # Non-grazing animal losses
+    result = np.zeros((NYrs, 12))
+    for Y in range(NYrs):
+        for i in range(12):
+            result[Y][i] = (NGAppManN[i] * NGAppNRate[i] * LossFactAdj[Y][i]
+                            * (1 - NGPctSoilIncRate[i]))
+            if result[Y][i] > NGAppManN[i]:
+                result[Y][i] = NGAppManN[i]
+            if result[Y][i] < 0:
+                result[Y][i] = 0
+    return result
+
+
+def NGLostManN_2():
+    pass
+
+def LossFactAdj(NYrs, Precipitation, DaysMonth):
+    result = np.zeros((NYrs, 12))
+    for Y in range(NYrs):
+        for i in range(12):
+            result[Y][i] = (Precipitation[Y][i] / DaysMonth[Y][i]) / 0.3301
+    return result
+
+
+def LossFactAdj_2():
     pass

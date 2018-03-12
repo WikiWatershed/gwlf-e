@@ -60,26 +60,27 @@ def run(z):
     # z.PtSrcFlow = PtSrcFlow.PtSrcFlow(z.NYrs,z.PointFlow)
     z.PtSrcFlow = PtSrcFlow.PtSrcFlow_2(z.NYrs, z.PointFlow)
 
-    z.LossFactAdj = GrazingAnimalWorksheet.LossFactAdj(z.NYrs, z.Precipitation, z.DaysMonth)
+    LossFactAdj = GrazingAnimalWorksheet.LossFactAdj(z.NYrs, z.Precipitation, z.DaysMonth)
+    z.LossFactAdj = LossFactAdj#not fully removed
     # z.LossFactAdj = GrazingAnimalWorksheet.LossFactAdj_2()
 
-    z.NGLostBarnN = GrazingAnimalWorksheet.NGLostBarnN(z.NYrs, z.NGInitBarnN, z.NGBarnNRate, z.LossFactAdj, z.AWMSNgPct,
+    z.NGLostBarnN = GrazingAnimalWorksheet.NGLostBarnN(z.NYrs, z.NGInitBarnN, z.NGBarnNRate, LossFactAdj, z.AWMSNgPct,
                                                        z.NgAWMSCoeffN, z.RunContPct, z.RunConCoeffN)
     # z.NGLostBarnN = GrazingAnimalWorksheet.NGLostBarnN_2()
 
-    z.NGLostManN = GrazingAnimalWorksheet.NGLostManN(z.NYrs, z.NGAppManN, z.NGAppNRate, z.LossFactAdj,
+    z.NGLostManN = GrazingAnimalWorksheet.NGLostManN(z.NYrs, z.NGAppManN, z.NGAppNRate, LossFactAdj,
                                                      z.NGPctSoilIncRate)
     # z.NGLostManN = GrazingAnimalWorksheet.NGLostManN_2()
 
-    z.GRLostManN = GrazingAnimalWorksheet.GRLostManN(z.NYrs, z.GRAppManN, z.GRAppNRate, z.LossFactAdj,
+    z.GRLostManN = GrazingAnimalWorksheet.GRLostManN(z.NYrs, z.GRAppManN, z.GRAppNRate, LossFactAdj,
                                                      z.GRPctSoilIncRate)
     # z.GRLostManN = GrazingAnimalWorksheet.GRLostManN_2()
 
-    z.GRLostBarnN = GrazingAnimalWorksheet.GRLostBarnN(z.NYrs, z.GRInitBarnN, z.GRBarnNRate, z.LossFactAdj, z.AWMSNgPct,
+    z.GRLostBarnN = GrazingAnimalWorksheet.GRLostBarnN(z.NYrs, z.GRInitBarnN, z.GRBarnNRate, LossFactAdj, z.AWMSNgPct,
                                                        z.GrAWMSCoeffN, z.RunContPct, z.RunConCoeffN)
     # z.GRLostBarnN = GrazingAnimalWorksheet.GRLostManN_2()
 
-    z.GRLossN = GrazingAnimalWorksheet.GRLossN(z.NYrs, z.GrazingN, z.GRStreamN, z.GrazingNRate, z.LossFactAdj)
+    z.GRLossN = GrazingAnimalWorksheet.GRLossN(z.NYrs, z.GrazingN, z.GRStreamN, z.GrazingNRate, LossFactAdj)
     # z.GRLossN = GrazingAnimalWorksheet.GRLossN_2()
 
     for Y in range(z.NYrs):
