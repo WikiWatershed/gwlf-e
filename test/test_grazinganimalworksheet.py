@@ -22,30 +22,30 @@ class TestGrazingAnimalWorksheet(unittest.TestCase):
     def test_GrAppManN(self):
         z = self.z
         np.testing.assert_array_almost_equal(GrazingAnimalWorksheet.GRAppManN(z.GRPctManApp, z.InitGrN),
-                                             GrazingAnimalWorksheet.GRAppManN_2(), decimal=7)
+                                             GrazingAnimalWorksheet.GRAppManN_2(z.GRPctManApp, z.InitGrN), decimal=7)
 
     def test_GrazingN(self):
         z = self.z
         np.testing.assert_array_almost_equal(GrazingAnimalWorksheet.GrazingN(z.PctGrazing, z.InitGrN),
-                                             GrazingAnimalWorksheet.GrazingN_2(), decimal=7)
+                                             GrazingAnimalWorksheet.GrazingN_2(z.PctGrazing, z.InitGrN), decimal=7)
 
     def test_GRAccManAppN(self):
         z = self.z
         np.testing.assert_array_almost_equal(
             GrazingAnimalWorksheet.GRAccManAppN(z.InitGrN, z.GRPctManApp, self.mock_GrazingN),
-            GrazingAnimalWorksheet.GRAccManAppN_2(), decimal=7)
+            GrazingAnimalWorksheet.GRAccManAppN_2(z.InitGrN, z.GRPctManApp, self.mock_GrazingN), decimal=7)
 
     def test_GRInitBarnN(self):
         z = self.z
         np.testing.assert_array_almost_equal(
             GrazingAnimalWorksheet.GRInitBarnN(self.mock_GRAppManN, z.InitGrN, z.GRPctManApp, self.mock_GrazingN),
-            GrazingAnimalWorksheet.GRInitBarnN_2(), decimal=7)
+            GrazingAnimalWorksheet.GRInitBarnN_2(self.mock_GRAppManN, z.InitGrN, z.GRPctManApp, self.mock_GrazingN), decimal=7)
 
     def test_LossFactAdj(self):
         z = self.z
         np.testing.assert_array_almost_equal(
             GrazingAnimalWorksheet.LossFactAdj(z.NYrs, z.Precipitation, z.DaysMonth),
-            GrazingAnimalWorksheet.LossFactAdj_2(), decimal=7)
+            GrazingAnimalWorksheet.LossFactAdj_2(z.NYrs, z.Precipitation, z.DaysMonth), decimal=7)
 
     def test_NGLostBarnN(self):
         z = self.z
@@ -53,21 +53,24 @@ class TestGrazingAnimalWorksheet(unittest.TestCase):
         np.testing.assert_array_almost_equal(
             GrazingAnimalWorksheet.NGLostBarnN(z.NYrs, z.NGInitBarnN, z.NGBarnNRate, self.mock_LossFactAdj, z.AWMSNgPct,
                                                z.NgAWMSCoeffN, z.RunContPct, z.RunConCoeffN),
-            GrazingAnimalWorksheet.NGLostBarnN_2(), decimal=7)
+            GrazingAnimalWorksheet.NGLostBarnN_2(z.NYrs, z.NGInitBarnN, z.NGBarnNRate, self.mock_LossFactAdj, z.AWMSNgPct,
+                                               z.NgAWMSCoeffN, z.RunContPct, z.RunConCoeffN), decimal=7)
 
     def test_NGLostManN(self):
         z = self.z
         np.testing.assert_array_almost_equal(
             GrazingAnimalWorksheet.NGLostManN(z.NYrs, z.NGAppManN, z.NGAppNRate, self.mock_LossFactAdj,
                                               z.NGPctSoilIncRate),
-            GrazingAnimalWorksheet.NGLostManN_2(), decimal=7)
+            GrazingAnimalWorksheet.NGLostManN_2(z.NYrs, z.NGAppManN, z.NGAppNRate, self.mock_LossFactAdj,
+                                              z.NGPctSoilIncRate), decimal=7)
 
     def test_GRLostManN(self):
         z = self.z
         np.testing.assert_array_almost_equal(
             GrazingAnimalWorksheet.GRLostManN(z.NYrs, self.mock_GRAppManN, z.GRAppNRate, self.mock_LossFactAdj,
                                               z.GRPctSoilIncRate),
-            GrazingAnimalWorksheet.GRLostManN_2(), decimal=7)
+            GrazingAnimalWorksheet.GRLostManN_2(z.NYrs, self.mock_GRAppManN, z.GRAppNRate, self.mock_LossFactAdj,
+                                              z.GRPctSoilIncRate), decimal=7)
 
     def test_GRLostBarnN(self):
         z = self.z
@@ -75,11 +78,14 @@ class TestGrazingAnimalWorksheet(unittest.TestCase):
             GrazingAnimalWorksheet.GRLostBarnN(z.NYrs, self.mock_GRInitBarnN, z.GRBarnNRate, self.mock_LossFactAdj,
                                                z.AWMSNgPct,
                                                z.GrAWMSCoeffN, z.RunContPct, z.RunConCoeffN),
-            GrazingAnimalWorksheet.GRLostBarnN_2(), decimal=7)
+            GrazingAnimalWorksheet.GRLostBarnN_2(z.NYrs, self.mock_GRInitBarnN, z.GRBarnNRate, self.mock_LossFactAdj,
+                                               z.AWMSNgPct,
+                                               z.GrAWMSCoeffN, z.RunContPct, z.RunConCoeffN), decimal=7)
 
     def test_GRLossN(self):
         z = self.z
         np.testing.assert_array_almost_equal(
             GrazingAnimalWorksheet.GRLossN(z.NYrs, self.mock_GrazingN, z.GRStreamN, z.GrazingNRate,
                                            self.mock_LossFactAdj),
-            GrazingAnimalWorksheet.GRLossN_2(), decimal=7)
+            GrazingAnimalWorksheet.GRLossN_2(z.NYrs, self.mock_GrazingN, z.GRStreamN, z.GrazingNRate,
+                                           self.mock_LossFactAdj), decimal=7)

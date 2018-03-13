@@ -3,6 +3,7 @@ from Timer import time_function
 import json
 
 # Grazing animal losses
+
 def GRAppManN(GRPctManApp, InitGrN):
     result = np.zeros((12,))
     for i in range(12):
@@ -10,8 +11,8 @@ def GRAppManN(GRPctManApp, InitGrN):
     return result
 
 
-def GRAppManN_2():
-    pass
+def GRAppManN_2(GRPctManApp, InitGrN):
+    return GRPctManApp * InitGrN
 
 
 def GrazingN(PctGrazing, InitGrN):
@@ -21,9 +22,8 @@ def GrazingN(PctGrazing, InitGrN):
     return result
 
 
-def GrazingN_2():
-    pass
-
+def GrazingN_2(PctGrazing, InitGrN):
+    return PctGrazing * (InitGrN / 12)
 
 def GRAccManAppN(InitGrN, GRPctManApp, GrazingN):
     result = np.zeros((12,))
@@ -34,9 +34,10 @@ def GRAccManAppN(InitGrN, GRPctManApp, GrazingN):
             result[i] = 0
     return result
 
-
-def GRAccManAppN_2():
-    pass
+def GRAccManAppN_2(InitGrN, GRPctManApp, GrazingN):
+    result = (np.repeat(InitGrN/12,12) ) - (GRPctManApp * np.repeat(InitGrN,12)) - GrazingN
+    result = np.maximum(result,0)
+    return result
 
 
 def GRInitBarnN(GRAppManN, InitGrN, GRPctManApp, GrazingN):
@@ -47,8 +48,10 @@ def GRInitBarnN(GRAppManN, InitGrN, GRPctManApp, GrazingN):
     return result
 
 
-def GRInitBarnN_2():
-    pass
+def GRInitBarnN_2(GRAppManN, InitGrN, GRPctManApp, GrazingN):
+    result = GRAccManAppN_2(InitGrN, GRPctManApp, GrazingN) - GRAppManN
+    return result
+
 
 def GRLostManN(NYrs, GRAppManN, GRAppNRate, LossFactAdj, GRPctSoilIncRate):
     result = np.zeros((NYrs, 12))
@@ -62,8 +65,11 @@ def GRLostManN(NYrs, GRAppManN, GRAppNRate, LossFactAdj, GRPctSoilIncRate):
     return result
 
 
-def GRLostManN_2():
-    pass
+def GRLostManN_2(NYrs, GRAppManN, GRAppNRate, LossFactAdj, GRPctSoilIncRate):
+    result = (np.tile( GRAppManN,NYrs) * np.tile( GRAppNRate, NYrs) * np.ndarray.flatten(LossFactAdj) * np.tile(( 1 - GRPctSoilIncRate),NYrs ))
+    result = np.minimum(result, np.tile( GRAppManN, NYrs ) )
+    result = np.maximum(result,0)
+    return np.reshape(result,(NYrs,12))
 
 
 def GRLostBarnN(NYrs, GRInitBarnN, GRBarnNRate, LossFactAdj, AWMSGrPct, GrAWMSCoeffN, RunContPct, RunConCoeffN):
@@ -80,8 +86,11 @@ def GRLostBarnN(NYrs, GRInitBarnN, GRBarnNRate, LossFactAdj, AWMSGrPct, GrAWMSCo
     return result
 
 
-def GRLostBarnN_2():
-    pass
+def GRLostBarnN_2(NYrs, GRInitBarnN, GRBarnNRate, LossFactAdj, AWMSGrPct, GrAWMSCoeffN, RunContPct, RunConCoeffN):
+    result = ( np.tile(GRInitBarnN, NYrs) * np.tile(GRBarnNRate,NYrs) * np.ndarray.flatten(LossFactAdj) * (1 - (AWMSGrPct * GrAWMSCoeffN) + (RunContPct * RunContPct)  ) )
+    result = np.minimum(result, np.tile( GRInitBarnN, NYrs ) )
+    result = np.maximum(result,0)
+    return np.reshape(result,(NYrs,12))
 
 
 def GRLossN(NYrs, GrazingN, GRStreamN, GrazingNRate, LossFactAdj):
@@ -96,8 +105,14 @@ def GRLossN(NYrs, GrazingN, GRStreamN, GrazingNRate, LossFactAdj):
     return result
 
 
-def GRLossN_2():
-    pass
+def GRLossN_2(NYrs, GrazingN, GRStreamN, GrazingNRate, LossFactAdj):
+    result = ( np.tile( ( (GrazingN - GRStreamN) * GrazingNRate ), NYrs ) * np.ndarray.flatten(LossFactAdj))
+    result = np.minimum(result, np.tile( (GrazingN-GRStreamN),NYrs))
+    result = np.maximum(result, 0)
+    return np.reshape(result,(NYrs,12))
+
+
+
 
 # Non-grazing animal losses
 def NGLostBarnN(NYrs, NGInitBarnN, NGBarnNRate, LossFactAdj, AWMSNgPct, NgAWMSCoeffN, RunContPct, RunConCoeffN):
@@ -114,8 +129,11 @@ def NGLostBarnN(NYrs, NGInitBarnN, NGBarnNRate, LossFactAdj, AWMSNgPct, NgAWMSCo
     return result
 
 
-def NGLostBarnN_2():
-    pass
+def NGLostBarnN_2(NYrs, NGInitBarnN, NGBarnNRate, LossFactAdj, AWMSNgPct, NgAWMSCoeffN, RunContPct, RunConCoeffN):
+    result = ( np.tile(NGInitBarnN, NYrs) * np.tile(NGBarnNRate,NYrs) * np.ndarray.flatten(LossFactAdj) * (1 - (AWMSNgPct * NgAWMSCoeffN) + (RunContPct * RunConCoeffN)  ) )
+    result = np.minimum(result, np.tile( NGInitBarnN, NYrs ) )
+    result = np.maximum(result,0)
+    return np.reshape(result,(NYrs,12))
 
 
 def NGLostManN(NYrs, NGAppManN, NGAppNRate, LossFactAdj, NGPctSoilIncRate):
@@ -132,8 +150,12 @@ def NGLostManN(NYrs, NGAppManN, NGAppNRate, LossFactAdj, NGPctSoilIncRate):
     return result
 
 
-def NGLostManN_2():
-    pass
+def NGLostManN_2(NYrs, NGAppManN, NGAppNRate, LossFactAdj, NGPctSoilIncRate):
+    result = np.tile(NGAppManN * NGAppNRate * ( 1 - NGPctSoilIncRate ) ,NYrs) * np.ndarray.flatten(LossFactAdj)
+    result = np.minimum(result, np.tile( NGAppManN, NYrs))
+    result = np.maximum(result, 0)
+    return np.reshape(result,(NYrs,12))
+
 
 def LossFactAdj(NYrs, Precipitation, DaysMonth):
     result = np.zeros((NYrs, 12))
@@ -143,5 +165,6 @@ def LossFactAdj(NYrs, Precipitation, DaysMonth):
     return result
 
 
-def LossFactAdj_2():
-    pass
+def LossFactAdj_2(NYrs, Precipitation, DaysMonth):
+    result = Precipitation / DaysMonth / 0.3301
+    return result
