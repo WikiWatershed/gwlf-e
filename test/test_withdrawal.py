@@ -18,5 +18,5 @@ class TestWithdrawal(unittest.TestCase):
     def test_AvWithdrawal(self):
         z = self.z
         z.Withdrawal = Withdrawal.Withdrawal(z.NYrs, z.StreamWithdrawal, z.GroundWithdrawal)
-        np.testing.assert_array_almost_equal(Withdrawal.AvWithdrawal_2(z.NYrs, z.Withdrawal),
+        np.testing.assert_array_almost_equal(Withdrawal.AvWithdrawal_2(z.StreamWithdrawal, z.GroundWithdrawal),
                                              Withdrawal.AvWithdrawal(z.NYrs, z.Withdrawal), decimal=7)

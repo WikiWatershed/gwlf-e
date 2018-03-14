@@ -58,10 +58,10 @@ def run(z):
     # print ('True')
 
     # z.PtSrcFlow = PtSrcFlow.PtSrcFlow(z.NYrs,z.PointFlow)
-    z.PtSrcFlow = PtSrcFlow.PtSrcFlow_2(z.NYrs,z.PointFlow)
+    z.PtSrcFlow = PtSrcFlow.PtSrcFlow_2(z.NYrs, z.PointFlow)
 
-    z.Withdrawal = Withdrawal.Withdrawal(z.NYrs, z.StreamWithdrawal, z.GroundWithdrawal)
-    # z.Withdrawal = Withdrawal.Withdrawal_2(z.NYrs, z.StreamWithdrawal, z.GroundWithdrawal)
+    # z.Withdrawal = Withdrawal.Withdrawal(z.NYrs, z.StreamWithdrawal, z.GroundWithdrawal)
+    z.Withdrawal = Withdrawal.Withdrawal_2(z.NYrs, z.StreamWithdrawal, z.GroundWithdrawal)
 
     for Y in range(z.NYrs):
         # Initialize monthly septic system variables
