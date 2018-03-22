@@ -26,9 +26,20 @@ from GRStreamN import GRStreamN
 from GRAppManN import GRAppManN
 from GRAccManAppN import GRAccManAppN
 from InitNgN import InitNgN
+from NGAppManN import NGAppManN
+from NGAccManAppN import NGAccManAppN
 
 
 def ReadAllData(z):
+    z.GrazingN = GrazingN.GrazingN(z.PctGrazing, z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN)
+    # z.GRInitBarnN = GRInitBarnN.GRInitBarnN(z.InitGrN, z.GRPctManApp, z.PctGrazing)
+    z.GRStreamN = GRStreamN(z.PctStreams, z.PctGrazing, z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN)
+    z.GRAppManN = GRAppManN(z.GRPctManApp, z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN)
+    z.GRAccManAppN = GRAccManAppN(z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN, z.GRPctManApp,
+                                  z.PctGrazing)
+    z.NGAppManN = NGAppManN(z.NGPctManApp, z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN)
+    z.NGAccManAppN = NGAccManAppN(z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN, z.NGPctManApp)
+
     # If RunQual output is requested, then redim RunQual values
     PrelimQualCalculations.ReDimRunQualVars()
 
@@ -111,9 +122,6 @@ def ReadAllData(z):
     z.InitNgP = 0
     z.InitNgFC = 0
 
-    # z.GRLoadNStorage = np.zeros((9,))
-    z.InitGrN = InitGrN(z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN)
-    z.InitNgN = InitNgN(z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN)
     for a in range(9):
         if z.GrazingAnimal[a] is YesOrNo.NO:
             # z.NGLoadN[a] = (z.NumAnimals[a] * z.AvgAnimalWt[a] / 1000) * z.AnimalDailyN[a] * 365
@@ -149,7 +157,7 @@ def ReadAllData(z):
     # Get the Non-Grazing Animal Worksheet values
     for i in range(12):
         # For Non-Grazing
-        z.NGAccManAppN[i] += (z.InitNgN / 12) - (z.NGPctManApp[i] * z.InitNgN)
+        # z.NGAccManAppN[i] += (z.InitNgN / 12) - (z.NGPctManApp[i] * z.InitNgN)
 
         if z.NGAccManAppN[i] < 0:
             z.NGAccManAppN[i] = 0
@@ -164,7 +172,7 @@ def ReadAllData(z):
         if z.NGAccManAppFC[i] < 0:
             z.NGAccManAppFC[i] = 0
 
-        z.NGAppManN[i] = z.NGPctManApp[i] * z.InitNgN
+        # z.NGAppManN[i] = z.NGPctManApp[i] * z.InitNgN
         z.NGInitBarnN[i] = z.NGAccManAppN[i] - z.NGAppManN[i]
 
         if z.NGInitBarnN[i] < 0:
@@ -184,12 +192,6 @@ def ReadAllData(z):
 
     # Read the Grazing Animal Worksheet values
 
-    z.GrazingN = GrazingN.GrazingN(z.PctGrazing, z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN)
-    # z.GRInitBarnN = GRInitBarnN.GRInitBarnN(z.InitGrN, z.GRPctManApp, z.PctGrazing)
-    z.GRStreamN = GRStreamN(z.PctStreams, z.PctGrazing, z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN)
-    z.GRAppManN = GRAppManN(z.GRPctManApp, z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN)
-    z.GRAccManAppN = GRAccManAppN(z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN, z.GRPctManApp,
-                                  z.PctGrazing)
     for i in range(12):
         # z.GrazingN[i] = z.PctGrazing[i] * (z.InitGrN / 12)
         z.GrazingP[i] = z.PctGrazing[i] * (z.InitGrP / 12)
