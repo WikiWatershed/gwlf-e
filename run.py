@@ -21,7 +21,7 @@ def main():
 
     fp = open(gms_filename, 'r')
     z = Parser.GmsReader(fp).read()
-    result = gwlfe.run(z)
+    result,_ = gwlfe.run(z)
     print(json.dumps(result, indent=4))
 
 

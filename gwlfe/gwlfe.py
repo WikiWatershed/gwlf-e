@@ -27,6 +27,12 @@ import Precipitation
 import ET
 import PtSrcFlow
 import GrazingAnimalWorksheet
+import GRLostManN
+import GRLostBarnN
+import GRLossN
+import LossFactAdj
+import NGLostBarnN
+import NGLostManN
 
 log = logging.getLogger(__name__)
 
@@ -60,27 +66,26 @@ def run(z):
     # z.PtSrcFlow = PtSrcFlow.PtSrcFlow(z.NYrs,z.PointFlow)
     z.PtSrcFlow = PtSrcFlow.PtSrcFlow_2(z.NYrs, z.PointFlow)
 
-    LossFactAdj = GrazingAnimalWorksheet.LossFactAdj(z.NYrs, z.Precipitation, z.DaysMonth)
-    z.LossFactAdj = LossFactAdj#not fully removed
+    z.LossFactAdj = LossFactAdj.LossFactAdj(z.NYrs, z.Precipitation, z.DaysMonth)#not fully removed
     # z.LossFactAdj = GrazingAnimalWorksheet.LossFactAdj_2()
 
-    z.NGLostBarnN = GrazingAnimalWorksheet.NGLostBarnN(z.NYrs, z.NGInitBarnN, z.NGBarnNRate, LossFactAdj, z.AWMSNgPct,
+    z.NGLostBarnN = NGLostBarnN.NGLostBarnN(z.NYrs, z.NGInitBarnN, z.NGBarnNRate, z.Precipitation, z.DaysMonth, z.AWMSNgPct,
                                                        z.NgAWMSCoeffN, z.RunContPct, z.RunConCoeffN)
     # z.NGLostBarnN = GrazingAnimalWorksheet.NGLostBarnN_2()
 
-    z.NGLostManN = GrazingAnimalWorksheet.NGLostManN(z.NYrs, z.NGAppManN, z.NGAppNRate, LossFactAdj,
+    z.NGLostManN = NGLostManN.NGLostManN(z.NYrs, z.NGAppManN, z.NGAppNRate, z.Precipitation, z.DaysMonth,
                                                      z.NGPctSoilIncRate)
     # z.NGLostManN = GrazingAnimalWorksheet.NGLostManN_2()
 
-    z.GRLostManN = GrazingAnimalWorksheet.GRLostManN(z.NYrs, z.GRAppManN, z.GRAppNRate, LossFactAdj,
+    z.GRLostManN = GRLostManN.GRLostManN(z.NYrs, z.GRAppManN, z.GRAppNRate, z.Precipitation, z.DaysMonth,
                                                      z.GRPctSoilIncRate)
     # z.GRLostManN = GrazingAnimalWorksheet.GRLostManN_2()
 
-    z.GRLostBarnN = GrazingAnimalWorksheet.GRLostBarnN(z.NYrs, z.GRInitBarnN, z.GRBarnNRate, LossFactAdj, z.AWMSNgPct,
-                                                       z.GrAWMSCoeffN, z.RunContPct, z.RunConCoeffN)
+    # z.GRLostBarnN = GRLostBarnN.GRLostBarnN(z.NYrs, z.GRInitBarnN, z.GRBarnNRate, z.Precipitation, z.DaysMonth, z.AWMSNgPct,
+    #                                                    z.GrAWMSCoeffN, z.RunContPct, z.RunConCoeffN)
     # z.GRLostBarnN = GrazingAnimalWorksheet.GRLostManN_2()
 
-    z.GRLossN = GrazingAnimalWorksheet.GRLossN(z.NYrs, z.GrazingN, z.GRStreamN, z.GrazingNRate, LossFactAdj)
+    # z.GRLossN = GRLossN.GRLossN(z.NYrs, z.GrazingN, z.GRStreamN, z.GrazingNRate, LossFactAdj)
     # z.GRLossN = GrazingAnimalWorksheet.GRLossN_2()
 
     for Y in range(z.NYrs):
@@ -361,4 +366,4 @@ def run(z):
     output = WriteOutputFiles.WriteOutput(z)
     # WriteOutputFiles.WriteOutputSumFiles()
 
-    return output
+    return output,z

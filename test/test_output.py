@@ -19,10 +19,9 @@ class TestOutput(unittest.TestCase):
     """
 
     def setUp(self):
-
         input_file = open('input_4.gms', 'r')
         self.z = Parser.GmsReader(input_file).read()
-        self.generated_output = gwlfe.run(self.z)
+        self.generated_output,_ = gwlfe.run(self.z)
         self.static_output = json.load(open('input_4.output', 'r'))
 
     def test_constants(self):
