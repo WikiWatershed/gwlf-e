@@ -14,7 +14,7 @@ log = logging.getLogger(__name__)
 
 def AnimalOperations(z, Y):
     for i in range(12):
-        z.LossFactAdj[Y][i] = (z.Precipitation[Y][i] / z.DaysMonth[Y][i]) / 0.3301
+        # z.LossFactAdj[Y][i] = (z.Precipitation[Y][i] / z.DaysMonth[Y][i]) / 0.3301
 
         # Non-grazing animal losses
         z.NGLostManN[Y][i] = (z.NGAppManN[i] * z.NGAppNRate[i] * z.LossFactAdj[Y][i]
@@ -41,16 +41,16 @@ def AnimalOperations(z, Y):
         if z.NGLostManFC[Y][i] < 0:
             z.NGLostManFC[Y][i] = 0
 
-        z.NGLostBarnN[Y][i] = (z.NGInitBarnN[i] * z.NGBarnNRate[i] * z.LossFactAdj[Y][i]
-                               - z.NGInitBarnN[i] * z.NGBarnNRate[i] * z.LossFactAdj[Y][
-                                   i] * z.AWMSNgPct * z.NgAWMSCoeffN
-                               + z.NGInitBarnN[i] * z.NGBarnNRate[i] * z.LossFactAdj[Y][
-                                   i] * z.RunContPct * z.RunConCoeffN)
-
-        if z.NGLostBarnN[Y][i] > z.NGInitBarnN[i]:
-            z.NGLostBarnN[Y][i] = z.NGInitBarnN[i]
-        if z.NGLostBarnN[Y][i] < 0:
-            z.NGLostBarnN[Y][i] = 0
+        # z.NGLostBarnN[Y][i] = (z.NGInitBarnN[i] * z.NGBarnNRate[i] * z.LossFactAdj[Y][i]
+        #                        - z.NGInitBarnN[i] * z.NGBarnNRate[i] * z.LossFactAdj[Y][
+        #                            i] * z.AWMSNgPct * z.NgAWMSCoeffN
+        #                        + z.NGInitBarnN[i] * z.NGBarnNRate[i] * z.LossFactAdj[Y][
+        #                            i] * z.RunContPct * z.RunConCoeffN)
+        #
+        # if z.NGLostBarnN[Y][i] > z.NGInitBarnN[i]:
+        #     z.NGLostBarnN[Y][i] = z.NGInitBarnN[i]
+        # if z.NGLostBarnN[Y][i] < 0:
+        #     z.NGLostBarnN[Y][i] = 0
 
         z.NGLostBarnP[Y][i] = (z.NGInitBarnP[i] * z.NGBarnPRate[i] * z.LossFactAdj[Y][i]
                                - z.NGInitBarnP[i] * z.NGBarnPRate[i] * z.LossFactAdj[Y][

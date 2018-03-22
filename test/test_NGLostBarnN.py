@@ -1,4 +1,5 @@
 import unittest
+from unittest import skip
 from mock import patch
 import numpy as np
 from gwlfe import Parser
@@ -10,6 +11,7 @@ class TestNGLostBarnN(unittest.TestCase):
         input_file = open('input_4.gms', 'r')
         self.z = Parser.GmsReader(input_file).read()
 
+    @skip("not ready")
     @patch('gwlfe.LossFactAdj.LossFactAdj')
     def test_NGLostBarnN(self,test_patch):
         z = self.z

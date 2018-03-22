@@ -8,7 +8,7 @@ from GRAppManN import GRAppManN_2
 
 def GRInitBarnN(InitGrN, GRPctManApp, PctGrazing):
     result = np.zeros((12,))
-    gr_acc_man_app_n = GRAccManAppN(InitGrN, GRPctManApp, PctGrazing)
+    gr_acc_man_app_n = GRAccManAppN(GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN, GRPctManApp, PctGrazing)
     gr_app_man_n = GRAppManN(GRPctManApp,InitGrN)
     for i in range(12):
         result[i] = gr_acc_man_app_n[i] - gr_app_man_n[i]

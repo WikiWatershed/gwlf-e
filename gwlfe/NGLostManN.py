@@ -17,8 +17,8 @@ def NGLostManN(NYrs, NGAppManN, NGAppNRate, Precipitation, DaysMonth, NGPctSoilI
     return result
 
 
-def NGLostManN_2(NYrs, NGAppManN, NGAppNRate, Precipitation, DaysMonth, NGPctSoilIncRate):
-    lossFactAdj = LossFactAdj.LossFactAdj(NYrs, Precipitation, DaysMonth)
+def NGLostManN_2(NYrs, NGAppManN, NGAppNRate, Prec, DaysMonth, NGPctSoilIncRate):
+    lossFactAdj = LossFactAdj.LossFactAdj(NYrs, Prec, DaysMonth)
     result = np.tile(NGAppManN * NGAppNRate * ( 1 - NGPctSoilIncRate ) ,NYrs) * np.ndarray.flatten(lossFactAdj)
     result = np.minimum(result, np.tile( NGAppManN, NYrs))
     result = np.maximum(result, 0)

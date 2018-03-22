@@ -13,5 +13,5 @@ class TestLossFactAdj(unittest.TestCase):
     def test_LossFactAdj(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            LossFactAdj.LossFactAdj(z.NYrs, z.Precipitation, z.DaysMonth),
-            LossFactAdj.LossFactAdj_2(z.NYrs, z.Precipitation, z.DaysMonth), decimal=7)
+            LossFactAdj.LossFactAdj(z.NYrs, z.Prec, z.DaysMonth),
+            LossFactAdj.LossFactAdj_2(z.NYrs, z.Prec, z.DaysMonth), decimal=7)

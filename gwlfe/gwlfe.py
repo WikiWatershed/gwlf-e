@@ -65,19 +65,19 @@ def run(z):
     # z.PtSrcFlow = PtSrcFlow.PtSrcFlow(z.NYrs,z.PointFlow)
     z.PtSrcFlow = PtSrcFlow.PtSrcFlow_2(z.NYrs, z.PointFlow)
 
-    z.LossFactAdj = LossFactAdj.LossFactAdj(z.NYrs, z.Precipitation, z.DaysMonth)#not fully removed
+    z.LossFactAdj = LossFactAdj.LossFactAdj(z.NYrs, z.Prec, z.DaysMonth)#not fully removed
     # z.LossFactAdj = GrazingAnimalWorksheet.LossFactAdj_2()
 
-    z.NGLostBarnN = NGLostBarnN.NGLostBarnN(z.NYrs, z.NGInitBarnN, z.NGBarnNRate, z.Precipitation, z.DaysMonth, z.AWMSNgPct,
-                                                       z.NgAWMSCoeffN, z.RunContPct, z.RunConCoeffN)
+    # z.NGLostBarnN = NGLostBarnN.NGLostBarnN(z.NYrs, z.NGInitBarnN, z.NGBarnNRate, z.Precipitation, z.DaysMonth, z.AWMSNgPct,
+    #                                                    z.NgAWMSCoeffN, z.RunContPct, z.RunConCoeffN)
     # z.NGLostBarnN = GrazingAnimalWorksheet.NGLostBarnN_2()
 
-    z.NGLostManN = NGLostManN.NGLostManN(z.NYrs, z.NGAppManN, z.NGAppNRate, z.Precipitation, z.DaysMonth,
-                                                     z.NGPctSoilIncRate)
+    # z.NGLostManN = NGLostManN.NGLostManN(z.NYrs, z.NGAppManN, z.NGAppNRate, z.Precipitation, z.DaysMonth,
+    #                                                  z.NGPctSoilIncRate)
     # z.NGLostManN = GrazingAnimalWorksheet.NGLostManN_2()
 
-    z.GRLostManN = GRLostManN.GRLostManN(z.NYrs, z.GRAppManN, z.GRAppNRate, z.Precipitation, z.DaysMonth,
-                                                     z.GRPctSoilIncRate)
+    # z.GRLostManN = GRLostManN.GRLostManN(z.NYrs, z.GRAppManN, z.GRAppNRate, z.Precipitation, z.DaysMonth,
+    #                                                  z.GRPctSoilIncRate)
     # z.GRLostManN = GrazingAnimalWorksheet.GRLostManN_2()
 
     # z.GRLostBarnN = GRLostBarnN.GRLostBarnN(z.NYrs, z.GRInitBarnN, z.GRBarnNRate, z.Precipitation, z.DaysMonth, z.AWMSNgPct,

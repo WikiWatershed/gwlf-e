@@ -9,6 +9,8 @@ def NGAccManAppN(GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN, NGPctManA
     for i in range(12):
         # For Non-Grazing
         result[i] += (init_ng_n / 12) - (NGPctManApp[i] * init_ng_n)
+        if result[i] < 0:
+            result[i] = 0
     return result
 
 

@@ -1,7 +1,7 @@
 import numpy as np
 from Timer import time_function
 
-def Precipitation(NYrs, DaysMonth, Prec):
+def Precipitation(NYrs, DaysMonth, Prec):#TODO: change internal "Precipitation" to "result"
     Precipitation = np.zeros((NYrs,12))
     for Y in range(NYrs):
         for i in range(12):

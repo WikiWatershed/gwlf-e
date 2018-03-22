@@ -28,9 +28,12 @@ from GRAccManAppN import GRAccManAppN
 from InitNgN import InitNgN
 from NGAppManN import NGAppManN
 from NGAccManAppN import NGAccManAppN
-
+from NGInitBarnN import NGInitBarnN
+from LossFactAdj import LossFactAdj
+from NGLostBarnN import NGLostBarnN
 
 def ReadAllData(z):
+
     z.GrazingN = GrazingN.GrazingN(z.PctGrazing, z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN)
     # z.GRInitBarnN = GRInitBarnN.GRInitBarnN(z.InitGrN, z.GRPctManApp, z.PctGrazing)
     z.GRStreamN = GRStreamN(z.PctStreams, z.PctGrazing, z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN)
@@ -38,7 +41,10 @@ def ReadAllData(z):
     z.GRAccManAppN = GRAccManAppN(z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN, z.GRPctManApp,
                                   z.PctGrazing)
     z.NGAppManN = NGAppManN(z.NGPctManApp, z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN)
-    z.NGAccManAppN = NGAccManAppN(z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN, z.NGPctManApp)
+    z.NGLostBarnN = NGLostBarnN(z.NYrs,z.NGPctManApp,z.GrazingAnimal,z.NumAnimals,z.AvgAnimalWt,z.AnimalDailyN,z.NGBarnNRate,z.Prec,
+                                z.DaysMonth,z.AWMSNgPct,z.NgAWMSCoeffN,z.RunContPct,z.RunConCoeffN)
+
+    z.LossFactAdj = LossFactAdj(z.NYrs,z.Prec,z.DaysMonth)
 
     # If RunQual output is requested, then redim RunQual values
     PrelimQualCalculations.ReDimRunQualVars()
@@ -159,8 +165,8 @@ def ReadAllData(z):
         # For Non-Grazing
         # z.NGAccManAppN[i] += (z.InitNgN / 12) - (z.NGPctManApp[i] * z.InitNgN)
 
-        if z.NGAccManAppN[i] < 0:
-            z.NGAccManAppN[i] = 0
+        # if z.NGAccManAppN[i] < 0:
+        #     z.NGAccManAppN[i] = 0
 
         z.NGAccManAppP[i] += (z.InitNgP / 12) - (z.NGPctManApp[i] * z.InitNgP)
 
@@ -173,10 +179,10 @@ def ReadAllData(z):
             z.NGAccManAppFC[i] = 0
 
         # z.NGAppManN[i] = z.NGPctManApp[i] * z.InitNgN
-        z.NGInitBarnN[i] = z.NGAccManAppN[i] - z.NGAppManN[i]
-
-        if z.NGInitBarnN[i] < 0:
-            z.NGInitBarnN[i] = 0
+        # z.NGInitBarnN[i] = z.NGAccManAppN[i] - z.NGAppManN[i]
+        #
+        # if z.NGInitBarnN[i] < 0:
+        #     z.NGInitBarnN[i] = 0
 
         z.NGAppManP[i] = z.NGPctManApp[i] * z.InitNgP
         z.NGInitBarnP[i] = z.NGAccManAppP[i] - z.NGAppManP[i]
