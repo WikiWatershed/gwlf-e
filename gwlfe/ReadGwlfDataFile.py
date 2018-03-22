@@ -17,12 +17,15 @@ from . import PrelimQualCalculations
 
 log = logging.getLogger(__name__)
 
-import GRAppManN
+from GRAppManN import GRAppManN
 import GrazingN
 import GRInitBarnN
 from GRLoadN import GRLoadN
 from InitGrN import InitGrN
 from GRStreamN import GRStreamN
+from GRAppManN import GRAppManN
+from GRAccManAppN import GRAccManAppN
+from InitNgN import InitNgN
 
 
 def ReadAllData(z):
@@ -104,18 +107,19 @@ def ReadAllData(z):
     # z.InitGrN = 0
     z.InitGrP = 0
     z.InitGrFC = 0
-    z.InitNgN = 0
+    # z.InitNgN = 0
     z.InitNgP = 0
     z.InitNgFC = 0
 
     # z.GRLoadNStorage = np.zeros((9,))
-    z.InitGrN = InitGrN(z.GrazingAnimal,z.NumAnimals,z.AvgAnimalWt,z.AnimalDailyN)
+    z.InitGrN = InitGrN(z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN)
+    z.InitNgN = InitNgN(z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN)
     for a in range(9):
         if z.GrazingAnimal[a] is YesOrNo.NO:
-            z.NGLoadN[a] = (z.NumAnimals[a] * z.AvgAnimalWt[a] / 1000) * z.AnimalDailyN[a] * 365
+            # z.NGLoadN[a] = (z.NumAnimals[a] * z.AvgAnimalWt[a] / 1000) * z.AnimalDailyN[a] * 365
             z.NGLoadP[a] = (z.NumAnimals[a] * z.AvgAnimalWt[a] / 1000) * z.AnimalDailyP[a] * 365
             z.NGLoadFC[a] = (z.NumAnimals[a] * z.AvgAnimalWt[a] / 1000) * z.FCOrgsPerDay[a] * 365
-            z.InitNgN += z.NGLoadN[a]
+            # z.InitNgN += z.NGLoadN[a]
             z.InitNgP += z.NGLoadP[a]
             z.InitNgFC += z.NGLoadFC[a]
         elif z.GrazingAnimal[a] is YesOrNo.YES:
@@ -179,10 +183,13 @@ def ReadAllData(z):
             z.NGInitBarnFC[i] = 0
 
     # Read the Grazing Animal Worksheet values
-    # z.GRAppManN = GRAppManN.GRAppManN(z.GRPctManApp, z.InitGrN)
+
     z.GrazingN = GrazingN.GrazingN(z.PctGrazing, z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN)
     # z.GRInitBarnN = GRInitBarnN.GRInitBarnN(z.InitGrN, z.GRPctManApp, z.PctGrazing)
-    z.GRStreamN = GRStreamN(z.PctStreams,z.PctGrazing,z.GrazingAnimal,z.NumAnimals,z.AvgAnimalWt,z.AnimalDailyN)
+    z.GRStreamN = GRStreamN(z.PctStreams, z.PctGrazing, z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN)
+    z.GRAppManN = GRAppManN(z.GRPctManApp, z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN)
+    z.GRAccManAppN = GRAccManAppN(z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN, z.GRPctManApp,
+                                  z.PctGrazing)
     for i in range(12):
         # z.GrazingN[i] = z.PctGrazing[i] * (z.InitGrN / 12)
         z.GrazingP[i] = z.PctGrazing[i] * (z.InitGrP / 12)
@@ -197,10 +204,12 @@ def ReadAllData(z):
         z.AvGRStreamN += z.GRStreamN[i]
         z.AvGRStreamP += z.GRStreamP[i]
 
-        z.GRAccManAppN[i] = (z.GRAccManAppN[i] + (z.InitGrN / 12)
-                             - (z.GRPctManApp[i] * z.InitGrN) - z.GrazingN[i])
-        if z.GRAccManAppN[i] < 0:
-            z.GRAccManAppN[i] = 0
+        # print("old",z.GRAccManAppN[i])
+        # print((z.GRAccManAppN[i] + (z.InitGrN / 12) - (z.GRPctManApp[i] * z.InitGrN) - z.GrazingN[i]))
+        # z.GRAccManAppN[i] = (z.GRAccManAppN[i] + (z.InitGrN / 12)
+        #                      - (z.GRPctManApp[i] * z.InitGrN) - z.GrazingN[i])
+        # if z.GRAccManAppN[i] < 0:
+        #     z.GRAccManAppN[i] = 0
 
         z.GRAccManAppP[i] = (z.GRAccManAppP[i] + (z.InitGrP / 12)
                              - (z.GRPctManApp[i] * z.InitGrP) - z.GrazingP[i])
@@ -212,7 +221,7 @@ def ReadAllData(z):
         if z.GRAccManAppFC[i] < 0:
             z.GRAccManAppFC[i] = 0
 
-        z.GRAppManN[i] = z.GRPctManApp[i] * z.InitGrN
+        # z.GRAppManN[i] = z.GRPctManApp[i] * z.InitGrN
         z.GRInitBarnN[i] = z.GRAccManAppN[i] - z.GRAppManN[i]
         if z.GRInitBarnN[i] < 0:
             z.GRInitBarnN[i] = 0

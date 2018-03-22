@@ -161,7 +161,7 @@ class GmsReader(object):
         z.AvPtSrcFlow = np.zeros(12)
 
         # Calculated Values for Animal Feeding Operations
-        z.NGLoadN = np.zeros(9)
+        # z.NGLoadN = np.zeros(9)
         z.NGLoadP = np.zeros(9)
         z.NGLoadFC = np.zeros(9)
         z.NGAccManAppN = np.zeros(12)
@@ -177,10 +177,10 @@ class GmsReader(object):
         # z.GRLoadN = np.zeros(9)
         z.GRLoadP = np.zeros(9)
         z.GRLoadFC = np.zeros(9)
-        z.GRAccManAppN = np.zeros(12)
+        # z.GRAccManAppN = np.zeros(12)
         z.GRAccManAppP = np.zeros(12)
         z.GRAccManAppFC = np.zeros(12)
-        z.GRAppManN = np.zeros(12)
+        # z.GRAppManN = np.zeros(12)
         z.GRInitBarnN = np.zeros(12)
         z.GRAppManP = np.zeros(12)
         z.GRInitBarnP = np.zeros(12)
@@ -1116,7 +1116,8 @@ class GmsReader(object):
         self.next(EOL)
 
         # Line 146:
-        z.InitNgN = self.next(float)  # Initial Non-Grazing Animal Totals: Nitrogen (kg/yr)
+        # z.InitNgN = self.next(float)  # Initial Non-Grazing Animal Totals: Nitrogen (kg/yr)
+        _ = self.next(float)  # Seems to be set to 0 before it is used
         z.InitNgP = self.next(float)  # Initial Non-Grazing Animal Totals: Phosphorus (kg/yr)
         z.InitNgFC = self.next(float)  # Initial Non-Grazing Animal Totals: Fecal Coliforms (orgs/yr)
         z.NGAppSum = self.next(float)  # Non-Grazing Manure Data Check: Land Applied (%)
