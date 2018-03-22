@@ -1,4 +1,5 @@
 import unittest
+from unittest import skip
 from mock import patch
 import numpy as np
 from gwlfe import Parser
@@ -12,6 +13,7 @@ class TestGRLostBarnN(unittest.TestCase):
         self.mock_GRInitBarnN = np.load("GRInitBarnN.npy")
         self.mock_LossFactAdj = np.load("LossFactAdj.npy")
 
+    @skip("not ready")
     @patch('gwlfe.LossFactAdj.LossFactAdj')
     @patch('gwlfe.GRInitBarnN.GRInitBarnN')
     @patch('gwlfe.GRAppManN.GRAppManN')
