@@ -156,7 +156,7 @@ def WriteOutput(z):
     z.NGLBFC = z.AvNGLostBarnFCSum
     z.GRLBFC = z.AvGRLostBarnFCSum
     z.GRSFC = z.AvGRStreamFC
-    z.GRSN = z.AvGRStreamN
+    # z.GRSN = z.AvGRStreamN
     z.GRSP = z.AvGRStreamP
 
     # Get the initial pathogen loads
@@ -237,7 +237,7 @@ def WriteOutput(z):
     z.GRLBP = z.GRLBP * NPConvert
     z.NGLBP = z.NGLBP * NPConvert
     z.NGLManP = z.NGLManP * NPConvert
-    z.GRSN = z.AvGRStreamN * NPConvert
+    # z.GRSN_2 = z.AvGRStreamN * NPConvert
     z.GRSP = z.AvGRStreamP * NPConvert
 
     # RESET GWLF OUTPUT VALUES FOR RURAL LANDUSE TO REDUCED LOADS AND CONVERT SCENARIO VALUES
@@ -546,7 +546,7 @@ def WriteOutput(z):
         z.NGLBFC = z.NGLostBarnFCSum[y]
         z.GRLBFC = z.GRLostBarnFCSum[y]
         z.GRSFC = z.AvGRStreamFC
-        z.GRSN = z.AvGRStreamN
+        # z.GRSN_3 = z.AvGRStreamN
         z.GRSP = z.AvGRStreamP
 
         # Get the initial pathogen loads

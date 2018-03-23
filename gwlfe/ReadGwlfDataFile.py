@@ -228,7 +228,7 @@ def ReadAllData(z):
 
         # Get the annual sum for FC
         z.AvGRStreamFC += z.GRStreamFC[i]
-        z.AvGRStreamN += z.GRStreamN[i]
+        # z.AvGRStreamN += z.GRStreamN[i]
         z.AvGRStreamP += z.GRStreamP[i]
 
         # print("old",z.GRAccManAppN[i])

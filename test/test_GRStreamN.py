@@ -17,3 +17,10 @@ class TestGRStreamN(unittest.TestCase):
         np.testing.assert_array_almost_equal(
             GRStreamN.GRStreamN_2(),
             GRStreamN.GRStreamN(), decimal=7)
+
+    @skip("not ready")
+    def test_AvGRStreamN(self):
+        z = self.z
+        np.testing.assert_array_almost_equal(
+            GRStreamN.AvGRStreamN_2(),
+            GRStreamN.AvGRStreamN(), decimal=7)

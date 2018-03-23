@@ -59,7 +59,7 @@ class GmsReader(object):
         z.NetDisLoad = np.zeros(3)
 
         z.AvGRStreamFC = 0
-        z.AvGRStreamN = 0
+        # z.AvGRStreamN = 0
         z.AvGRStreamP = 0
         z.AvTileDrain = np.zeros(12)
         z.RurAreaTotal = 0
@@ -204,7 +204,7 @@ class GmsReader(object):
         z.AvOrgConc = np.zeros(12)
         # z.AvGRLostBarnN = np.zeros(12)
         z.AvGRLostBarnP = np.zeros(12)
-        z.AvNGLostBarnN = np.zeros(12)
+        # z.AvNGLostBarnN = np.zeros(12)
         z.AvNGLostBarnP = np.zeros(12)
         z.AvNGLostManP = np.zeros(12)
         z.AvNGLostBarnFC = np.zeros(12)
@@ -457,7 +457,7 @@ class GmsReader(object):
         # z.GRLostBarnNSum = np.zeros(z.WxYrs)
         z.GRLostBarnPSum = np.zeros(z.WxYrs)
         z.GRLostBarnFCSum = np.zeros(z.WxYrs)
-        z.NGLostBarnNSum = np.zeros(z.WxYrs)
+        # z.NGLostBarnNSum = np.zeros(z.WxYrs)
         z.NGLostBarnPSum = np.zeros(z.WxYrs)
         z.NGLostBarnFCSum = np.zeros(z.WxYrs)
         z.NGLostManPSum = np.zeros(z.WxYrs)
@@ -784,7 +784,8 @@ class GmsReader(object):
         z.NGLBFC = self.next(float)  # Average Non-Grazing Animal Loss Rate (Barnyard/Confined Area): Fecal Coliform
         z.GRLBFC = self.next(float)  # Average Grazing Animal Loss Rate (Barnyard/Confined Area): Fecal Coliform
         z.GRSFC = self.next(float)  # Average Grazing Animal Loss Rate (Spent in Streams): Fecal Coliform
-        z.GRSN = self.next(float)  # Average Grazing Animal Loss Rate (Spent in Streams): Nitrogen
+        # z.GRSN = self.next(float)  # Average Grazing Animal Loss Rate (Spent in Streams): Nitrogen
+        _ = self.next(float)  # Value set before it is used
         z.GRSP = self.next(float)  # Average Grazing Animal Loss Rate (Spent in Streams): Phosphorus
         self.next(EOL)
 

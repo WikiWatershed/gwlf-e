@@ -137,7 +137,7 @@ def CalculateStreamBankEros(z, Y):
         # z.GRLostBarnNSum[Y] += z.GRLostBarnN[Y][i]
         z.GRLostBarnPSum[Y] += z.GRLostBarnP[Y][i]
         z.GRLostBarnFCSum[Y] += z.GRLostBarnFC[Y][i]
-        z.NGLostBarnNSum[Y] += z.NGLostBarnN[Y][i]
+        # z.NGLostBarnNSum[Y] += z.NGLostBarnN[Y][i]
         z.NGLostBarnPSum[Y] += z.NGLostBarnP[Y][i]
         z.NGLostBarnFCSum[Y] += z.NGLostBarnFC[Y][i]
         z.NGLostManPSum[Y] += z.NGLostManP[Y][i]

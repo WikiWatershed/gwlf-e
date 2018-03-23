@@ -27,15 +27,19 @@ import Precipitation
 import ET
 import PtSrcFlow
 import GRLostManN
-import GRLostBarnN
+from GRLostBarnN import GRLostBarnNSum
+from GRLostBarnN import AvGRLostBarnN
+from GRLostBarnN import AvGRLostBarnNSum
 import GRLossN
+from GRStreamN import AvGRStreamN
 import LossFactAdj
 import NGLostBarnN
 import NGLostManN
 from AnimalN import AnimalN
-from GRLostBarnN import GRLostBarnNSum
-from GRLostBarnN import AvGRLostBarnN
-from GRLostBarnN import AvGRLostBarnNSum
+from NGLostBarnN import AvNGLostBarnN
+from NGLostBarnN import AvNGLostBarnNSum
+from NGLostBarnN import NGLostBarnNSum
+from GRSN import GRSN
 
 log = logging.getLogger(__name__)
 
@@ -86,6 +90,23 @@ def run(z):
     z.AvGRLostBarnNSum = AvGRLostBarnNSum(z.NYrs, z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN,
                                           z.GRPctManApp, z.PctGrazing, z.GRBarnNRate, z.Prec, z.DaysMonth, z.AWMSGrPct,
                                           z.GrAWMSCoeffN, z.RunContPct, z.RunConCoeffN)
+
+    z.AvNGLostBarnN = AvNGLostBarnN(z.NYrs, z.NGPctManApp, z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN,
+                                    z.NGBarnNRate,
+                                    z.Prec, z.DaysMonth, z.AWMSNgPct, z.NgAWMSCoeffN, z.RunContPct, z.RunConCoeffN)
+
+    z.AvNGLostBarnNSum = AvNGLostBarnNSum(z.NYrs, z.NGPctManApp, z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt,
+                                          z.AnimalDailyN, z.NGBarnNRate, z.Prec, z.DaysMonth, z.AWMSNgPct,
+                                          z.NgAWMSCoeffN, z.RunContPct, z.RunConCoeffN)
+
+    z.NGLostBarnNSum = NGLostBarnNSum(z.NYrs, z.NGPctManApp, z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt,
+                                      z.AnimalDailyN, z.NGBarnNRate, z.Prec, z.DaysMonth, z.AWMSNgPct, z.NgAWMSCoeffN,
+                                      z.RunContPct, z.RunConCoeffN)
+
+    z.AvGRStreamN = AvGRStreamN(z.PctStreams, z.PctGrazing, z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt,
+                                z.AnimalDailyN)
+
+    z.GRSN = GRSN(z.PctStreams,z.PctGrazing,z.GrazingAnimal,z.NumAnimals,z.AvgAnimalWt,z.AnimalDailyN)
     for Y in range(z.NYrs):
         # Initialize monthly septic system variables
         z.MonthPondNitr = np.zeros(12)

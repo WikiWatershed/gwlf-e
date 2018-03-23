@@ -84,7 +84,7 @@ def CalculateAnnualMeanLoads(z, Y):
         z.AvGRLostBarnP[i] += z.GRLostBarnP[Y][i] / z.NYrs
         z.AvGRLostBarnFC[i] += z.GRLostBarnFC[Y][i] / z.NYrs
 
-        z.AvNGLostBarnN[i] += z.NGLostBarnN[Y][i] / z.NYrs
+        # z.AvNGLostBarnN[i] += z.NGLostBarnN[Y][i] / z.NYrs
         z.AvNGLostBarnP[i] += z.NGLostBarnP[Y][i] / z.NYrs
         z.AvNGLostBarnFC[i] += z.NGLostBarnFC[Y][i] / z.NYrs
 
@@ -142,7 +142,7 @@ def CalculateAnnualMeanLoads(z, Y):
     # z.AvGRLostBarnNSum = sum(z.AvGRLostBarnN)
     z.AvGRLostBarnPSum = sum(z.AvGRLostBarnP)
     z.AvGRLostBarnFCSum = sum(z.AvGRLostBarnFC)
-    z.AvNGLostBarnNSum = sum(z.AvNGLostBarnN)
+    # z.AvNGLostBarnNSum = sum(z.AvNGLostBarnN)
     z.AvNGLostBarnPSum = sum(z.AvNGLostBarnP)
     z.AvNGLostBarnFCSum = sum(z.AvNGLostBarnFC)
     z.AvNGLostManPSum = sum(z.AvNGLostManP)
