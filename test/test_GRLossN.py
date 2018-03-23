@@ -1,4 +1,5 @@
 import unittest
+from unittest import skip
 import numpy as np
 from gwlfe import Parser
 from gwlfe import GRLossN
@@ -11,11 +12,11 @@ class TestGRLossN(unittest.TestCase):
         self.mock_GrazingN = np.load("GrazingN.npy")
         self.mock_LossFactAdj = np.load("LossFactAdj.npy")
 
-
+    @skip("not ready")
     def test_GRLossN(self):
         z = self.z
         np.testing.assert_array_almost_equal(
             GRLossN.GRLossN(z.NYrs, self.mock_GrazingN, z.GRStreamN, z.GrazingNRate,
-                                           self.mock_LossFactAdj),
+                            self.mock_LossFactAdj),
             GRLossN.GRLossN_2(z.NYrs, self.mock_GrazingN, z.GRStreamN, z.GrazingNRate,
-                                           self.mock_LossFactAdj), decimal=7)
+                              self.mock_LossFactAdj), decimal=7)

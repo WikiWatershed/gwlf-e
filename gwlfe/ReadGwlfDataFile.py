@@ -31,20 +31,39 @@ from NGAccManAppN import NGAccManAppN
 from NGInitBarnN import NGInitBarnN
 from LossFactAdj import LossFactAdj
 from NGLostBarnN import NGLostBarnN
+from GRLostBarnN import GRLostBarnN
+from GRInitBarnN import GRInitBarnN
+from GRLostManN import GRLostManN
+from NGLostManN import NGLostManN
+from GRLossN import GRLossN
+
 
 def ReadAllData(z):
-
     z.GrazingN = GrazingN.GrazingN(z.PctGrazing, z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN)
     # z.GRInitBarnN = GRInitBarnN.GRInitBarnN(z.InitGrN, z.GRPctManApp, z.PctGrazing)
     z.GRStreamN = GRStreamN(z.PctStreams, z.PctGrazing, z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN)
-    z.GRAppManN = GRAppManN(z.GRPctManApp, z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN)
     z.GRAccManAppN = GRAccManAppN(z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN, z.GRPctManApp,
                                   z.PctGrazing)
     z.NGAppManN = NGAppManN(z.NGPctManApp, z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN)
-    z.NGLostBarnN = NGLostBarnN(z.NYrs,z.NGPctManApp,z.GrazingAnimal,z.NumAnimals,z.AvgAnimalWt,z.AnimalDailyN,z.NGBarnNRate,z.Prec,
-                                z.DaysMonth,z.AWMSNgPct,z.NgAWMSCoeffN,z.RunContPct,z.RunConCoeffN)
+    z.NGLostBarnN = NGLostBarnN(z.NYrs, z.NGPctManApp, z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN,
+                                z.NGBarnNRate, z.Prec,
+                                z.DaysMonth, z.AWMSNgPct, z.NgAWMSCoeffN, z.RunContPct, z.RunConCoeffN)
 
-    z.LossFactAdj = LossFactAdj(z.NYrs,z.Prec,z.DaysMonth)
+    z.GRLostBarnN = GRLostBarnN(z.NYrs, z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN, z.GRPctManApp,
+                                z.PctGrazing, z.GRBarnNRate, z.Prec, z.DaysMonth, z.AWMSGrPct, z.GrAWMSCoeffN,
+                                z.RunContPct, z.RunConCoeffN)
+
+    z.GRLostManN = GRLostManN(z.NYrs, z.GRPctManApp, z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN,
+                              z.GRAppNRate,
+                              z.Prec, z.DaysMonth, z.GRPctSoilIncRate)
+
+    z.NGLostManN = NGLostManN(z.NYrs, z.NGPctManApp, z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN,
+                              z.NGAppNRate,
+                              z.Prec, z.DaysMonth, z.NGPctSoilIncRate)
+
+    z.GRLossN = GRLossN(z.NYrs, z.PctStreams, z.PctGrazing, z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt,
+                        z.AnimalDailyN,
+                        z.GrazingNRate, z.Prec, z.DaysMonth)
 
     # If RunQual output is requested, then redim RunQual values
     PrelimQualCalculations.ReDimRunQualVars()
@@ -230,9 +249,9 @@ def ReadAllData(z):
             z.GRAccManAppFC[i] = 0
 
         # z.GRAppManN[i] = z.GRPctManApp[i] * z.InitGrN
-        z.GRInitBarnN[i] = z.GRAccManAppN[i] - z.GRAppManN[i]
-        if z.GRInitBarnN[i] < 0:
-            z.GRInitBarnN[i] = 0
+        # z.GRInitBarnN[i] = z.GRAccManAppN[i] - z.GRAppManN[i]
+        # if z.GRInitBarnN[i] < 0:
+        #     z.GRInitBarnN[i] = 0
 
         z.GRAppManP[i] = z.GRPctManApp[i] * z.InitGrP
         z.GRInitBarnP[i] = z.GRAccManAppP[i] - z.GRAppManP[i]

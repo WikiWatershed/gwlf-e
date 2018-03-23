@@ -1,5 +1,6 @@
 import unittest
 from mock import patch
+from unittest import skip
 import numpy as np
 from gwlfe import Parser
 from gwlfe import GRLostManN
@@ -11,7 +12,7 @@ class TestGRLostManN(unittest.TestCase):
         self.z = Parser.GmsReader(input_file).read()
         self.mock_LossFactAdj = np.load("LossFactAdj.npy")
         self.mock_GRAppManN = np.load("GRAppManN.npy")
-
+    @skip("not ready")
     @patch('gwlfe.LossFactAdj.LossFactAdj')
     def test_GRLostManN(self,test_patch):
         z = self.z

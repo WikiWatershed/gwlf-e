@@ -32,6 +32,10 @@ import GRLossN
 import LossFactAdj
 import NGLostBarnN
 import NGLostManN
+from AnimalN import AnimalN
+from GRLostBarnN import GRLostBarnNSum
+from GRLostBarnN import AvGRLostBarnN
+from GRLostBarnN import AvGRLostBarnNSum
 
 log = logging.getLogger(__name__)
 
@@ -65,28 +69,23 @@ def run(z):
     # z.PtSrcFlow = PtSrcFlow.PtSrcFlow(z.NYrs,z.PointFlow)
     z.PtSrcFlow = PtSrcFlow.PtSrcFlow_2(z.NYrs, z.PointFlow)
 
-    z.LossFactAdj = LossFactAdj.LossFactAdj(z.NYrs, z.Prec, z.DaysMonth)#not fully removed
-    # z.LossFactAdj = GrazingAnimalWorksheet.LossFactAdj_2()
+    z.LossFactAdj = LossFactAdj.LossFactAdj(z.NYrs, z.Prec, z.DaysMonth)  # not fully removed
 
-    # z.NGLostBarnN = NGLostBarnN.NGLostBarnN(z.NYrs, z.NGInitBarnN, z.NGBarnNRate, z.Precipitation, z.DaysMonth, z.AWMSNgPct,
-    #                                                    z.NgAWMSCoeffN, z.RunContPct, z.RunConCoeffN)
-    # z.NGLostBarnN = GrazingAnimalWorksheet.NGLostBarnN_2()
+    z.AnimalN = AnimalN(z.NYrs, z.NGPctManApp, z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN,
+                        z.NGAppNRate, z.Prec, z.DaysMonth, z.NGPctSoilIncRate, z.GRPctManApp, z.GRAppNRate,
+                        z.GRPctSoilIncRate, z.NGBarnNRate, z.AWMSNgPct, z.NgAWMSCoeffN, z.RunContPct, z.RunConCoeffN,
+                        z.PctGrazing, z.GRBarnNRate, z.AWMSGrPct, z.GrAWMSCoeffN, z.PctStreams, z.GrazingNRate)
 
-    # z.NGLostManN = NGLostManN.NGLostManN(z.NYrs, z.NGAppManN, z.NGAppNRate, z.Precipitation, z.DaysMonth,
-    #                                                  z.NGPctSoilIncRate)
-    # z.NGLostManN = GrazingAnimalWorksheet.NGLostManN_2()
+    z.LostBarnNSum = GRLostBarnNSum(z.NYrs, z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN, z.GRPctManApp,
+                                    z.PctGrazing, z.GRBarnNRate, z.Prec, z.DaysMonth, z.AWMSGrPct, z.GrAWMSCoeffN,
+                                    z.RunContPct, z.RunConCoeffN)
 
-    # z.GRLostManN = GRLostManN.GRLostManN(z.NYrs, z.GRAppManN, z.GRAppNRate, z.Precipitation, z.DaysMonth,
-    #                                                  z.GRPctSoilIncRate)
-    # z.GRLostManN = GrazingAnimalWorksheet.GRLostManN_2()
-
-    # z.GRLostBarnN = GRLostBarnN.GRLostBarnN(z.NYrs, z.GRInitBarnN, z.GRBarnNRate, z.Precipitation, z.DaysMonth, z.AWMSNgPct,
-    #                                                    z.GrAWMSCoeffN, z.RunContPct, z.RunConCoeffN)
-    # z.GRLostBarnN = GrazingAnimalWorksheet.GRLostManN_2()
-
-    # z.GRLossN = GRLossN.GRLossN(z.NYrs, z.GrazingN, z.GRStreamN, z.GrazingNRate, LossFactAdj)
-    # z.GRLossN = GrazingAnimalWorksheet.GRLossN_2()
-
+    z.AvGRLostBarnN = AvGRLostBarnN(z.NYrs, z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN, z.GRPctManApp,
+                                    z.PctGrazing, z.GRBarnNRate, z.Prec, z.DaysMonth, z.AWMSGrPct, z.GrAWMSCoeffN,
+                                    z.RunContPct, z.RunConCoeffN)
+    z.AvGRLostBarnNSum = AvGRLostBarnNSum(z.NYrs, z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN,
+                                          z.GRPctManApp, z.PctGrazing, z.GRBarnNRate, z.Prec, z.DaysMonth, z.AWMSGrPct,
+                                          z.GrAWMSCoeffN, z.RunContPct, z.RunConCoeffN)
     for Y in range(z.NYrs):
         # Initialize monthly septic system variables
         z.MonthPondNitr = np.zeros(12)
@@ -365,4 +364,4 @@ def run(z):
     output = WriteOutputFiles.WriteOutput(z)
     # WriteOutputFiles.WriteOutputSumFiles()
 
-    return output,z
+    return output, z

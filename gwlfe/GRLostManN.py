@@ -1,15 +1,17 @@
 import numpy as np
 from Timer import time_function
 import LossFactAdj
+from GRAppManN import GRAppManN
 
-def GRLostManN(NYrs, GRAppManN, GRAppNRate, Precipitation, DaysMonth, GRPctSoilIncRate):
+def GRLostManN(NYrs, GRPctManApp,GrazingAnimal,NumAnimals,AvgAnimalWt,AnimalDailyN, GRAppNRate, Prec, DaysMonth, GRPctSoilIncRate):
     result = np.zeros((NYrs, 12))
-    lossFactAdj = LossFactAdj.LossFactAdj(NYrs, Precipitation, DaysMonth)
+    loss_fact_adj = LossFactAdj.LossFactAdj(NYrs, Prec, DaysMonth)
+    gr_app_man_n = GRAppManN(GRPctManApp,GrazingAnimal,NumAnimals,AvgAnimalWt,AnimalDailyN)
     for Y in range(NYrs):
         for i in range(12):
-            result[Y][i] = (GRAppManN[i] * GRAppNRate[i] * lossFactAdj[Y][i] * (1 - GRPctSoilIncRate[i]))
-            if result[Y][i] > GRAppManN[i]:
-                result[Y][i] = GRAppManN[i]
+            result[Y][i] = (gr_app_man_n[i] * GRAppNRate[i] * loss_fact_adj[Y][i] * (1 - GRPctSoilIncRate[i]))
+            if result[Y][i] > gr_app_man_n[i]:
+                result[Y][i] = gr_app_man_n[i]
             if result[Y][i] < 0:
                 result[Y][i] = 0
     return result

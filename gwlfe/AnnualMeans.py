@@ -80,7 +80,7 @@ def CalculateAnnualMeanLoads(z, Y):
         z.AvAnimalN[i] += z.AnimalN[Y][i] / z.NYrs
         z.AvAnimalP[i] += z.AnimalP[Y][i] / z.NYrs
 
-        z.AvGRLostBarnN[i] += z.GRLostBarnN[Y][i] / z.NYrs
+        # z.AvGRLostBarnN[i] += z.GRLostBarnN[Y][i] / z.NYrs
         z.AvGRLostBarnP[i] += z.GRLostBarnP[Y][i] / z.NYrs
         z.AvGRLostBarnFC[i] += z.GRLostBarnFC[Y][i] / z.NYrs
 
@@ -139,7 +139,7 @@ def CalculateAnnualMeanLoads(z, Y):
     z.AvGroundPhosSum = sum(z.AvGroundPhos)
     z.AvAnimalNSum = sum(z.AvAnimalN)
     z.AvAnimalPSum = sum(z.AvAnimalP)
-    z.AvGRLostBarnNSum = sum(z.AvGRLostBarnN)
+    # z.AvGRLostBarnNSum = sum(z.AvGRLostBarnN)
     z.AvGRLostBarnPSum = sum(z.AvGRLostBarnP)
     z.AvGRLostBarnFCSum = sum(z.AvGRLostBarnFC)
     z.AvNGLostBarnNSum = sum(z.AvNGLostBarnN)
