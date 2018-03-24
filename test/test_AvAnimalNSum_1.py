@@ -1,0 +1,19 @@
+import unittest
+from unittest import skip
+from mock import patch
+import numpy as np
+from gwlfe import Parser
+from gwlfe import AvAnimalNSum_1
+
+
+class TestAvAnimalNSum_1(unittest.TestCase):
+    def setUp(self):
+        input_file = open('input_4.gms', 'r')
+        self.z = Parser.GmsReader(input_file).read()
+
+    @skip("not ready")
+    def test_AvAnimalNSum_1(self):
+        z = self.z
+        np.testing.assert_array_almost_equal(
+            AvAnimalNSum_1.AvAnimalNSum_1_2(),
+            AvAnimalNSum_1.AvAnimalNSum_1(), decimal=7)

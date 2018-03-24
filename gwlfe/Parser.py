@@ -192,7 +192,7 @@ class GmsReader(object):
         z.GRStreamN = np.zeros(12)
         z.GRStreamP = np.zeros(12)
         z.GRStreamFC = np.zeros(12)
-        z.AvAnimalN = np.zeros(12)
+        # z.AvAnimalN = np.zeros(12)
         z.AvAnimalP = np.zeros(12)
         z.AvAnimalFC = np.zeros(12)
         z.AvWWOrgs = np.zeros(12)
@@ -776,8 +776,10 @@ class GmsReader(object):
         z.n42b = self.next(float)  # Total Stream Length (km)
         z.n42c = self.next(float)  # Unpaved Road Length (km)
         z.n43 = self.next(float)  # Stream Km with Vegetated Buffer Strips: Existing
-        z.GRLBN = self.next(float)  # Average Grazing Animal Loss Rate (Barnyard/Confined Area): Nitrogen
-        z.NGLBN = self.next(float)  # Average Non-Grazing Animal Loss Rate (Barnyard/Confined Area): Nitrogen
+        # z.GRLBN = self.next(float)  # Average Grazing Animal Loss Rate (Barnyard/Confined Area): Nitrogen
+        _ = self.next(float)  # Average Grazing Animal Loss Rate (Barnyard/Confined Area): Nitrogen
+        # z.NGLBN = self.next(float)  # Average Non-Grazing Animal Loss Rate (Barnyard/Confined Area): Nitrogen
+        _ = self.next(float)  # Average Non-Grazing Animal Loss Rate (Barnyard/Confined Area): Nitrogen
         z.GRLBP = self.next(float)  # Average Grazing Animal Loss Rate (Barnyard/Confined Area): Phosphorus
         z.NGLBP = self.next(float)  # Average Non-Grazing Animal Loss Rate (Barnyard/Confined Area): Phosphorus
         z.NGLManP = self.next(float)  # Average Non-Grazing Animal Loss Rate (Manure Spreading): Phosphorus
