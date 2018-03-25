@@ -9,7 +9,6 @@ Imported from StreamBank.bas
 
 import logging
 
-
 log = logging.getLogger(__name__)
 
 
@@ -108,7 +107,8 @@ def CalculateStreamBankEros(z, Y):
             z.PCTAG = (z.n23 + z.n24) / z.AreaTotal
             z.GroundNitr[Y][i] -= z.GroundNitr[Y][i] * ((z.n28b / 100) * z.n23) / z.n23 * z.PCTAG * z.n70
             z.GroundNitr[Y][i] -= z.GroundNitr[Y][i] * (z.n43 / z.n42) * (z.n42 / z.n42b) * z.PCTAG * z.n64
-            z.GroundNitr[Y][i] -= (z.GroundNitr[Y][i] * ((((z.n29 / 100) * z.n23) + ((z.n37 / 100) * z.n24)) / (z.n23 + z.n24))) * z.PCTAG * z.n68
+            z.GroundNitr[Y][i] -= (z.GroundNitr[Y][i] * (
+                        (((z.n29 / 100) * z.n23) + ((z.n37 / 100) * z.n24)) / (z.n23 + z.n24))) * z.PCTAG * z.n68
 
         # Groundwater P loads are reduced based on extent of nutrient management BMP
         z.RCNMAC = (z.n28b / 100) * z.n23
@@ -125,7 +125,7 @@ def CalculateStreamBankEros(z, Y):
         z.TileDrainNSum[Y] += z.TileDrainN[Y][i]
         z.TileDrainPSum[Y] += z.TileDrainP[Y][i]
         z.TileDrainSedSum[Y] += z.TileDrainSed[Y][i]
-        z.AnimalNSum[Y] += z.AnimalN[Y][i]
+        # z.AnimalNSum[Y] += z.AnimalN[Y][i]
         z.AnimalPSum[Y] += z.AnimalP[Y][i]
         z.AnimalFCSum[Y] += z.AnimalFC[Y][i]
         z.WWOrgsSum[Y] += z.WWOrgs[Y][i]

@@ -50,6 +50,8 @@ from AvAnimalN import AvAnimalN
 from N7b import N7b
 from AvAnimalNSum import AvAnimalNSum
 from AvAnimalNSum_1 import AvAnimalNSum_1
+from N7b_1 import N7b_1
+from Constants import NPConvert
 
 log = logging.getLogger(__name__)
 
@@ -83,76 +85,6 @@ def run(z):
                         z.NGAppNRate, z.Prec, z.DaysMonth, z.NGPctSoilIncRate, z.GRPctManApp, z.GRAppNRate,
                         z.GRPctSoilIncRate, z.NGBarnNRate, z.AWMSNgPct, z.NgAWMSCoeffN, z.RunContPct, z.RunConCoeffN,
                         z.PctGrazing, z.GRBarnNRate, z.AWMSGrPct, z.GrAWMSCoeffN, z.PctStreams, z.GrazingNRate)
-
-    z.LostBarnNSum = GRLostBarnNSum(z.NYrs, z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN, z.GRPctManApp,
-                                    z.PctGrazing, z.GRBarnNRate, z.Prec, z.DaysMonth, z.AWMSGrPct, z.GrAWMSCoeffN,
-                                    z.RunContPct, z.RunConCoeffN)
-
-    z.AvGRLostBarnN = AvGRLostBarnN(z.NYrs, z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN, z.GRPctManApp,
-                                    z.PctGrazing, z.GRBarnNRate, z.Prec, z.DaysMonth, z.AWMSGrPct, z.GrAWMSCoeffN,
-                                    z.RunContPct, z.RunConCoeffN)
-    z.AvGRLostBarnNSum = AvGRLostBarnNSum(z.NYrs, z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN,
-                                          z.GRPctManApp, z.PctGrazing, z.GRBarnNRate, z.Prec, z.DaysMonth, z.AWMSGrPct,
-                                          z.GrAWMSCoeffN, z.RunContPct, z.RunConCoeffN)
-
-    z.AvNGLostBarnN = AvNGLostBarnN(z.NYrs, z.NGPctManApp, z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN,
-                                    z.NGBarnNRate,
-                                    z.Prec, z.DaysMonth, z.AWMSNgPct, z.NgAWMSCoeffN, z.RunContPct, z.RunConCoeffN)
-
-    z.AvNGLostBarnNSum = AvNGLostBarnNSum(z.NYrs, z.NGPctManApp, z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt,
-                                          z.AnimalDailyN, z.NGBarnNRate, z.Prec, z.DaysMonth, z.AWMSNgPct,
-                                          z.NgAWMSCoeffN, z.RunContPct, z.RunConCoeffN)
-
-    z.NGLostBarnNSum = NGLostBarnNSum(z.NYrs, z.NGPctManApp, z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt,
-                                      z.AnimalDailyN, z.NGBarnNRate, z.Prec, z.DaysMonth, z.AWMSNgPct, z.NgAWMSCoeffN,
-                                      z.RunContPct, z.RunConCoeffN)
-
-    z.AvGRStreamN = AvGRStreamN(z.PctStreams, z.PctGrazing, z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt,
-                                z.AnimalDailyN)
-
-    z.GRSN = GRSN(z.PctStreams, z.PctGrazing, z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN)
-    z.GRLBN = GRLBN(z.NYrs, z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN, z.GRPctManApp, z.PctGrazing,
-                    z.GRBarnNRate,
-                    z.Prec, z.DaysMonth, z.AWMSGrPct, z.GrAWMSCoeffN, z.RunContPct, z.RunConCoeffN)
-    z.NGLBN = NGLBN(z.NYrs, z.NGPctManApp, z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN, z.NGBarnNRate,
-                    z.Prec, z.DaysMonth, z.AWMSNgPct, z.NgAWMSCoeffN, z.RunContPct, z.RunConCoeffN)
-    z.NFENCING = NFENCING(z.PctStreams, z.PctGrazing, z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN,
-                          z.n42, z.n45, z.n69)
-    z.NAWMSL = NAWMSL(z.NYrs, z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN, z.GRPctManApp, z.PctGrazing,
-                      z.GRBarnNRate, z.Prec, z.DaysMonth, z.AWMSGrPct, z.GrAWMSCoeffN, z.RunContPct, z.RunConCoeffN,
-                      z.n41b, z.n85h)
-    z.NRUNCON = NRUNCON(z.NYrs, z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN, z.GRPctManApp,
-                        z.PctGrazing, z.GRBarnNRate,
-                        z.Prec, z.DaysMonth, z.AWMSGrPct, z.GrAWMSCoeffN, z.RunContPct, z.RunConCoeffN, z.NGPctManApp,
-                        z.NGBarnNRate, z.AWMSNgPct,
-                        z.NgAWMSCoeffN, z.n41f, z.n85l)
-
-    z.NAWMSP = NAWMSP(z.NYrs, z.NGPctManApp, z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN,
-                      z.NGBarnNRate, z.Prec, z.DaysMonth, z.AWMSNgPct, z.NgAWMSCoeffN, z.RunContPct, z.RunConCoeffN,
-                      z.n41d, z.n85j)
-
-    z.AvAnimalN = AvAnimalN(z.NYrs, z.NGPctManApp, z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN,
-                            z.NGAppNRate, z.Prec, z.DaysMonth, z.NGPctSoilIncRate, z.GRPctManApp, z.GRAppNRate,
-                            z.GRPctSoilIncRate, z.NGBarnNRate, z.AWMSNgPct, z.NgAWMSCoeffN, z.RunContPct,
-                            z.RunConCoeffN, z.PctGrazing, z.GRBarnNRate, z.AWMSGrPct, z.GrAWMSCoeffN, z.PctStreams,
-                            z.GrazingNRate)
-
-    # z.AvAnimalNSum = AvAnimalNSum(z.NYrs, z.NGPctManApp, z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN,
-    #                               z.NGAppNRate, z.Prec, z.DaysMonth, z.NGPctSoilIncRate, z.GRPctManApp, z.GRAppNRate,
-    #                               z.GRPctSoilIncRate, z.NGBarnNRate, z.AWMSNgPct, z.NgAWMSCoeffN, z.RunContPct,
-    #                               z.RunConCoeffN, z.PctGrazing, z.GRBarnNRate, z.AWMSGrPct, z.GrAWMSCoeffN,
-    #                               z.PctStreams, z.GrazingNRate)
-    z.n7b = N7b(z.NYrs, z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN, z.NGAppNRate,z.NGPctSoilIncRate,z.GRAppNRate,z.GRPctSoilIncRate,z.GrazingNRate,z.GRPctManApp,z.PctGrazing, z.GRBarnNRate,
-        z.Prec, z.DaysMonth, z.AWMSGrPct, z.GrAWMSCoeffN, z.RunContPct, z.RunConCoeffN, z.n41b, z.n85h, z.NGPctManApp, z.AWMSNgPct,
-        z.NGBarnNRate, z.NgAWMSCoeffN, z.n41d, z.n85j, z.n41f, z.n85l, z.PctStreams, z.n42, z.n45, z.n69,z.n43, z.n64, z.n7b)
-
-    z.AvAnimalNSum_1 = AvAnimalNSum_1(z.NYrs, z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN,
-                                      z.NGAppNRate, z.NGPctSoilIncRate, z.GRAppNRate, z.GRPctSoilIncRate,
-                                      z.GrazingNRate, z.GRPctManApp, z.PctGrazing, z.GRBarnNRate, z.Prec, z.DaysMonth,
-                                      z.AWMSGrPct, z.GrAWMSCoeffN, z.RunContPct, z.RunConCoeffN, z.n41b, z.n85h,
-                                      z.NGPctManApp, z.AWMSNgPct, z.NGBarnNRate, z.NgAWMSCoeffN, z.n41d, z.n85j, z.n41f,
-                                      z.n85l, z.PctStreams, z.n42, z.n45, z.n69,z.n43, z.n64, z.n7b)
-
     ReadGwlfDataFile.ReadAllData(z)
 
     # CALCLULATE PRELIMINARY INITIALIZATIONS AND VALUES FOR

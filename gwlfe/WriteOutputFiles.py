@@ -9,10 +9,11 @@ import numpy as np
 
 from . import LoadReductions
 from .enums import YesOrNo, LandUse
-
+from Constants import NPConvert
+from AvAnimalNSum_1 import AvAnimalNSum_1
+from N7b_1 import N7b_1
 
 log = logging.getLogger(__name__)
-
 
 CM_TO_M = 1 / 100
 HA_TO_M2 = 10000
@@ -143,7 +144,7 @@ def WriteOutput(z):
     # Set the conversion factors from metric to english
     SedConvert = 1000
     SedConvert = 1
-    NPConvert = 1
+    # NPConvert = 1
 
     # Get the animal nuntient loads
     # z.GRLBN = z.AvGRLostBarnNSum
@@ -170,7 +171,7 @@ def WriteOutput(z):
     z.n149 = z.AvWildOrgsSum
 
     # FARM ANIMAL LOADS
-    # z.n7b = z.AvAnimalNSum
+    # z.n7b_2 = z.AvAnimalNSum
     z.n14b = z.AvAnimalPSum
 
     # XXX: These are not used in our port.
@@ -225,7 +226,7 @@ def WriteOutput(z):
     # FARM ANIMAL LOAD REDUCTION FOR N AND P
     # z.AvAnimalNSum_1 = z.n7b
     z.AvAnimalPSum = z.n14b
-    z.n7b = z.n7b * NPConvert
+    # z.n7b_1 = z.n7b * NPConvert
     z.n14b = z.n14b * NPConvert
 
     # XXX: These are not used in our port
@@ -363,14 +364,15 @@ def WriteOutput(z):
 
     # COMPLETE CALCULATING THE TOTAL SOURCE LOADS FOR SEDIMENT, N AND P
     AvTotalSed = (AvTotalSed + (((z.AvStreamBankErosSum / 1000) +
-                  ((z.AvTileDrainSedSum / 1000)) * z.RetentFactorSed * (1 - z.AttenTSS))))
+                                 ((z.AvTileDrainSedSum / 1000)) * z.RetentFactorSed * (1 - z.AttenTSS))))
     AvDisN = (AvDisN + ((z.AvGroundNitrSum + YrPointNitr + z.AvSeptNitr) *
-              z.RetentFactorN * (1 - z.AttenN)))
-    AvTotalN = (AvTotalN + ((z.AvStreamBankNSum + (z.AvGroundNitrSum + z.AvTileDrainNSum +
-                z.AvAnimalNSum_1 + YrPointNitr + z.AvSeptNitr) * z.RetentFactorN * (1 - z.AttenN))))
+                        z.RetentFactorN * (1 - z.AttenN)))
+    # AvTotalN = (AvTotalN + ((z.AvStreamBankNSum + (z.AvGroundNitrSum + z.AvTileDrainNSum +
+    #             z.AvAnimalNSum + YrPointNitr + z.AvSeptNitr) * z.RetentFactorN * (1 - z.AttenN))))
     AvDisP = AvDisP + ((z.AvGroundPhosSum + YrPointPhos + z.AvSeptPhos) * z.RetentFactorP * (1 - z.AttenP))
     AvTotalP = (AvTotalP + ((z.AvStreamBankPSum + (z.AvGroundPhosSum + z.AvTileDrainPSum +
-                z.AvAnimalPSum + YrPointPhos + z.AvSeptPhos) * z.RetentFactorP * (1 - z.AttenP))))
+                                                   z.AvAnimalPSum + YrPointPhos + z.AvSeptPhos) * z.RetentFactorP * (
+                                         1 - z.AttenP))))
 
     # OBTAIN THE AVERAGE TOTAL MONTHLY LOADS
     AvMonDisN = 0
@@ -461,7 +463,18 @@ def WriteOutput(z):
     # Obtain the totals for sed, z.n az.nd P
     # Obtain the totals for sed, N and P
     z.n19 = z.n1 + z.n2 + z.n2b + z.n2c + z.n2d + z.n3 + z.n4
-    z.n20 = z.n5 + z.n6 + z.n6b + z.n6c + z.n6d + z.n7 + z.n7b + z.n8 + z.n9 + z.n10 + z.n11
+    z.n20 = z.n5 + z.n6 + z.n6b + z.n6c + z.n6d + z.n7 + N7b_1(z.NYrs, z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt,
+                                                               z.AnimalDailyN, z.NGAppNRate, z.NGPctSoilIncRate,
+                                                               z.GRAppNRate,
+                                                               z.GRPctSoilIncRate, z.GrazingNRate, z.GRPctManApp,
+                                                               z.PctGrazing, z.GRBarnNRate, z.Prec, z.DaysMonth,
+                                                               z.AWMSGrPct,
+                                                               z.GrAWMSCoeffN, z.RunContPct, z.RunConCoeffN, z.n41b,
+                                                               z.n85h, z.NGPctManApp, z.AWMSNgPct, z.NGBarnNRate,
+                                                               z.NgAWMSCoeffN, z.n41d,
+                                                               z.n85j, z.n41f, z.n85l, z.PctStreams, z.n42, z.n45,
+                                                               z.n69, z.n43, z.n64,
+                                                               NPConvert) + z.n8 + z.n9 + z.n10 + z.n11
     z.n21 = z.n12 + z.n13 + z.n13b + z.n13c + z.n13d + z.n14 + z.n14b + z.n15 + z.n16 + z.n17 + z.n18
 
     # TODO: Port WriteDailyFlowFile if needed
@@ -723,7 +736,13 @@ def WriteOutput(z):
     # kg
     SumNitr = sum(z.AvLuTotNitr[l] for l in sources)
     SumNitr += z.AvStreamBankNSum
-    SumNitr += z.AvAnimalNSum_1 * z.RetentFactorN * (1 - z.AttenN)
+    SumNitr += AvAnimalNSum_1(z.NYrs, z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN, z.NGAppNRate,
+                              z.NGPctSoilIncRate, z.GRAppNRate, z.GRPctSoilIncRate, z.GrazingNRate, z.GRPctManApp,
+                              z.PctGrazing, z.GRBarnNRate,
+                              z.Prec, z.DaysMonth, z.AWMSGrPct, z.GrAWMSCoeffN, z.RunContPct, z.RunConCoeffN, z.n41b,
+                              z.n85h, z.NGPctManApp, z.AWMSNgPct,
+                              z.NGBarnNRate, z.NgAWMSCoeffN, z.n41d, z.n85j, z.n41f, z.n85l, z.PctStreams, z.n42, z.n45,
+                              z.n69, z.n43, z.n64) * z.RetentFactorN * (1 - z.AttenN)
     SumNitr += z.AvGroundNitrSum * z.RetentFactorN * (1 - z.AttenN)
     SumNitr += YrPointNitr * z.RetentFactorN * (1 - z.AttenN)
     SumNitr += z.AvSeptNitr * z.RetentFactorN * (1 - z.AttenN)
@@ -879,7 +898,13 @@ def WriteOutput(z):
     output['Loads'].append({
         'Source': 'Farm Animals',
         'Sediment': 0,
-        'TotalN': z.AvAnimalNSum_1 * z.RetentFactorN * (1 - z.AttenN),
+        'TotalN': AvAnimalNSum_1(z.NYrs, z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN, z.NGAppNRate,
+                                 z.NGPctSoilIncRate, z.GRAppNRate, z.GRPctSoilIncRate, z.GrazingNRate, z.GRPctManApp,
+                                 z.PctGrazing, z.GRBarnNRate,
+                                 z.Prec, z.DaysMonth, z.AWMSGrPct, z.GrAWMSCoeffN, z.RunContPct, z.RunConCoeffN, z.n41b,
+                                 z.n85h, z.NGPctManApp, z.AWMSNgPct,
+                                 z.NGBarnNRate, z.NgAWMSCoeffN, z.n41d, z.n85j, z.n41f, z.n85l, z.PctStreams, z.n42,
+                                 z.n45, z.n69, z.n43, z.n64) * z.RetentFactorN * (1 - z.AttenN),
         'TotalP': z.AvAnimalPSum * z.RetentFactorP * (1 - z.AttenP),
     })
     output['Loads'].append({
