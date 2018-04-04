@@ -26,6 +26,7 @@ from . import WriteOutputFiles
 import Precipitation
 import ET
 import PtSrcFlow
+from Rain import Rain
 
 log = logging.getLogger(__name__)
 
@@ -57,7 +58,9 @@ def run(z):
     # print ('True')
 
     # z.PtSrcFlow = PtSrcFlow.PtSrcFlow(z.NYrs,z.PointFlow)
-    z.PtSrcFlow = PtSrcFlow.PtSrcFlow_2(z.NYrs,z.PointFlow)
+    z.PtSrcFlow = PtSrcFlow.PtSrcFlow_2(z.NYrs, z.PointFlow)
+
+    z.Rain = Rain(z.NYrs, z.DaysMonth, z.Temp, z.Prec)
 
     for Y in range(z.NYrs):
         # Initialize monthly septic system variables
@@ -87,7 +90,7 @@ def run(z):
                 z.DailyTemp = z.Temp[Y][i][j]
                 z.DailyPrec = z.Prec[Y][i][j]
                 z.Melt = 0
-                z.Rain = 0
+                # z.Rain = 0
                 z.Water = 0
                 z.Erosiv = 0
                 z.ET = 0
@@ -114,7 +117,7 @@ def run(z):
                 if z.DailyTemp <= 0:
                     z.InitSnow = z.InitSnow + z.DailyPrec
                 else:
-                    z.Rain = z.DailyPrec
+                    # z.Rain = z.DailyPrec
                     if z.InitSnow > 0.001:
                         # A DEGREE-DAY INITSNOW MELT, BUT NO MORE THAN EXISTED
                         # INITSNOW
@@ -128,12 +131,12 @@ def run(z):
                         z.MeltPest[Y][i][j] = 0
 
                     # AVAILABLE WATER CALCULATION
-                    z.Water = z.Rain + z.Melt
+                    z.Water = z.Rain[Y][i][j] + z.Melt
                     z.DailyWater[Y][i][j] = z.Water
 
                     # Compute erosivity when erosion occurs, i.e., with rain and no InitSnow left
-                    if z.Rain > 0 and z.InitSnow < 0.001:
-                        z.Erosiv = 6.46 * z.Acoef[i] * z.Rain ** 1.81
+                    if z.Rain[Y][i][j] > 0 and z.InitSnow < 0.001:
+                        z.Erosiv = 6.46 * z.Acoef[i] * z.Rain[Y][i][j] ** 1.81
 
                     # IF WATER AVAILABLE, THEN CALL SUB TO COMPUTE CN, RUNOFF,
                     # EROSION AND SEDIMENT
