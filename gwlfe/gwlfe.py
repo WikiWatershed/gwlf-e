@@ -13,6 +13,7 @@ Imported from GWLF-E.frm
 import logging
 
 import numpy as np
+from Yesterday import get_value_for_yesterday
 
 from .enums import ETflag, GrowFlag
 from . import ReadGwlfDataFile
@@ -27,6 +28,7 @@ import Precipitation
 import ET
 import PtSrcFlow
 from Rain import Rain
+from InitSnow import InitSnow
 
 log = logging.getLogger(__name__)
 
@@ -62,6 +64,9 @@ def run(z):
 
     z.Rain = Rain(z.NYrs, z.DaysMonth, z.Temp, z.Prec)
 
+    z.InitSnow = InitSnow(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec)
+    # z.InitSnow_2 = np.zeros((z.NYrs,12,31))
+
     for Y in range(z.NYrs):
         # Initialize monthly septic system variables
         z.MonthPondNitr = np.zeros(12)
@@ -89,7 +94,7 @@ def run(z):
                 # ***** BEGIN WEATHER DATA ANALYSIS *****
                 z.DailyTemp = z.Temp[Y][i][j]
                 z.DailyPrec = z.Prec[Y][i][j]
-                z.Melt = 0
+                # z.Melt = 0
                 # z.Rain = 0
                 z.Water = 0
                 z.Erosiv = 0
@@ -114,34 +119,66 @@ def run(z):
                 z.CNum = 0
 
                 # RAIN , SNOWMELT, EVAPOTRANSPIRATION (ET)
-                if z.DailyTemp <= 0:
-                    z.InitSnow = z.InitSnow + z.DailyPrec
+                # print(z.InitSnow,get_value_for_yesterday(z.InitSnow_2,z.InitSnow_0,Y,i,j,z.NYrs,z.DaysMonth))
+                if z.DailyTemp > 0 and get_value_for_yesterday(z.InitSnow, z.InitSnow_0, Y, i, j, z.NYrs,
+                                                               z.DaysMonth) > 0.001:
+                    z.Melt = 0.45 * z.DailyTemp
                 else:
-                    # z.Rain = z.DailyPrec
-                    if z.InitSnow > 0.001:
-                        # A DEGREE-DAY INITSNOW MELT, BUT NO MORE THAN EXISTED
-                        # INITSNOW
-                        z.Melt = 0.45 * z.DailyTemp
-                        z.MeltPest[Y][i][j] = z.Melt
-                        if z.Melt > z.InitSnow:
-                            z.Melt = z.InitSnow
-                            z.MeltPest[Y][i][j] = z.InitSnow
-                        z.InitSnow = z.InitSnow - z.Melt
-                    else:
-                        z.MeltPest[Y][i][j] = 0
+                    z.Melt = 0
 
-                    # AVAILABLE WATER CALCULATION
-                    z.Water = z.Rain[Y][i][j] + z.Melt
-                    z.DailyWater[Y][i][j] = z.Water
+                if z.DailyTemp > 0 and get_value_for_yesterday(z.InitSnow, z.InitSnow_0, Y, i, j, z.NYrs,
+                                                               z.DaysMonth) > 0.001 and z.Melt > get_value_for_yesterday(
+                    z.InitSnow, z.InitSnow_0, Y, i, j, z.NYrs, z.DaysMonth):
+                    z.Melt_1 = get_value_for_yesterday(z.InitSnow, z.InitSnow_0, Y, i, j, z.NYrs, z.DaysMonth)
+                else:
+                    z.Melt_1 = z.Melt
+
+                # AVAILABLE WATER CALCULATION
+                z.Water = z.Rain[Y][i][j] + z.Melt_1
+                z.DailyWater[Y][i][j] = z.Water
+
+                if z.DailyTemp > 0 and get_value_for_yesterday(z.InitSnow, z.InitSnow_0, Y, i, j, z.NYrs,
+                                                               z.DaysMonth) > 0.001:
+                    z.MeltPest[Y][i][j] = z.Melt
+                else:
+                    z.MeltPest[Y][i][j] = 0
+
+                # if z.DailyTemp <= 0:
+                #     z.InitSnow_2[Y][i][j] = get_value_for_yesterday(z.InitSnow_2,z.InitSnow_0,Y,i,j,z.NYrs,z.DaysMonth) + z.DailyPrec
+                # else:
+                #     if get_value_for_yesterday(z.InitSnow_2,z.InitSnow_0,Y,i,j,z.NYrs,z.DaysMonth) > 0.001:
+                #         if(z.Melt > get_value_for_yesterday(z.InitSnow_2, z.InitSnow_0, Y, i, j, z.NYrs, z.DaysMonth)):
+                #             z.InitSnow_2[Y][i][j] = 0
+                #         else:
+                #             z.InitSnow_2[Y][i][j] = get_value_for_yesterday(z.InitSnow_2, z.InitSnow_0, Y, i, j, z.NYrs,
+                #                                                             z.DaysMonth) - z.Melt
+                #     else:
+                #         z.InitSnow_2[Y][i][j] = get_value_for_yesterday(z.InitSnow_2,z.InitSnow_0,Y,i,j,z.NYrs,z.DaysMonth)
+                # print(z.InitSnow_3[Y][i][j],z.InitSnow_2[Y][i][j] )
+
+                if z.DailyTemp > 0:
+                    if get_value_for_yesterday(z.InitSnow, z.InitSnow_0, Y, i, j, z.NYrs, z.DaysMonth) > 0.001:
+                        if z.Melt > get_value_for_yesterday(z.InitSnow, z.InitSnow_0, Y, i, j, z.NYrs, z.DaysMonth):
+                            z.MeltPest[Y][i][j] = get_value_for_yesterday(z.InitSnow, z.InitSnow_0, Y, i, j, z.NYrs,
+                                                                          z.DaysMonth)
 
                     # Compute erosivity when erosion occurs, i.e., with rain and no InitSnow left
-                    if z.Rain[Y][i][j] > 0 and z.InitSnow < 0.001:
-                        z.Erosiv = 6.46 * z.Acoef[i] * z.Rain[Y][i][j] ** 1.81
+                if z.DailyTemp > 0:
+                    if (get_value_for_yesterday(z.InitSnow, z.InitSnow_0, Y, i, j, z.NYrs, z.DaysMonth) > 0.001):
+                        if z.Rain[Y][i][j] > 0 and get_value_for_yesterday(z.InitSnow, z.InitSnow_0, Y, i, j, z.NYrs,
+                                                                           z.DaysMonth) - z.Melt_1 < 0.001:
+                            z.Erosiv = 6.46 * z.Acoef[i] * z.Rain[Y][i][j] ** 1.81
+                    else:
+                        if z.Rain[Y][i][j] > 0 and get_value_for_yesterday(z.InitSnow, z.InitSnow_0, Y, i, j, z.NYrs,
+                                                                           z.DaysMonth) < 0.001:
+                            z.Erosiv = 6.46 * z.Acoef[i] * z.Rain[Y][i][j] ** 1.81
 
                     # IF WATER AVAILABLE, THEN CALL SUB TO COMPUTE CN, RUNOFF,
                     # EROSION AND SEDIMENT
                     if z.Water > 0.01:
                         CalcCnErosRunoffSed.CalcCN(z, i, Y, j)
+
+                # print("n-1 init snow (",Y,i,j,")",z.InitSnow)
 
                 # DAILY CN
                 z.DailyCN[Y][i][j] = z.CNum
@@ -239,7 +276,7 @@ def run(z):
                                   (z.PhosSepticLoad - z.PhosPlantUptake * grow_factor))
 
                 # UPDATE MASS BALANCE ON PONDED EFFLUENT
-                if z.Temp[Y][i][j] <= 0 or z.InitSnow > 0:
+                if z.Temp[Y][i][j] <= 0 or z.InitSnow[Y][i][j] > 0:
 
                     # ALL INPUTS GO TO FROZEN STORAGE
                     z.FrozenPondNitr = z.FrozenPondNitr + z.PondNitrLoad
@@ -272,7 +309,6 @@ def run(z):
                                        z.PhosPlantUptake * grow_factor)
                 z.MonthDischargeNitr[i] = z.MonthDischargeNitr[i] + z.NitrSepticLoad
                 z.MonthDischargePhos[i] = z.MonthDischargePhos[i] + z.PhosSepticLoad
-
             # CALCULATE WITHDRAWAL AND POINT SOURCE FLOW VALUES
             z.Withdrawal[Y][i] = (z.Withdrawal[Y][i] + z.StreamWithdrawal[i] +
                                   z.GroundWithdrawal[i])
@@ -339,5 +375,4 @@ def run(z):
 
     output = WriteOutputFiles.WriteOutput(z)
     # WriteOutputFiles.WriteOutputSumFiles()
-
     return output
