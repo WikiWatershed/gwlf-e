@@ -33,7 +33,7 @@ def CalcCN(z, i, Y, j):
         grow_factor = GrowFlag.intval(z.Grow[i])
 
         if z.CN[l] > 0:
-            if z.Melt <= 0:
+            if z.Melt[Y][i][j] <= 0:
                 if grow_factor > 0:
                     # growing season
                     if z.AMC5 >= 5.33:
@@ -107,7 +107,7 @@ def CalcCN(z, i, Y, j):
 
         # Find curve number
         if z.CNI[1][l] > 0:
-            if z.Melt <= 0:
+            if z.Melt[Y][i][j] <= 0:
                 if grow_factor > 0:
                     # Growing season
                     if z.AMC5 >= 5.33:
@@ -135,7 +135,7 @@ def CalcCN(z, i, Y, j):
                 z.QrunI[l] = (z.Water - 0.2 * z.CNumImpervReten) ** 2 / (z.Water + 0.8 * z.CNumImpervReten)
 
         if z.CNP[1][l] > 0:
-            if z.Melt <= 0:
+            if z.Melt[Y][i][j] <= 0:
                 if grow_factor > 0:
                     # Growing season
                     if z.AMC5 >= 5.33:

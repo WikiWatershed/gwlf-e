@@ -13,7 +13,7 @@ Imported from GWLF-E.frm
 import logging
 
 import numpy as np
-from Yesterday import get_value_for_yesterday
+from DailyArrayConverter import get_value_for_yesterday
 
 from .enums import ETflag, GrowFlag
 from . import ReadGwlfDataFile
@@ -29,6 +29,7 @@ import ET
 import PtSrcFlow
 from Rain import Rain
 from InitSnow import InitSnow
+from Melt import Melt
 
 log = logging.getLogger(__name__)
 
@@ -65,7 +66,8 @@ def run(z):
     z.Rain = Rain(z.NYrs, z.DaysMonth, z.Temp, z.Prec)
 
     z.InitSnow = InitSnow(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec)
-    # z.InitSnow_2 = np.zeros((z.NYrs,12,31))
+
+    z.Melt = Melt(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec)
 
     for Y in range(z.NYrs):
         # Initialize monthly septic system variables
@@ -120,18 +122,19 @@ def run(z):
 
                 # RAIN , SNOWMELT, EVAPOTRANSPIRATION (ET)
                 # print(z.InitSnow,get_value_for_yesterday(z.InitSnow_2,z.InitSnow_0,Y,i,j,z.NYrs,z.DaysMonth))
-                if z.DailyTemp > 0 and get_value_for_yesterday(z.InitSnow, z.InitSnow_0, Y, i, j, z.NYrs,
-                                                               z.DaysMonth) > 0.001:
-                    z.Melt = 0.45 * z.DailyTemp
-                else:
-                    z.Melt = 0
+                # if z.DailyTemp > 0 and get_value_for_yesterday(z.InitSnow, z.InitSnow_0, Y, i, j, z.NYrs,
+                #                                                z.DaysMonth) > 0.001:
+                #     z.Melt = 0.45 * z.DailyTemp
+                # else:
+                #     z.Melt = 0
 
                 if z.DailyTemp > 0 and get_value_for_yesterday(z.InitSnow, z.InitSnow_0, Y, i, j, z.NYrs,
-                                                               z.DaysMonth) > 0.001 and z.Melt > get_value_for_yesterday(
+                                                               z.DaysMonth) > 0.001 and z.Melt[Y][i][
+                    j] > get_value_for_yesterday(
                     z.InitSnow, z.InitSnow_0, Y, i, j, z.NYrs, z.DaysMonth):
                     z.Melt_1 = get_value_for_yesterday(z.InitSnow, z.InitSnow_0, Y, i, j, z.NYrs, z.DaysMonth)
                 else:
-                    z.Melt_1 = z.Melt
+                    z.Melt_1 = z.Melt[Y][i][j]
 
                 # AVAILABLE WATER CALCULATION
                 z.Water = z.Rain[Y][i][j] + z.Melt_1
@@ -139,7 +142,7 @@ def run(z):
 
                 if z.DailyTemp > 0 and get_value_for_yesterday(z.InitSnow, z.InitSnow_0, Y, i, j, z.NYrs,
                                                                z.DaysMonth) > 0.001:
-                    z.MeltPest[Y][i][j] = z.Melt
+                    z.MeltPest[Y][i][j] = z.Melt[Y][i][j]
                 else:
                     z.MeltPest[Y][i][j] = 0
 
@@ -158,7 +161,8 @@ def run(z):
 
                 if z.DailyTemp > 0:
                     if get_value_for_yesterday(z.InitSnow, z.InitSnow_0, Y, i, j, z.NYrs, z.DaysMonth) > 0.001:
-                        if z.Melt > get_value_for_yesterday(z.InitSnow, z.InitSnow_0, Y, i, j, z.NYrs, z.DaysMonth):
+                        if z.Melt[Y][i][j] > get_value_for_yesterday(z.InitSnow, z.InitSnow_0, Y, i, j, z.NYrs,
+                                                                     z.DaysMonth):
                             z.MeltPest[Y][i][j] = get_value_for_yesterday(z.InitSnow, z.InitSnow_0, Y, i, j, z.NYrs,
                                                                           z.DaysMonth)
 
