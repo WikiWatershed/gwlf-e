@@ -30,6 +30,7 @@ import PtSrcFlow
 from Rain import Rain
 from InitSnow import InitSnow
 from Melt import Melt
+from MeltPest import MeltPest
 
 log = logging.getLogger(__name__)
 
@@ -68,6 +69,8 @@ def run(z):
     z.InitSnow = InitSnow(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec)
 
     z.Melt = Melt(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec)
+
+    z.MeltPest = MeltPest(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec)
 
     for Y in range(z.NYrs):
         # Initialize monthly septic system variables
@@ -140,12 +143,6 @@ def run(z):
                 z.Water = z.Rain[Y][i][j] + z.Melt_1
                 z.DailyWater[Y][i][j] = z.Water
 
-                if z.DailyTemp > 0 and get_value_for_yesterday(z.InitSnow, z.InitSnow_0, Y, i, j, z.NYrs,
-                                                               z.DaysMonth) > 0.001:
-                    z.MeltPest[Y][i][j] = z.Melt[Y][i][j]
-                else:
-                    z.MeltPest[Y][i][j] = 0
-
                 # if z.DailyTemp <= 0:
                 #     z.InitSnow_2[Y][i][j] = get_value_for_yesterday(z.InitSnow_2,z.InitSnow_0,Y,i,j,z.NYrs,z.DaysMonth) + z.DailyPrec
                 # else:
@@ -159,14 +156,22 @@ def run(z):
                 #         z.InitSnow_2[Y][i][j] = get_value_for_yesterday(z.InitSnow_2,z.InitSnow_0,Y,i,j,z.NYrs,z.DaysMonth)
                 # print(z.InitSnow_3[Y][i][j],z.InitSnow_2[Y][i][j] )
 
-                if z.DailyTemp > 0:
-                    if get_value_for_yesterday(z.InitSnow, z.InitSnow_0, Y, i, j, z.NYrs, z.DaysMonth) > 0.001:
-                        if z.Melt[Y][i][j] > get_value_for_yesterday(z.InitSnow, z.InitSnow_0, Y, i, j, z.NYrs,
-                                                                     z.DaysMonth):
-                            z.MeltPest[Y][i][j] = get_value_for_yesterday(z.InitSnow, z.InitSnow_0, Y, i, j, z.NYrs,
-                                                                          z.DaysMonth)
+                # if z.DailyTemp > 0 and get_value_for_yesterday(z.InitSnow, z.InitSnow_0, Y, i, j, z.NYrs,
+                #                                                z.DaysMonth) > 0.001:
+                #     z.MeltPest[Y][i][j] = z.Melt[Y][i][j]
+                # else:
+                #     z.MeltPest[Y][i][j] = 0
+                # if z.DailyTemp > 0 and get_value_for_yesterday(z.InitSnow, z.InitSnow_0, Y, i, j, z.NYrs, z.DaysMonth) > 0.001:
+                #         if z.Melt[Y][i][j] > get_value_for_yesterday(z.InitSnow, z.InitSnow_0, Y, i, j, z.NYrs,
+                #                                                      z.DaysMonth):
+                #             z.MeltPest[Y][i][j] = get_value_for_yesterday(z.InitSnow, z.InitSnow_0, Y, i, j, z.NYrs,
+                #                                                           z.DaysMonth)
+                #         else:
+                #             z.MeltPest[Y][i][j] = z.Melt[Y][i][j]
+                # else:
+                #     z.MeltPest[Y][i][j] = 0
 
-                    # Compute erosivity when erosion occurs, i.e., with rain and no InitSnow left
+                # Compute erosivity when erosion occurs, i.e., with rain and no InitSnow left
                 if z.DailyTemp > 0:
                     if (get_value_for_yesterday(z.InitSnow, z.InitSnow_0, Y, i, j, z.NYrs, z.DaysMonth) > 0.001):
                         if z.Rain[Y][i][j] > 0 and get_value_for_yesterday(z.InitSnow, z.InitSnow_0, Y, i, j, z.NYrs,
