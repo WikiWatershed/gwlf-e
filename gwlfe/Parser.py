@@ -54,7 +54,7 @@ class GmsReader(object):
         z.ImpervAccum = np.zeros(16)
         z.PervAccum = np.zeros(16)
         z.QrunI = np.zeros(16)
-        z.QrunP = np.zeros(16)
+        # z.QrunP = np.zeros(16)
         z.WashPerv = np.zeros(16)
         z.NetDisLoad = np.zeros(3)
 

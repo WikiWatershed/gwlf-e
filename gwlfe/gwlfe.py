@@ -47,6 +47,8 @@ from CNumImperv import CNumImperv
 from CNum import CNum
 from CNumPervReten import CNumPervReten
 from CNumImpervReten import CNumImpervReten
+from Retention import Retention
+from QrunP import QrunP
 
 log = logging.getLogger(__name__)
 
@@ -101,7 +103,12 @@ def run(z):
                                     z.CNP_0, z.Grow)
 
     z.CNumImpervReten = CNumImpervReten(z.NYrs, z.DaysMonth, z.Temp, z.Prec, z.InitSnow_0, z.AntMoist_0, z.NRur, z.NUrb,
-                                    z.CNI_0, z.Grow)
+                                        z.CNI_0, z.Grow)
+
+    z.Retention = Retention(z.NYrs, z.DaysMonth, z.Temp, z.Prec, z.InitSnow_0, z.AntMoist_0, z.NRur, z.NUrb, z.CN,
+                            z.Grow)
+
+    z.QrunP = QrunP(z.NYrs, z.DaysMonth, z.NRur, z.NUrb, z.Temp, z.InitSnow_0, z.Prec, z.CNP_0, z.AntMoist_0, z.Grow)
     # --------- run the remaining parts of the model ---------------------
 
     ReadGwlfDataFile.ReadAllData(z)

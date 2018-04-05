@@ -6,7 +6,7 @@ from NLU import NLU
 from Water import Water
 
 
-def CNumImpervReten(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, NRur, NUrb, CNI_0, Grow):#TODO: this is exactly the same as perv
+def CNumImpervReten(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, NRur, NUrb, CNI_0, Grow):#TODO: this is exactly the same as perv and retention
     cni = CNI(NRur, NUrb, CNI_0)
     c_num_imperv = CNumImperv(NYrs, NRur, NUrb, DaysMonth, InitSnow_0, Temp, Prec, CNI_0, Grow, AntMoist_0)
     nlu = NLU(NRur, NUrb)
