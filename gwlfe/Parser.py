@@ -357,7 +357,7 @@ class GmsReader(object):
         z.StreamBankEros = np.zeros((z.DimYrs, 12))
         z.StreamBankN = np.zeros((z.DimYrs, 12))
         z.StreamBankP = np.zeros((z.DimYrs, 12))
-        z.DailyAMC5 = np.zeros((z.DimYrs, 12, 31))
+        # z.DailyAMC5 = np.zeros((z.DimYrs, 12, 31))
         z.MonthFlow = np.zeros((z.DimYrs, 12))
         z.LuGrFlow = np.zeros((16, z.DimYrs, 12, 31))
         z.LuDeepSeep = np.zeros((16, z.DimYrs, 12, 31))
@@ -471,10 +471,12 @@ class GmsReader(object):
 
         # Lines 3 - 7: (each line represents 1 day)
         # Antecedent Rain + Melt Moisture Condition for Days 1 to 5
-        z.AntMoist = np.zeros(5)
+        # z.AntMoist = np.zeros(5)
+        z.AntMoist_0 = np.zeros(5)
 
         for i in range(5):
-            z.AntMoist[i] = self.next(float)
+            # z.AntMoist[i] = self.next(float)
+            z.AntMoist_0[i] = self.next(float)
             self.next(EOL)
 
         # Lines 8 - 19: (each line represents 1 month)

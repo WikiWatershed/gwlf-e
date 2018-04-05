@@ -37,6 +37,7 @@ from Erosiv import Erosiv
 from NLU import NLU
 from CNI import CNI
 from CNP import CNP
+from AMC5 import AMC5
 
 log = logging.getLogger(__name__)
 
@@ -74,6 +75,8 @@ def run(z):
     z.CNI = CNI(z.NRur, z.NUrb, z.CNI_0)
 
     z.CNP = CNP(z.NRur, z.NUrb, z.CNP_0)
+
+    z.AMC5 = AMC5(z.NYrs, z.DaysMonth, z.Temp, z.Prec, z.InitSnow_0, z.AntMoist_0)
 
     # --------- run the remaining parts of the model ---------------------
 
@@ -205,15 +208,15 @@ def run(z):
 
                 # UPDATE ANTECEDENT RAIN+MELT CONDITION
                 # Subtract AMC5 by the sum of AntMoist (day 5) and Water
-                z.AMC5 = z.AMC5 - z.AntMoist[4] + z.Water[Y][i][j]
-                z.DailyAMC5[Y][i][j] = z.AMC5
+                # z.AMC5 = z.AMC5 - z.AntMoist[4] + z.Water[Y][i][j]
+                # z.DailyAMC5[Y][i][j] = z.AMC5
 
                 # Shift AntMoist values to the right.
-                z.AntMoist[4] = z.AntMoist[3]
-                z.AntMoist[3] = z.AntMoist[2]
-                z.AntMoist[2] = z.AntMoist[1]
-                z.AntMoist[1] = z.AntMoist[0]
-                z.AntMoist[0] = z.Water[Y][i][j]
+                # z.AntMoist[4] = z.AntMoist[3]
+                # z.AntMoist[3] = z.AntMoist[2]
+                # z.AntMoist[2] = z.AntMoist[1]
+                # z.AntMoist[1] = z.AntMoist[0]
+                # z.AntMoist[0] = z.Water[Y][i][j]
 
                 # CALCULATE ET FROM SATURATED VAPOR PRESSURE,
                 # HAMON (1961) METHOD

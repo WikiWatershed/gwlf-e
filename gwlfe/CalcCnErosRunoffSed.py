@@ -36,20 +36,20 @@ def CalcCN(z, i, Y, j):
             if z.Melt[Y][i][j] <= 0:
                 if grow_factor > 0:
                     # growing season
-                    if z.AMC5 >= 5.33:
+                    if z.AMC5[Y][i][j] >= 5.33:
                         z.CNum = z.NewCN[2][l]
-                    elif z.AMC5 < 3.56:
-                        z.CNum = z.NewCN[0][l] + (z.CN[l] - z.NewCN[0][l]) * z.AMC5 / 3.56
+                    elif z.AMC5[Y][i][j] < 3.56:
+                        z.CNum = z.NewCN[0][l] + (z.CN[l] - z.NewCN[0][l]) * z.AMC5[Y][i][j] / 3.56
                     else:
-                        z.CNum = z.CN[l] + (z.NewCN[2][l] - z.CN[l]) * (z.AMC5 - 3.56) / 1.77
+                        z.CNum = z.CN[l] + (z.NewCN[2][l] - z.CN[l]) * (z.AMC5[Y][i][j] - 3.56) / 1.77
                 else:
                     # dormant season
-                    if z.AMC5 >= 2.79:
+                    if z.AMC5[Y][i][j] >= 2.79:
                         z.CNum = z.NewCN[2][l]
-                    elif z.AMC5 < 1.27:
-                        z.CNum = z.NewCN[0][l] + (z.CN[l] - z.NewCN[0][l]) * z.AMC5 / 1.27
+                    elif z.AMC5[Y][i][j] < 1.27:
+                        z.CNum = z.NewCN[0][l] + (z.CN[l] - z.NewCN[0][l]) * z.AMC5[Y][i][j] / 1.27
                     else:
-                        z.CNum = z.CN[l] + (z.NewCN[2][l] - z.CN[l]) * (z.AMC5 - 1.27) / 1.52
+                        z.CNum = z.CN[l] + (z.NewCN[2][l] - z.CN[l]) * (z.AMC5[Y][i][j] - 1.27) / 1.52
             else:
                 z.CNum = z.NewCN[2][l]
 
@@ -110,20 +110,20 @@ def CalcCN(z, i, Y, j):
             if z.Melt[Y][i][j] <= 0:
                 if grow_factor > 0:
                     # Growing season
-                    if z.AMC5 >= 5.33:
+                    if z.AMC5[Y][i][j] >= 5.33:
                         z.CNumImperv = z.CNI[2][l]
-                    elif z.AMC5 < 3.56:
-                        z.CNumImperv = z.CNI[0][l] + (z.CNI[1][l] - z.CNI[0][l]) * z.AMC5 / 3.56
+                    elif z.AMC5[Y][i][j] < 3.56:
+                        z.CNumImperv = z.CNI[0][l] + (z.CNI[1][l] - z.CNI[0][l]) * z.AMC5[Y][i][j] / 3.56
                     else:
-                        z.CNumImperv = z.CNI[1][l] + (z.CNI[2][l] - z.CNI[1][l]) * (z.AMC5 - 3.56) / 1.77
+                        z.CNumImperv = z.CNI[1][l] + (z.CNI[2][l] - z.CNI[1][l]) * (z.AMC5[Y][i][j] - 3.56) / 1.77
                 else:
                     # Dormant season
-                    if z.AMC5 >= 2.79:
+                    if z.AMC5[Y][i][j] >= 2.79:
                         z.CNumImperv = z.CNI[2][l]
-                    elif z.AMC5 < 1.27:
-                        z.CNumImperv = z.CNI[0][l] + (z.CNI[1][l] - z.CNI[0][l]) * z.AMC5 / 1.27
+                    elif z.AMC5[Y][i][j] < 1.27:
+                        z.CNumImperv = z.CNI[0][l] + (z.CNI[1][l] - z.CNI[0][l]) * z.AMC5[Y][i][j] / 1.27
                     else:
-                        z.CNumImperv = z.CNI[1][l] + (z.CNI[2][l] - z.CNI[1][l]) * (z.AMC5 - 1.27) / 1.52
+                        z.CNumImperv = z.CNI[1][l] + (z.CNI[2][l] - z.CNI[1][l]) * (z.AMC5[Y][i][j] - 1.27) / 1.52
             else:
                 z.CNumImperv = z.CNI[2][l]
 
@@ -138,20 +138,20 @@ def CalcCN(z, i, Y, j):
             if z.Melt[Y][i][j] <= 0:
                 if grow_factor > 0:
                     # Growing season
-                    if z.AMC5 >= 5.33:
+                    if z.AMC5[Y][i][j] >= 5.33:
                         z.CNumPerv = z.CNP[2][l]
-                    elif z.AMC5 < 3.56:
-                        z.CNumPerv = z.CNP[0][l] + (z.CNP[1][l] - z.CNP[0][l]) * z.AMC5 / 3.56
+                    elif z.AMC5[Y][i][j] < 3.56:
+                        z.CNumPerv = z.CNP[0][l] + (z.CNP[1][l] - z.CNP[0][l]) * z.AMC5[Y][i][j] / 3.56
                     else:
-                        z.CNumPerv = z.CNP[1][l] + (z.CNP[2][l] - z.CNP[1][l]) * (z.AMC5 - 3.56) / 1.77
+                        z.CNumPerv = z.CNP[1][l] + (z.CNP[2][l] - z.CNP[1][l]) * (z.AMC5[Y][i][j] - 3.56) / 1.77
                 else:
                     # Dormant season
-                    if z.AMC5 >= 2.79:
+                    if z.AMC5[Y][i][j] >= 2.79:
                         z.CNumPerv = z.CNP[2][l]
-                    elif z.AMC5 < 1.27:
-                        z.CNumPerv = z.CNP[0][l] + (z.CNP[1][l] - z.CNP[0][l]) * z.AMC5 / 1.27
+                    elif z.AMC5[Y][i][j] < 1.27:
+                        z.CNumPerv = z.CNP[0][l] + (z.CNP[1][l] - z.CNP[0][l]) * z.AMC5[Y][i][j] / 1.27
                     else:
-                        z.CNumPerv = z.CNP[1][l] + (z.CNP[2][l] - z.CNP[1][l]) * (z.AMC5 - 1.27) / 1.52
+                        z.CNumPerv = z.CNP[1][l] + (z.CNP[2][l] - z.CNP[1][l]) * (z.AMC5[Y][i][j] - 1.27) / 1.52
             else:
                 z.CNumPerv = z.CNP[2][l]
 

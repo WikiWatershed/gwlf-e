@@ -81,6 +81,6 @@ def InitialCalculations(z):
             z.Difference = z.Volume
 
     # ANTECEDANT MOISTURE OUT TO 5 DAYS
-    z.AMC5 = 0
-    for k in range(5):
-        z.AMC5 += z.AntMoist[k]
+    # z.AMC5 = 0
+    # for k in range(5):
+    #     z.AMC5 += z.AntMoist[k]
