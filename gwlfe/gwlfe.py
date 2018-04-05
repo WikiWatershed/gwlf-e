@@ -42,6 +42,7 @@ from NewCN import NewCN
 from LU import LU
 from LU_1 import LU_1
 from GrowFactor import GrowFactor
+from CNumPerv import CNumPerv
 
 log = logging.getLogger(__name__)
 
@@ -84,11 +85,15 @@ def run(z):
 
     z.NewCN = NewCN(z.NRur, z.NUrb, z.CN)
 
-    z.lu = LU(z.NRur,z.NUrb)
+    z.lu = LU(z.NRur, z.NUrb)
 
-    z.lu_1 = LU_1(z.NRur,z.NUrb)
+    z.lu_1 = LU_1(z.NRur, z.NUrb)
 
     z.GrowFactor = GrowFactor(z.Grow)
+
+    z.CNumPerv = CNumPerv(z.NYrs, z.DaysMonth, z.Temp, z.NRur, z.NUrb, z.CNP_0, z.InitSnow_0, z.Prec, z.Grow, z.AntMoist_0)
+    # np.testing.assert_almost_equal(z.CNumPerv,np.load("CNumPerv.npy"))
+    # z.CNumPerv = np.zeros((z.NYrs,12,31,NLU(z.NRur,z.NUrb)))
 
     # --------- run the remaining parts of the model ---------------------
 

@@ -9,6 +9,7 @@ Imported from CalcCNErosRunoffSed.bas
 
 import math
 import logging
+import numpy as np
 
 from .enums import GrowFlag, LandUse
 
@@ -109,12 +110,12 @@ def CalcCN(z, i, Y, j):
         pass
     else:
         for l in range(z.NRur, z.NLU):
-            grow_factor = GrowFlag.intval(z.Grow[i])
+            # grow_factor = GrowFlag.intval(z.Grow[i])
 
             # Find curve number
             if z.CNI[1][l] > 0:
                 if z.Melt[Y][i][j] <= 0:
-                    if grow_factor > 0:
+                    if z.GrowFactor[i] > 0:
                         # Growing season
                         if get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) >= 5.33:
                             z.CNumImperv = z.CNI[2][l]
@@ -148,33 +149,36 @@ def CalcCN(z, i, Y, j):
                                 z.Water[Y][i][j] + 0.8 * z.CNumImpervReten)
 
             if z.CNP[1][l] > 0:
-                if z.Melt[Y][i][j] <= 0:
-                    if grow_factor > 0:
-                        # Growing season
-                        if get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) >= 5.33:
-                            z.CNumPerv = z.CNP[2][l]
-                        elif get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) < 3.56:
-                            z.CNumPerv = z.CNP[0][l] + (z.CNP[1][l] - z.CNP[0][l]) * get_value_for_yesterday(z.AMC5, 0, Y,
-                                                                                                             i, j, z.NYrs,
-                                                                                                             z.DaysMonth) / 3.56
-                        else:
-                            z.CNumPerv = z.CNP[1][l] + (z.CNP[2][l] - z.CNP[1][l]) * (
-                                        get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) - 3.56) / 1.77
-                    else:
-                        # Dormant season
-                        if get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) >= 2.79:
-                            z.CNumPerv = z.CNP[2][l]
-                        elif get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) < 1.27:
-                            z.CNumPerv = z.CNP[0][l] + (z.CNP[1][l] - z.CNP[0][l]) * get_value_for_yesterday(z.AMC5, 0, Y,
-                                                                                                             i, j, z.NYrs,
-                                                                                                             z.DaysMonth) / 1.27
-                        else:
-                            z.CNumPerv = z.CNP[1][l] + (z.CNP[2][l] - z.CNP[1][l]) * (
-                                        get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) - 1.27) / 1.52
-                else:
-                    z.CNumPerv = z.CNP[2][l]
+                # if z.Melt[Y][i][j] <= 0:
+                #     if z.GrowFactor[i] > 0:
+                #         # Growing season
+                #         if get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) >= 5.33:
+                #             z.CNumPerv[Y][i][j][l] = z.CNP[2][l]
+                #         elif get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) < 3.56:
+                #             z.CNumPerv[Y][i][j][l] = z.CNP[0][l] + (z.CNP[1][l] - z.CNP[0][l]) * get_value_for_yesterday(z.AMC5, 0, Y,
+                #                                                                                              i, j, z.NYrs,
+                #                                                                                              z.DaysMonth) / 3.56
+                #         else:
+                #             z.CNumPerv[Y][i][j][l] = z.CNP[1][l] + (z.CNP[2][l] - z.CNP[1][l]) * (
+                #                         get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) - 3.56) / 1.77
+                #     else:
+                #         # Dormant season
+                #         if get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) >= 2.79:
+                #             z.CNumPerv[Y][i][j][l] = z.CNP[2][l]
+                #         elif get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) < 1.27:
+                #             z.CNumPerv[Y][i][j][l] = z.CNP[0][l] + (z.CNP[1][l] - z.CNP[0][l]) * get_value_for_yesterday(z.AMC5, 0, Y,
+                #                                                                                              i, j, z.NYrs,
+                #                                                                                              z.DaysMonth) / 1.27
+                #         else:
+                #             z.CNumPerv[Y][i][j][l] = z.CNP[1][l] + (z.CNP[2][l] - z.CNP[1][l]) * (
+                #                         get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) - 1.27) / 1.52
+                # else:
+                #     z.CNumPerv[Y][i][j][l] = z.CNP[2][l]
 
-                z.CNumPervReten = 2540 / z.CNumPerv - 25.4
+                # print(z.CNumPerv[Y][i][j][l],z.CNumPerv_2[Y][i][j][l])
+                # assert(z.CNumPerv[Y][i][j]==z.CNumPerv_2[Y][i][j])
+
+                z.CNumPervReten = 2540 / z.CNumPerv[Y][i][j][l] - 25.4
                 if z.CNumPervReten < 0:
                     z.CNumPervReten = 0
 
