@@ -140,13 +140,13 @@ def CalcCN(z, i, Y, j):
                 # else:
                 #     z.CNumImperv = z.CNI[2][l]
 
-                z.CNumImpervReten = 2540 / z.CNumImperv[Y][i][j][l] - 25.4
-                if z.CNumImpervReten < 0:
-                    z.CNumImpervReten = 0
+                # z.CNumImpervReten = 2540 / z.CNumImperv[Y][i][j][l] - 25.4
+                # if z.CNumImpervReten < 0:
+                #     z.CNumImpervReten = 0
 
-                if z.Water[Y][i][j] >= 0.2 * z.CNumImpervReten:
-                    z.QrunI[l] = (z.Water[Y][i][j] - 0.2 * z.CNumImpervReten) ** 2 / (
-                            z.Water[Y][i][j] + 0.8 * z.CNumImpervReten)
+                if z.Water[Y][i][j] >= 0.2 * z.CNumImpervReten[Y][i][j][l]:
+                    z.QrunI[l] = (z.Water[Y][i][j] - 0.2 * z.CNumImpervReten[Y][i][j][l]) ** 2 / (
+                            z.Water[Y][i][j] + 0.8 * z.CNumImpervReten[Y][i][j][l])
 
             if z.CNP[1][l] > 0:
                 # if z.Melt[Y][i][j] <= 0:

@@ -46,6 +46,7 @@ from CNumPerv import CNumPerv
 from CNumImperv import CNumImperv
 from CNum import CNum
 from CNumPervReten import CNumPervReten
+from CNumImpervReten import CNumImpervReten
 
 log = logging.getLogger(__name__)
 
@@ -98,6 +99,9 @@ def run(z):
 
     z.CNumPervReten = CNumPervReten(z.NYrs, z.DaysMonth, z.Temp, z.Prec, z.InitSnow_0, z.AntMoist_0, z.NRur, z.NUrb,
                                     z.CNP_0, z.Grow)
+
+    z.CNumImpervReten = CNumImpervReten(z.NYrs, z.DaysMonth, z.Temp, z.Prec, z.InitSnow_0, z.AntMoist_0, z.NRur, z.NUrb,
+                                    z.CNI_0, z.Grow)
     # --------- run the remaining parts of the model ---------------------
 
     ReadGwlfDataFile.ReadAllData(z)
