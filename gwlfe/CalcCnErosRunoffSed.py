@@ -178,13 +178,13 @@ def CalcCN(z, i, Y, j):
                 # print(z.CNumPerv[Y][i][j][l],z.CNumPerv_2[Y][i][j][l])
                 # assert(z.CNumPerv[Y][i][j]==z.CNumPerv_2[Y][i][j])
 
-                z.CNumPervReten = 2540 / z.CNumPerv[Y][i][j][l] - 25.4
-                if z.CNumPervReten < 0:
-                    z.CNumPervReten = 0
+                # z.CNumPervReten = 2540 / z.CNumPerv[Y][i][j][l] - 25.4
+                # if z.CNumPervReten < 0:
+                #     z.CNumPervReten = 0
 
-                if z.Water[Y][i][j] >= 0.2 * z.CNumPervReten:
-                    z.QrunP[l] = (z.Water[Y][i][j] - 0.2 * z.CNumPervReten) ** 2 / (
-                            z.Water[Y][i][j] + 0.8 * z.CNumPervReten)
+                if z.Water[Y][i][j] >= 0.2 * z.CNumPervReten[Y][i][j][l]:
+                    z.QrunP[l] = (z.Water[Y][i][j] - 0.2 * z.CNumPervReten[Y][i][j][l]) ** 2 / (
+                            z.Water[Y][i][j] + 0.8 * z.CNumPervReten[Y][i][j][l])
 
             # lu = l - z.NRur
 
