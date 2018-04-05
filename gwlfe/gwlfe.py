@@ -31,6 +31,8 @@ from Rain import Rain
 from InitSnow import InitSnow
 from Melt import Melt
 from MeltPest import MeltPest
+from Melt_1 import Melt_1
+from Water import Water
 
 log = logging.getLogger(__name__)
 
@@ -72,6 +74,10 @@ def run(z):
 
     z.MeltPest = MeltPest(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec)
 
+    z.Melt_1 = Melt_1(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec)
+
+    z.Water = Water(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec)
+
     for Y in range(z.NYrs):
         # Initialize monthly septic system variables
         z.MonthPondNitr = np.zeros(12)
@@ -97,11 +103,11 @@ def run(z):
             for j in range(z.DaysMonth[Y][i]):
                 # DAILYWEATHERANALY TEMP[Y][I][J], PREC[Y][I][J]
                 # ***** BEGIN WEATHER DATA ANALYSIS *****
-                z.DailyTemp = z.Temp[Y][i][j]
-                z.DailyPrec = z.Prec[Y][i][j]
+                # z.DailyTemp = z.Temp[Y][i][j]
+                # z.DailyPrec = z.Prec[Y][i][j]
                 # z.Melt = 0
                 # z.Rain = 0
-                z.Water = 0
+                # z.Water = 0
                 z.Erosiv = 0
                 z.ET = 0
                 z.QTotal = 0
@@ -131,17 +137,17 @@ def run(z):
                 # else:
                 #     z.Melt = 0
 
-                if z.DailyTemp > 0 and get_value_for_yesterday(z.InitSnow, z.InitSnow_0, Y, i, j, z.NYrs,
-                                                               z.DaysMonth) > 0.001 and z.Melt[Y][i][
-                    j] > get_value_for_yesterday(
-                    z.InitSnow, z.InitSnow_0, Y, i, j, z.NYrs, z.DaysMonth):
-                    z.Melt_1 = get_value_for_yesterday(z.InitSnow, z.InitSnow_0, Y, i, j, z.NYrs, z.DaysMonth)
-                else:
-                    z.Melt_1 = z.Melt[Y][i][j]
+                # if z.DailyTemp > 0 and get_value_for_yesterday(z.InitSnow, z.InitSnow_0, Y, i, j, z.NYrs,
+                #                                                z.DaysMonth) > 0.001 and z.Melt[Y][i][
+                #     j] > get_value_for_yesterday(
+                #     z.InitSnow, z.InitSnow_0, Y, i, j, z.NYrs, z.DaysMonth):
+                #     z.Melt_1 = get_value_for_yesterday(z.InitSnow, z.InitSnow_0, Y, i, j, z.NYrs, z.DaysMonth)
+                # else:
+                #     z.Melt_1 = z.Melt[Y][i][j]
 
                 # AVAILABLE WATER CALCULATION
-                z.Water = z.Rain[Y][i][j] + z.Melt_1
-                z.DailyWater[Y][i][j] = z.Water
+                # z.Water = z.Rain[Y][i][j] + z.Melt_1[Y][i][j]
+                # z.DailyWater[Y][i][j] = z.Water[Y][i][j]
 
                 # if z.DailyTemp <= 0:
                 #     z.InitSnow_2[Y][i][j] = get_value_for_yesterday(z.InitSnow_2,z.InitSnow_0,Y,i,j,z.NYrs,z.DaysMonth) + z.DailyPrec
@@ -175,7 +181,7 @@ def run(z):
                 if z.DailyTemp > 0:
                     if (get_value_for_yesterday(z.InitSnow, z.InitSnow_0, Y, i, j, z.NYrs, z.DaysMonth) > 0.001):
                         if z.Rain[Y][i][j] > 0 and get_value_for_yesterday(z.InitSnow, z.InitSnow_0, Y, i, j, z.NYrs,
-                                                                           z.DaysMonth) - z.Melt_1 < 0.001:
+                                                                           z.DaysMonth) - z.Melt_1[Y][i][j] < 0.001:
                             z.Erosiv = 6.46 * z.Acoef[i] * z.Rain[Y][i][j] ** 1.81
                     else:
                         if z.Rain[Y][i][j] > 0 and get_value_for_yesterday(z.InitSnow, z.InitSnow_0, Y, i, j, z.NYrs,
@@ -184,7 +190,7 @@ def run(z):
 
                     # IF WATER AVAILABLE, THEN CALL SUB TO COMPUTE CN, RUNOFF,
                     # EROSION AND SEDIMENT
-                    if z.Water > 0.01:
+                    if z.Water[Y][i][j] > 0.01:
                         CalcCnErosRunoffSed.CalcCN(z, i, Y, j)
 
                 # print("n-1 init snow (",Y,i,j,")",z.InitSnow)
@@ -194,7 +200,7 @@ def run(z):
 
                 # UPDATE ANTECEDENT RAIN+MELT CONDITION
                 # Subtract AMC5 by the sum of AntMoist (day 5) and Water
-                z.AMC5 = z.AMC5 - z.AntMoist[4] + z.Water
+                z.AMC5 = z.AMC5 - z.AntMoist[4] + z.Water[Y][i][j]
                 z.DailyAMC5[Y][i][j] = z.AMC5
 
                 # Shift AntMoist values to the right.
@@ -202,7 +208,7 @@ def run(z):
                 z.AntMoist[3] = z.AntMoist[2]
                 z.AntMoist[2] = z.AntMoist[1]
                 z.AntMoist[1] = z.AntMoist[0]
-                z.AntMoist[0] = z.Water
+                z.AntMoist[0] = z.Water[Y][i][j]
 
                 # CALCULATE ET FROM SATURATED VAPOR PRESSURE,
                 # HAMON (1961) METHOD
@@ -227,8 +233,8 @@ def run(z):
 
                 # ***** WATERSHED WATER BALANCE *****
 
-                if z.QTotal <= z.Water:
-                    z.Infiltration = z.Water - z.QTotal
+                if z.QTotal <= z.Water[Y][i][j]:
+                    z.Infiltration = z.Water[Y][i][j] - z.QTotal
                 z.GrFlow = z.RecessionCoef * z.SatStor
                 z.DeepSeep = z.SeepCoef * z.SatStor
 

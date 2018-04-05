@@ -58,8 +58,8 @@ def CalcCN(z, i, Y, j):
                 z.Retention = 0
 
             # z.Water balance and runoff calculation
-            if z.Water >= 0.2 * z.Retention:
-                z.Qrun = (z.Water - 0.2 * z.Retention) ** 2 / (z.Water + 0.8 * z.Retention)
+            if z.Water[Y][i][j] >= 0.2 * z.Retention:
+                z.Qrun = (z.Water[Y][i][j] - 0.2 * z.Retention) ** 2 / (z.Water[Y][i][j] + 0.8 * z.Retention)
                 z.RuralQTotal += z.Qrun * z.Area[l] / z.RurAreaTotal
                 z.RurQRunoff[l][i] += z.Qrun
                 # TODO: (what is done with "DayQRunoff"? - appears not to be used)
@@ -98,7 +98,7 @@ def CalcCN(z, i, Y, j):
         z.NetSolidLoad[q] = 0
         z.NetDisLoad[q] = 0
 
-    if z.Water < 0.05:
+    if z.Water[Y][i][j] < 0.05:
         BasinWater(z, i, Y, j)
         return
     #else:
@@ -131,8 +131,8 @@ def CalcCN(z, i, Y, j):
             if z.CNumImpervReten < 0:
                 z.CNumImpervReten = 0
 
-            if z.Water >= 0.2 * z.CNumImpervReten:
-                z.QrunI[l] = (z.Water - 0.2 * z.CNumImpervReten) ** 2 / (z.Water + 0.8 * z.CNumImpervReten)
+            if z.Water[Y][i][j] >= 0.2 * z.CNumImpervReten:
+                z.QrunI[l] = (z.Water[Y][i][j] - 0.2 * z.CNumImpervReten) ** 2 / (z.Water[Y][i][j] + 0.8 * z.CNumImpervReten)
 
         if z.CNP[1][l] > 0:
             if z.Melt[Y][i][j] <= 0:
@@ -159,8 +159,8 @@ def CalcCN(z, i, Y, j):
             if z.CNumPervReten < 0:
                 z.CNumPervReten = 0
 
-            if z.Water >= 0.2 * z.CNumPervReten:
-                z.QrunP[l] = (z.Water - 0.2 * z.CNumPervReten) ** 2 / (z.Water + 0.8 * z.CNumPervReten)
+            if z.Water[Y][i][j] >= 0.2 * z.CNumPervReten:
+                z.QrunP[l] = (z.Water[Y][i][j] - 0.2 * z.CNumPervReten) ** 2 / (z.Water[Y][i][j] + 0.8 * z.CNumPervReten)
 
         lu = l - z.NRur
 
@@ -263,11 +263,11 @@ def BasinWater(z, i, Y, j):
                 z.DisBasinMass[q] = 0
 
                 if z.Storm > 0:
-                    z.UrbLoadRed = (z.Water / z.Storm) * z.UrbBMPRed[l][q]
+                    z.UrbLoadRed = (z.Water[Y][i][j] / z.Storm) * z.UrbBMPRed[l][q]
                 else:
                     z.UrbLoadRed = 0
 
-                if z.Water > z.Storm:
+                if z.Water[Y][i][j] > z.Storm:
                     z.UrbLoadRed = z.UrbBMPRed[l][q]
 
                 # TODO: Should 11 be NRur + 1?

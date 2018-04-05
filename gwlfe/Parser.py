@@ -352,7 +352,7 @@ class GmsReader(object):
         z.DailyInfilt = np.zeros((z.DimYrs, 12, 31))
         z.StreamFlowVol = np.zeros((z.DimYrs, 12))
         z.DailyCN = np.zeros((z.DimYrs, 12, 31))
-        z.DailyWater = np.zeros((z.DimYrs, 12, 31))
+        # z.DailyWater = np.zeros((z.DimYrs, 12, 31))
         z.LE = np.zeros((z.DimYrs, 12))
         z.StreamBankEros = np.zeros((z.DimYrs, 12))
         z.StreamBankN = np.zeros((z.DimYrs, 12))
