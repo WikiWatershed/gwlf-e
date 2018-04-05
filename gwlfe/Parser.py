@@ -250,7 +250,7 @@ class GmsReader(object):
         z.BasinId = self.next(int)  # Basin ID
         self.next(EOL)
 
-        z.NLU = z.NRur + z.NUrb
+        # z.NLU = z.NRur + z.NUrb
 
         # Line 2:
         z.TranVersionNo = self.next(str)  # GWLF-E Version
@@ -335,7 +335,7 @@ class GmsReader(object):
         z.DayLuSed = np.zeros((16, z.DimYrs, 12, 31))
         z.DayRunoff = np.zeros((z.DimYrs, 12, 31))
         z.DayLuRunoff = np.zeros((16, z.DimYrs, 12, 31))
-        z.MeltPest = np.zeros((z.DimYrs, 12, 31))
+        # z.MeltPest = np.zeros((z.DimYrs, 12, 31))
         z.PrecPest = np.zeros((z.DimYrs, 12, 31))
         z.DailyGrFlow = np.zeros((z.DimYrs, 12, 31))
         z.DailyETCm = np.zeros((z.DimYrs, 12, 31))
@@ -374,7 +374,7 @@ class GmsReader(object):
         z.TileDrainGW = np.zeros((z.DimYrs, 12))
         z.GwAgLE = np.zeros((z.DimYrs, 12))
         z.Withdrawal = np.zeros((z.DimYrs, 12))
-        z.PtSrcFlow = np.zeros((z.DimYrs, 12))
+        # z.PtSrcFlow = np.zeros((z.DimYrs, 12))
         z.StreamFlow = np.zeros((z.DimYrs, 12))
         z.StreamFlowLE = np.zeros((z.DimYrs, 12))
         z.Precipitation = np.zeros((z.DimYrs, 12))
@@ -513,7 +513,8 @@ class GmsReader(object):
         z.Imper = np.zeros(z.NLU)
         z.TotSusSolids = np.zeros(z.NLU)
 
-        z.CNI = np.zeros((3, z.NLU))
+        # z.CNI = np.zeros((3, z.NLU))
+        z.CNI_0 = np.zeros((3, z.NLU))
         z.CNP = np.zeros((3, z.NLU))
         z.NewCN = np.zeros((3, z.NLU))
 
@@ -521,7 +522,9 @@ class GmsReader(object):
             z.Landuse[i] = self.next(LandUse.parse)  # Urban Land Use Category
             z.Area[i] = self.next(float)  # Area (Ha)
             z.Imper[i] = self.next(float)  # Impervious Surface %
-            z.CNI[1][i] = self.next(float)  # Curve Number(Impervious Surfaces)
+            # z.CNI[1][i] = self.next(float)  # Curve Number(Impervious Surfaces)
+            # z.CNI_0[1][i] = z.CNI[1][i]  # Curve Number(Impervious Surfaces)
+            z.CNI_0[1][i] = self.next(float)  # Curve Number(Impervious Surfaces)
             z.CNP[1][i] = self.next(float)  # Curve Number(Pervious Surfaces)
             z.TotSusSolids[i] = self.next(float)  # Total Suspended Solids Factor
             self.next(EOL)

@@ -34,6 +34,8 @@ from MeltPest import MeltPest
 from Melt_1 import Melt_1
 from Water import Water
 from Erosiv import Erosiv
+from NLU import NLU
+from CNI import CNI
 
 log = logging.getLogger(__name__)
 
@@ -45,12 +47,6 @@ def run(z):
     # overflow, underflow, and division by 0 errors.
     np.seterr(all='raise')
 
-    ReadGwlfDataFile.ReadAllData(z)
-
-    # CALCLULATE PRELIMINARY INITIALIZATIONS AND VALUES FOR
-    # WATER BALANCE AND NUTRIENTS
-    PrelimCalculations.InitialCalculations(z)
-
     # MODEL CALCULATIONS FOR EACH YEAR OF ANALYSIS - WATER BALANCE,
     # NUTRIENTS AND SEDIMENT LOADS
 
@@ -61,25 +57,28 @@ def run(z):
 
     # DailyET_Part1 = ET.DailyET(z.NYrs,z.DaysMonth,z.Temp,z.DayHrs,z.KV,z.PcntET,z.ETFlag)
     DailyET_Part1 = ET.DailyET_2(z.Temp, z.KV, z.PcntET, z.DayHrs)
-    # if (DailyET_Part1_vect.any() == DailyET_Part1.any()):
-    # print ('True')
 
-    # z.PtSrcFlow = PtSrcFlow.PtSrcFlow(z.NYrs,z.PointFlow)
     z.PtSrcFlow = PtSrcFlow.PtSrcFlow_2(z.NYrs, z.PointFlow)
-
-    z.Rain = Rain(z.NYrs, z.DaysMonth, z.Temp, z.Prec)
 
     z.InitSnow = InitSnow(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec)
 
     z.Melt = Melt(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec)
 
-    z.MeltPest = MeltPest(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec)
-
-    z.Melt_1 = Melt_1(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec)
-
     z.Water = Water(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec)
 
     z.Erosiv = Erosiv(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.Acoef)
+
+    z.NLU = NLU(z.NRur, z.NUrb)
+
+    z.CNI = CNI(z.NRur, z.NUrb, z.CNI_0)
+
+    # --------- run the remaining parts of the model ---------------------
+
+    ReadGwlfDataFile.ReadAllData(z)
+
+    # CALCLULATE PRELIMINARY INITIALIZATIONS AND VALUES FOR
+    # WATER BALANCE AND NUTRIENTS
+    PrelimCalculations.InitialCalculations(z)
 
     for Y in range(z.NYrs):
         # Initialize monthly septic system variables
@@ -191,11 +190,10 @@ def run(z):
                 #                                                            z.DaysMonth) < 0.001:
                 #             z.Erosiv = 6.46 * z.Acoef[i] * z.Rain[Y][i][j] ** 1.81
 
-
                 # IF WATER AVAILABLE, THEN CALL SUB TO COMPUTE CN, RUNOFF,
                 # EROSION AND SEDIMENT
                 if z.DailyTemp > 0 and z.Water[Y][i][j] > 0.01:
-                        CalcCnErosRunoffSed.CalcCN(z, i, Y, j)
+                    CalcCnErosRunoffSed.CalcCN(z, i, Y, j)
 
                 # print("n-1 init snow (",Y,i,j,")",z.InitSnow)
 
