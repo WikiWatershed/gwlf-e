@@ -36,6 +36,7 @@ from Water import Water
 from Erosiv import Erosiv
 from NLU import NLU
 from CNI import CNI
+from CNP import CNP
 
 log = logging.getLogger(__name__)
 
@@ -71,6 +72,8 @@ def run(z):
     z.NLU = NLU(z.NRur, z.NUrb)
 
     z.CNI = CNI(z.NRur, z.NUrb, z.CNI_0)
+
+    z.CNP = CNP(z.NRur, z.NUrb, z.CNP_0)
 
     # --------- run the remaining parts of the model ---------------------
 

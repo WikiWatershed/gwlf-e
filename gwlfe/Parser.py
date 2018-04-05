@@ -515,7 +515,8 @@ class GmsReader(object):
 
         # z.CNI = np.zeros((3, z.NLU))
         z.CNI_0 = np.zeros((3, z.NLU))
-        z.CNP = np.zeros((3, z.NLU))
+        # z.CNP = np.zeros((3, z.NLU))
+        z.CNP_0 = np.zeros((3, z.NLU))
         z.NewCN = np.zeros((3, z.NLU))
 
         for i in range(z.NRur, z.NLU):
@@ -525,7 +526,8 @@ class GmsReader(object):
             # z.CNI[1][i] = self.next(float)  # Curve Number(Impervious Surfaces)
             # z.CNI_0[1][i] = z.CNI[1][i]  # Curve Number(Impervious Surfaces)
             z.CNI_0[1][i] = self.next(float)  # Curve Number(Impervious Surfaces)
-            z.CNP[1][i] = self.next(float)  # Curve Number(Pervious Surfaces)
+            # z.CNP[1][i] = self.next(float)  # Curve Number(Pervious Surfaces)
+            z.CNP_0[1][i] = self.next(float)  # Curve Number(Pervious Surfaces)
             z.TotSusSolids[i] = self.next(float)  # Total Suspended Solids Factor
             self.next(EOL)
 
