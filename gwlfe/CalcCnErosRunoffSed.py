@@ -35,33 +35,33 @@ def CalcCN(z, i, Y, j):
         grow_factor = GrowFlag.intval(z.Grow[i])
 
         if z.CN[l] > 0:
-            if z.Melt[Y][i][j] <= 0:
-                if grow_factor > 0:
-                    # growing season
-                    if get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) >= 5.33:
-                        z.CNum = z.NewCN[2][l]
-                    elif get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) < 3.56:
-                        z.CNum = z.NewCN[0][l] + (z.CN[l] - z.NewCN[0][l]) * get_value_for_yesterday(z.AMC5, 0, Y, i, j,
-                                                                                                     z.NYrs,
-                                                                                                     z.DaysMonth) / 3.56
-                    else:
-                        z.CNum = z.CN[l] + (z.NewCN[2][l] - z.CN[l]) * (
-                                    get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) - 3.56) / 1.77
-                else:
-                    # dormant season
-                    if get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) >= 2.79:
-                        z.CNum = z.NewCN[2][l]
-                    elif get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) < 1.27:
-                        z.CNum = z.NewCN[0][l] + (z.CN[l] - z.NewCN[0][l]) * get_value_for_yesterday(z.AMC5, 0, Y, i, j,
-                                                                                                     z.NYrs,
-                                                                                                     z.DaysMonth) / 1.27
-                    else:
-                        z.CNum = z.CN[l] + (z.NewCN[2][l] - z.CN[l]) * (
-                                    get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) - 1.27) / 1.52
-            else:
-                z.CNum = z.NewCN[2][l]
+            # if z.Melt[Y][i][j] <= 0:
+            #     if grow_factor > 0:
+            #         # growing season
+            #         if get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) >= 5.33:
+            #             z.CNum = z.NewCN[2][l]
+            #         elif get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) < 3.56:
+            #             z.CNum = z.NewCN[0][l] + (z.CN[l] - z.NewCN[0][l]) * get_value_for_yesterday(z.AMC5, 0, Y, i, j,
+            #                                                                                          z.NYrs,
+            #                                                                                          z.DaysMonth) / 3.56
+            #         else:
+            #             z.CNum = z.CN[l] + (z.NewCN[2][l] - z.CN[l]) * (
+            #                         get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) - 3.56) / 1.77
+            #     else:
+            #         # dormant season
+            #         if get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) >= 2.79:
+            #             z.CNum = z.NewCN[2][l]
+            #         elif get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) < 1.27:
+            #             z.CNum = z.NewCN[0][l] + (z.CN[l] - z.NewCN[0][l]) * get_value_for_yesterday(z.AMC5, 0, Y, i, j,
+            #                                                                                          z.NYrs,
+            #                                                                                          z.DaysMonth) / 1.27
+            #         else:
+            #             z.CNum = z.CN[l] + (z.NewCN[2][l] - z.CN[l]) * (
+            #                         get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) - 1.27) / 1.52
+            # else:
+            #     z.CNum = z.NewCN[2][l]
 
-            z.Retention = 2540 / z.CNum - 25.4
+            z.Retention = 2540 / z.CNum[Y][i][j][l] - 25.4
             if z.Retention < 0:
                 z.Retention = 0
 
@@ -146,7 +146,7 @@ def CalcCN(z, i, Y, j):
 
                 if z.Water[Y][i][j] >= 0.2 * z.CNumImpervReten:
                     z.QrunI[l] = (z.Water[Y][i][j] - 0.2 * z.CNumImpervReten) ** 2 / (
-                                z.Water[Y][i][j] + 0.8 * z.CNumImpervReten)
+                            z.Water[Y][i][j] + 0.8 * z.CNumImpervReten)
 
             if z.CNP[1][l] > 0:
                 # if z.Melt[Y][i][j] <= 0:
@@ -184,7 +184,7 @@ def CalcCN(z, i, Y, j):
 
                 if z.Water[Y][i][j] >= 0.2 * z.CNumPervReten:
                     z.QrunP[l] = (z.Water[Y][i][j] - 0.2 * z.CNumPervReten) ** 2 / (
-                                z.Water[Y][i][j] + 0.8 * z.CNumPervReten)
+                            z.Water[Y][i][j] + 0.8 * z.CNumPervReten)
 
             # lu = l - z.NRur
 
@@ -196,8 +196,9 @@ def CalcCN(z, i, Y, j):
             if z.AreaTotal > 0:
                 z.UncontrolledQ += ((z.QrunI[l] * (z.Imper[l] * (1 - z.ISRR[z.lu[l]]) *
                                                    (1 - z.ISRA[z.lu[l]])) + z.QrunP[l] * (1 - (z.Imper[l] *
-                                                                                          (1 - z.ISRR[z.lu[l]]) * (
-                                                                                                      1 - z.ISRA[z.lu[l]])))) *
+                                                                                               (1 - z.ISRR[z.lu[l]]) * (
+                                                                                                       1 - z.ISRA[
+                                                                                                   z.lu[l]])))) *
                                     z.Area[l] / z.AreaTotal)
 
             z.WashImperv[l] = (1 - math.exp(-1.81 * z.QrunI[l])) * z.ImpervAccum[l]
@@ -301,11 +302,11 @@ def BasinWater(z, i, Y, j):
 
                 if z.Area[l] > 0:
                     z.SurfaceLoad = (((z.LoadRateImp[l][q] * z.WashImperv[l] * (
-                                (z.Imper[l] * (1 - z.ISRR[z.lu_1[l]]) * (1 - z.ISRA[z.lu_1[l]]))
-                                * (z.SweepFrac[i] + (
-                                    (1 - z.SweepFrac[i]) * ((1 - z.UrbSweepFrac) * z.Area[l]) / z.Area[l])))
+                            (z.Imper[l] * (1 - z.ISRR[z.lu_1[l]]) * (1 - z.ISRA[z.lu_1[l]]))
+                            * (z.SweepFrac[i] + (
+                            (1 - z.SweepFrac[i]) * ((1 - z.UrbSweepFrac) * z.Area[l]) / z.Area[l])))
                                        + z.LoadRatePerv[l][q] * z.WashPerv[l] * (
-                                                   1 - (z.Imper[l] * (1 - z.ISRR[z.lu_1[l]]) * (1 - z.ISRA[z.lu_1[l]]))))
+                                               1 - (z.Imper[l] * (1 - z.ISRR[z.lu_1[l]]) * (1 - z.ISRA[z.lu_1[l]]))))
                                       * z.Area[l]) - z.UrbLoadRed)
                 else:
                     z.SurfaceLoad = 0

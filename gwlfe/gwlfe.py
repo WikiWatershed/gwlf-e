@@ -44,6 +44,7 @@ from LU_1 import LU_1
 from GrowFactor import GrowFactor
 from CNumPerv import CNumPerv
 from CNumImperv import CNumImperv
+from CNum import CNum
 
 log = logging.getLogger(__name__)
 
@@ -70,8 +71,6 @@ def run(z):
 
     z.InitSnow = InitSnow(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec)
 
-    z.Melt = Melt(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec)
-
     z.Water = Water(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec)
 
     z.Erosiv = Erosiv(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.Acoef)
@@ -81,10 +80,6 @@ def run(z):
     z.CNI = CNI(z.NRur, z.NUrb, z.CNI_0)
 
     z.CNP = CNP(z.NRur, z.NUrb, z.CNP_0)
-
-    z.AMC5 = AMC5(z.NYrs, z.DaysMonth, z.Temp, z.Prec, z.InitSnow_0, z.AntMoist_0)
-
-    z.NewCN = NewCN(z.NRur, z.NUrb, z.CN)
 
     z.lu = LU(z.NRur, z.NUrb)
 
@@ -97,6 +92,8 @@ def run(z):
 
     z.CNumImperv = CNumImperv(z.NYrs, z.NRur, z.NUrb, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.CNI_0, z.Grow,
                               z.AntMoist_0)
+
+    z.CNum = CNum(z.NYrs, z.DaysMonth, z.Temp, z.Prec, z.InitSnow_0, z.AntMoist_0, z.CN, z.NRur, z.NUrb, z.Grow)
 
     # --------- run the remaining parts of the model ---------------------
 
@@ -159,7 +156,7 @@ def run(z):
                 # TODO: If Water is <= 0.01, then CalcCNErosRunoffSed
                 # never executes, and CNum will remain undefined.
                 # What should the default value for CNum be in this case?
-                z.CNum = 0
+                # z.CNum = 0
 
                 # RAIN , SNOWMELT, EVAPOTRANSPIRATION (ET)
                 # print(z.InitSnow,get_value_for_yesterday(z.InitSnow_2,z.InitSnow_0,Y,i,j,z.NYrs,z.DaysMonth))
@@ -228,7 +225,7 @@ def run(z):
                 # print("n-1 init snow (",Y,i,j,")",z.InitSnow)
 
                 # DAILY CN
-                z.DailyCN[Y][i][j] = z.CNum
+                # z.DailyCN[Y][i][j] = z.CNum
 
                 # UPDATE ANTECEDENT RAIN+MELT CONDITION
                 # Subtract AMC5 by the sum of AntMoist (day 5) and Water
