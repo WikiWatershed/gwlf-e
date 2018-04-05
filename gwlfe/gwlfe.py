@@ -33,6 +33,7 @@ from Melt import Melt
 from MeltPest import MeltPest
 from Melt_1 import Melt_1
 from Water import Water
+from Erosiv import Erosiv
 
 log = logging.getLogger(__name__)
 
@@ -78,6 +79,8 @@ def run(z):
 
     z.Water = Water(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec)
 
+    z.Erosiv = Erosiv(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.Acoef)
+
     for Y in range(z.NYrs):
         # Initialize monthly septic system variables
         z.MonthPondNitr = np.zeros(12)
@@ -103,12 +106,12 @@ def run(z):
             for j in range(z.DaysMonth[Y][i]):
                 # DAILYWEATHERANALY TEMP[Y][I][J], PREC[Y][I][J]
                 # ***** BEGIN WEATHER DATA ANALYSIS *****
-                # z.DailyTemp = z.Temp[Y][i][j]
+                z.DailyTemp = z.Temp[Y][i][j]
                 # z.DailyPrec = z.Prec[Y][i][j]
                 # z.Melt = 0
                 # z.Rain = 0
                 # z.Water = 0
-                z.Erosiv = 0
+                # z.Erosiv = 0
                 z.ET = 0
                 z.QTotal = 0
                 z.AgQTotal = 0
@@ -178,19 +181,20 @@ def run(z):
                 #     z.MeltPest[Y][i][j] = 0
 
                 # Compute erosivity when erosion occurs, i.e., with rain and no InitSnow left
-                if z.DailyTemp > 0:
-                    if (get_value_for_yesterday(z.InitSnow, z.InitSnow_0, Y, i, j, z.NYrs, z.DaysMonth) > 0.001):
-                        if z.Rain[Y][i][j] > 0 and get_value_for_yesterday(z.InitSnow, z.InitSnow_0, Y, i, j, z.NYrs,
-                                                                           z.DaysMonth) - z.Melt_1[Y][i][j] < 0.001:
-                            z.Erosiv = 6.46 * z.Acoef[i] * z.Rain[Y][i][j] ** 1.81
-                    else:
-                        if z.Rain[Y][i][j] > 0 and get_value_for_yesterday(z.InitSnow, z.InitSnow_0, Y, i, j, z.NYrs,
-                                                                           z.DaysMonth) < 0.001:
-                            z.Erosiv = 6.46 * z.Acoef[i] * z.Rain[Y][i][j] ** 1.81
+                # if z.DailyTemp > 0:
+                #     if (get_value_for_yesterday(z.InitSnow, z.InitSnow_0, Y, i, j, z.NYrs, z.DaysMonth) > 0.001):
+                #         if z.Rain[Y][i][j] > 0 and get_value_for_yesterday(z.InitSnow, z.InitSnow_0, Y, i, j, z.NYrs,
+                #                                                            z.DaysMonth) - z.Melt_1[Y][i][j] < 0.001:
+                #             z.Erosiv = 6.46 * z.Acoef[i] * z.Rain[Y][i][j] ** 1.81
+                #     else:
+                #         if z.Rain[Y][i][j] > 0 and get_value_for_yesterday(z.InitSnow, z.InitSnow_0, Y, i, j, z.NYrs,
+                #                                                            z.DaysMonth) < 0.001:
+                #             z.Erosiv = 6.46 * z.Acoef[i] * z.Rain[Y][i][j] ** 1.81
 
-                    # IF WATER AVAILABLE, THEN CALL SUB TO COMPUTE CN, RUNOFF,
-                    # EROSION AND SEDIMENT
-                    if z.Water[Y][i][j] > 0.01:
+
+                # IF WATER AVAILABLE, THEN CALL SUB TO COMPUTE CN, RUNOFF,
+                # EROSION AND SEDIMENT
+                if z.DailyTemp > 0 and z.Water[Y][i][j] > 0.01:
                         CalcCnErosRunoffSed.CalcCN(z, i, Y, j)
 
                 # print("n-1 init snow (",Y,i,j,")",z.InitSnow)
