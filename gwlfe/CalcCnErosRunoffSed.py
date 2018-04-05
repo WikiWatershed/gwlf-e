@@ -106,117 +106,116 @@ def CalcCN(z, i, Y, j):
         z.NetDisLoad[q] = 0
 
     if z.Water[Y][i][j] < 0.05:
-        BasinWater(z, i, Y, j)
-        return
-    # else:
-    for l in range(z.NRur, z.NLU):
-        grow_factor = GrowFlag.intval(z.Grow[i])
+        pass
+    else:
+        for l in range(z.NRur, z.NLU):
+            grow_factor = GrowFlag.intval(z.Grow[i])
 
-        # Find curve number
-        if z.CNI[1][l] > 0:
-            if z.Melt[Y][i][j] <= 0:
-                if grow_factor > 0:
-                    # Growing season
-                    if get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) >= 5.33:
-                        z.CNumImperv = z.CNI[2][l]
-                    elif get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) < 3.56:
-                        z.CNumImperv = z.CNI[0][l] + (z.CNI[1][l] - z.CNI[0][l]) * get_value_for_yesterday(z.AMC5, 0, Y,
-                                                                                                           i, j, z.NYrs,
-                                                                                                           z.DaysMonth) / 3.56
+            # Find curve number
+            if z.CNI[1][l] > 0:
+                if z.Melt[Y][i][j] <= 0:
+                    if grow_factor > 0:
+                        # Growing season
+                        if get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) >= 5.33:
+                            z.CNumImperv = z.CNI[2][l]
+                        elif get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) < 3.56:
+                            z.CNumImperv = z.CNI[0][l] + (z.CNI[1][l] - z.CNI[0][l]) * get_value_for_yesterday(z.AMC5, 0, Y,
+                                                                                                               i, j, z.NYrs,
+                                                                                                               z.DaysMonth) / 3.56
+                        else:
+                            z.CNumImperv = z.CNI[1][l] + (z.CNI[2][l] - z.CNI[1][l]) * (
+                                        get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) - 3.56) / 1.77
                     else:
-                        z.CNumImperv = z.CNI[1][l] + (z.CNI[2][l] - z.CNI[1][l]) * (
-                                    get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) - 3.56) / 1.77
+                        # Dormant season
+                        if get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) >= 2.79:
+                            z.CNumImperv = z.CNI[2][l]
+                        elif get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) < 1.27:
+                            z.CNumImperv = z.CNI[0][l] + (z.CNI[1][l] - z.CNI[0][l]) * get_value_for_yesterday(z.AMC5, 0, Y,
+                                                                                                               i, j, z.NYrs,
+                                                                                                               z.DaysMonth) / 1.27
+                        else:
+                            z.CNumImperv = z.CNI[1][l] + (z.CNI[2][l] - z.CNI[1][l]) * (
+                                        get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) - 1.27) / 1.52
                 else:
-                    # Dormant season
-                    if get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) >= 2.79:
-                        z.CNumImperv = z.CNI[2][l]
-                    elif get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) < 1.27:
-                        z.CNumImperv = z.CNI[0][l] + (z.CNI[1][l] - z.CNI[0][l]) * get_value_for_yesterday(z.AMC5, 0, Y,
-                                                                                                           i, j, z.NYrs,
-                                                                                                           z.DaysMonth) / 1.27
+                    z.CNumImperv = z.CNI[2][l]
+
+                z.CNumImpervReten = 2540 / z.CNumImperv - 25.4
+                if z.CNumImpervReten < 0:
+                    z.CNumImpervReten = 0
+
+                if z.Water[Y][i][j] >= 0.2 * z.CNumImpervReten:
+                    z.QrunI[l] = (z.Water[Y][i][j] - 0.2 * z.CNumImpervReten) ** 2 / (
+                                z.Water[Y][i][j] + 0.8 * z.CNumImpervReten)
+
+            if z.CNP[1][l] > 0:
+                if z.Melt[Y][i][j] <= 0:
+                    if grow_factor > 0:
+                        # Growing season
+                        if get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) >= 5.33:
+                            z.CNumPerv = z.CNP[2][l]
+                        elif get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) < 3.56:
+                            z.CNumPerv = z.CNP[0][l] + (z.CNP[1][l] - z.CNP[0][l]) * get_value_for_yesterday(z.AMC5, 0, Y,
+                                                                                                             i, j, z.NYrs,
+                                                                                                             z.DaysMonth) / 3.56
+                        else:
+                            z.CNumPerv = z.CNP[1][l] + (z.CNP[2][l] - z.CNP[1][l]) * (
+                                        get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) - 3.56) / 1.77
                     else:
-                        z.CNumImperv = z.CNI[1][l] + (z.CNI[2][l] - z.CNI[1][l]) * (
-                                    get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) - 1.27) / 1.52
-            else:
-                z.CNumImperv = z.CNI[2][l]
-
-            z.CNumImpervReten = 2540 / z.CNumImperv - 25.4
-            if z.CNumImpervReten < 0:
-                z.CNumImpervReten = 0
-
-            if z.Water[Y][i][j] >= 0.2 * z.CNumImpervReten:
-                z.QrunI[l] = (z.Water[Y][i][j] - 0.2 * z.CNumImpervReten) ** 2 / (
-                            z.Water[Y][i][j] + 0.8 * z.CNumImpervReten)
-
-        if z.CNP[1][l] > 0:
-            if z.Melt[Y][i][j] <= 0:
-                if grow_factor > 0:
-                    # Growing season
-                    if get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) >= 5.33:
-                        z.CNumPerv = z.CNP[2][l]
-                    elif get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) < 3.56:
-                        z.CNumPerv = z.CNP[0][l] + (z.CNP[1][l] - z.CNP[0][l]) * get_value_for_yesterday(z.AMC5, 0, Y,
-                                                                                                         i, j, z.NYrs,
-                                                                                                         z.DaysMonth) / 3.56
-                    else:
-                        z.CNumPerv = z.CNP[1][l] + (z.CNP[2][l] - z.CNP[1][l]) * (
-                                    get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) - 3.56) / 1.77
+                        # Dormant season
+                        if get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) >= 2.79:
+                            z.CNumPerv = z.CNP[2][l]
+                        elif get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) < 1.27:
+                            z.CNumPerv = z.CNP[0][l] + (z.CNP[1][l] - z.CNP[0][l]) * get_value_for_yesterday(z.AMC5, 0, Y,
+                                                                                                             i, j, z.NYrs,
+                                                                                                             z.DaysMonth) / 1.27
+                        else:
+                            z.CNumPerv = z.CNP[1][l] + (z.CNP[2][l] - z.CNP[1][l]) * (
+                                        get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) - 1.27) / 1.52
                 else:
-                    # Dormant season
-                    if get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) >= 2.79:
-                        z.CNumPerv = z.CNP[2][l]
-                    elif get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) < 1.27:
-                        z.CNumPerv = z.CNP[0][l] + (z.CNP[1][l] - z.CNP[0][l]) * get_value_for_yesterday(z.AMC5, 0, Y,
-                                                                                                         i, j, z.NYrs,
-                                                                                                         z.DaysMonth) / 1.27
-                    else:
-                        z.CNumPerv = z.CNP[1][l] + (z.CNP[2][l] - z.CNP[1][l]) * (
-                                    get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) - 1.27) / 1.52
-            else:
-                z.CNumPerv = z.CNP[2][l]
+                    z.CNumPerv = z.CNP[2][l]
 
-            z.CNumPervReten = 2540 / z.CNumPerv - 25.4
-            if z.CNumPervReten < 0:
-                z.CNumPervReten = 0
+                z.CNumPervReten = 2540 / z.CNumPerv - 25.4
+                if z.CNumPervReten < 0:
+                    z.CNumPervReten = 0
 
-            if z.Water[Y][i][j] >= 0.2 * z.CNumPervReten:
-                z.QrunP[l] = (z.Water[Y][i][j] - 0.2 * z.CNumPervReten) ** 2 / (
-                            z.Water[Y][i][j] + 0.8 * z.CNumPervReten)
+                if z.Water[Y][i][j] >= 0.2 * z.CNumPervReten:
+                    z.QrunP[l] = (z.Water[Y][i][j] - 0.2 * z.CNumPervReten) ** 2 / (
+                                z.Water[Y][i][j] + 0.8 * z.CNumPervReten)
 
-        lu = l - z.NRur
+            # lu = l - z.NRur
 
-        if z.UrbAreaTotal > 0:
-            z.UrbanQTotal += ((z.QrunI[l] * (z.Imper[l] * (1 - z.ISRR[lu]) * (1 - z.ISRA[lu]))
-                               + z.QrunP[l] * (1 - (z.Imper[l] * (1 - z.ISRR[lu]) * (1 - z.ISRA[lu]))))
-                              * z.Area[l] / z.UrbAreaTotal)
+            if z.UrbAreaTotal > 0:
+                z.UrbanQTotal += ((z.QrunI[l] * (z.Imper[l] * (1 - z.ISRR[z.lu[l]]) * (1 - z.ISRA[z.lu[l]]))
+                                   + z.QrunP[l] * (1 - (z.Imper[l] * (1 - z.ISRR[z.lu[l]]) * (1 - z.ISRA[z.lu[l]]))))
+                                  * z.Area[l] / z.UrbAreaTotal)
 
-        if z.AreaTotal > 0:
-            z.UncontrolledQ += ((z.QrunI[l] * (z.Imper[l] * (1 - z.ISRR[lu]) *
-                                               (1 - z.ISRA[lu])) + z.QrunP[l] * (1 - (z.Imper[l] *
-                                                                                      (1 - z.ISRR[lu]) * (
-                                                                                                  1 - z.ISRA[lu])))) *
-                                z.Area[l] / z.AreaTotal)
+            if z.AreaTotal > 0:
+                z.UncontrolledQ += ((z.QrunI[l] * (z.Imper[l] * (1 - z.ISRR[z.lu[l]]) *
+                                                   (1 - z.ISRA[z.lu[l]])) + z.QrunP[l] * (1 - (z.Imper[l] *
+                                                                                          (1 - z.ISRR[z.lu[l]]) * (
+                                                                                                      1 - z.ISRA[z.lu[l]])))) *
+                                    z.Area[l] / z.AreaTotal)
 
-        z.WashImperv[l] = (1 - math.exp(-1.81 * z.QrunI[l])) * z.ImpervAccum[l]
-        z.ImpervAccum[l] -= z.WashImperv[l]
+            z.WashImperv[l] = (1 - math.exp(-1.81 * z.QrunI[l])) * z.ImpervAccum[l]
+            z.ImpervAccum[l] -= z.WashImperv[l]
 
-        z.WashPerv[l] = (1 - math.exp(-1.81 * z.QrunP[l])) * z.PervAccum[l]
-        z.PervAccum[l] -= z.WashPerv[l]
+            z.WashPerv[l] = (1 - math.exp(-1.81 * z.QrunP[l])) * z.PervAccum[l]
+            z.PervAccum[l] -= z.WashPerv[l]
 
-        z.UrbQRunoff[l][i] += (z.QrunI[l] * (z.Imper[l] * (1 - z.ISRR[lu]) * (1 - z.ISRA[lu]))
-                               + z.QrunP[l] * (1 - (z.Imper[l] * (1 - z.ISRR[lu]) * (1 - z.ISRA[lu]))))
+            z.UrbQRunoff[l][i] += (z.QrunI[l] * (z.Imper[l] * (1 - z.ISRR[z.lu[l]]) * (1 - z.ISRA[z.lu[l]]))
+                                   + z.QrunP[l] * (1 - (z.Imper[l] * (1 - z.ISRR[z.lu[l]]) * (1 - z.ISRA[z.lu[l]]))))
 
-    z.AdjUrbanQTotal = z.UrbanQTotal
+        z.AdjUrbanQTotal = z.UrbanQTotal
 
-    # Runoff retention
-    if z.Qretention > 0:
-        if z.UrbanQTotal > 0:
-            if z.UrbanQTotal <= z.Qretention * z.PctAreaInfil:
-                z.RetentionEff = 1
-                z.AdjUrbanQTotal = 0
-            else:
-                z.RetentionEff = z.Qretention * z.PctAreaInfil / z.UrbanQTotal
-                z.AdjUrbanQTotal -= z.Qretention * z.PctAreaInfil
+        # Runoff retention
+        if z.Qretention > 0:
+            if z.UrbanQTotal > 0:
+                if z.UrbanQTotal <= z.Qretention * z.PctAreaInfil:
+                    z.RetentionEff = 1
+                    z.AdjUrbanQTotal = 0
+                else:
+                    z.RetentionEff = z.Qretention * z.PctAreaInfil / z.UrbanQTotal
+                    z.AdjUrbanQTotal -= z.Qretention * z.PctAreaInfil
 
     BasinWater(z, i, Y, j)
 
@@ -294,15 +293,15 @@ def BasinWater(z, i, Y, j):
 
                 # TODO: Should 11 be NRur + 1?
                 # What is this trying to do?
-                lu = l - 11
+                # lu_1 = l - 11
 
                 if z.Area[l] > 0:
                     z.SurfaceLoad = (((z.LoadRateImp[l][q] * z.WashImperv[l] * (
-                                (z.Imper[l] * (1 - z.ISRR[lu]) * (1 - z.ISRA[lu]))
+                                (z.Imper[l] * (1 - z.ISRR[z.lu_1[l]]) * (1 - z.ISRA[z.lu_1[l]]))
                                 * (z.SweepFrac[i] + (
                                     (1 - z.SweepFrac[i]) * ((1 - z.UrbSweepFrac) * z.Area[l]) / z.Area[l])))
                                        + z.LoadRatePerv[l][q] * z.WashPerv[l] * (
-                                                   1 - (z.Imper[l] * (1 - z.ISRR[lu]) * (1 - z.ISRA[lu]))))
+                                                   1 - (z.Imper[l] * (1 - z.ISRR[z.lu_1[l]]) * (1 - z.ISRA[z.lu_1[l]]))))
                                       * z.Area[l]) - z.UrbLoadRed)
                 else:
                     z.SurfaceLoad = 0

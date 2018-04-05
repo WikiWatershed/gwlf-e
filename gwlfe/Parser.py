@@ -520,7 +520,7 @@ class GmsReader(object):
         z.CNI_0 = np.zeros((3, z.NLU))
         # z.CNP = np.zeros((3, z.NLU))
         z.CNP_0 = np.zeros((3, z.NLU))
-        z.NewCN = np.zeros((3, z.NLU))
+        # z.NewCN = np.zeros((3, z.NLU))
 
         for i in range(z.NRur, z.NLU):
             z.Landuse[i] = self.next(LandUse.parse)  # Urban Land Use Category

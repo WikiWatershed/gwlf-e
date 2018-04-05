@@ -38,6 +38,9 @@ from NLU import NLU
 from CNI import CNI
 from CNP import CNP
 from AMC5 import AMC5
+from NewCN import NewCN
+from LU import LU
+from LU_1 import LU_1
 
 log = logging.getLogger(__name__)
 
@@ -78,6 +81,10 @@ def run(z):
 
     z.AMC5 = AMC5(z.NYrs, z.DaysMonth, z.Temp, z.Prec, z.InitSnow_0, z.AntMoist_0)
 
+    z.NewCN = NewCN(z.NRur, z.NUrb, z.CN)
+
+    z.lu = LU(z.NRur,z.NUrb)
+    z.lu_1 = LU_1(z.NRur,z.NUrb)
 
     # --------- run the remaining parts of the model ---------------------
 
@@ -224,8 +231,6 @@ def run(z):
                 # z.AntMoist[0] = z.Water[Y][i][j]
                 #
                 # print(z.AMC5,z.AMC5_2[Y][i][j])
-
-
 
                 # CALCULATE ET FROM SATURATED VAPOR PRESSURE,
                 # HAMON (1961) METHOD
