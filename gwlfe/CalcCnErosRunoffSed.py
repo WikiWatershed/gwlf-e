@@ -114,33 +114,33 @@ def CalcCN(z, i, Y, j):
 
             # Find curve number
             if z.CNI[1][l] > 0:
-                if z.Melt[Y][i][j] <= 0:
-                    if z.GrowFactor[i] > 0:
-                        # Growing season
-                        if get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) >= 5.33:
-                            z.CNumImperv = z.CNI[2][l]
-                        elif get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) < 3.56:
-                            z.CNumImperv = z.CNI[0][l] + (z.CNI[1][l] - z.CNI[0][l]) * get_value_for_yesterday(z.AMC5, 0, Y,
-                                                                                                               i, j, z.NYrs,
-                                                                                                               z.DaysMonth) / 3.56
-                        else:
-                            z.CNumImperv = z.CNI[1][l] + (z.CNI[2][l] - z.CNI[1][l]) * (
-                                        get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) - 3.56) / 1.77
-                    else:
-                        # Dormant season
-                        if get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) >= 2.79:
-                            z.CNumImperv = z.CNI[2][l]
-                        elif get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) < 1.27:
-                            z.CNumImperv = z.CNI[0][l] + (z.CNI[1][l] - z.CNI[0][l]) * get_value_for_yesterday(z.AMC5, 0, Y,
-                                                                                                               i, j, z.NYrs,
-                                                                                                               z.DaysMonth) / 1.27
-                        else:
-                            z.CNumImperv = z.CNI[1][l] + (z.CNI[2][l] - z.CNI[1][l]) * (
-                                        get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) - 1.27) / 1.52
-                else:
-                    z.CNumImperv = z.CNI[2][l]
+                # if z.Melt[Y][i][j] <= 0:
+                #     if z.GrowFactor[i] > 0:
+                #         # Growing season
+                #         if get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) >= 5.33:
+                #             z.CNumImperv = z.CNI[2][l]
+                #         elif get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) < 3.56:
+                #             z.CNumImperv = z.CNI[0][l] + (z.CNI[1][l] - z.CNI[0][l]) * get_value_for_yesterday(z.AMC5, 0, Y,
+                #                                                                                                i, j, z.NYrs,
+                #                                                                                                z.DaysMonth) / 3.56
+                #         else:
+                #             z.CNumImperv = z.CNI[1][l] + (z.CNI[2][l] - z.CNI[1][l]) * (
+                #                         get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) - 3.56) / 1.77
+                #     else:
+                #         # Dormant season
+                #         if get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) >= 2.79:
+                #             z.CNumImperv = z.CNI[2][l]
+                #         elif get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) < 1.27:
+                #             z.CNumImperv = z.CNI[0][l] + (z.CNI[1][l] - z.CNI[0][l]) * get_value_for_yesterday(z.AMC5, 0, Y,
+                #                                                                                                i, j, z.NYrs,
+                #                                                                                                z.DaysMonth) / 1.27
+                #         else:
+                #             z.CNumImperv = z.CNI[1][l] + (z.CNI[2][l] - z.CNI[1][l]) * (
+                #                         get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) - 1.27) / 1.52
+                # else:
+                #     z.CNumImperv = z.CNI[2][l]
 
-                z.CNumImpervReten = 2540 / z.CNumImperv - 25.4
+                z.CNumImpervReten = 2540 / z.CNumImperv[Y][i][j][l] - 25.4
                 if z.CNumImpervReten < 0:
                     z.CNumImpervReten = 0
 

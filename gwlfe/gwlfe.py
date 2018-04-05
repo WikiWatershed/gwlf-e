@@ -43,6 +43,7 @@ from LU import LU
 from LU_1 import LU_1
 from GrowFactor import GrowFactor
 from CNumPerv import CNumPerv
+from CNumImperv import CNumImperv
 
 log = logging.getLogger(__name__)
 
@@ -91,9 +92,11 @@ def run(z):
 
     z.GrowFactor = GrowFactor(z.Grow)
 
-    z.CNumPerv = CNumPerv(z.NYrs, z.DaysMonth, z.Temp, z.NRur, z.NUrb, z.CNP_0, z.InitSnow_0, z.Prec, z.Grow, z.AntMoist_0)
-    # np.testing.assert_almost_equal(z.CNumPerv,np.load("CNumPerv.npy"))
-    # z.CNumPerv = np.zeros((z.NYrs,12,31,NLU(z.NRur,z.NUrb)))
+    z.CNumPerv = CNumPerv(z.NYrs, z.DaysMonth, z.Temp, z.NRur, z.NUrb, z.CNP_0, z.InitSnow_0, z.Prec, z.Grow,
+                          z.AntMoist_0)
+
+    z.CNumImperv = CNumImperv(z.NYrs, z.NRur, z.NUrb, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.CNI_0, z.Grow,
+                              z.AntMoist_0)
 
     # --------- run the remaining parts of the model ---------------------
 
