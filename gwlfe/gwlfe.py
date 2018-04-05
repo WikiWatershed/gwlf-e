@@ -78,6 +78,7 @@ def run(z):
 
     z.AMC5 = AMC5(z.NYrs, z.DaysMonth, z.Temp, z.Prec, z.InitSnow_0, z.AntMoist_0)
 
+
     # --------- run the remaining parts of the model ---------------------
 
     ReadGwlfDataFile.ReadAllData(z)
@@ -85,6 +86,10 @@ def run(z):
     # CALCLULATE PRELIMINARY INITIALIZATIONS AND VALUES FOR
     # WATER BALANCE AND NUTRIENTS
     PrelimCalculations.InitialCalculations(z)
+
+    # temp_AMC5 = z.AMC5
+    # z.AMC5 = np.zeros((z.NYrs,12,31))
+    # z.AMC5[0][0][0] = temp_AMC5
 
     for Y in range(z.NYrs):
         # Initialize monthly septic system variables
@@ -209,14 +214,18 @@ def run(z):
                 # UPDATE ANTECEDENT RAIN+MELT CONDITION
                 # Subtract AMC5 by the sum of AntMoist (day 5) and Water
                 # z.AMC5 = z.AMC5 - z.AntMoist[4] + z.Water[Y][i][j]
-                # z.DailyAMC5[Y][i][j] = z.AMC5
-
-                # Shift AntMoist values to the right.
+                # # z.DailyAMC5[Y][i][j] = z.AMC5
+                #
+                # # Shift AntMoist values to the right.
                 # z.AntMoist[4] = z.AntMoist[3]
                 # z.AntMoist[3] = z.AntMoist[2]
                 # z.AntMoist[2] = z.AntMoist[1]
                 # z.AntMoist[1] = z.AntMoist[0]
                 # z.AntMoist[0] = z.Water[Y][i][j]
+                #
+                # print(z.AMC5,z.AMC5_2[Y][i][j])
+
+
 
                 # CALCULATE ET FROM SATURATED VAPOR PRESSURE,
                 # HAMON (1961) METHOD

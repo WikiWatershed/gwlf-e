@@ -471,11 +471,12 @@ class GmsReader(object):
 
         # Lines 3 - 7: (each line represents 1 day)
         # Antecedent Rain + Melt Moisture Condition for Days 1 to 5
-        # z.AntMoist = np.zeros(5)
+        z.AntMoist = np.zeros(5)
         z.AntMoist_0 = np.zeros(5)
 
         for i in range(5):
             # z.AntMoist[i] = self.next(float)
+            # z.AntMoist_0[i] = z.AntMoist[i]
             z.AntMoist_0[i] = self.next(float)
             self.next(EOL)
 
