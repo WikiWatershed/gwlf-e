@@ -27,26 +27,15 @@ from . import WriteOutputFiles
 import Precipitation
 import ET
 import PtSrcFlow
-from Rain import Rain
 from InitSnow import InitSnow
-from Melt import Melt
-from MeltPest import MeltPest
-from Melt_1 import Melt_1
 from Water import Water
 from Erosiv import Erosiv
 from NLU import NLU
 from CNI import CNI
 from CNP import CNP
-from AMC5 import AMC5
-from NewCN import NewCN
 from LU import LU
 from LU_1 import LU_1
 from GrowFactor import GrowFactor
-from CNumPerv import CNumPerv
-from CNumImperv import CNumImperv
-from CNum import CNum
-from CNumPervReten import CNumPervReten
-from CNumImpervReten import CNumImpervReten
 from Retention import Retention
 from QrunP import QrunP
 from QrunI import QrunI
@@ -96,20 +85,6 @@ def run(z):
     z.lu_1 = LU_1(z.NRur, z.NUrb)
 
     z.GrowFactor = GrowFactor(z.Grow)
-
-    z.CNumPerv = CNumPerv(z.NYrs, z.DaysMonth, z.Temp, z.NRur, z.NUrb, z.CNP_0, z.InitSnow_0, z.Prec, z.Grow,
-                          z.AntMoist_0)
-
-    z.CNumImperv = CNumImperv(z.NYrs, z.NRur, z.NUrb, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.CNI_0, z.Grow,
-                              z.AntMoist_0)
-
-    z.CNum = CNum(z.NYrs, z.DaysMonth, z.Temp, z.Prec, z.InitSnow_0, z.AntMoist_0, z.CN, z.NRur, z.NUrb, z.Grow)
-
-    z.CNumPervReten = CNumPervReten(z.NYrs, z.DaysMonth, z.Temp, z.Prec, z.InitSnow_0, z.AntMoist_0, z.NRur, z.NUrb,
-                                    z.CNP_0, z.Grow)
-
-    z.CNumImpervReten = CNumImpervReten(z.NYrs, z.DaysMonth, z.Temp, z.Prec, z.InitSnow_0, z.AntMoist_0, z.NRur, z.NUrb,
-                                        z.CNI_0, z.Grow)
 
     z.Retention = Retention(z.NYrs, z.DaysMonth, z.Temp, z.Prec, z.InitSnow_0, z.AntMoist_0, z.NRur, z.NUrb, z.CN,
                             z.Grow)
