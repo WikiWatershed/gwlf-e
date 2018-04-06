@@ -28,12 +28,12 @@ def ReadAllData(z):
         z.AnnDayHrs += z.DayHrs[i]
 
     for l in range(z.NRur):
-        z.AreaTotal += z.Area[l]
+        # z.AreaTotal += z.Area[l]
         z.RurAreaTotal += z.Area[l]
 
-    for l in range(z.NRur, z.NLU):
-        z.AreaTotal += z.Area[l]
-        z.UrbAreaTotal += z.Area[l]
+    # for l in range(z.NRur, z.NLU):
+    #     z.AreaTotal += z.Area[l]
+        # z.UrbAreaTotal += z.Area[l]
 
     z.TotAreaMeters = z.AreaTotal * 10000
 

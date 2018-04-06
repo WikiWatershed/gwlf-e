@@ -25,7 +25,7 @@ def CalcCN(z, i, Y, j):
     Y - year
     j - number of days in month
     """
-    z.UrbanQTotal = 0
+    # z.UrbanQTotal = 0
     z.UncontrolledQ = 0
     z.RetentionEff = 0
 
@@ -190,23 +190,23 @@ def CalcCN(z, i, Y, j):
 
             # lu = l - z.NRur
 
-            if z.UrbAreaTotal > 0:
-                z.UrbanQTotal += ((z.QrunI[Y][i][j][l] * (z.Imper[l] * (1 - z.ISRR[z.lu[l]]) * (1 - z.ISRA[z.lu[l]]))
-                                   + z.QrunP[Y][i][j][l] * (
-                                           1 - (z.Imper[l] * (1 - z.ISRR[z.lu[l]]) * (1 - z.ISRA[z.lu[l]]))))
-                                  * z.Area[l] / z.UrbAreaTotal)
+            # if z.UrbAreaTotal > 0:
+            #     z.UrbanQTotal += ((z.QrunI[Y][i][j][l] * (z.Imper[l] * (1 - z.ISRR[z.lu[l]]) * (1 - z.ISRA[z.lu[l]]))
+            #                        + z.QrunP[Y][i][j][l] * (
+            #                                1 - (z.Imper[l] * (1 - z.ISRR[z.lu[l]]) * (1 - z.ISRA[z.lu[l]]))))
+            #                       * z.Area[l] / z.UrbAreaTotal)
 
             if z.AreaTotal > 0:
                 z.UncontrolledQ += ((z.QrunI[Y][i][j][l] * (z.Imper[l] * (1 - z.ISRR[z.lu[l]]) *
                                                             (1 - z.ISRA[z.lu[l]])) + z.QrunP[Y][i][j][l] * (
-                                                 1 - (z.Imper[l] *
-                                                      (1 - z.ISRR[
-                                                          z.lu[
-                                                              l]]) * (
-                                                              1 -
-                                                              z.ISRA[
-                                                                  z.lu[
-                                                                      l]])))) *
+                                             1 - (z.Imper[l] *
+                                                  (1 - z.ISRR[
+                                                      z.lu[
+                                                          l]]) * (
+                                                          1 -
+                                                          z.ISRA[
+                                                              z.lu[
+                                                                  l]])))) *
                                     z.Area[l] / z.AreaTotal)
 
             z.WashImperv[l] = (1 - math.exp(-1.81 * z.QrunI[Y][i][j][l])) * z.ImpervAccum[l]
@@ -219,16 +219,16 @@ def CalcCN(z, i, Y, j):
                                    + z.QrunP[Y][i][j][l] * (
                                            1 - (z.Imper[l] * (1 - z.ISRR[z.lu[l]]) * (1 - z.ISRA[z.lu[l]]))))
 
-        z.AdjUrbanQTotal = z.UrbanQTotal
+        z.AdjUrbanQTotal = z.UrbanQTotal[Y][i][j]
 
         # Runoff retention
         if z.Qretention > 0:
-            if z.UrbanQTotal > 0:
-                if z.UrbanQTotal <= z.Qretention * z.PctAreaInfil:
+            if z.UrbanQTotal[Y][i][j] > 0:
+                if z.UrbanQTotal[Y][i][j] <= z.Qretention * z.PctAreaInfil:
                     z.RetentionEff = 1
                     z.AdjUrbanQTotal = 0
                 else:
-                    z.RetentionEff = z.Qretention * z.PctAreaInfil / z.UrbanQTotal
+                    z.RetentionEff = z.Qretention * z.PctAreaInfil / z.UrbanQTotal[Y][i][j]
                     z.AdjUrbanQTotal -= z.Qretention * z.PctAreaInfil
 
     BasinWater(z, i, Y, j)
@@ -371,10 +371,10 @@ def BasinWater(z, i, Y, j):
     else:
         z.RuralQTotal = 0
 
-    if z.UrbAreaTotal > 0:
-        z.UrbanQTotal *= z.UrbAreaTotal / z.AreaTotal
-    else:
-        z.UrbanQTotal = 0
+    # if z.UrbAreaTotal > 0:
+    #     z.UrbanQTotal_1 = z.UrbanQTotal[Y][i][j] * z.UrbAreaTotal / z.AreaTotal
+    # else:
+    #     z.UrbanQTotal_1 = 0
 
     if z.UrbAreaTotal > 0:
         z.AdjUrbanQTotal *= z.UrbAreaTotal / z.AreaTotal
@@ -386,7 +386,7 @@ def BasinWater(z, i, Y, j):
     else:
         z.AgQTotal = 0
 
-    z.QTotal = z.UrbanQTotal + z.RuralQTotal
+    z.QTotal = z.UrbanQTotal_1[Y][i][j] + z.RuralQTotal
     # Assume 20% reduction of runoff with urban wetlands
     z.AdjQTotal = (z.AdjUrbanQTotal * (1 - (z.n25b * 0.2))) + z.RuralQTotal
 
@@ -399,7 +399,7 @@ def BasinWater(z, i, Y, j):
         z.Runoff[Y][i] += z.QTotal
 
     z.RuralRunoff[Y][i] += z.RuralQTotal
-    z.UrbanRunoff[Y][i] += z.UrbanQTotal
+    z.UrbanRunoff[Y][i] += z.UrbanQTotal_1[Y][i][j]
     # TODO: (Are z.AgRunoff and z.AgQTotal actually in cm?)
     z.AgRunoff[Y][i] += z.AgQTotal
 

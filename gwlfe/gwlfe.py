@@ -51,6 +51,10 @@ from Retention import Retention
 from QrunP import QrunP
 from QrunI import QrunI
 from Qrun import Qrun
+from UrbAreaTotal import UrbAreaTotal
+from UrbanQTotal import UrbanQTotal
+from AreaTotal import AreaTotal
+from UrbanQTotal_1 import UrbanQTotal_1
 
 log = logging.getLogger(__name__)
 
@@ -115,6 +119,16 @@ def run(z):
     z.QrunI = QrunI(z.NYrs, z.DaysMonth, z.NRur, z.NUrb, z.Temp, z.InitSnow_0, z.Prec, z.CNI_0, z.AntMoist_0, z.Grow)
 
     z.Qrun = Qrun(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.CN, z.AntMoist_0, z.Grow)
+
+    z.UrbAreaTotal = UrbAreaTotal(z.NRur, z.NUrb, z.Area)
+
+    z.AreaTotal = AreaTotal(z.NRur, z.NUrb, z.Area)
+
+    z.UrbanQTotal = UrbanQTotal(z.NYrs, z.DaysMonth, z.NRur, z.NUrb, z.Temp, z.InitSnow_0, z.Prec, z.Area, z.CNI_0,
+                                z.AntMoist_0, z.Grow, z.CNP_0, z.Imper, z.ISRR, z.ISRA)
+
+    z.UrbanQTotal_1 = UrbanQTotal_1(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow,
+                                    z.CNP_0, z.Imper, z.ISRR, z.ISRA)
     # --------- run the remaining parts of the model ---------------------
 
     ReadGwlfDataFile.ReadAllData(z)
@@ -162,7 +176,7 @@ def run(z):
                 z.QTotal = 0
                 z.AgQTotal = 0
                 z.RuralQTotal = 0
-                z.UrbanQTotal = 0
+                # z.UrbanQTotal = 0 # duplicate
 
                 # Question: Are these values supposed to accumulate for each
                 # day, each month, and each year? Or should these be
