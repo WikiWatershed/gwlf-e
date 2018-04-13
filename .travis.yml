@@ -5,7 +5,7 @@ sudo: false
 env:
   - TOXENV=py27
 
-install: pip install tox --use-mirrors
+install: pip install tox
 
 script: tox
 
