@@ -63,18 +63,18 @@ def CalcCN(z, i, Y, j):
                 z.RuralQTotal += z.Qrun * z.Area[l] / z.RurAreaTotal
                 z.RurQRunoff[l][i] += z.Qrun
                 # TODO: (what is done with "DayQRunoff"? - appears not to be used)
-                z.DayQRunoff[Y][i][j] = z.Qrun
+                # z.DayQRunoff[Y][i][j] = z.Qrun
                 # TODO: (What is done with "AgQRunoff? - apparently nothing)
                 if z.Landuse[l] is LandUse.CROPLAND:
                     # (Maybe used for STREAMPLAN?)
                     z.AgQTotal += z.Qrun * z.Area[l]
-                    z.AgQRunoff[l][i] += z.Qrun
+                    # z.AgQRunoff[l][i] += z.Qrun
                 elif z.Landuse[l] is LandUse.HAY_PAST:
                     z.AgQTotal += z.Qrun * z.Area[l]
-                    z.AgQRunoff[l][i] += z.Qrun
+                    # z.AgQRunoff[l][i] += z.Qrun
                 elif z.Landuse[l] is LandUse.TURFGRASS:
                     z.AgQTotal += z.Qrun * z.Area[l]
-                    z.AgQRunoff[l][i] += z.Qrun
+                    # z.AgQRunoff[l][i] += z.Qrun
             else:
                 z.Qrun = 0
 
@@ -83,7 +83,7 @@ def CalcCN(z, i, Y, j):
 
         z.Erosion[Y][i] = z.Erosion[Y][i] + z.RurEros
         z.ErosWashoff[l][i] = z.ErosWashoff[l][i] + z.RurEros
-        z.DayErWashoff[l][Y][i][j] = z.RurEros
+        # z.DayErWashoff[l][Y][i][j] = z.RurEros
 
         if z.SedDelivRatio == 0:
             z.SedDelivRatio = 0.0001
@@ -101,7 +101,7 @@ def CalcCN(z, i, Y, j):
     if z.Water < 0.05:
         BasinWater(z, i, Y, j)
         return
-
+    #else:
     for l in range(z.NRur, z.NLU):
         grow_factor = GrowFlag.intval(z.Grow[i])
 

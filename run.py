@@ -8,8 +8,7 @@ import sys
 import json
 import logging
 
-from gwlfe import gwlfe, parser
-
+from gwlfe import gwlfe, Parser
 
 def main():
     log = logging.getLogger('gwlfe')
@@ -21,7 +20,7 @@ def main():
     gms_filename = sys.argv[1]
 
     fp = open(gms_filename, 'r')
-    z = parser.GmsReader(fp).read()
+    z = Parser.GmsReader(fp).read()
     result = gwlfe.run(z)
     print(json.dumps(result, indent=4))
 

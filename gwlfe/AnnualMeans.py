@@ -8,7 +8,14 @@ Imported from AnnualMeans.bas
 """
 
 import logging
-
+from Precipitation import AvPrecipitation
+from Precipitation import AvPrecipitation_2
+from ET import AvEvapoTrans
+from ET import AvEvapoTrans_2
+from PtSrcFlow import AvPtSrcFlow
+from PtSrcFlow import AvPtSrcFlow_2
+from Withdrawal import AvWithdrawal
+from Withdrawal import AvWithdrawal_2
 
 log = logging.getLogger(__name__)
 
@@ -25,6 +32,11 @@ def CalculateAnnualMeanLoads(z, Y):
     z.CalendarYr = z.WxYrBeg + (Y - 1)
 
     # CALCULATE ANNUAL MEANS FOR STREAM BANK AND TILE DRAINAGE VALUES
+    # z.AvPtSrcFlow = AvPtSrcFlow(z.NYrs,z.PtSrcFlow)
+    z.AvPtSrcFlow = AvPtSrcFlow_2(z.PointFlow)
+
+    # z.AvWithdrawal = AvWithdrawal(z.NYrs,z.Withdrawal)
+    z.AvWithdrawal = AvWithdrawal_2(z.StreamWithdrawal, z.GroundWithdrawal)
     for i in range(12):
         z.AvStreamBankEros[i] += z.StreamBankEros[Y][i] / z.NYrs
         z.AvStreamBankN[i] += z.StreamBankN[Y][i] / z.NYrs
@@ -35,9 +47,9 @@ def CalculateAnnualMeanLoads(z, Y):
         if z.SedDelivRatio > 0 and z.Erosion[Y][i] < z.SedYield[Y][i]:
             z.Erosion[Y][i] = z.SedYield[Y][i] / z.SedDelivRatio
 
-        z.AvPtSrcFlow[i] += z.PtSrcFlow[Y][i] / z.NYrs
+        # z.AvPtSrcFlow[i] += z.PtSrcFlow[Y][i] / z.NYrs
         z.AvTileDrain[i] += z.TileDrain[Y][i] / z.NYrs
-        z.AvWithdrawal[i] += z.Withdrawal[Y][i] / z.NYrs
+        # z.AvWithdrawal[i] += z.Withdrawal[Y][i] / z.NYrs
         z.AvTileDrainN[i] += z.TileDrainN[Y][i] / z.NYrs
         z.AvTileDrainP[i] += z.TileDrainP[Y][i] / z.NYrs
         z.AvTileDrainSed[i] += z.TileDrainSed[Y][i] / z.NYrs
@@ -48,9 +60,13 @@ def CalculateAnnualMeanLoads(z, Y):
         z.ErosSum += z.Erosion[Y][i]
 
     # COMPUTE ANNUAL MEANS
+    # z.AvPrecipitation = AvPrecipitation(z.NYrs,z.Precipitation)
+    z.AvPrecipitation = AvPrecipitation_2(z.Precipitation)
+    # z.AvEvapoTrans = AvEvapoTrans(z.NYrs, z.Evapotrans)
+    z.AvEvapoTrans = AvEvapoTrans_2(z.Evapotrans)
     for i in range(12):
-        z.AvPrecipitation[i] += z.Precipitation[Y][i] / z.NYrs
-        z.AvEvapoTrans[i] += z.Evapotrans[Y][i] / z.NYrs
+        # z.AvPrecipitation[i] += z.Precipitation[Y][i] / z.NYrs
+        # z.AvEvapoTrans[i] += z.Evapotrans[Y][i] / z.NYrs
         z.AvGroundWater[i] += z.GroundWatLE[Y][i] / z.NYrs
 
         if z.AvGroundWater[i] < 0:
@@ -114,7 +130,7 @@ def CalculateAnnualMeanLoads(z, Y):
     z.AvTileDrainNSum = sum(z.AvTileDrainN)
     z.AvTileDrainPSum = sum(z.AvTileDrainP)
     z.AvTileDrainSedSum = sum(z.AvTileDrainSed)
-    z.AvPrecipitationSum = sum(z.AvPrecipitation)
+    # z.AvPrecipitationSum = sum(z.AvPrecipitation)
     z.AvEvapoTransSum = sum(z.AvEvapoTrans)
     z.AvGroundWaterSum = sum(z.AvGroundWater)
     z.AvRunoffSum = sum(z.AvRunoff)
