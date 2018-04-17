@@ -13,8 +13,6 @@ import numpy as np
 
 from .enums import GrowFlag, LandUse
 
-from DailyArrayConverter import get_value_for_yesterday
-
 log = logging.getLogger(__name__)
 
 
@@ -107,8 +105,8 @@ def CalcCN(z, i, Y, j):
     for q in range(z.Nqual):
         z.NetSolidLoad[q] = 0
         z.NetDisLoad[q] = 0
-
     if z.Water[Y][i][j] < 0.05:
+        # z.AdjUrbanQTotal = get_value_for_yesterday(z.AdjUrbanQTotal_1,0,Y,i,j,z.NYrs,z.DaysMonth)
         pass
     else:
         for l in range(z.NRur, z.NLU):
@@ -219,71 +217,86 @@ def CalcCN(z, i, Y, j):
                                    + z.QrunP[Y][i][j][l] * (
                                            1 - (z.Imper[l] * (1 - z.ISRR[z.lu[l]]) * (1 - z.ISRA[z.lu[l]]))))
 
-        z.AdjUrbanQTotal = z.UrbanQTotal[Y][i][j]
+        # z.AdjUrbanQTotal = z.UrbanQTotal[Y][i][j]
 
         # Runoff retention
         if z.Qretention > 0:
             if z.UrbanQTotal[Y][i][j] > 0:
                 if z.UrbanQTotal[Y][i][j] <= z.Qretention * z.PctAreaInfil:
                     z.RetentionEff = 1
-                    z.AdjUrbanQTotal = 0
+                    # z.AdjUrbanQTotal = 0
                 else:
                     z.RetentionEff = z.Qretention * z.PctAreaInfil / z.UrbanQTotal[Y][i][j]
-                    z.AdjUrbanQTotal -= z.Qretention * z.PctAreaInfil
+                    # z.AdjUrbanQTotal = z.UrbanQTotal[Y][i][j] - z.Qretention * z.PctAreaInfil
+
+    # if z.UrbAreaTotal > 0:
+    #     z.AdjUrbanQTotal = z.AdjUrbanQTotal * z.UrbAreaTotal / z.AreaTotal
+    # else:
+    #     z.AdjUrbanQTotal = 0
+
+    z.AdjUrbanQTotal_2 = z.AdjUrbanQTotal[Y][i][j] * z.AreaTotal / z.UrbAreaTotal  # TODO: is there a better way?
 
     BasinWater(z, i, Y, j)
 
+    # if z.UrbAreaTotal > 0:
+    #     z.AdjUrbanQTotal = z.AdjUrbanQTotal * z.UrbAreaTotal / z.AreaTotal
+    # else:
+    #     z.AdjUrbanQTotal = 0
+    # z.AdjUrbanQTotal = z.AdjUrbanQTotal_1
+
+    # z.AdjUrbanQTotal_2[Y][i][j] = z.AdjUrbanQTotal_1
+
 
 def BasinWater(z, i, Y, j):
-    # Detention basin water balance
-    if z.BasinArea > 0:
-        z.BasinInflow = z.UrbAreaTotal * 10000 * (z.AdjUrbanQTotal / 100)
-
-        if z.BasinInflow >= 0.5 * z.BasinVol and z.BasinInflow >= 0.1 * z.Capacity:
-            z.Mixing = 1
-        else:
-            z.Mixing = 0
-
-        z.BasinVol += z.BasinPrec - z.ETDetentBasin + z.BasinInflow
-        if z.BasinVol < 0:
-            z.BasinVol = 0
-
-        # Basin cleaning
-        if z.CleanMon > 0:
-            threshold = z.BasinDeadStorage + 0.1 * (z.Capacity - z.BasinDeadStorage)
-            # TODO: What is `i`?
-            if z.CleanSwitch == 0 and i >= z.CleanMon and z.BasinVol < threshold:
-                for q in range(z.Nqual):
-                    z.SolidBasinMass[q] = 0
-                    z.DisBasinMass[q] = 0
-                z.CleanSwitch = 1
-
-        z.ActiveVol = z.BasinVol - z.BasinDeadStorage
-        if z.ActiveVol < 0:
-            z.ActiveVol = 0
-        if z.ActiveVol > z.Capacity - z.BasinDeadStorage:
-            z.ActiveVol = z.Capacity - z.BasinDeadStorage
-
-        z.Head = z.ActiveVol / z.BasinArea
-
-        z.Discharge = 382700 * z.OutletCoef * math.sqrt(z.Head)
-        if z.Discharge > z.ActiveVol:
-            z.Discharge = z.ActiveVol
-
-        z.Overflow = z.BasinVol - z.Discharge - z.Capacity
-        if z.Overflow < 0:
-            z.Overflow = 0
-
-        z.OutFlow = z.Overflow + z.Discharge
-        if z.BasinVol > 0:
-            z.OutflowFract = z.OutFlow / z.BasinVol
-            if z.OutflowFract > 1:
-                z.OutflowFract = 1
-        else:
-            z.OutflowFract = 0
-
-        z.BasinVol -= z.OutFlow
-        z.AdjUrbanQTotal *= z.OutflowFract
+    # Detention basin water balance (this part of the code is not used
+    # if z.BasinArea > 0:
+    #     z.BasinInflow = z.UrbAreaTotal * 10000 * (z.AdjUrbanQTotal / 100)
+    #
+    #     if z.BasinInflow >= 0.5 * z.BasinVol and z.BasinInflow >= 0.1 * z.Capacity:
+    #         z.Mixing = 1
+    #     else:
+    #         z.Mixing = 0
+    #
+    #     z.BasinVol += z.BasinPrec - z.ETDetentBasin + z.BasinInflow
+    #     if z.BasinVol < 0:
+    #         z.BasinVol = 0
+    #
+    #     # Basin cleaning
+    #     if z.CleanMon > 0:
+    #         threshold = z.BasinDeadStorage + 0.1 * (z.Capacity - z.BasinDeadStorage)
+    #         # TODO: What is `i`?
+    #         if z.CleanSwitch == 0 and i >= z.CleanMon and z.BasinVol < threshold:
+    #             for q in range(z.Nqual):
+    #                 z.SolidBasinMass[q] = 0
+    #                 z.DisBasinMass[q] = 0
+    #             z.CleanSwitch = 1
+    #
+    #     z.ActiveVol = z.BasinVol - z.BasinDeadStorage
+    #     if z.ActiveVol < 0:
+    #         z.ActiveVol = 0
+    #     if z.ActiveVol > z.Capacity - z.BasinDeadStorage:
+    #         z.ActiveVol = z.Capacity - z.BasinDeadStorage
+    #
+    #     z.Head = z.ActiveVol / z.BasinArea
+    #
+    #     z.Discharge = 382700 * z.OutletCoef * math.sqrt(z.Head)
+    #     if z.Discharge > z.ActiveVol:
+    #         z.Discharge = z.ActiveVol
+    #
+    #     z.Overflow = z.BasinVol - z.Discharge - z.Capacity
+    #     if z.Overflow < 0:
+    #         z.Overflow = 0
+    #
+    #     z.OutFlow = z.Overflow + z.Discharge
+    #     if z.BasinVol > 0:
+    #         z.OutflowFract = z.OutFlow / z.BasinVol
+    #         if z.OutflowFract > 1:
+    #             z.OutflowFract = 1
+    #     else:
+    #         z.OutflowFract = 0
+    #
+    #     z.BasinVol -= z.OutFlow
+    #     z.AdjUrbanQTotal = z.AdjUrbanQTotal * z.OutflowFract
 
     # BELOW ARE CALCULATIONS FOR URBAN LOADS
     # MAYBE THEY SHOULD BE IN "CALCULATE LOADS" SUBROUTINE???
@@ -291,7 +304,7 @@ def BasinWater(z, i, Y, j):
     z.SolidLoad = 0
     z.UrbLoadRed = 0
 
-    if z.AdjUrbanQTotal > 0.001:
+    if z.AdjUrbanQTotal_2 > 0.001:
         for l in range(z.NRur, z.NLU):
             for q in range(z.Nqual):
                 z.SolidBasinMass[q] = 0
@@ -376,10 +389,10 @@ def BasinWater(z, i, Y, j):
     # else:
     #     z.UrbanQTotal_1 = 0
 
-    if z.UrbAreaTotal > 0:
-        z.AdjUrbanQTotal *= z.UrbAreaTotal / z.AreaTotal
-    else:
-        z.AdjUrbanQTotal = 0
+    # if z.UrbAreaTotal > 0:
+    #     z.AdjUrbanQTotal = z.AdjUrbanQTotal * z.UrbAreaTotal / z.AreaTotal
+    # else:
+    #     z.AdjUrbanQTotal = 0
 
     if z.AgAreaTotal > 0:
         z.AgQTotal = z.AgQTotal / z.AgAreaTotal
@@ -388,7 +401,7 @@ def BasinWater(z, i, Y, j):
 
     z.QTotal = z.UrbanQTotal_1[Y][i][j] + z.RuralQTotal
     # Assume 20% reduction of runoff with urban wetlands
-    z.AdjQTotal = (z.AdjUrbanQTotal * (1 - (z.n25b * 0.2))) + z.RuralQTotal
+    z.AdjQTotal = (z.AdjUrbanQTotal[Y][i][j] * (1 - (z.n25b * 0.2))) + z.RuralQTotal
 
     z.SedTrans[Y][i] += z.AdjQTotal ** 1.67
 

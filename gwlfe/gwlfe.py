@@ -102,8 +102,14 @@ def run(z):
     z.UrbanQTotal = UrbanQTotal(z.NYrs, z.DaysMonth, z.NRur, z.NUrb, z.Temp, z.InitSnow_0, z.Prec, z.Area, z.CNI_0,
                                 z.AntMoist_0, z.Grow, z.CNP_0, z.Imper, z.ISRR, z.ISRA)
 
-    z.UrbanQTotal_1 = UrbanQTotal_1(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow,
-                                    z.CNP_0, z.Imper, z.ISRR, z.ISRA)
+    z.UrbanQTotal_1 = UrbanQTotal_1(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
+                                    z.AntMoist_0, z.Grow, z.CNP_0, z.Imper, z.ISRR, z.ISRA)
+
+    z.AdjUrbanQTotal = AdjUrbanQTotal(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area,
+                                      z.CNI_0, z.AntMoist_0, z.Grow, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.Qretention,
+                                      z.PctAreaInfil)
+    # z.AdjUrbanQTotal = np.zeros((z.NYrs,12,31))
+    z.AdjUrbanQTotal_2 = np.zeros((z.NYrs, 12, 31))
     # --------- run the remaining parts of the model ---------------------
 
     ReadGwlfDataFile.ReadAllData(z)
@@ -230,6 +236,8 @@ def run(z):
                 # EROSION AND SEDIMENT
                 if z.DailyTemp > 0 and z.Water[Y][i][j] > 0.01:
                     CalcCnErosRunoffSed.CalcCN(z, i, Y, j)
+                else:
+                    pass
 
                 # print("n-1 init snow (",Y,i,j,")",z.InitSnow)
 
