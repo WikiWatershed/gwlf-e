@@ -44,6 +44,14 @@ from UrbAreaTotal import UrbAreaTotal
 from UrbanQTotal import UrbanQTotal
 from AreaTotal import AreaTotal
 from UrbanQTotal_1 import UrbanQTotal_1
+from AEU import AEU, TotAEU, TotLAEU, TotPAEU
+from PcntUrbanArea import PcntUrbanArea
+from AvCNUrb import AvCNUrb
+from RurAreaTotal import RurAreaTotal
+from AvCNRur import AvCNRur
+from AvCN import AvCN
+from SedAFactor import SedAFactor
+
 
 log = logging.getLogger(__name__)
 
@@ -104,6 +112,28 @@ def run(z):
 
     z.UrbanQTotal_1 = UrbanQTotal_1(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow,
                                     z.CNP_0, z.Imper, z.ISRR, z.ISRA)
+
+    z.AEU = AEU(z.NumAnimals, z.AvgAnimalWt, z.NRur, z.NUrb, z.Area)
+
+    z.TotAEU = TotAEU(z.NumAnimals, z.AvgAnimalWt)
+
+    z.TotLAEU = TotLAEU(z.NumAnimals, z.AvgAnimalWt)
+
+    z.TotPAEU = TotPAEU(z.NumAnimals, z.AvgAnimalWt)
+
+    z.PcntUrbanArea = PcntUrbanArea(z.NRur, z.NUrb, z.Area)
+
+    z.AvCNUrb = AvCNUrb(z.NRur, z.NUrb, z.CNI_0, z.CNP_0, z.Imper, z.Area)
+
+    z.RurAreaTotal = RurAreaTotal(z.NRur, z.Area)
+
+    z.AvCNRur = AvCNRur(z.NRur, z.Area, z.CN)
+
+    z.AvCN = AvCN(z.NRur, z.NUrb, z.CNI_0, z.CNP_0, z.CN, z.Imper, z.Area)
+
+    z.SedAFactor = SedAFactor(z.NumAnimals, z.AvgAnimalWt, z.NRur, z.NUrb, z.CNI_0, z.CNP_0, z.CN, z.Imper, z.Area
+                               , z.SedAFactor_0, z.AvKF, z.AvSlope, z.SedAAdjust)
+
     # --------- run the remaining parts of the model ---------------------
 
     ReadGwlfDataFile.ReadAllData(z)

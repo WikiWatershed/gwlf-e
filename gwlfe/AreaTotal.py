@@ -2,6 +2,7 @@ import numpy as np
 from Timer import time_function
 from NLU import NLU
 
+
 def AreaTotal(NRur, NUrb, Area):
     result = 0
     nlu = NLU(NRur,NUrb)
