@@ -161,7 +161,10 @@ def run(z):
 
                 if z.QTotal <= z.Water:
                     z.Infiltration = z.Water - z.QTotal
-                z.GrFlow = z.RecessionCoef * z.SatStor
+                # For very dry areas, SatStor can underflow its double type.
+                # Keep the value above a certain threshold so it remains
+                # practically zero, but not zero.
+                z.GrFlow = max(z.RecessionCoef * z.SatStor, 1e-20)
                 z.DeepSeep = z.SeepCoef * z.SatStor
 
                 # CALCULATE EVAPOTRANSPIRATION, Percolation, AND THE
