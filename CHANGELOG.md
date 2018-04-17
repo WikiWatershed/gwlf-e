@@ -1,3 +1,7 @@
+## 0.6.3
+
+- Add lower threshold to GrFlow to prevent double underflow.
+
 ## 0.6.2
 
 - Set initial default for `AdjUrbanQTotal`
