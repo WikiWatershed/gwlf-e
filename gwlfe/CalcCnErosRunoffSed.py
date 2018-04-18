@@ -412,7 +412,7 @@ def BasinWater(z, i, Y, j):
     # else:
     #     z.AgQTotal = 0
 
-    z.QTotal = z.UrbanQTotal_1[Y][i][j] + z.RuralQTotal[Y][i][j]
+    # z.QTotal = z.UrbanQTotal_1[Y][i][j] + z.RuralQTotal[Y][i][j]
     # Assume 20% reduction of runoff with urban wetlands
     z.AdjQTotal = (z.AdjUrbanQTotal[Y][i][j] * (1 - (z.n25b * 0.2))) + z.RuralQTotal[Y][i][j]
 
@@ -422,7 +422,7 @@ def BasinWater(z, i, Y, j):
     if z.AdjQTotal > 0:
         z.Runoff[Y][i] += z.AdjQTotal
     else:
-        z.Runoff[Y][i] += z.QTotal
+        z.Runoff[Y][i] += z.QTotal[Y][i][j]
 
     z.RuralRunoff[Y][i] += z.RuralQTotal[Y][i][j]
     z.UrbanRunoff[Y][i] += z.UrbanQTotal_1[Y][i][j]
@@ -436,7 +436,7 @@ def BasinWater(z, i, Y, j):
     # Calculate Daily runoff (used in output for daily flow file)
     if z.AdjQTotal > 0:
         z.DayRunoff[Y][i][j] = z.AdjQTotal
-    elif z.QTotal > 0:
-        z.DayRunoff[Y][i][j] = z.QTotal
+    elif z.QTotal[Y][i][j] > 0:
+        z.DayRunoff[Y][i][j] = z.QTotal[Y][i][j]
     else:
         z.DayRunoff[Y][i][j] = 0

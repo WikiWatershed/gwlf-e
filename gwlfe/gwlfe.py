@@ -56,6 +56,7 @@ from AMC5 import AMC5
 from NewCN import NewCN
 from AgAreaTotal import AgAreaTotal
 from AgQTotal import AgQTotal
+from QTotal import QTotal
 
 log = logging.getLogger(__name__)
 
@@ -140,6 +141,8 @@ def run(z):
     z.AgQTotal = AgQTotal(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.NRur, z.CN, z.AntMoist_0, z.NUrb, z.Grow,
                           z.Landuse, z.Area)
 
+    z.QTotal = QTotal(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0,
+                      z.Grow, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN)
     # z.NewCN = NewCN(z.NRur,z.NUrb,z.CN)
     # z.AMC5 = AMC5(z.NYrs, z.DaysMonth, z.Temp, z.Prec, z.InitSnow_0, z.AntMoist_0)
     # z.Melt = Melt(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec)
@@ -190,7 +193,7 @@ def run(z):
                 # z.Water = 0
                 # z.Erosiv = 0
                 z.ET = 0
-                z.QTotal = 0
+                # z.QTotal = 0
                 # z.AgQTotal = 0
                 # z.RuralQTotal = 0
                 # z.UrbanQTotal = 0 # duplicate
@@ -317,8 +320,8 @@ def run(z):
 
                 # ***** WATERSHED WATER BALANCE *****
 
-                if z.QTotal <= z.Water[Y][i][j]:
-                    z.Infiltration = z.Water[Y][i][j] - z.QTotal
+                if z.QTotal[Y][i][j] <= z.Water[Y][i][j]:
+                    z.Infiltration = z.Water[Y][i][j] - z.QTotal[Y][i][j]
                 z.GrFlow = z.RecessionCoef * z.SatStor
                 z.DeepSeep = z.SeepCoef * z.SatStor
 
@@ -350,7 +353,7 @@ def run(z):
                 z.SatStor = z.SatStor + z.Percolation - z.GrFlow - z.DeepSeep
                 if z.SatStor < 0:
                     z.SatStor = 0
-                z.Flow = z.QTotal + z.GrFlow
+                z.Flow = z.QTotal[Y][i][j] + z.GrFlow
                 z.DailyFlow[Y][i][j] = z.DayRunoff[Y][i][j] + z.GrFlow
 
                 z.DailyFlowGPM[Y][i][j] = z.Flow * 0.00183528 * z.TotAreaMeters
