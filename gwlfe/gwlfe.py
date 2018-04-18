@@ -59,6 +59,7 @@ from AgQTotal import AgQTotal
 from QTotal import QTotal
 from AgRunoff import AgRunoff
 from AdjQTotal import AdjQTotal
+from TileDrainRO import TileDrainRO
 
 log = logging.getLogger(__name__)
 
@@ -140,18 +141,15 @@ def run(z):
 
     z.AgAreaTotal = AgAreaTotal(z.NRur, z.Landuse, z.Area)
 
-    z.AgQTotal = AgQTotal(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.NRur, z.CN, z.AntMoist_0, z.NUrb, z.Grow,
-                          z.Landuse, z.Area)
-
     z.QTotal = QTotal(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0,
                       z.Grow, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN)
-
-    z.AgRunoff = AgRunoff(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.CN, z.AntMoist_0, z.NUrb, z.Grow,
-                          z.Landuse, z.Area)
 
     z.AdjQTotal = AdjQTotal(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
                             z.AntMoist_0, z.Grow, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.Qretention, z.PctAreaInfil,
                             z.n25b, z.CN)
+
+    z.TileDrainRO = TileDrainRO(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.CN, z.AntMoist_0, z.NUrb,
+                                z.Grow, z.Landuse, z.Area, z.TileDrainDensity)
     # z.NewCN = NewCN(z.NRur,z.NUrb,z.CN)
     # z.AMC5 = AMC5(z.NYrs, z.DaysMonth, z.Temp, z.Prec, z.InitSnow_0, z.AntMoist_0)
     # z.Melt = Melt(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec)
@@ -425,9 +423,8 @@ def run(z):
                                   z.GroundWithdrawal[i])
             # z.PtSrcFlow[Y][i] = z.PtSrcFlow[Y][i] + z.PointFlow[i]
 
-            # CALCULATE THE SURFACE RUNOFF PORTION OF TILE DRAINAGE
-            z.TileDrainRO[Y][i] = (z.TileDrainRO[Y][i] + [z.AgRunoff[Y][i] *
-                                                          z.TileDrainDensity])
+            # # CALCULATE THE SURFACE RUNOFF PORTION OF TILE DRAINAGE
+            # z.TileDrainRO[Y][i] = (z.AgRunoff[Y][i] * z.TileDrainDensity)
 
             # CALCULATE SUBSURFACE PORTION OF TILE DRAINAGE
             if z.AreaTotal > 0:
