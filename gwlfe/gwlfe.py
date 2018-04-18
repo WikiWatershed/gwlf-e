@@ -14,6 +14,8 @@ import logging
 
 import numpy as np
 from DailyArrayConverter import get_value_for_yesterday
+from Timer import time_function
+from HashableArray import HashableArray
 
 from .enums import ETflag, GrowFlag
 from . import ReadGwlfDataFile
@@ -44,10 +46,19 @@ from UrbAreaTotal import UrbAreaTotal
 from UrbanQTotal import UrbanQTotal
 from AreaTotal import AreaTotal
 from UrbanQTotal_1 import UrbanQTotal_1
+from AdjUrbanQTotal import AdjUrbanQTotal
+from AdjUrbanQTotal_1 import AdjUrbanQTotal_1
+from RurAreaTotal import RurAreaTotal
+from RuralQTotal import RuralQTotal
+from CNum import CNum
+from Melt import Melt
+from AMC5 import AMC5
+from NewCN import NewCN
 
 log = logging.getLogger(__name__)
 
 
+# @time_function
 def run(z):
     log.debug('Running model...')
 
@@ -64,6 +75,10 @@ def run(z):
     # print ('True')
 
     # DailyET_Part1 = ET.DailyET(z.NYrs,z.DaysMonth,z.Temp,z.DayHrs,z.KV,z.PcntET,z.ETFlag)
+    z.DaysMonth = HashableArray(z.DaysMonth)
+    z.Temp = HashableArray(z.Temp)
+    z.Prec = HashableArray(z.Prec)
+
     DailyET_Part1 = ET.DailyET_2(z.Temp, z.KV, z.PcntET, z.DayHrs)
 
     z.PtSrcFlow = PtSrcFlow.PtSrcFlow_2(z.NYrs, z.PointFlow)
@@ -86,8 +101,8 @@ def run(z):
 
     z.GrowFactor = GrowFactor(z.Grow)
 
-    z.Retention = Retention(z.NYrs, z.DaysMonth, z.Temp, z.Prec, z.InitSnow_0, z.AntMoist_0, z.NRur, z.NUrb, z.CN,
-                            z.Grow)
+    z.Retention_2 = Retention(z.NYrs, z.DaysMonth, z.Temp, z.Prec, z.InitSnow_0, z.AntMoist_0, z.NRur, z.NUrb, z.CN,
+                              z.Grow)
 
     z.QrunP = QrunP(z.NYrs, z.DaysMonth, z.NRur, z.NUrb, z.Temp, z.InitSnow_0, z.Prec, z.CNP_0, z.AntMoist_0, z.Grow)
 
@@ -108,8 +123,23 @@ def run(z):
     z.AdjUrbanQTotal = AdjUrbanQTotal(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area,
                                       z.CNI_0, z.AntMoist_0, z.Grow, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.Qretention,
                                       z.PctAreaInfil)
+
+    z.AdjUrbanQTotal_1 = AdjUrbanQTotal_1(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area,
+                                          z.CNI_0, z.AntMoist_0, z.Grow, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.Qretention,
+                                          z.PctAreaInfil)
+
+    z.RurAreaTotal = RurAreaTotal(z.NRur, z.Area)
+
+    z.RuralQTotal_2 = RuralQTotal(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.CN, z.NUrb, z.AntMoist_0,
+                                  z.Grow, z.Area)
+
+
+    z.NewCN = NewCN(z.NRur,z.NUrb,z.CN)
+    z.AMC5 = AMC5(z.NYrs, z.DaysMonth, z.Temp, z.Prec, z.InitSnow_0, z.AntMoist_0)
+    z.Melt = Melt(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec)
+    z.CNum_2 = CNum(z.NYrs, z.DaysMonth, z.Temp, z.Prec, z.InitSnow_0, z.AntMoist_0, z.CN, z.NRur, z.NUrb, z.Grow)
     # z.AdjUrbanQTotal = np.zeros((z.NYrs,12,31))
-    z.AdjUrbanQTotal_2 = np.zeros((z.NYrs, 12, 31))
+    # z.AdjUrbanQTotal_2 = np.zeros((z.NYrs, 12, 31))
     # --------- run the remaining parts of the model ---------------------
 
     ReadGwlfDataFile.ReadAllData(z)
@@ -171,7 +201,7 @@ def run(z):
                 # TODO: If Water is <= 0.01, then CalcCNErosRunoffSed
                 # never executes, and CNum will remain undefined.
                 # What should the default value for CNum be in this case?
-                # z.CNum = 0
+                z.CNum = 0
 
                 # RAIN , SNOWMELT, EVAPOTRANSPIRATION (ET)
                 # print(z.InitSnow,get_value_for_yesterday(z.InitSnow_2,z.InitSnow_0,Y,i,j,z.NYrs,z.DaysMonth))
@@ -234,7 +264,7 @@ def run(z):
 
                 # IF WATER AVAILABLE, THEN CALL SUB TO COMPUTE CN, RUNOFF,
                 # EROSION AND SEDIMENT
-                if z.DailyTemp > 0 and z.Water[Y][i][j] > 0.01:
+                if z.Temp[Y][i][j] > 0 and z.Water[Y][i][j] > 0.01:
                     CalcCnErosRunoffSed.CalcCN(z, i, Y, j)
                 else:
                     pass
@@ -246,17 +276,17 @@ def run(z):
 
                 # UPDATE ANTECEDENT RAIN+MELT CONDITION
                 # Subtract AMC5 by the sum of AntMoist (day 5) and Water
-                # z.AMC5 = z.AMC5 - z.AntMoist[4] + z.Water[Y][i][j]
-                # # z.DailyAMC5[Y][i][j] = z.AMC5
-                #
-                # # Shift AntMoist values to the right.
-                # z.AntMoist[4] = z.AntMoist[3]
-                # z.AntMoist[3] = z.AntMoist[2]
-                # z.AntMoist[2] = z.AntMoist[1]
-                # z.AntMoist[1] = z.AntMoist[0]
-                # z.AntMoist[0] = z.Water[Y][i][j]
-                #
-                # print(z.AMC5,z.AMC5_2[Y][i][j])
+                z.AMC5_2 = z.AMC5_2 - z.AntMoist[4] + z.Water[Y][i][j]
+                # z.DailyAMC5[Y][i][j] = z.AMC5
+
+                # Shift AntMoist values to the right.
+                z.AntMoist[4] = z.AntMoist[3]
+                z.AntMoist[3] = z.AntMoist[2]
+                z.AntMoist[2] = z.AntMoist[1]
+                z.AntMoist[1] = z.AntMoist[0]
+                z.AntMoist[0] = z.Water[Y][i][j]
+
+                # print(z.AMC5_2,z.AMC5[Y][i][j])
 
                 # CALCULATE ET FROM SATURATED VAPOR PRESSURE,
                 # HAMON (1961) METHOD

@@ -62,7 +62,7 @@ class GmsReader(object):
         z.AvGRStreamN = 0
         z.AvGRStreamP = 0
         z.AvTileDrain = np.zeros(12)
-        z.RurAreaTotal = 0
+        # z.RurAreaTotal = 0
         # z.UrbAreaTotal = 0
         z.d = np.zeros(12)
         z.KVD = np.zeros(12)

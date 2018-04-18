@@ -10,6 +10,7 @@ Imported from CalcCNErosRunoffSed.bas
 import math
 import logging
 import numpy as np
+from DailyArrayConverter import get_value_for_yesterday
 
 from .enums import GrowFlag, LandUse
 
@@ -33,39 +34,48 @@ def CalcCN(z, i, Y, j):
         grow_factor = GrowFlag.intval(z.Grow[i])
 
         if z.CN[l] > 0:
-            # if z.Melt[Y][i][j] <= 0:
-            #     if grow_factor > 0:
-            #         # growing season
-            #         if get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) >= 5.33:
-            #             z.CNum = z.NewCN[2][l]
-            #         elif get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) < 3.56:
-            #             z.CNum = z.NewCN[0][l] + (z.CN[l] - z.NewCN[0][l]) * get_value_for_yesterday(z.AMC5, 0, Y, i, j,
-            #                                                                                          z.NYrs,
-            #                                                                                          z.DaysMonth) / 3.56
-            #         else:
-            #             z.CNum = z.CN[l] + (z.NewCN[2][l] - z.CN[l]) * (
-            #                         get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) - 3.56) / 1.77
-            #     else:
-            #         # dormant season
-            #         if get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) >= 2.79:
-            #             z.CNum = z.NewCN[2][l]
-            #         elif get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) < 1.27:
-            #             z.CNum = z.NewCN[0][l] + (z.CN[l] - z.NewCN[0][l]) * get_value_for_yesterday(z.AMC5, 0, Y, i, j,
-            #                                                                                          z.NYrs,
-            #                                                                                          z.DaysMonth) / 1.27
-            #         else:
-            #             z.CNum = z.CN[l] + (z.NewCN[2][l] - z.CN[l]) * (
-            #                         get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) - 1.27) / 1.52
-            # else:
-            #     z.CNum = z.NewCN[2][l]
+            print("test2",z.CNum)
+            if z.Melt[Y][i][j] <= 0:
 
+                if grow_factor > 0:
+                    print("test4")
+                    # growing season
+                    if get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) >= 5.33:
+                        z.CNum = z.NewCN[2][l]
+                    elif get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) < 3.56:
+                        z.CNum = z.NewCN[0][l] + (z.CN[l] - z.NewCN[0][l]) * get_value_for_yesterday(z.AMC5, 0, Y, i, j,
+                                                                                                     z.NYrs,
+                                                                                                     z.DaysMonth) / 3.56
+                    else:
+                        z.CNum = z.CN[l] + (z.NewCN[2][l] - z.CN[l]) * (
+                                    get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) - 3.56) / 1.77
+                else:
+                    print("test5")
+                    # dormant season
+                    if get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) >= 2.79:
+                        z.CNum = z.NewCN[2][l]
+                    elif get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) < 1.27:
+                        z.CNum = z.NewCN[0][l] + (z.CN[l] - z.NewCN[0][l]) * get_value_for_yesterday(z.AMC5, 0, Y, i, j,
+                                                                                                     z.NYrs,
+                                                                                                     z.DaysMonth) / 1.27
+                    else:
+                        print("test6")
+                        z.CNum = z.CN[l] + (z.NewCN[2][l] - z.CN[l]) * (
+                                    get_value_for_yesterday(z.AMC5, 0, Y, i, j, z.NYrs, z.DaysMonth) - 1.27) / 1.52
+                print("test3")
+            else:
+                print("test7")
+                z.CNum = z.NewCN[2][l]
+            # print(z.CNum,z.CNum_2[Y][i][j][l])
             # z.Retention = 2540 / z.CNum[Y][i][j][l] - 25.4
-            # if z.Retention < 0:
-            #     z.Retention = 0
+            z.Retention = 2540 / z.CNum - 25.4
+            if z.Retention < 0:
+                z.Retention = 0
+            # print(z.Retention,z.Retention_2[Y][i][j][l])
 
             # z.Water balance and runoff calculation
-
-            if z.Water[Y][i][j] >= 0.2 * z.Retention[Y][i][j][l]:
+            # if z.Water[Y][i][j] >= 0.2 * z.Retention[Y][i][j][l]:
+            if z.Water[Y][i][j] >= 0.2 * z.Retention:
                 # z.Qrun = (z.Water[Y][i][j] - 0.2 * z.Retention[Y][i][j][l]) ** 2 / (
                 #             z.Water[Y][i][j] + 0.8 * z.Retention[Y][i][j][l])
                 z.RuralQTotal += z.Qrun[Y][i][j][l] * z.Area[l] / z.RurAreaTotal
@@ -85,6 +95,8 @@ def CalcCN(z, i, Y, j):
                     # z.AgQRunoff[l][i] += z.Qrun[Y][i][j][l]
             # else:
             #     z.Qrun[Y][i][j][l] = 0
+        else:
+            print("test1",z.CNum_2[Y][i][j-3][l])
 
         # EROSION, SEDIMENT WASHOFF FOR RURAL AND URBAN LANDUSE
         z.RurEros = 1.32 * z.Erosiv[Y][i][j] * z.KF[l] * z.LS[l] * z.C[l] * z.P[l] * z.Area[l]
@@ -234,7 +246,7 @@ def CalcCN(z, i, Y, j):
     # else:
     #     z.AdjUrbanQTotal = 0
 
-    z.AdjUrbanQTotal_2 = z.AdjUrbanQTotal[Y][i][j] * z.AreaTotal / z.UrbAreaTotal  # TODO: is there a better way?
+    # z.AdjUrbanQTotal_1 = z.AdjUrbanQTotal[Y][i][j] * z.AreaTotal / z.UrbAreaTotal  # TODO: is there a better way?
 
     BasinWater(z, i, Y, j)
 
@@ -304,7 +316,7 @@ def BasinWater(z, i, Y, j):
     z.SolidLoad = 0
     z.UrbLoadRed = 0
 
-    if z.AdjUrbanQTotal_2 > 0.001:
+    if z.AdjUrbanQTotal_1[Y][i][j] > 0.001:
         for l in range(z.NRur, z.NLU):
             for q in range(z.Nqual):
                 z.SolidBasinMass[q] = 0
@@ -379,6 +391,7 @@ def BasinWater(z, i, Y, j):
             z.DisLoad[Y][i][q] = 0
 
     # WATERSHED TOTALS
+    print(z.RuralQTotal, z.RuralQTotal_2)
     if z.RurAreaTotal > 0:
         z.RuralQTotal *= z.RurAreaTotal / z.AreaTotal
     else:
