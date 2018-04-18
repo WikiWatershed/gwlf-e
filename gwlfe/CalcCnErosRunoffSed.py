@@ -413,29 +413,29 @@ def BasinWater(z, i, Y, j):
     #     z.AgQTotal = 0
 
     # z.QTotal = z.UrbanQTotal_1[Y][i][j] + z.RuralQTotal[Y][i][j]
-    # Assume 20% reduction of runoff with urban wetlands
-    z.AdjQTotal = (z.AdjUrbanQTotal[Y][i][j] * (1 - (z.n25b * 0.2))) + z.RuralQTotal[Y][i][j]
+    # # Assume 20% reduction of runoff with urban wetlands
+    # z.AdjQTotal = (z.AdjUrbanQTotal[Y][i][j] * (1 - (z.n25b * 0.2))) + z.RuralQTotal[Y][i][j]
 
-    z.SedTrans[Y][i] += z.AdjQTotal ** 1.67
+    z.SedTrans[Y][i] += z.AdjQTotal[Y][i][j] ** 1.67
 
     # Calculate monthly runoff for year Y and month i
-    if z.AdjQTotal > 0:
-        z.Runoff[Y][i] += z.AdjQTotal
+    if z.AdjQTotal[Y][i][j] > 0:
+        z.Runoff[Y][i] += z.AdjQTotal[Y][i][j]
     else:
         z.Runoff[Y][i] += z.QTotal[Y][i][j]
 
     z.RuralRunoff[Y][i] += z.RuralQTotal[Y][i][j]
     z.UrbanRunoff[Y][i] += z.UrbanQTotal_1[Y][i][j]
     # TODO: (Are z.AgRunoff and z.AgQTotal actually in cm?)
-    z.AgRunoff[Y][i] += z.AgQTotal[Y][i][j]
+    # z.AgRunoff[Y][i] += z.AgQTotal[Y][i][j]
 
     # Convert Urban runoff from cm to Liters
     # TODO: (Maybe use z.UrbanRunoff[y][i] instead in the above equation)
     z.UrbRunoffLiter[Y][i] = (z.UrbanRunoff[Y][i] / 100) * z.UrbAreaTotal * 10000 * 1000
 
     # Calculate Daily runoff (used in output for daily flow file)
-    if z.AdjQTotal > 0:
-        z.DayRunoff[Y][i][j] = z.AdjQTotal
+    if z.AdjQTotal[Y][i][j] > 0:
+        z.DayRunoff[Y][i][j] = z.AdjQTotal[Y][i][j]
     elif z.QTotal[Y][i][j] > 0:
         z.DayRunoff[Y][i][j] = z.QTotal[Y][i][j]
     else:

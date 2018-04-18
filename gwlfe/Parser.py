@@ -380,7 +380,7 @@ class GmsReader(object):
         z.Precipitation = np.zeros((z.DimYrs, 12))
         z.Evapotrans = np.zeros((z.DimYrs, 12))
         z.GroundWatLE = np.zeros((z.DimYrs, 12))
-        z.AgRunoff = np.zeros((z.DimYrs, 12))
+        # z.AgRunoff = np.zeros((z.DimYrs, 12))
         z.Runoff = np.zeros((z.DimYrs, 12))
         z.Erosion = np.zeros((z.DimYrs, 12))
         z.SedYield = np.zeros((z.DimYrs, 12))

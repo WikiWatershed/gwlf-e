@@ -57,6 +57,8 @@ from NewCN import NewCN
 from AgAreaTotal import AgAreaTotal
 from AgQTotal import AgQTotal
 from QTotal import QTotal
+from AgRunoff import AgRunoff
+from AdjQTotal import AdjQTotal
 
 log = logging.getLogger(__name__)
 
@@ -143,6 +145,13 @@ def run(z):
 
     z.QTotal = QTotal(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0,
                       z.Grow, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN)
+
+    z.AgRunoff = AgRunoff(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.CN, z.AntMoist_0, z.NUrb, z.Grow,
+                          z.Landuse, z.Area)
+
+    z.AdjQTotal = AdjQTotal(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
+                            z.AntMoist_0, z.Grow, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.Qretention, z.PctAreaInfil,
+                            z.n25b, z.CN)
     # z.NewCN = NewCN(z.NRur,z.NUrb,z.CN)
     # z.AMC5 = AMC5(z.NYrs, z.DaysMonth, z.Temp, z.Prec, z.InitSnow_0, z.AntMoist_0)
     # z.Melt = Melt(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec)
