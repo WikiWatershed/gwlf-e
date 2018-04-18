@@ -228,7 +228,7 @@ class GmsReader(object):
         z.FrozenPondPhos = 0
         z.AvSeptNitr = 0
         z.AvSeptPhos = 0
-        z.AgAreaTotal = 0
+        # z.AgAreaTotal = 0
         z.ForestAreaTotal = 0
 
         # Referenced in LoadReductions

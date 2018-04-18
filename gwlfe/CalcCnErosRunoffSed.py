@@ -82,16 +82,16 @@ def CalcCN(z, i, Y, j):
                 # TODO: (what is done with "DayQRunoff"? - appears not to be used)
                 # z.DayQRunoff[Y][i][j] = z.Qrun[Y][i][j][l]
                 # TODO: (What is done with "AgQRunoff? - apparently nothing)
-                if z.Landuse[l] is LandUse.CROPLAND:
-                    # (Maybe used for STREAMPLAN?)
-                    z.AgQTotal += z.Qrun[Y][i][j][l] * z.Area[l]
-                    # z.AgQRunoff[l][i] += z.Qrun[Y][i][j][l]
-                elif z.Landuse[l] is LandUse.HAY_PAST:
-                    z.AgQTotal += z.Qrun[Y][i][j][l] * z.Area[l]
-                    # z.AgQRunoff[l][i] += z.Qrun[Y][i][j][l]
-                elif z.Landuse[l] is LandUse.TURFGRASS:
-                    z.AgQTotal += z.Qrun[Y][i][j][l] * z.Area[l]
-                    # z.AgQRunoff[l][i] += z.Qrun[Y][i][j][l]
+                # if z.Landuse[l] is LandUse.CROPLAND:
+                #     # (Maybe used for STREAMPLAN?)
+                #     z.AgQTotal += z.Qrun[Y][i][j][l] * z.Area[l]
+                #     # z.AgQRunoff[l][i] += z.Qrun[Y][i][j][l]
+                # elif z.Landuse[l] is LandUse.HAY_PAST:
+                #     z.AgQTotal += z.Qrun[Y][i][j][l] * z.Area[l]
+                #     # z.AgQRunoff[l][i] += z.Qrun[Y][i][j][l]
+                # elif z.Landuse[l] is LandUse.TURFGRASS:
+                #     z.AgQTotal += z.Qrun[Y][i][j][l] * z.Area[l]
+                #     # z.AgQRunoff[l][i] += z.Qrun[Y][i][j][l]
             # else:
             #     z.Qrun[Y][i][j][l] = 0
         else:
@@ -407,10 +407,10 @@ def BasinWater(z, i, Y, j):
     # else:
     #     z.AdjUrbanQTotal = 0
 
-    if z.AgAreaTotal > 0:
-        z.AgQTotal = z.AgQTotal / z.AgAreaTotal
-    else:
-        z.AgQTotal = 0
+    # if z.AgAreaTotal > 0:
+    #     z.AgQTotal = z.AgQTotal / z.AgAreaTotal
+    # else:
+    #     z.AgQTotal = 0
 
     z.QTotal = z.UrbanQTotal_1[Y][i][j] + z.RuralQTotal[Y][i][j]
     # Assume 20% reduction of runoff with urban wetlands
@@ -427,7 +427,7 @@ def BasinWater(z, i, Y, j):
     z.RuralRunoff[Y][i] += z.RuralQTotal[Y][i][j]
     z.UrbanRunoff[Y][i] += z.UrbanQTotal_1[Y][i][j]
     # TODO: (Are z.AgRunoff and z.AgQTotal actually in cm?)
-    z.AgRunoff[Y][i] += z.AgQTotal
+    z.AgRunoff[Y][i] += z.AgQTotal[Y][i][j]
 
     # Convert Urban runoff from cm to Liters
     # TODO: (Maybe use z.UrbanRunoff[y][i] instead in the above equation)

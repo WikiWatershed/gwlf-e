@@ -24,12 +24,12 @@ def InitialCalculations(z):
     for l in range(z.NRur):
         if z.Landuse[l] is LandUse.FOREST:
             z.ForestAreaTotal += z.Area[l]
-        elif z.Landuse[l] is LandUse.CROPLAND:
-            z.AgAreaTotal += z.Area[l]
-        elif z.Landuse[l] is LandUse.HAY_PAST:
-            z.AgAreaTotal += z.Area[l]
-        elif z.Landuse[l] is LandUse.TURFGRASS:
-            z.AgAreaTotal += z.Area[l]
+        # elif z.Landuse[l] is LandUse.CROPLAND:
+        #     z.AgAreaTotal += z.Area[l]
+        # elif z.Landuse[l] is LandUse.HAY_PAST:
+        #     z.AgAreaTotal += z.Area[l]
+        # elif z.Landuse[l] is LandUse.TURFGRASS:
+        #     z.AgAreaTotal += z.Area[l]
 
         # z.NewCN[0][l] = z.CN[l] / (2.334 - 0.01334 * z.CN[l])
         # z.NewCN[2][l] = z.CN[l] / (0.4036 + 0.0059 * z.CN[l])

@@ -54,6 +54,8 @@ from CNum import CNum
 from Melt import Melt
 from AMC5 import AMC5
 from NewCN import NewCN
+from AgAreaTotal import AgAreaTotal
+from AgQTotal import AgQTotal
 
 log = logging.getLogger(__name__)
 
@@ -102,7 +104,7 @@ def run(z):
     z.GrowFactor = GrowFactor(z.Grow)
 
     z.Retention = Retention(z.NYrs, z.DaysMonth, z.Temp, z.Prec, z.InitSnow_0, z.AntMoist_0, z.NRur, z.NUrb, z.CN,
-                              z.Grow)
+                            z.Grow)
 
     z.QrunP = QrunP(z.NYrs, z.DaysMonth, z.NRur, z.NUrb, z.Temp, z.InitSnow_0, z.Prec, z.CNP_0, z.AntMoist_0, z.Grow)
 
@@ -131,8 +133,12 @@ def run(z):
     z.RurAreaTotal = RurAreaTotal(z.NRur, z.Area)
 
     z.RuralQTotal = RuralQTotal(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.CN, z.NUrb, z.AntMoist_0,
-                                  z.Grow, z.Area)
+                                z.Grow, z.Area)
 
+    z.AgAreaTotal = AgAreaTotal(z.NRur, z.Landuse, z.Area)
+
+    z.AgQTotal = AgQTotal(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.NRur, z.CN, z.AntMoist_0, z.NUrb, z.Grow,
+                          z.Landuse, z.Area)
 
     # z.NewCN = NewCN(z.NRur,z.NUrb,z.CN)
     # z.AMC5 = AMC5(z.NYrs, z.DaysMonth, z.Temp, z.Prec, z.InitSnow_0, z.AntMoist_0)
@@ -185,7 +191,7 @@ def run(z):
                 # z.Erosiv = 0
                 z.ET = 0
                 z.QTotal = 0
-                z.AgQTotal = 0
+                # z.AgQTotal = 0
                 # z.RuralQTotal = 0
                 # z.UrbanQTotal = 0 # duplicate
 
