@@ -419,10 +419,10 @@ def BasinWater(z, i, Y, j):
     z.SedTrans[Y][i] += z.AdjQTotal[Y][i][j] ** 1.67
 
     # Calculate monthly runoff for year Y and month i
-    if z.AdjQTotal[Y][i][j] > 0:
-        z.Runoff[Y][i] += z.AdjQTotal[Y][i][j]
-    else:
-        z.Runoff[Y][i] += z.QTotal[Y][i][j]
+    # if z.AdjQTotal[Y][i][j] > 0:
+    #     z.Runoff[Y][i] += z.AdjQTotal[Y][i][j]
+    # else:
+    #     z.Runoff[Y][i] += z.QTotal[Y][i][j]
 
     z.RuralRunoff[Y][i] += z.RuralQTotal[Y][i][j]
     z.UrbanRunoff[Y][i] += z.UrbanQTotal_1[Y][i][j]

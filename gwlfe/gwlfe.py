@@ -60,6 +60,7 @@ from QTotal import QTotal
 from AgRunoff import AgRunoff
 from AdjQTotal import AdjQTotal
 from TileDrainRO import TileDrainRO
+from Runoff import Runoff
 
 log = logging.getLogger(__name__)
 
@@ -150,6 +151,10 @@ def run(z):
 
     z.TileDrainRO = TileDrainRO(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.CN, z.AntMoist_0, z.NUrb,
                                 z.Grow, z.Landuse, z.Area, z.TileDrainDensity)
+
+    z.Runoff = Runoff(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0,
+                      z.Grow, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.Qretention, z.PctAreaInfil, z.n25b, z.CN, z.Landuse,
+                      z.TileDrainDensity)
     # z.NewCN = NewCN(z.NRur,z.NUrb,z.CN)
     # z.AMC5 = AMC5(z.NYrs, z.DaysMonth, z.Temp, z.Prec, z.InitSnow_0, z.AntMoist_0)
     # z.Melt = Melt(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec)
@@ -442,11 +447,11 @@ def run(z):
             if z.GroundWatLE[Y][i] < 0:
                 z.GroundWatLE[Y][i] = 0
 
-            # ADJUST THE SURFACE RUNOFF
-            z.Runoff[Y][i] = z.Runoff[Y][i] - z.TileDrainRO[Y][i]
+            # # ADJUST THE SURFACE RUNOFF
+            # z.Runoff[Y][i] = z.Runoff[Y][i] - z.TileDrainRO[Y][i]
 
-            if z.Runoff[Y][i] < 0:
-                z.Runoff[Y][i] = 0
+            # if z.Runoff[Y][i] < 0:
+            #     z.Runoff[Y][i] = 0
 
         # CALCULATE ANIMAL FEEDING OPERATIONS OUTPUT
         AFOS.AnimalOperations(z, Y)
