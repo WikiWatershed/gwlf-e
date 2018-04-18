@@ -12,6 +12,12 @@ class TestCNum(unittest.TestCase):
         self.z = Parser.GmsReader(input_file).read()
 
 
+    def test_elementwise_CNum(self):
+        z = self.z
+        np.testing.assert_array_almost_equal(
+            np.load("CNum.npy"),
+            CNum.CNum(z.NYrs, z.DaysMonth, z.Temp, z.Prec, z.InitSnow_0, z.AntMoist_0, z.CN, z.NRur, z.NUrb, z.Grow), decimal=7)
+
     @skip("not ready")
     def test_CNum(self):
         z = self.z

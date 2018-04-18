@@ -7,7 +7,7 @@ from Retention import Retention
 from AreaTotal import AreaTotal
 
 def RuralQTotal(NYrs,DaysMonth,Temp,InitSnow_0,Prec,NRur,CN,NUrb,AntMoist_0, Grow,Area):
-    result = 0
+    result = np.zeros((NYrs,12,31))
     water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     q_run =Qrun(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, CN, AntMoist_0, Grow)
     rur_area_total = RurAreaTotal(NRur,Area)
@@ -16,16 +16,16 @@ def RuralQTotal(NYrs,DaysMonth,Temp,InitSnow_0,Prec,NRur,CN,NUrb,AntMoist_0, Gro
     for Y in range(NYrs):
         for i in range(12):
             for j in range(DaysMonth[Y][i]):
-                result = 0#this does not need to be calculated daily
+                result[Y][i][j] = 0#this does not need to be calculated daily
                 if Temp[Y][i][j] > 0 and water[Y][i][j] > 0.01:
                     for l in range(NRur):
                         if CN[l] > 0:#TODO: CN in set to all zeros in datamodel:42
                             if water[Y][i][j] >= 0.2 * retention[Y][i][j][l]:
-                                result += q_run[Y][i][j][l] * Area[l] / rur_area_total
-                    # if result > 0:
-                    #     result *= rur_area_total / area_total
-                    # else:
-                    #     result = 0#TODO: this seems redundant
+                                result[Y][i][j] += q_run[Y][i][j][l] * Area[l] / rur_area_total
+                    if result[Y][i][j] > 0:
+                        result[Y][i][j] *= rur_area_total / area_total
+                    else:
+                        result[Y][i][j] = 0#TODO: this seems redundant
                 else:
                     pass
     return result

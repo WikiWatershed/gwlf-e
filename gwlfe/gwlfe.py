@@ -101,7 +101,7 @@ def run(z):
 
     z.GrowFactor = GrowFactor(z.Grow)
 
-    z.Retention_2 = Retention(z.NYrs, z.DaysMonth, z.Temp, z.Prec, z.InitSnow_0, z.AntMoist_0, z.NRur, z.NUrb, z.CN,
+    z.Retention = Retention(z.NYrs, z.DaysMonth, z.Temp, z.Prec, z.InitSnow_0, z.AntMoist_0, z.NRur, z.NUrb, z.CN,
                               z.Grow)
 
     z.QrunP = QrunP(z.NYrs, z.DaysMonth, z.NRur, z.NUrb, z.Temp, z.InitSnow_0, z.Prec, z.CNP_0, z.AntMoist_0, z.Grow)
@@ -130,14 +130,14 @@ def run(z):
 
     z.RurAreaTotal = RurAreaTotal(z.NRur, z.Area)
 
-    z.RuralQTotal_2 = RuralQTotal(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.CN, z.NUrb, z.AntMoist_0,
+    z.RuralQTotal = RuralQTotal(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.CN, z.NUrb, z.AntMoist_0,
                                   z.Grow, z.Area)
 
 
-    z.NewCN = NewCN(z.NRur,z.NUrb,z.CN)
-    z.AMC5 = AMC5(z.NYrs, z.DaysMonth, z.Temp, z.Prec, z.InitSnow_0, z.AntMoist_0)
-    z.Melt = Melt(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec)
-    z.CNum_2 = CNum(z.NYrs, z.DaysMonth, z.Temp, z.Prec, z.InitSnow_0, z.AntMoist_0, z.CN, z.NRur, z.NUrb, z.Grow)
+    # z.NewCN = NewCN(z.NRur,z.NUrb,z.CN)
+    # z.AMC5 = AMC5(z.NYrs, z.DaysMonth, z.Temp, z.Prec, z.InitSnow_0, z.AntMoist_0)
+    # z.Melt = Melt(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec)
+    # z.CNum = CNum(z.NYrs, z.DaysMonth, z.Temp, z.Prec, z.InitSnow_0, z.AntMoist_0, z.CN, z.NRur, z.NUrb, z.Grow)
     # z.AdjUrbanQTotal = np.zeros((z.NYrs,12,31))
     # z.AdjUrbanQTotal_2 = np.zeros((z.NYrs, 12, 31))
     # --------- run the remaining parts of the model ---------------------
@@ -186,7 +186,7 @@ def run(z):
                 z.ET = 0
                 z.QTotal = 0
                 z.AgQTotal = 0
-                z.RuralQTotal = 0
+                # z.RuralQTotal = 0
                 # z.UrbanQTotal = 0 # duplicate
 
                 # Question: Are these values supposed to accumulate for each
@@ -201,7 +201,7 @@ def run(z):
                 # TODO: If Water is <= 0.01, then CalcCNErosRunoffSed
                 # never executes, and CNum will remain undefined.
                 # What should the default value for CNum be in this case?
-                z.CNum = 0
+                # z.CNum = 0
 
                 # RAIN , SNOWMELT, EVAPOTRANSPIRATION (ET)
                 # print(z.InitSnow,get_value_for_yesterday(z.InitSnow_2,z.InitSnow_0,Y,i,j,z.NYrs,z.DaysMonth))
@@ -276,15 +276,15 @@ def run(z):
 
                 # UPDATE ANTECEDENT RAIN+MELT CONDITION
                 # Subtract AMC5 by the sum of AntMoist (day 5) and Water
-                z.AMC5_2 = z.AMC5_2 - z.AntMoist[4] + z.Water[Y][i][j]
+                # z.AMC5_2 = z.AMC5_2 - z.AntMoist[4] + z.Water[Y][i][j]
                 # z.DailyAMC5[Y][i][j] = z.AMC5
 
                 # Shift AntMoist values to the right.
-                z.AntMoist[4] = z.AntMoist[3]
-                z.AntMoist[3] = z.AntMoist[2]
-                z.AntMoist[2] = z.AntMoist[1]
-                z.AntMoist[1] = z.AntMoist[0]
-                z.AntMoist[0] = z.Water[Y][i][j]
+                # z.AntMoist[4] = z.AntMoist[3]
+                # z.AntMoist[3] = z.AntMoist[2]
+                # z.AntMoist[2] = z.AntMoist[1]
+                # z.AntMoist[1] = z.AntMoist[0]
+                # z.AntMoist[0] = z.Water[Y][i][j]
 
                 # print(z.AMC5_2,z.AMC5[Y][i][j])
 

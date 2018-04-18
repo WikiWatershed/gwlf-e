@@ -13,7 +13,6 @@ def memoize(f):
             return ret
     return memodict(f)
 
-@memoize
 def InitSnow(NYrs, DaysMonth, InitSnow_0, Temp, Prec):
     result = np.zeros((NYrs, 12, 31))
     yesterday = InitSnow_0
