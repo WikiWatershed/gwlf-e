@@ -14,8 +14,6 @@ import logging
 
 import numpy as np
 from DailyArrayConverter import get_value_for_yesterday
-from Timer import time_function
-from HashableArray import HashableArray
 
 from .enums import ETflag, GrowFlag
 from . import ReadGwlfDataFile
@@ -61,6 +59,22 @@ from AgRunoff import AgRunoff
 from AdjQTotal import AdjQTotal
 from TileDrainRO import TileDrainRO
 from Runoff import Runoff
+from AEU import AEU
+from AEU import TotAEU
+from AEU import TotLAEU
+from AEU import TotPAEU
+from PcntUrbanArea import PcntUrbanArea
+from AvCNUrb import AvCNUrb
+from AvCNRur import AvCNRur
+from AvCN import AvCN
+from SedAFactor import SedAFactor
+from QTotal import QTotal
+from AdjUrbanQTotal_1 import AdjUrbanQTotal_1
+from AdjQTotal import AdjQTotal
+from RuralQTotal import RuralQTotal
+from AgAreaTotal import AgAreaTotal
+from TileDrainRO import TileDrainRO
+from Runoff import Runoff
 
 log = logging.getLogger(__name__)
 
@@ -82,9 +96,9 @@ def run(z):
     # print ('True')
 
     # DailyET_Part1 = ET.DailyET(z.NYrs,z.DaysMonth,z.Temp,z.DayHrs,z.KV,z.PcntET,z.ETFlag)
-    z.DaysMonth = HashableArray(z.DaysMonth)
-    z.Temp = HashableArray(z.Temp)
-    z.Prec = HashableArray(z.Prec)
+    # z.DaysMonth = HashableArray(z.DaysMonth)
+    # z.Temp = HashableArray(z.Temp)
+    # z.Prec = HashableArray(z.Prec)
 
     DailyET_Part1 = ET.DailyET_2(z.Temp, z.KV, z.PcntET, z.DayHrs)
 
@@ -125,29 +139,45 @@ def run(z):
                                 z.AntMoist_0, z.Grow, z.CNP_0, z.Imper, z.ISRR, z.ISRA)
 
     z.UrbanQTotal_1 = UrbanQTotal_1(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
-                                    z.AntMoist_0, z.Grow, z.CNP_0, z.Imper, z.ISRR, z.ISRA)
+                                    z.AntMoist_0, z.Grow,
+                                    z.CNP_0, z.Imper, z.ISRR, z.ISRA)
 
-    z.AdjUrbanQTotal = AdjUrbanQTotal(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area,
-                                      z.CNI_0, z.AntMoist_0, z.Grow, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.Qretention,
-                                      z.PctAreaInfil)
+    z.AEU = AEU(z.NumAnimals, z.AvgAnimalWt, z.NRur, z.NUrb, z.Area)
 
-    z.AdjUrbanQTotal_1 = AdjUrbanQTotal_1(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area,
-                                          z.CNI_0, z.AntMoist_0, z.Grow, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.Qretention,
-                                          z.PctAreaInfil)
+    z.TotAEU = TotAEU(z.NumAnimals, z.AvgAnimalWt)
+    z.TotLAEU = TotLAEU(z.NumAnimals, z.AvgAnimalWt)
+
+    z.TotPAEU = TotPAEU(z.NumAnimals, z.AvgAnimalWt)
+
+    z.PcntUrbanArea = PcntUrbanArea(z.NRur, z.NUrb, z.Area)
+
+    z.AvCNUrb = AvCNUrb(z.NRur, z.NUrb, z.CNI_0, z.CNP_0, z.Imper, z.Area)
 
     z.RurAreaTotal = RurAreaTotal(z.NRur, z.Area)
+
+    z.AvCNRur = AvCNRur(z.NRur, z.Area, z.CN)
+
+    z.AvCN = AvCN(z.NRur, z.NUrb, z.CNI_0, z.CNP_0, z.CN, z.Imper, z.Area)
+
+    z.SedAFactor = SedAFactor(z.NumAnimals, z.AvgAnimalWt, z.NRur, z.NUrb, z.CNI_0, z.CNP_0, z.CN, z.Imper, z.Area
+                              , z.SedAFactor_0, z.AvKF, z.AvSlope, z.SedAAdjust)
+
+    z.QTotal = QTotal(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0,
+                      z.Grow, z.CNP_0, z.Imper,
+                      z.ISRR, z.ISRA, z.CN)
+
+    z.AdjUrbanQTotal_1 = AdjUrbanQTotal_1(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area,
+                                          z.CNI_0, z.AntMoist_0, z.Grow, z.CNP_0,
+                                          z.Imper, z.ISRR, z.ISRA, z.Qretention, z.PctAreaInfil)
+
+    z.AdjQTotal = AdjQTotal(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
+                            z.AntMoist_0, z.Grow, z.CNP_0, z.Imper,
+                            z.ISRR, z.ISRA, z.Qretention, z.PctAreaInfil, z.n25b, z.CN)
 
     z.RuralQTotal = RuralQTotal(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.CN, z.NUrb, z.AntMoist_0,
                                 z.Grow, z.Area)
 
     z.AgAreaTotal = AgAreaTotal(z.NRur, z.Landuse, z.Area)
-
-    z.QTotal = QTotal(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0,
-                      z.Grow, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN)
-
-    z.AdjQTotal = AdjQTotal(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
-                            z.AntMoist_0, z.Grow, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.Qretention, z.PctAreaInfil,
-                            z.n25b, z.CN)
 
     z.TileDrainRO = TileDrainRO(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.CN, z.AntMoist_0, z.NUrb,
                                 z.Grow, z.Landuse, z.Area, z.TileDrainDensity)
@@ -155,12 +185,6 @@ def run(z):
     z.Runoff = Runoff(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0,
                       z.Grow, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.Qretention, z.PctAreaInfil, z.n25b, z.CN, z.Landuse,
                       z.TileDrainDensity)
-    # z.NewCN = NewCN(z.NRur,z.NUrb,z.CN)
-    # z.AMC5 = AMC5(z.NYrs, z.DaysMonth, z.Temp, z.Prec, z.InitSnow_0, z.AntMoist_0)
-    # z.Melt = Melt(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec)
-    # z.CNum = CNum(z.NYrs, z.DaysMonth, z.Temp, z.Prec, z.InitSnow_0, z.AntMoist_0, z.CN, z.NRur, z.NUrb, z.Grow)
-    # z.AdjUrbanQTotal = np.zeros((z.NYrs,12,31))
-    # z.AdjUrbanQTotal_2 = np.zeros((z.NYrs, 12, 31))
     # --------- run the remaining parts of the model ---------------------
 
     ReadGwlfDataFile.ReadAllData(z)

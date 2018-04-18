@@ -272,7 +272,8 @@ class GmsReader(object):
         z.WxYrs = self.next(int)  # Total Weather Years
         z.WxYrBeg = self.next(int)  # Beginning Weather Year
         z.WxYrEnd = self.next(int)  # Ending Weather Year
-        z.SedAFactor = self.next(float)  # Sediment A Factor
+        # z.SedAFactor = self.next(float)  # Sediment A Factor
+        z.SedAFactor_0 = self.next(float)  # Sediment A Factor
         z.TotArea = self.next(float)  # Total Basin Area (Ha)
         z.TileDrainRatio = self.next(float)  # Tile Drain Ratio
         z.TileDrainDensity = self.next(float)  # Tile Drain Density
@@ -1390,7 +1391,8 @@ class GmsWriter(object):
             z.WxYrs,
             z.WxYrBeg,
             z.WxYrEnd,
-            z.SedAFactor,
+            # z.SedAFactor,
+            z.SedAFactor_0,
             z.TotArea,
             z.TileDrainRatio,
             z.TileDrainDensity,

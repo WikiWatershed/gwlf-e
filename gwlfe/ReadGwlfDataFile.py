@@ -27,9 +27,7 @@ def ReadAllData(z):
     for i in range(12):
         z.AnnDayHrs += z.DayHrs[i]
 
-    # for l in range(z.NRur):
-        # z.AreaTotal += z.Area[l]
-        # z.RurAreaTotal += z.Area[l]
+    #     # z.AreaTotal += z.Area[l]
 
     # for l in range(z.NRur, z.NLU):
     #     z.AreaTotal += z.Area[l]
@@ -37,30 +35,30 @@ def ReadAllData(z):
 
     z.TotAreaMeters = z.AreaTotal * 10000
 
-    # Get the area weighted average CN for rural areas
-    z.AvCNRur = 0
-    for l in range(z.NRur):
-        # Calculate average area weighted CN and KF
-        z.AvCNRur += (z.CN[l] * z.Area[l] / z.RurAreaTotal) \
-            if z.RurAreaTotal > 0 else 0
+    # # Get the area weighted average CN for rural areas
+    # z.AvCNRur = 0
+    # for l in range(z.NRur):
+    #     # Calculate average area weighted CN and KF
+    #     z.AvCNRur += (z.CN[l] * z.Area[l] / z.RurAreaTotal) \
+    #         if z.RurAreaTotal > 0 else 0
 
     # Get the area weighted average CN for urban areas
-    z.AvCNUrb = 0
-    for l in range(z.NRur, z.NLU):
-        # Calculate average area-weighted CN for urban areas
-        if z.UrbAreaTotal > 0:
-            z.AvCNUrb += ((z.Imper[l] * z.CNI_0[1][l]
-                          + (1 - z.Imper[l]) * z.CNP[1][l])
-                          * z.Area[l] / z.UrbAreaTotal)
+    # z.AvCNUrb = 0
+    # for l in range(z.NRur, z.NLU):
+    #     # Calculate average area-weighted CN for urban areas
+    #     if z.UrbAreaTotal > 0:
+    #         z.AvCNUrb += ((z.Imper[l] * z.CNI_0[1][l]
+    #                       + (1 - z.Imper[l]) * z.CNP[1][l])
+    #                       * z.Area[l] / z.UrbAreaTotal)
 
     # Calculate the average CN and percent urban area
-    if z.AreaTotal == 0:
-        z.AvCN = 0
-        z.PcntUrbanArea = 0
-    else:
-        z.AvCN = ((z.AvCNRur * z.RurAreaTotal / z.AreaTotal) +
-                  (z.AvCNUrb * z.UrbAreaTotal / z.AreaTotal))
-        z.PcntUrbanArea = z.UrbAreaTotal / z.AreaTotal
+    # if z.AreaTotal == 0:
+    #     z.AvCN = 0
+    #     # z.PcntUrbanArea = 0
+    # else:
+    #     z.AvCN = ((z.AvCNRur * z.RurAreaTotal / z.AreaTotal) +
+    #               (z.AvCNUrb * z.UrbAreaTotal / z.AreaTotal))
+    #     # z.PcntUrbanArea = z.UrbAreaTotal / z.AreaTotal
 
     if z.SepticFlag is YesOrNo.YES:
         for i in range(12):
@@ -120,18 +118,18 @@ def ReadAllData(z):
             raise ValueError('Unexpected value for GrazingAnimal')
 
     # Obtain AEU for each farm animal
-    z.AEU1 = ((z.NumAnimals[2] / 2) * (z.AvgAnimalWt[2]) / 1000) + ((z.NumAnimals[3] / 2) * (z.AvgAnimalWt[3]) / 1000)
-    z.AEU2 = (z.NumAnimals[7] * z.AvgAnimalWt[7]) / 1000
-    z.AEU3 = (z.NumAnimals[5] * z.AvgAnimalWt[5]) / 1000
-    z.AEU4 = (z.NumAnimals[4] * z.AvgAnimalWt[4]) / 1000
-    z.AEU5 = (z.NumAnimals[6] * z.AvgAnimalWt[6]) / 1000
-    z.AEU6 = (z.NumAnimals[0] * z.AvgAnimalWt[0]) / 1000
-    z.AEU7 = (z.NumAnimals[1] * z.AvgAnimalWt[1]) / 1000
+    # z.AEU1 = ((z.NumAnimals[2] / 2) * (z.AvgAnimalWt[2]) / 1000) + ((z.NumAnimals[3] / 2) * (z.AvgAnimalWt[3]) / 1000)
+    # z.AEU2 = (z.NumAnimals[7] * z.AvgAnimalWt[7]) / 1000
+    # z.AEU3 = (z.NumAnimals[5] * z.AvgAnimalWt[5]) / 1000
+    # z.AEU4 = (z.NumAnimals[4] * z.AvgAnimalWt[4]) / 1000
+    # z.AEU5 = (z.NumAnimals[6] * z.AvgAnimalWt[6]) / 1000
+    # z.AEU6 = (z.NumAnimals[0] * z.AvgAnimalWt[0]) / 1000
+    # z.AEU7 = (z.NumAnimals[1] * z.AvgAnimalWt[1]) / 1000
 
     # Get the total AEU, Total livestock and poultry AEU
-    z.TotAEU = z.AEU1 + z.AEU2 + z.AEU3 + z.AEU4 + z.AEU5 + z.AEU6 + z.AEU7
-    z.TotLAEU = z.AEU3 + z.AEU4 + z.AEU5 + z.AEU6 + z.AEU7
-    z.TotPAEU = z.AEU1 + z.AEU2
+    # z.TotAEU = z.AEU1 + z.AEU2 + z.AEU3 + z.AEU4 + z.AEU5 + z.AEU6 + z.AEU7
+    # z.TotLAEU = z.AEU3 + z.AEU4 + z.AEU5 + z.AEU6 + z.AEU7
+    # z.TotPAEU = z.AEU1 + z.AEU2
 
     # Get the Non-Grazing Animal Worksheet values
     for i in range(12):
@@ -215,20 +213,20 @@ def ReadAllData(z):
             z.GRInitBarnFC[i] = 0
 
     # Recalculate AEU using the TotAEU from the animal file and the total area of the basin in Acres
-    if z.TotLAEU > 0 and z.AreaTotal > 0:
-        z.AEU = z.TotLAEU / (z.AreaTotal * 2.471)
-    else:
-        z.AEU = 0
+    # if z.TotLAEU > 0 and z.AreaTotal > 0:
+    #     z.AEU = z.TotLAEU / (z.AreaTotal * 2.471)
+    # else:
+    #     z.AEU = 0
 
     # Recalculate Sed A Factor using updated AEU value based on animal data
-    z.SedAFactor = ((0.00467 * z.PcntUrbanArea) +
-                    (0.000863 * z.AEU) +
-                    (0.000001 * z.AvCN) +
-                    (0.000425 * z.AvKF) +
-                    (0.000001 * z.AvSlope) - 0.000036) * z.SedAAdjust
-
-    if z.SedAFactor < 0.00001:
-        z.SedAFactor = 0.00001
+    # z.SedAFactor = ((0.00467 * z.PcntUrbanArea) +
+    #                 (0.000863 * z.AEU) +
+    #                 (0.000001 * z.AvCN) +
+    #                 (0.000425 * z.AvKF) +
+    #                 (0.000001 * z.AvSlope) - 0.000036) * z.SedAAdjust
+    #
+    # if z.SedAFactor < 0.00001:
+    #     z.SedAFactor = 0.00001
 
     if z.AttenFlowDist > 0 and z.AttenFlowVel > 0:
         z.FlowDays = z.AttenFlowDist / (z.AttenFlowVel * 24)
