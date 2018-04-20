@@ -256,7 +256,8 @@ class GmsReader(object):
         z.TranVersionNo = self.next(str)  # GWLF-E Version
         z.RecessionCoef = self.next(float)  # Recession Coefficient
         z.SeepCoef = self.next(float)  # Seepage Coefficient
-        z.UnsatStor = self.next(float)  # Unsaturated Storage
+        # z.UnsatStor = self.next(float)  # Unsaturated Storage
+        z.UnsatStor_0 = self.next(float)  # Unsaturated Storage
         z.SatStor = self.next(float)  # Saturated Storage
         # z.InitSnow = self.next(int)  # Initial Snow Days
         z.InitSnow_0 = self.next(int)  # Initial Snow Days

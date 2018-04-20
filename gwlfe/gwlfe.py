@@ -202,6 +202,8 @@ def run(z):
     # z.AMC5 = np.zeros((z.NYrs,12,31))
     # z.AMC5[0][0][0] = temp_AMC5
 
+    z.UnsatStor = z.UnsatStor_0
+
     for Y in range(z.NYrs):
         # Initialize monthly septic system variables
         z.MonthPondNitr = np.zeros(12)
