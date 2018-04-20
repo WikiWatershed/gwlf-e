@@ -36,6 +36,7 @@ else:
                     "        input_file = open('input_4.gms', 'r')\n"
                     "        self.z = Parser.GmsReader(input_file).read()\n"
                     "\n\n"
+                    "    @skip('Not Ready Yet.')\n"
                     "    def test_{variable}(self):\n"
                     "        z = self.z\n"
                     "        np.testing.assert_array_almost_equal(\n"

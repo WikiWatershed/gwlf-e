@@ -75,6 +75,7 @@ from RuralQTotal import RuralQTotal
 from AgAreaTotal import AgAreaTotal
 from TileDrainRO import TileDrainRO
 from Runoff import Runoff
+from Infiltration import Infiltration
 
 log = logging.getLogger(__name__)
 
@@ -185,6 +186,10 @@ def run(z):
     z.Runoff = Runoff(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0,
                       z.Grow, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.Qretention, z.PctAreaInfil, z.n25b, z.CN, z.Landuse,
                       z.TileDrainDensity)
+
+    z.Infiltration = Infiltration(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow, z.CNP_0, z.Imper,
+                                  z.ISRR, z.ISRA, z.CN)
+
     # --------- run the remaining parts of the model ---------------------
 
     ReadGwlfDataFile.ReadAllData(z)
@@ -356,8 +361,9 @@ def run(z):
 
                 # ***** WATERSHED WATER BALANCE *****
 
-                if z.QTotal[Y][i][j] <= z.Water[Y][i][j]:
-                    z.Infiltration = z.Water[Y][i][j] - z.QTotal[Y][i][j]
+                # if z.QTotal[Y][i][j] <= z.Water[Y][i][j]:
+                #     z.Infiltration = z.Water[Y][i][j] - z.QTotal[Y][i][j]
+
                 z.GrFlow = z.RecessionCoef * z.SatStor
                 z.DeepSeep = z.SeepCoef * z.SatStor
 
@@ -365,7 +371,7 @@ def run(z):
                 # NEXT DAY'S UNSATURATED STORAGE AS LIMITED BY THE UNSATURATED
                 # ZONE MAXIMUM WATER CAPACITY
 
-                z.UnsatStor = z.UnsatStor + z.Infiltration
+                z.UnsatStor = z.UnsatStor + z.Infiltration[Y][i][j]
 
                 # Calculate water balance for non-Pesticide componenets
                 if z.ET >= z.UnsatStor:
