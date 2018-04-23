@@ -1,10 +1,12 @@
 import numpy as np
 from Timer import time_function
 from InitSnow import InitSnow
-from Rain import Rain
-from Melt_1 import Melt_1
+from InitSnowYesterday import InitSnowYesterday
+from Rain import Rain, Rain_2
+from Melt_1 import Melt_1, Melt_1_2
 
 
+@time_function
 def Erosiv(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef):
     result = np.zeros((NYrs, 12, 31))
     init_snow = InitSnow(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
@@ -24,6 +26,13 @@ def Erosiv(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef):
                 init_snow_yesterday = init_snow[Y][i][j]
     return result
 
-
-def Erosiv_2():
-    pass
+@time_function
+def Erosiv_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef):
+    result = np.zeros((NYrs, 12, 31))
+    rain = Rain_2(Temp, Prec)
+    init_snow_yesterday = InitSnowYesterday(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
+    melt_1 = Melt_1_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
+    erosiv = 6.46*Acoef.reshape((12,1)) *rain **1.81
+    result[np.where((Temp>0) & (init_snow_yesterday > 0.001) & (rain > 0 ) & (init_snow_yesterday - melt_1 < 0.001))] = erosiv[np.where((Temp>0) & (init_snow_yesterday > 0.001) & (rain > 0 ) & (init_snow_yesterday - melt_1 < 0.001))]
+    result[np.where((Temp>0) & (init_snow_yesterday <= 0.001) & (rain > 0 ))] =erosiv[np.where((Temp>0) & (init_snow_yesterday <= 0.001) & (rain > 0 ))]
+    return result

@@ -1,8 +1,8 @@
 import numpy as np
 from Timer import time_function
 from NLU import NLU
-
-
+from numba import jit
+# @time_function
 def NewCN(NRur, NUrb, CN):
     nlu = NLU(NRur, NUrb)
     result = np.zeros((3, nlu))
@@ -13,6 +13,11 @@ def NewCN(NRur, NUrb, CN):
             result[2][l] = 100
     return result
 
-
-def NewCN_2():
-    pass
+# @time_function
+def NewCN_2(NRur, NUrb, CN):
+    nlu = NLU(NRur, NUrb)
+    result = np.zeros((3, nlu))
+    result[0,:] = CN / (2.334 - 0.01334 * CN)
+    result[2,:] = CN / (0.4036 + 0.0059 * CN)
+    result[2,:][np.where(result[2,:]>100)] = 100
+    return result
