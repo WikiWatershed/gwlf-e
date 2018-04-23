@@ -76,6 +76,7 @@ from AgAreaTotal import AgAreaTotal
 from TileDrainRO import TileDrainRO
 from Runoff import Runoff
 from Infiltration import Infiltration
+from UnsatStor import UnsatStor
 
 log = logging.getLogger(__name__)
 
@@ -190,6 +191,10 @@ def run(z):
     z.Infiltration = Infiltration(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow, z.CNP_0, z.Imper,
                                   z.ISRR, z.ISRA, z.CN)
 
+    z.UnsatStor = UnsatStor(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow, z.CNP_0, z.Imper,
+              z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap)
+
+
     # --------- run the remaining parts of the model ---------------------
 
     ReadGwlfDataFile.ReadAllData(z)
@@ -202,7 +207,7 @@ def run(z):
     # z.AMC5 = np.zeros((z.NYrs,12,31))
     # z.AMC5[0][0][0] = temp_AMC5
 
-    z.UnsatStor = z.UnsatStor_0
+    z.UnsatStor_2 = z.UnsatStor_0
 
     for Y in range(z.NYrs):
         # Initialize monthly septic system variables
@@ -373,24 +378,28 @@ def run(z):
                 # NEXT DAY'S UNSATURATED STORAGE AS LIMITED BY THE UNSATURATED
                 # ZONE MAXIMUM WATER CAPACITY
 
-                z.UnsatStor = z.UnsatStor + z.Infiltration[Y][i][j]
+                z.UnsatStor_2 = z.UnsatStor_2 + z.Infiltration[Y][i][j]
 
                 # Calculate water balance for non-Pesticide componenets
-                if z.ET >= z.UnsatStor:
-                    z.ET = z.UnsatStor
-                    z.UnsatStor = 0
+                if z.ET >= z.UnsatStor_2:
+                    z.ET = z.UnsatStor_2
+                    z.UnsatStor_2 = 0
                 else:
-                    z.UnsatStor = z.UnsatStor - z.ET
+                    z.UnsatStor_2 = z.UnsatStor_2 - z.ET
 
                 # Obtain the Percolation, adjust precip and UnsatStor values
-                if z.UnsatStor > z.MaxWaterCap:
-                    z.Percolation = z.UnsatStor - z.MaxWaterCap
-                    z.Perc[Y][i][j] = z.UnsatStor - z.MaxWaterCap
-                    z.UnsatStor = z.UnsatStor - z.Percolation
+                if z.UnsatStor_2 > z.MaxWaterCap:
+                    z.Percolation = z.UnsatStor_2 - z.MaxWaterCap
+                    z.Perc[Y][i][j] = z.UnsatStor_2 - z.MaxWaterCap
+                    z.UnsatStor_2 = z.UnsatStor_2 - (z.UnsatStor_2 - z.MaxWaterCap)
                 else:
                     z.Percolation = 0
                     z.Perc[Y][i][j] = 0
                 z.PercCm[Y][i][j] = z.Percolation / 100
+
+                print("UnsatStor orig = ", z.UnsatStor_2, "UnsatStor new = ", z.UnsatStor[Y][i][j])
+                print(z.UnsatStor_2 == z.UnsatStor[Y][i][j])
+                print("Infiltration = ", z.Infiltration[Y][i][j])
 
                 # CALCULATE STORAGE IN SATURATED ZONES AND GROUNDWATER
                 # DISCHARGE
