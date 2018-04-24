@@ -258,7 +258,8 @@ class GmsReader(object):
         z.SeepCoef = self.next(float)  # Seepage Coefficient
         # z.UnsatStor = self.next(float)  # Unsaturated Storage
         z.UnsatStor_0 = self.next(float)  # Unsaturated Storage
-        z.SatStor = self.next(float)  # Saturated Storage
+        # z.SatStor = self.next(float)  # Saturated Storage
+        z.SatStor_0 = self.next(float)  # Saturated Storage
         # z.InitSnow = self.next(int)  # Initial Snow Days
         z.InitSnow_0 = self.next(int)  # Initial Snow Days
         z.SedDelivRatio = self.next(float)  # Sediment Delivery Ratio

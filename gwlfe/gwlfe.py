@@ -79,6 +79,7 @@ from Infiltration import Infiltration
 from UnsatStor import UnsatStor
 from Percolation import Percolation
 from ET_2 import ET_2
+from GrFlow import GrFlow
 
 log = logging.getLogger(__name__)
 
@@ -202,6 +203,9 @@ def run(z):
     z.ET_2 = ET_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow, z.CNP_0, z.Imper,
          z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap)
 
+    z.GrFlow = GrFlow(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow, z.CNP_0, z.Imper,
+           z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0, z.RecessionCoef, z.SeepCoef)
+
 
     # --------- run the remaining parts of the model ---------------------
 
@@ -216,6 +220,8 @@ def run(z):
     # z.AMC5[0][0][0] = temp_AMC5
 
     # z.UnsatStor_temp = z.UnsatStor_0
+
+    z.SatStor_test = z.SatStor_0
 
     for Y in range(z.NYrs):
         # Initialize monthly septic system variables
@@ -379,8 +385,11 @@ def run(z):
                 # if z.QTotal[Y][i][j] <= z.Water[Y][i][j]:
                 #     z.Infiltration = z.Water[Y][i][j] - z.QTotal[Y][i][j]
 
-                z.GrFlow = z.RecessionCoef * z.SatStor
-                z.DeepSeep = z.SeepCoef * z.SatStor
+                # z.GrFlow_test = z.RecessionCoef * z.SatStor_test
+                # z.DeepSeep = z.SeepCoef * z.SatStor_test
+                #
+                # print("GrFlow orig = ", z.GrFlow_test,"GrFlow new = ", z.GrFlow[Y][i][j])
+                # print(z.GrFlow_test == z.GrFlow[Y][i][j])
 
                 # CALCULATE EVAPOTRANSPIRATION, Percolation, AND THE
                 # NEXT DAY'S UNSATURATED STORAGE AS LIMITED BY THE UNSATURATED
@@ -416,14 +425,15 @@ def run(z):
 
                 # CALCULATE STORAGE IN SATURATED ZONES AND GROUNDWATER
                 # DISCHARGE
-                z.SatStor = z.SatStor + z.Percolation[Y][i][j] - z.GrFlow - z.DeepSeep
-                if z.SatStor < 0:
-                    z.SatStor = 0
-                z.Flow = z.QTotal[Y][i][j] + z.GrFlow
-                z.DailyFlow[Y][i][j] = z.DayRunoff[Y][i][j] + z.GrFlow
+                # z.SatStor_test = z.SatStor_test + z.Percolation[Y][i][j] - z.GrFlow_test - z.DeepSeep
+                # if z.SatStor_test < 0:
+                #     z.SatStor_test = 0
+
+                z.Flow = z.QTotal[Y][i][j] + z.GrFlow[Y][i][j]
+                z.DailyFlow[Y][i][j] = z.DayRunoff[Y][i][j] + z.GrFlow[Y][i][j]
 
                 z.DailyFlowGPM[Y][i][j] = z.Flow * 0.00183528 * z.TotAreaMeters
-                z.DailyGrFlow[Y][i][j] = z.GrFlow  # (for daily load calculations)
+                z.DailyGrFlow[Y][i][j] = z.GrFlow[Y][i][j]  # (for daily load calculations)
 
                 # MONTHLY FLOW
                 z.MonthFlow[Y][i] = z.MonthFlow[Y][i] + z.DailyFlow[Y][i][j]
@@ -433,7 +443,7 @@ def run(z):
                 z.Evapotrans[Y][i] = z.Evapotrans[Y][i] + z.ET_2[Y][i][j]
 
                 z.StreamFlow[Y][i] = z.StreamFlow[Y][i] + z.Flow
-                z.GroundWatLE[Y][i] = z.GroundWatLE[Y][i] + z.GrFlow
+                z.GroundWatLE[Y][i] = z.GroundWatLE[Y][i] + z.GrFlow[Y][i][j]
 
                 # grow_factor = GrowFlag.intval(z.Grow[i])
 
