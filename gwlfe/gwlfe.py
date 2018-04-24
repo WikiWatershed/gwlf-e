@@ -77,6 +77,8 @@ from TileDrainRO import TileDrainRO
 from Runoff import Runoff
 from Infiltration import Infiltration
 from UnsatStor import UnsatStor
+from Percolation import Percolation
+from ET_2 import ET_2
 
 log = logging.getLogger(__name__)
 
@@ -194,6 +196,12 @@ def run(z):
     z.UnsatStor = UnsatStor(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow, z.CNP_0, z.Imper,
               z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap)
 
+    z.Percolation = Percolation(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow, z.CNP_0, z.Imper,
+           z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap)
+
+    z.ET_2 = ET_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow, z.CNP_0, z.Imper,
+         z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap)
+
 
     # --------- run the remaining parts of the model ---------------------
 
@@ -207,7 +215,7 @@ def run(z):
     # z.AMC5 = np.zeros((z.NYrs,12,31))
     # z.AMC5[0][0][0] = temp_AMC5
 
-    z.UnsatStor_2 = z.UnsatStor_0
+    # z.UnsatStor_temp = z.UnsatStor_0
 
     for Y in range(z.NYrs):
         # Initialize monthly septic system variables
@@ -378,32 +386,37 @@ def run(z):
                 # NEXT DAY'S UNSATURATED STORAGE AS LIMITED BY THE UNSATURATED
                 # ZONE MAXIMUM WATER CAPACITY
 
-                z.UnsatStor_2 = z.UnsatStor_2 + z.Infiltration[Y][i][j]
+                # z.UnsatStor_temp = z.UnsatStor_temp + z.Infiltration[Y][i][j]
 
                 # Calculate water balance for non-Pesticide componenets
-                if z.ET >= z.UnsatStor_2:
-                    z.ET = z.UnsatStor_2
-                    z.UnsatStor_2 = 0
-                else:
-                    z.UnsatStor_2 = z.UnsatStor_2 - z.ET
+                # if z.ET >= z.UnsatStor_temp:
+                #     z.ET = z.UnsatStor_temp
+                #     z.UnsatStor_temp = 0
+                # else:
+                #     z.UnsatStor_temp = z.UnsatStor_temp - z.ET
 
                 # Obtain the Percolation, adjust precip and UnsatStor values
-                if z.UnsatStor_2 > z.MaxWaterCap:
-                    z.Percolation = z.UnsatStor_2 - z.MaxWaterCap
-                    z.Perc[Y][i][j] = z.UnsatStor_2 - z.MaxWaterCap
-                    z.UnsatStor_2 = z.UnsatStor_2 - (z.UnsatStor_2 - z.MaxWaterCap)
-                else:
-                    z.Percolation = 0
-                    z.Perc[Y][i][j] = 0
-                z.PercCm[Y][i][j] = z.Percolation / 100
+                # if z.UnsatStor_temp > z.MaxWaterCap:
+                #     z.Percolation_2 = z.UnsatStor_temp - z.MaxWaterCap
+                #     z.Perc[Y][i][j] = z.UnsatStor_temp - z.MaxWaterCap # TODO Perc is the same exact thing as Percolation
+                #     z.UnsatStor_temp = z.UnsatStor_temp - z.Percolation_2
+                # else:
+                #     z.Percolation_2 = 0
+                #     z.Perc[Y][i][j] = 0
 
-                print("UnsatStor orig = ", z.UnsatStor_2, "UnsatStor new = ", z.UnsatStor[Y][i][j])
-                print(z.UnsatStor_2 == z.UnsatStor[Y][i][j])
-                print("Infiltration = ", z.Infiltration[Y][i][j])
+                z.PercCm[Y][i][j] = z.Percolation[Y][i][j] / 100
+
+                # print("UnsatStor orig = ", z.UnsatStor_temp, "UnsatStor new = ", z.UnsatStor[Y][i][j])
+                # print(z.UnsatStor_temp == z.UnsatStor[Y][i][j])
+                # print("Infiltration = ", z.Infiltration[Y][i][j])
+                # print("MaxWaterCap = ", z.MaxWaterCap)
+
+                # print("Percolation orig = ", z.Percolation_2, "Percolation new = ", z.Percolation[Y][i][j])
+                # print(z.Percolation_2 == z.Percolation[Y][i][j])
 
                 # CALCULATE STORAGE IN SATURATED ZONES AND GROUNDWATER
                 # DISCHARGE
-                z.SatStor = z.SatStor + z.Percolation - z.GrFlow - z.DeepSeep
+                z.SatStor = z.SatStor + z.Percolation[Y][i][j] - z.GrFlow - z.DeepSeep
                 if z.SatStor < 0:
                     z.SatStor = 0
                 z.Flow = z.QTotal[Y][i][j] + z.GrFlow
@@ -417,7 +430,7 @@ def run(z):
 
                 # CALCULATE TOTALS
                 # z.Precipitation[Y][i] = z.Precipitation[Y][i] + z.Prec[Y][i][j]
-                z.Evapotrans[Y][i] = z.Evapotrans[Y][i] + z.ET
+                z.Evapotrans[Y][i] = z.Evapotrans[Y][i] + z.ET_2[Y][i][j]
 
                 z.StreamFlow[Y][i] = z.StreamFlow[Y][i] + z.Flow
                 z.GroundWatLE[Y][i] = z.GroundWatLE[Y][i] + z.GrFlow
