@@ -9,12 +9,12 @@ def ET_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMo
     result = np.zeros((NYrs, 12, 31))
     infiltration = Infiltration(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0, Imper,
            ISRR, ISRA, CN)
-    unsatstor_0 = UnsatStor_0
+    unsatstor_carryover = UnsatStor_0
     et = DailyET_2(Temp, KV, PcntET, DayHrs)
     for Y in range(NYrs):
         for i in range(12):
             for j in range(DaysMonth[Y][i]):
-                result[Y][i][j] = unsatstor_0
+                result[Y][i][j] = unsatstor_carryover
                 result[Y][i][j] = result[Y][i][j] + infiltration[Y][i][j]
                 if et[Y][i][j] >= result[Y][i][j]:
                     et[Y][i][j] = result[Y][i][j]
@@ -25,7 +25,7 @@ def ET_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMo
                     result[Y][i][j] = MaxWaterCap
                 else:
                     pass
-                unsatstor_0 = result[Y][i][j]
+                unsatstor_carryover = result[Y][i][j]
     return et
 
 
