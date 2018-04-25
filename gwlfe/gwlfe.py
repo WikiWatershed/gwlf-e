@@ -83,6 +83,10 @@ from ET_2 import ET_2
 # from DeepSeep import DeepSeep
 from GrFlow import GrFlow
 from Flow import Flow
+from GroundWatLE import GroundWatLE
+from GwAgLE import GwAgLE
+from TileDrainGW import TileDrainGW
+from GroundWatLE_2 import GroundWatLE_2
 
 log = logging.getLogger(__name__)
 
@@ -220,6 +224,20 @@ def run(z):
     z.Flow = Flow(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow, z.CNP_0, z.Imper,
          z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0, z.RecessionCoef, z.SeepCoef)
 
+    z.GroundWatLE = GroundWatLE(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow, z.CNP_0, z.Imper,
+           z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0, z.RecessionCoef, z.SeepCoef)
+
+    z.GwAgLE = GwAgLE(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow, z.CNP_0, z.Imper,
+           z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0, z.RecessionCoef, z.SeepCoef, z.Landuse)
+
+    z.TileDrainGW = TileDrainGW(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow, z.CNP_0, z.Imper,
+                z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0, z.RecessionCoef, z.SeepCoef,
+                z.Landuse, z.TileDrainDensity)
+
+    z.GroundWatLE_2 = GroundWatLE_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow, z.CNP_0, z.Imper,
+                  z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0, z.RecessionCoef, z.SeepCoef,
+                  z.Landuse, z.TileDrainDensity)
+
 
     # --------- run the remaining parts of the model ---------------------
 
@@ -235,7 +253,7 @@ def run(z):
 
     # z.UnsatStor_temp = z.UnsatStor_0
 
-    z.SatStor_test = z.SatStor_0
+    # z.SatStor_test = z.SatStor_0
 
     for Y in range(z.NYrs):
         # Initialize monthly septic system variables
@@ -458,7 +476,8 @@ def run(z):
                 z.Evapotrans[Y][i] = z.Evapotrans[Y][i] + z.ET_2[Y][i][j]
 
                 z.StreamFlow[Y][i] = z.StreamFlow[Y][i] + z.Flow[Y][i][j]
-                z.GroundWatLE[Y][i] = z.GroundWatLE[Y][i] + z.GrFlow[Y][i][j]
+
+                # z.GroundWatLE[Y][i] = z.GroundWatLE[Y][i] + z.GrFlow[Y][i][j]
 
                 # grow_factor = GrowFlag.intval(z.Grow[i])
 
@@ -502,6 +521,7 @@ def run(z):
                                        z.PhosPlantUptake * z.GrowFactor[i])
                 z.MonthDischargeNitr[i] = z.MonthDischargeNitr[i] + z.NitrSepticLoad
                 z.MonthDischargePhos[i] = z.MonthDischargePhos[i] + z.PhosSepticLoad
+
             # CALCULATE WITHDRAWAL AND POINT SOURCE FLOW VALUES
             z.Withdrawal[Y][i] = (z.Withdrawal[Y][i] + z.StreamWithdrawal[i] +
                                   z.GroundWithdrawal[i])
@@ -511,20 +531,23 @@ def run(z):
             # z.TileDrainRO[Y][i] = (z.AgRunoff[Y][i] * z.TileDrainDensity)
 
             # CALCULATE SUBSURFACE PORTION OF TILE DRAINAGE
-            if z.AreaTotal > 0:
-                z.GwAgLE[Y][i] = (z.GwAgLE[Y][i] + (z.GroundWatLE[Y][i] *
-                                                    (z.AgAreaTotal / z.AreaTotal)))
-            z.TileDrainGW[Y][i] = (z.TileDrainGW[Y][i] + [z.GwAgLE[Y][i] *
-                                                          z.TileDrainDensity])
+            # if z.AreaTotal > 0:
+            #     z.GwAgLE[Y][i] = (z.GwAgLE[Y][i] + (z.GroundWatLE[Y][i] *
+            #                                         (z.AgAreaTotal / z.AreaTotal)))
+            # z.TileDrainGW[Y][i] = (z.TileDrainGW[Y][i] + [z.GwAgLE[Y][i] *
+            #                                               z.TileDrainDensity])
 
             # ADD THE TWO COMPONENTS OF TILE DRAINAGE FLOW
             z.TileDrain[Y][i] = (z.TileDrain[Y][i] + z.TileDrainRO[Y][i] +
                                  z.TileDrainGW[Y][i])
 
             # ADJUST THE GROUNDWATER FLOW
-            z.GroundWatLE[Y][i] = z.GroundWatLE[Y][i] - z.TileDrainGW[Y][i]
-            if z.GroundWatLE[Y][i] < 0:
-                z.GroundWatLE[Y][i] = 0
+            # z.GroundWatLE[Y][i] = z.GroundWatLE[Y][i] - z.TileDrainGW[Y][i]
+            # if z.GroundWatLE[Y][i] < 0:
+            #     z.GroundWatLE[Y][i] = 0
+
+            # print("GroundWatLE orig = ", z.GroundWatLE[Y][i], "GroundWatLE new = ", z.GroundWatLE_2_temp[Y][i])
+            # print(z.GroundWatLE[Y][i] == z.GroundWatLE_2_temp[Y][i])
 
             # # ADJUST THE SURFACE RUNOFF
             # z.Runoff[Y][i] = z.Runoff[Y][i] - z.TileDrainRO[Y][i]

@@ -40,7 +40,7 @@ def CalculateLoads(z, Y):
     # CALCULATE THE MONTHLY WATER BALANCE FOR STREAM Flow FOR EACH YEAR OF THE ANALYSIS
     for i in range(12):
         z.StreamFlow[Y][i] = (z.Runoff[Y][i]
-                              + z.GroundWatLE[Y][i]
+                              + z.GroundWatLE_2[Y][i]
                               + z.PtSrcFlow[Y][i]
                               + z.TileDrain[Y][i]
                               - z.Withdrawal[Y][i])
@@ -61,7 +61,7 @@ def CalculateLoads(z, Y):
 
         PrecipitationTotal += z.Precipitation[Y][i]
         RunoffTotal += z.Runoff[Y][i]
-        GroundWatLETotal += z.GroundWatLE[Y][i]
+        GroundWatLETotal += z.GroundWatLE_2[Y][i]
         EvapotransTotal += z.Evapotrans[Y][i]
         # PtSrcFlowTotal += z.PtSrcFlow[Y][i]
         WithdrawalTotal += z.Withdrawal[Y][i]
@@ -153,8 +153,8 @@ def CalculateLoads(z, Y):
         z.UplandP[Y][i] = z.TotPhos[Y][i]
 
         # ADD GROUNDWATER, POINT SOURCES,
-        z.GroundNitr[Y][i] = 0.1 * z.GrNitrConc * z.GroundWatLE[Y][i] * z.AreaTotal
-        z.GroundPhos[Y][i] = 0.1 * z.GrPhosConc * z.GroundWatLE[Y][i] * z.AreaTotal
+        z.GroundNitr[Y][i] = 0.1 * z.GrNitrConc * z.GroundWatLE_2[Y][i] * z.AreaTotal
+        z.GroundPhos[Y][i] = 0.1 * z.GrPhosConc * z.GroundWatLE_2[Y][i] * z.AreaTotal
         z.DisNitr[Y][i] += z.GroundNitr[Y][i] + z.PointNitr[i]
         z.DisPhos[Y][i] += z.GroundPhos[Y][i] + z.PointPhos[i]
         z.TotNitr[Y][i] += z.GroundNitr[Y][i] + z.PointNitr[i]
@@ -164,7 +164,7 @@ def CalculateLoads(z, Y):
         if GroundWatLETotal[Y] <= 0:
             GroundWatLETotal[Y] = 0.0001
 
-        z.MonthNormNitr[i] = AnNormNitr * z.GroundWatLE[Y][i] / GroundWatLETotal[Y]
+        z.MonthNormNitr[i] = AnNormNitr * z.GroundWatLE_2[Y][i] / GroundWatLETotal[Y]
 
         z.DisSeptNitr = (z.MonthNormNitr[i]
                          + z.MonthPondNitr[i]

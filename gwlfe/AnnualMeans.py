@@ -62,7 +62,7 @@ def CalculateAnnualMeanLoads(z, Y):
     for i in range(12):
         # z.AvPrecipitation[i] += z.Precipitation[Y][i] / z.NYrs
         # z.AvEvapoTrans[i] += z.Evapotrans[Y][i] / z.NYrs
-        z.AvGroundWater[i] += z.GroundWatLE[Y][i] / z.NYrs
+        z.AvGroundWater[i] += z.GroundWatLE_2[Y][i] / z.NYrs
 
         if z.AvGroundWater[i] < 0:
             z.AvGroundWater[i] = 0
