@@ -88,6 +88,8 @@ from GwAgLE import GwAgLE
 from TileDrainGW import TileDrainGW
 from GroundWatLE_2 import GroundWatLE_2
 from TileDrain import TileDrain
+from Withdrawal import Withdrawal
+from StreamFlow import StreamFlow
 
 log = logging.getLogger(__name__)
 
@@ -242,6 +244,13 @@ def run(z):
     z.TileDrain = TileDrain(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow, z.CNP_0, z.Imper,
               z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0, z.RecessionCoef, z.SeepCoef, z.Landuse,
               z.TileDrainDensity)
+
+    z.Withdrawal = Withdrawal(z.NYrs, z.StreamWithdrawal, z.GroundWithdrawal)
+
+    z.StreamFlow = StreamFlow(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow, z.CNP_0, z.Imper,
+               z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0, z.RecessionCoef, z.SeepCoef
+               , z.Qretention, z.PctAreaInfil, z.n25b, z.Landuse, z.TileDrainDensity, z.PointFlow, z.StreamWithdrawal,
+               z.GroundWithdrawal)
 
 
     # --------- run the remaining parts of the model ---------------------
@@ -480,7 +489,7 @@ def run(z):
                 # z.Precipitation[Y][i] = z.Precipitation[Y][i] + z.Prec[Y][i][j]
                 z.Evapotrans[Y][i] = z.Evapotrans[Y][i] + z.ET_2[Y][i][j]
 
-                z.StreamFlow[Y][i] = z.StreamFlow[Y][i] + z.Flow[Y][i][j]
+                # z.StreamFlow[Y][i] = z.StreamFlow[Y][i] + z.Flow[Y][i][j]
 
                 # z.GroundWatLE[Y][i] = z.GroundWatLE[Y][i] + z.GrFlow[Y][i][j]
 
@@ -528,8 +537,8 @@ def run(z):
                 z.MonthDischargePhos[i] = z.MonthDischargePhos[i] + z.PhosSepticLoad
 
             # CALCULATE WITHDRAWAL AND POINT SOURCE FLOW VALUES
-            z.Withdrawal[Y][i] = (z.Withdrawal[Y][i] + z.StreamWithdrawal[i] +
-                                  z.GroundWithdrawal[i])
+            # z.Withdrawal[Y][i] = (z.Withdrawal[Y][i] + z.StreamWithdrawal[i] +
+            #                       z.GroundWithdrawal[i])
             # z.PtSrcFlow[Y][i] = z.PtSrcFlow[Y][i] + z.PointFlow[i]
 
             # # CALCULATE THE SURFACE RUNOFF PORTION OF TILE DRAINAGE
