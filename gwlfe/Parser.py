@@ -372,7 +372,7 @@ class GmsReader(object):
         z.TileDrainN = np.zeros((z.DimYrs, 12))
         z.TileDrainP = np.zeros((z.DimYrs, 12))
         z.TileDrainSed = np.zeros((z.DimYrs, 12))
-        z.TileDrain = np.zeros((z.DimYrs, 12))
+        # z.TileDrain = np.zeros((z.DimYrs, 12))
         # z.TileDrainRO = np.zeros((z.DimYrs, 12))
         # z.TileDrainGW = np.zeros((z.DimYrs, 12))
         # z.GwAgLE = np.zeros((z.DimYrs, 12))

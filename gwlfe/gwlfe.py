@@ -87,6 +87,7 @@ from GroundWatLE import GroundWatLE
 from GwAgLE import GwAgLE
 from TileDrainGW import TileDrainGW
 from GroundWatLE_2 import GroundWatLE_2
+from TileDrain import TileDrain
 
 log = logging.getLogger(__name__)
 
@@ -237,6 +238,10 @@ def run(z):
     z.GroundWatLE_2 = GroundWatLE_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow, z.CNP_0, z.Imper,
                   z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0, z.RecessionCoef, z.SeepCoef,
                   z.Landuse, z.TileDrainDensity)
+
+    z.TileDrain = TileDrain(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow, z.CNP_0, z.Imper,
+              z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0, z.RecessionCoef, z.SeepCoef, z.Landuse,
+              z.TileDrainDensity)
 
 
     # --------- run the remaining parts of the model ---------------------
@@ -538,8 +543,12 @@ def run(z):
             #                                               z.TileDrainDensity])
 
             # ADD THE TWO COMPONENTS OF TILE DRAINAGE FLOW
-            z.TileDrain[Y][i] = (z.TileDrain[Y][i] + z.TileDrainRO[Y][i] +
-                                 z.TileDrainGW[Y][i])
+            # z.TileDrain[Y][i] = (z.TileDrain[Y][i] + z.TileDrainRO[Y][i] +
+            #                      z.TileDrainGW[Y][i])
+
+
+            # print("TileDrain orig = ", z.TileDrain[Y][i], "TileDrain new = ", z.TileDrain_temp[Y][i])
+            # print(z.TileDrain[Y][i] == z.TileDrain_temp[Y][i])
 
             # ADJUST THE GROUNDWATER FLOW
             # z.GroundWatLE[Y][i] = z.GroundWatLE[Y][i] - z.TileDrainGW[Y][i]
