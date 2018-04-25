@@ -17,7 +17,7 @@ def CalculateStreamBankEros(z, Y):
     # CALCULATE THE STREAM BANK SEDIMENT AND N AND P
     for i in range(12):
         # CALCULATE ER FACTOR FOR STREAMBANK EROSION
-        z.LE[Y][i] = z.SedAFactor * (z.StreamFlowVolAdj * (z.StreamFlowVol[Y][i] ** 0.6))
+        # z.LE[Y][i] = z.SedAFactor * (z.StreamFlowVolAdj * (z.StreamFlowVol[Y][i] ** 0.6))
 
         z.StreamBankEros[Y][i] = z.LE[Y][i] * z.StreamLength * 1500 * 1.5
 
