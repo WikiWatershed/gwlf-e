@@ -90,6 +90,8 @@ from GroundWatLE_2 import GroundWatLE_2
 from TileDrain import TileDrain
 from Withdrawal import Withdrawal
 from StreamFlow import StreamFlow
+from StreamFlowLE import StreamFlowLE
+from TotAreaMeters import TotAreaMeters
 
 log = logging.getLogger(__name__)
 
@@ -251,6 +253,13 @@ def run(z):
                z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0, z.RecessionCoef, z.SeepCoef
                , z.Qretention, z.PctAreaInfil, z.n25b, z.Landuse, z.TileDrainDensity, z.PointFlow, z.StreamWithdrawal,
                z.GroundWithdrawal)
+
+    z.StreamFlowLE = StreamFlowLE(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow, z.CNP_0, z.Imper,
+               z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0, z.RecessionCoef, z.SeepCoef
+               , z.Qretention, z.PctAreaInfil, z.n25b, z.Landuse, z.TileDrainDensity, z.PointFlow, z.StreamWithdrawal,
+               z.GroundWithdrawal)
+
+    z.TotAreaMeters = TotAreaMeters(z.NRur, z.NUrb, z.Area)
 
 
     # --------- run the remaining parts of the model ---------------------

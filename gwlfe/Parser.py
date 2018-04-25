@@ -379,7 +379,7 @@ class GmsReader(object):
         # z.Withdrawal = np.zeros((z.DimYrs, 12))
         # z.PtSrcFlow = np.zeros((z.DimYrs, 12))
         # z.StreamFlow = np.zeros((z.DimYrs, 12))
-        z.StreamFlowLE = np.zeros((z.DimYrs, 12))
+        # z.StreamFlowLE = np.zeros((z.DimYrs, 12))
         z.Precipitation = np.zeros((z.DimYrs, 12))
         z.Evapotrans = np.zeros((z.DimYrs, 12))
         # z.GroundWatLE = np.zeros((z.DimYrs, 12))

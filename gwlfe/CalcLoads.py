@@ -38,7 +38,7 @@ def CalculateLoads(z, Y):
     OrgConcTotal = 0
 
     # CALCULATE THE MONTHLY WATER BALANCE FOR STREAM Flow FOR EACH YEAR OF THE ANALYSIS
-    for i in range(12):
+    # for i in range(12):
         # z.StreamFlow[Y][i] = (z.Runoff[Y][i]
         #                       + z.GroundWatLE_2[Y][i]
         #                       + z.PtSrcFlow[Y][i]
@@ -48,9 +48,9 @@ def CalculateLoads(z, Y):
         # print("StreamFlow orig = ", z.StreamFlow[Y][i], "StreamFlow new = ", z.StreamFlow_temp[Y][i])
         # print(z.StreamFlow[Y][i] == z.StreamFlow_temp[Y][i])
 
-        z.StreamFlowLE[Y][i] = z.StreamFlow[Y][i]
-        if z.StreamFlowLE[Y][i] < 0:
-            z.StreamFlowLE[Y][i] = 0
+        # z.StreamFlowLE[Y][i] = z.StreamFlow[Y][i]
+        # if z.StreamFlowLE[Y][i] < 0:
+        #     z.StreamFlowLE[Y][i] = 0
 
     # ANNUAL WATER BALANCE CALCULATIONS
     for i in range(12):

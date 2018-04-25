@@ -33,7 +33,7 @@ def ReadAllData(z):
     #     z.AreaTotal += z.Area[l]
         # z.UrbAreaTotal += z.Area[l]
 
-    z.TotAreaMeters = z.AreaTotal * 10000
+    # z.TotAreaMeters = z.AreaTotal * 10000
 
     # # Get the area weighted average CN for rural areas
     # z.AvCNRur = 0
