@@ -51,34 +51,36 @@ def InitialCalculations(z):
     else:
         z.FilterEff = 1
 
-    if z.BasinArea > 0:
-        z.BasinVol = z.BasinDeadStorage
-        z.Difference = z.Capacity - z.BasinDeadStorage
-        z.OutletCoef = 0
-
-        while z.Difference > 0:
-            z.OutletCoef += 0.001
-            z.Volume = z.Capacity - z.BasinDeadStorage
-            for k in range(z.DaysToDrain):
-                z.Head = z.Volume / z.BasinArea
-                if z.Volume > 0:
-                    z.Flow = 382700 * z.OutletCoef * math.sqrt(z.Head)
-                else:
-                    z.Flow = 0
-                z.Volume -= z.Flow
-            z.Difference = z.Volume
-
-        z.OutletCoef -= 0.001
-        z.Difference = z.Capacity - z.BasinDeadStorage
-
-        while z.Difference > 0:
-            z.OutletCoef += 0.0001
-            z.Volume = z.Capacity - z.BasinDeadStorage
-            for k in range(z.DaysToDrain):
-                z.Head = z.Volume / z.BasinArea
-                z.Flow = 382700 * z.OutletCoef * math.sqrt(z.Head)
-                z.Volume -= z.Flow
-            z.Difference = z.Volume
+    # TODO: BasinArea is never supposed to be over 0, this retention basin data set DNE according to Barry
+    # Model and Tests complete with no errors without this section of code
+    # if z.BasinArea > 0:
+    #     z.BasinVol = z.BasinDeadStorage
+    #     z.Difference = z.Capacity - z.BasinDeadStorage
+    #     z.OutletCoef = 0
+    #
+    #     while z.Difference > 0:
+    #         z.OutletCoef += 0.001
+    #         z.Volume = z.Capacity - z.BasinDeadStorage
+    #         for k in range(z.DaysToDrain):
+    #             z.Head = z.Volume / z.BasinArea
+    #             if z.Volume > 0:
+    #                 z.Flow = 382700 * z.OutletCoef * math.sqrt(z.Head)
+    #             else:
+    #                 z.Flow = 0
+    #             z.Volume -= z.Flow
+    #         z.Difference = z.Volume
+    #
+    #     z.OutletCoef -= 0.001
+    #     z.Difference = z.Capacity - z.BasinDeadStorage
+    #
+    #     while z.Difference > 0:
+    #         z.OutletCoef += 0.0001
+    #         z.Volume = z.Capacity - z.BasinDeadStorage
+    #         for k in range(z.DaysToDrain):
+    #             z.Head = z.Volume / z.BasinArea
+    #             z.Flow = 382700 * z.OutletCoef * math.sqrt(z.Head)
+    #             z.Volume -= z.Flow
+    #         z.Difference = z.Volume
 
     # ANTECEDANT MOISTURE OUT TO 5 DAYS
     z.AMC5_2 = 0

@@ -82,6 +82,7 @@ from ET_2 import ET_2
 # from SatStor import SatStor
 # from DeepSeep import DeepSeep
 from GrFlow import GrFlow
+from Flow import Flow
 
 log = logging.getLogger(__name__)
 
@@ -215,6 +216,9 @@ def run(z):
                       z.Grow, z.CNP_0, z.Imper,
                       z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0,
                       z.RecessionCoef, z.SeepCoef)
+
+    z.Flow = Flow(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow, z.CNP_0, z.Imper,
+         z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0, z.RecessionCoef, z.SeepCoef)
 
 
     # --------- run the remaining parts of the model ---------------------
@@ -439,10 +443,11 @@ def run(z):
                 # if z.SatStor_test < 0:
                 #     z.SatStor_test = 0
 
-                z.Flow = z.QTotal[Y][i][j] + z.GrFlow[Y][i][j]
+                # z.Flow = z.QTotal[Y][i][j] + z.GrFlow[Y][i][j]
+
                 z.DailyFlow[Y][i][j] = z.DayRunoff[Y][i][j] + z.GrFlow[Y][i][j]
 
-                z.DailyFlowGPM[Y][i][j] = z.Flow * 0.00183528 * z.TotAreaMeters
+                z.DailyFlowGPM[Y][i][j] = z.Flow[Y][i][j] * 0.00183528 * z.TotAreaMeters
                 z.DailyGrFlow[Y][i][j] = z.GrFlow[Y][i][j]  # (for daily load calculations)
 
                 # MONTHLY FLOW
@@ -452,7 +457,7 @@ def run(z):
                 # z.Precipitation[Y][i] = z.Precipitation[Y][i] + z.Prec[Y][i][j]
                 z.Evapotrans[Y][i] = z.Evapotrans[Y][i] + z.ET_2[Y][i][j]
 
-                z.StreamFlow[Y][i] = z.StreamFlow[Y][i] + z.Flow
+                z.StreamFlow[Y][i] = z.StreamFlow[Y][i] + z.Flow[Y][i][j]
                 z.GroundWatLE[Y][i] = z.GroundWatLE[Y][i] + z.GrFlow[Y][i][j]
 
                 # grow_factor = GrowFlag.intval(z.Grow[i])
