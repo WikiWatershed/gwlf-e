@@ -25,7 +25,7 @@ def CalculateAnnualMeanLoads(z, Y):
 
     # Add the Stream Bank Erosion to sediment yield
     for i in range(12):
-        z.SedYield[Y][i] += z.StreamBankEros[Y][i] / 1000
+        z.SedYield[Y][i] += z.StreamBankEros_2[Y][i] / 1000
 
     z.CalendarYr = z.WxYrBeg + (Y - 1)
 
@@ -33,7 +33,7 @@ def CalculateAnnualMeanLoads(z, Y):
     # z.AvPtSrcFlow = AvPtSrcFlow(z.NYrs,z.PtSrcFlow)
     z.AvPtSrcFlow = AvPtSrcFlow_2(z.PointFlow)
     for i in range(12):
-        z.AvStreamBankEros[i] += z.StreamBankEros[Y][i] / z.NYrs
+        z.AvStreamBankEros[i] += z.StreamBankEros_2[Y][i] / z.NYrs
         z.AvStreamBankN[i] += z.StreamBankN[Y][i] / z.NYrs
         z.AvStreamBankP[i] += z.StreamBankP[Y][i] / z.NYrs
 

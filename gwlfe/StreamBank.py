@@ -19,31 +19,41 @@ def CalculateStreamBankEros(z, Y):
         # CALCULATE ER FACTOR FOR STREAMBANK EROSION
         # z.LE[Y][i] = z.SedAFactor * (z.StreamFlowVolAdj * (z.StreamFlowVol[Y][i] ** 0.6))
 
-        z.StreamBankEros[Y][i] = z.LE[Y][i] * z.StreamLength * 1500 * 1.5
+        # z.StreamBankEros[Y][i] = z.LE[Y][i] * z.StreamLength * 1500 * 1.5
+
+        # print("StreamBankEros orig = ", z.StreamBankEros[Y][i], "StreamBankEros new = ", z.StreamBankEros_temp[Y][i])
+        # print(z.StreamBankEros[Y][i] == z.StreamBankEros_temp[Y][i])
 
         # CALCULATE STREAM ABANK N AND P
         z.StreamBankN[Y][i] = z.StreamBankEros[Y][i] * (z.SedNitr / 1000000) * z.BankNFrac
         z.StreamBankP[Y][i] = z.StreamBankEros[Y][i] * (z.SedPhos / 1000000) * z.BankPFrac
 
         # CALCULATIONS FOR STREAM BANK STABILIZATION AND FENCING
-        z.SURBBANK = 0
+        # z.SURBBANK = 0
         z.NURBBANK = 0
         z.PURBBANK = 0
         z.FCURBBANK = 0
 
-        z.SEDSTAB = 0
-        z.SURBBANK = 0
-        if z.n42b > 0:
-            z.SEDSTAB = (z.n46c / z.n42b) * z.StreamBankEros[Y][i] * z.n85d
-            z.SURBBANK = (z.UrbBankStab / z.n42b) * z.StreamBankEros[Y][i] * z.n85d
+        # z.SEDSTAB = 0
+        # z.SURBBANK = 0 # TODO: Why is this in here twice ?
 
-        z.SEDFEN = 0
-        if z.n42 > 0:
-            z.SEDFEN = (z.n45 / z.n42) * z.StreamBankEros[Y][i] * z.AGSTRM * z.n85
+        # if z.n42b > 0:
+        #     z.SEDSTAB = (z.n46c / z.n42b) * z.StreamBankEros[Y][i] * z.n85d
+        #     z.SURBBANK = (z.UrbBankStab / z.n42b) * z.StreamBankEros[Y][i] * z.n85d
 
-        z.StreamBankEros[Y][i] = z.StreamBankEros[Y][i] - (z.SEDSTAB + z.SEDFEN + z.SURBBANK)
-        if z.StreamBankEros[Y][i] < 0:
-            z.StreamBankEros[Y][i] = 0
+        # z.SEDFEN = 0
+        # if z.n42 > 0:
+        #     z.SEDFEN = (z.n45 / z.n42) * z.StreamBankEros[Y][i] * z.AGSTRM * z.n85
+
+        # print("SURBBANK orig = ", z.SURBBANK, "SURBBANK new = ", z.SURBBANK_temp[Y][i])
+        # print(z.SURBBANK == z.SURBBANK_temp[Y][i])
+
+        # print("SEDSTAB orig = ", z.SEDSTAB, "SEDSTAB new = ", z.SURBBANK_temp[Y][i])
+        # print(z.SEDSTAB == z.SURBBANK_temp[Y][i])
+
+        # z.StreamBankEros[Y][i] = z.StreamBankEros[Y][i] - (z.SEDSTAB[Y][i] + z.SEDFEN[Y][i] + z.SURBBANK[Y][i])
+        # if z.StreamBankEros[Y][i] < 0:
+        #     z.StreamBankEros[Y][i] = 0
 
         z.NSTAB = 0
         z.NURBBANK = 0
@@ -76,7 +86,7 @@ def CalculateStreamBankEros(z, Y):
         # CALCULATE ANNUAL STREAMBANK N AND P AND SEDIMENT
         z.StreamBankNSum[Y] += z.StreamBankN[Y][i]
         z.StreamBankPSum[Y] += z.StreamBankP[Y][i]
-        z.StreamBankErosSum[Y] += z.StreamBankEros[Y][i]
+        z.StreamBankErosSum[Y] += z.StreamBankEros_2[Y][i]
 
         # GROUNDWATER N LOADS ARE REDUCED BASED ON SPECIFIC BMPS
         z.GWNRF = 0
