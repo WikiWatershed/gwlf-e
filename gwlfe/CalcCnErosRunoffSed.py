@@ -99,10 +99,10 @@ def CalcCN(z, i, Y, j):
             # print("test1",z.CNum_2[Y][i][j-3][l])
 
         # EROSION, SEDIMENT WASHOFF FOR RURAL AND URBAN LANDUSE
-        z.RurEros = 1.32 * z.Erosiv[Y][i][j] * z.KF[l] * z.LS[l] * z.C[l] * z.P[l] * z.Area[l]
+        # z.RurEros = 1.32 * z.Erosiv[Y][i][j] * z.KF[l] * z.LS[l] * z.C[l] * z.P[l] * z.Area[l]
 
-        z.Erosion[Y][i] = z.Erosion[Y][i] + z.RurEros
-        z.ErosWashoff[l][i] = z.ErosWashoff[l][i] + z.RurEros
+        z.Erosion[Y][i] = z.Erosion[Y][i] + z.RurEros[Y][i][j][l]
+        z.ErosWashoff[l][i] = z.ErosWashoff[l][i] + z.RurEros[Y][i][j][l]
         # z.DayErWashoff[l][Y][i][j] = z.RurEros
 
         if z.SedDelivRatio == 0:
@@ -416,7 +416,7 @@ def BasinWater(z, i, Y, j):
     # # Assume 20% reduction of runoff with urban wetlands
     # z.AdjQTotal = (z.AdjUrbanQTotal[Y][i][j] * (1 - (z.n25b * 0.2))) + z.RuralQTotal[Y][i][j]
 
-    z.SedTrans[Y][i] += z.AdjQTotal[Y][i][j] ** 1.67
+    # z.SedTrans[Y][i] = z.SedTrans[Y][i] + z.AdjQTotal[Y][i][j] ** 1.67
 
     # Calculate monthly runoff for year Y and month i
     # if z.AdjQTotal[Y][i][j] > 0:

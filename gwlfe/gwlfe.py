@@ -100,6 +100,8 @@ from SEDSTAB import SEDSTAB
 from AGSTRM import AGSTRM
 from SEDFEN import SEDFEN
 from StreamBankEros_2 import StreamBankEros_2
+from SedTrans import SedTrans
+from RurEros import RurEros
 
 log = logging.getLogger(__name__)
 
@@ -315,6 +317,11 @@ def run(z):
                    , z.NumAnimals, z.AvgAnimalWt, z.StreamFlowVolAdj, z.SedAFactor_0, z.AvKF, z.AvSlope, z.SedAAdjust, z.StreamLength
                      , z.n42b, z.n46c, z.n85d, z.AgLength, z.n42, z.n45, z.n85, z.UrbBankStab)
 
+    z.SedTrans = SedTrans(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow, z.CNP_0, z.Imper,
+             z.ISRR, z.ISRA, z.Qretention, z.PctAreaInfil, z.n25b, z.CN)
+
+    z.RurEros = RurEros(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.Acoef, z.NRur, z.KF, z.LS, z.C, z.P, z.Area)
+
 
     # --------- run the remaining parts of the model ---------------------
 
@@ -448,7 +455,6 @@ def run(z):
                     CalcCnErosRunoffSed.CalcCN(z, i, Y, j)
                 else:
                     pass
-
                 # print("n-1 init snow (",Y,i,j,")",z.InitSnow)
 
                 # DAILY CN

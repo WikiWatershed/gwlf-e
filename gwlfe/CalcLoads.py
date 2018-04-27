@@ -80,6 +80,10 @@ def CalculateLoads(z, Y):
 
     z.CalendarYr = z.WxYrBeg + (Y - 1)
 
+    # print("AdjQTotal = ", np.sum(z.AdjQTotal[Y][i]))
+    # print("SedTrans orig = ", z.SedTrans[Y][i], "SedTrans new = ", z.SedTrans_temp[Y][i])
+    # print(z.SedTrans[Y][i] == z.SedTrans_temp[Y][i])
+
     # SEDIMENT YIELD AND TILE DRAINAGE
     for i in range(12):
         z.BSed[i] = 0

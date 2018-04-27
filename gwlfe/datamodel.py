@@ -105,7 +105,7 @@ class DataModel(object):
             'Storm': 0,
             'CSNAreaSim': 0,
             'CSNDevType': 'None',
-            'AdjUrbanQTotal': 0,
+            # 'AdjUrbanQTotal': 0,
         }
 
     def date_guides(self):

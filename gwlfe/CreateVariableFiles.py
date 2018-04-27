@@ -10,7 +10,8 @@ if os.path.exists("gwlfe/"+var_filename):
 else:
     with open("gwlfe/"+var_filename,"w") as file:
         file.write("import numpy as np\n"
-                   "from Timer import time_function\n\n\n"
+                   "from Timer import time_function\n"
+                    "from Memoization import memoize\n\n\n"
                     "def %s():\n"
                     "    pass\n"
                     "\n\n"
