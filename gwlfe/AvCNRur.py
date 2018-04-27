@@ -1,8 +1,10 @@
 import numpy as np
 from Timer import time_function
 from RurAreaTotal import RurAreaTotal
+from Memoization import memoize
 
 
+@memoize
 def AvCNRur(NRur, Area, CN):
     result = 0
     rurareatotal = RurAreaTotal(NRur, Area)

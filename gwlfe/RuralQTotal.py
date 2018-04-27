@@ -5,8 +5,10 @@ from Qrun import Qrun
 from RurAreaTotal import RurAreaTotal
 from Retention import Retention
 from AreaTotal import AreaTotal
+from Memoization import memoize
 
 
+@memoize
 def RuralQTotal(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, CN, NUrb, AntMoist_0, Grow, Area):
     result = np.zeros((NYrs, 12, 31))
     water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)

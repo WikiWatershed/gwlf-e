@@ -2,12 +2,14 @@ import numpy as np
 from Timer import time_function
 from Water import Water
 from AgQTotal import AgQTotal
+from Memoization import memoize
 
 
+@memoize
 def AgRunoff(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, CN, AntMoist_0, NUrb, Grow, Landuse, Area):
     result = np.zeros((NYrs, 12))
     water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
-    ag_q_total = AgQTotal(NYrs,DaysMonth,InitSnow_0, Temp, Prec,NRur,CN, AntMoist_0,NUrb,Grow,Landuse,Area)
+    ag_q_total = AgQTotal(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, CN, AntMoist_0, NUrb, Grow, Landuse, Area)
     for Y in range(NYrs):
         for i in range(12):
             for j in range(DaysMonth[Y][i]):

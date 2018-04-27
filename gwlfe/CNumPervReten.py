@@ -4,8 +4,10 @@ from CNP import CNP
 from CNumPerv import CNumPerv
 from NLU import NLU
 from Water import Water
+from Memoization import memoize
 
 
+@memoize
 def CNumPervReten(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, NRur, NUrb, CNP_0, Grow):
     cnp = CNP(NRur, NUrb, CNP_0)
     c_num_perv = CNumPerv(NYrs, DaysMonth, Temp, NRur, NUrb, CNP_0, InitSnow_0, Prec, Grow, AntMoist_0)

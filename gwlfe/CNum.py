@@ -7,8 +7,10 @@ from AMC5 import AMC5
 from GrowFactor import GrowFactor
 from Water import Water
 from Melt import Melt
+from Memoization import memoize
 
 
+@memoize
 def CNum(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, CN, NRur, NUrb, Grow):
     result = np.zeros((NYrs, 12, 31, 10))
     water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
@@ -30,10 +32,10 @@ def CNum(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, CN, NRur, NUrb, Gr
                                         result[Y][i][j][l] = new_cn[2][l]
                                     elif get_value_for_yesterday(amc5, 0, Y, i, j, NYrs, DaysMonth) < 3.56:
                                         result[Y][i][j][l] = new_cn[0][l] + (
-                                                    CN[l] - new_cn[0][l]) * get_value_for_yesterday(amc5, 0, Y,
-                                                                                                    i, j,
-                                                                                                    NYrs,
-                                                                                                    DaysMonth) / 3.56
+                                                CN[l] - new_cn[0][l]) * get_value_for_yesterday(amc5, 0, Y,
+                                                                                                i, j,
+                                                                                                NYrs,
+                                                                                                DaysMonth) / 3.56
                                     else:
                                         result[Y][i][j][l] = CN[l] + (new_cn[2][l] - CN[l]) * (
                                                 get_value_for_yesterday(amc5, 0, Y, i, j, NYrs,
@@ -44,10 +46,10 @@ def CNum(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, CN, NRur, NUrb, Gr
                                         result[Y][i][j][l] = new_cn[2][l]
                                     elif get_value_for_yesterday(amc5, 0, Y, i, j, NYrs, DaysMonth) < 1.27:
                                         result[Y][i][j][l] = new_cn[0][l] + (
-                                                    CN[l] - new_cn[0][l]) * get_value_for_yesterday(amc5, 0, Y,
-                                                                                                    i, j,
-                                                                                                    NYrs,
-                                                                                                    DaysMonth) / 1.27
+                                                CN[l] - new_cn[0][l]) * get_value_for_yesterday(amc5, 0, Y,
+                                                                                                i, j,
+                                                                                                NYrs,
+                                                                                                DaysMonth) / 1.27
                                     else:
                                         result[Y][i][j][l] = CN[l] + (new_cn[2][l] - CN[l]) * (
                                                 get_value_for_yesterday(amc5, 0, Y, i, j, NYrs,

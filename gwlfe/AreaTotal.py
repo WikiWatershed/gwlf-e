@@ -1,11 +1,13 @@
 import numpy as np
 from Timer import time_function
 from NLU import NLU
+from Memoization import memoize
 
 
+@memoize
 def AreaTotal(NRur, NUrb, Area):
     result = 0
-    nlu = NLU(NRur,NUrb)
+    nlu = NLU(NRur, NUrb)
     for l in range(NRur):
         result += Area[l]
     for l in range(NRur, nlu):

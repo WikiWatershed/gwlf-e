@@ -4,8 +4,10 @@ from NLU import NLU
 from Water import Water
 from CNP import CNP
 from CNumPervReten import CNumPervReten
+from Memoization import memoize
 
 
+@memoize
 def QrunP(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, CNP_0, AntMoist_0, Grow):
     result = np.zeros((NYrs, 12, 31, 16))  # TODO: should this be nlu?
     nlu = NLU(NRur, NUrb)

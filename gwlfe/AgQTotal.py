@@ -5,10 +5,12 @@ from Retention import Retention
 from enums import LandUse
 from Qrun import Qrun
 from AgAreaTotal import AgAreaTotal
+from Memoization import memoize
 
 
-def AgQTotal(NYrs,DaysMonth,InitSnow_0, Temp, Prec,NRur,CN, AntMoist_0,NUrb,Grow,Landuse,Area):
-    result = np.zeros((NYrs,12,31))
+@memoize
+def AgQTotal(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, CN, AntMoist_0, NUrb, Grow, Landuse, Area):
+    result = np.zeros((NYrs, 12, 31))
     water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     retention = Retention(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, NRur, NUrb, CN, Grow)
     q_run = Qrun(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, CN, AntMoist_0, Grow)

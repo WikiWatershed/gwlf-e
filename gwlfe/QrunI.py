@@ -4,8 +4,10 @@ from NLU import NLU
 from Water import Water
 from CNI import CNI
 from CNumImpervReten import CNumImpervReten
+from Memoization import memoize
 
 
+@memoize
 def QrunI(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, CNI_0, AntMoist_0, Grow):
     result = np.zeros((NYrs, 12, 31, 16))  # TODO: should this be nlu?
     nlu = NLU(NRur, NUrb)
@@ -24,8 +26,9 @@ def QrunI(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, CNI_0, AntMoist_0
                         for l in range(NRur, nlu):
                             if cni[1][l] > 0:
                                 if water[Y][i][j] >= 0.2 * c_num_imperv_reten[Y][i][j][l]:
-                                    result[Y][i][j][l] = (water[Y][i][j] - 0.2 * c_num_imperv_reten[Y][i][j][l]) ** 2 / (
-                                            water[Y][i][j] + 0.8 * c_num_imperv_reten[Y][i][j][l])
+                                    result[Y][i][j][l] = (water[Y][i][j] - 0.2 * c_num_imperv_reten[Y][i][j][
+                                        l]) ** 2 / (
+                                                                 water[Y][i][j] + 0.8 * c_num_imperv_reten[Y][i][j][l])
     return result
 
 

@@ -7,8 +7,10 @@ from CNI import CNI
 from Melt import Melt
 from GrowFactor import GrowFactor
 from AMC5 import AMC5
+from Memoization import memoize
 
 
+@memoize
 def CNumImperv(NYrs, NRur, NUrb, DaysMonth, InitSnow_0, Temp, Prec, CNI_0, Grow, AntMoist_0):
     nlu = NLU(NRur, NUrb)
     result = np.zeros((NYrs, 12, 31, nlu))

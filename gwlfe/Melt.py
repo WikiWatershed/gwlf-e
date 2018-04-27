@@ -2,8 +2,10 @@ import numpy as np
 from Timer import time_function
 from DailyArrayConverter import get_value_for_yesterday
 from InitSnow import InitSnow
+from Memoization import memoize
 
 
+@memoize
 def Melt(NYrs, DaysMonth, Temp, InitSnow_0, Prec):
     result = np.zeros((NYrs, 12, 31))
     init_snow = InitSnow(NYrs, DaysMonth, InitSnow_0, Temp, Prec)

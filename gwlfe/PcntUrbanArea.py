@@ -2,8 +2,10 @@ import numpy as np
 from Timer import time_function
 from AreaTotal import AreaTotal
 from UrbAreaTotal import UrbAreaTotal
+from Memoization import memoize
 
 
+@memoize
 def PcntUrbanArea(NRur, NUrb, Area):
     result = 0
     areatotal = AreaTotal(NRur, NUrb, Area)

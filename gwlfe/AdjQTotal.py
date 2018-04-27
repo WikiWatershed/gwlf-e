@@ -3,14 +3,18 @@ from Timer import time_function
 from Water import Water
 from AdjUrbanQTotal import AdjUrbanQTotal
 from RuralQTotal import RuralQTotal
+from Memoization import memoize
 
+
+@memoize
 def AdjQTotal(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0, Imper,
               ISRR, ISRA, Qretention, PctAreaInfil, n25b, CN):
-    result = np.zeros((NYrs,12,31))
+    result = np.zeros((NYrs, 12, 31))
     water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
-    adj_urban_q_total = AdjUrbanQTotal(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0, Imper,
-                   ISRR, ISRA, Qretention, PctAreaInfil)
-    rural_q_total = RuralQTotal(NYrs,DaysMonth,Temp,InitSnow_0,Prec,NRur,CN,NUrb,AntMoist_0, Grow,Area)
+    adj_urban_q_total = AdjUrbanQTotal(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
+                                       Grow, CNP_0, Imper,
+                                       ISRR, ISRA, Qretention, PctAreaInfil)
+    rural_q_total = RuralQTotal(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, CN, NUrb, AntMoist_0, Grow, Area)
     for Y in range(NYrs):
         for i in range(12):
             for j in range(DaysMonth[Y][i]):

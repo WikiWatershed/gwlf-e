@@ -11,7 +11,7 @@ import logging
 from Precipitation import AvPrecipitation
 from Precipitation import AvPrecipitation_2
 from ET import AvEvapoTrans
-from ET import AvEvapoTrans_2
+# from ET import AvEvapoTrans_2
 from PtSrcFlow import AvPtSrcFlow
 from PtSrcFlow import AvPtSrcFlow_2
 
@@ -58,10 +58,10 @@ def CalculateAnnualMeanLoads(z, Y):
     # z.AvPrecipitation = AvPrecipitation(z.NYrs,z.Precipitation)
     z.AvPrecipitation = AvPrecipitation_2(z.Precipitation)
     # z.AvEvapoTrans = AvEvapoTrans(z.NYrs, z.Evapotrans)
-    z.AvEvapoTrans = AvEvapoTrans_2(z.Evapotrans)
+    # z.AvEvapoTrans = AvEvapoTrans_2(z.Evapotrans)
     for i in range(12):
         # z.AvPrecipitation[i] += z.Precipitation[Y][i] / z.NYrs
-        # z.AvEvapoTrans[i] += z.Evapotrans[Y][i] / z.NYrs
+        z.AvEvapoTrans[i] += z.Evapotrans[Y][i] / z.NYrs
         z.AvGroundWater[i] += z.GroundWatLE_2[Y][i] / z.NYrs
 
         if z.AvGroundWater[i] < 0:

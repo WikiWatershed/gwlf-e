@@ -2,13 +2,16 @@ import numpy as np
 from Timer import time_function
 from Infiltration import Infiltration
 from ET import DailyET_2
+from Memoization import memoize
 
 
+@memoize
 def ET_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0, Imper,
-           ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap):
+         ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap):
     result = np.zeros((NYrs, 12, 31))
-    infiltration = Infiltration(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0, Imper,
-           ISRR, ISRA, CN)
+    infiltration = Infiltration(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow,
+                                CNP_0, Imper,
+                                ISRR, ISRA, CN)
     unsatstor_carryover = UnsatStor_0
     et = DailyET_2(Temp, KV, PcntET, DayHrs)
     for Y in range(NYrs):
@@ -27,6 +30,3 @@ def ET_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMo
                     pass
                 unsatstor_carryover = result[Y][i][j]
     return et
-
-
-

@@ -13,7 +13,10 @@ import numpy as np
 
 log = logging.getLogger(__name__)
 
+from Memoization import memoize
 
+
+@memoize
 def CalculateLoads(z, Y):
     PrecipitationTotal = 0
     RunoffTotal = 0
@@ -39,18 +42,18 @@ def CalculateLoads(z, Y):
 
     # CALCULATE THE MONTHLY WATER BALANCE FOR STREAM Flow FOR EACH YEAR OF THE ANALYSIS
     # for i in range(12):
-        # z.StreamFlow[Y][i] = (z.Runoff[Y][i]
-        #                       + z.GroundWatLE_2[Y][i]
-        #                       + z.PtSrcFlow[Y][i]
-        #                       + z.TileDrain[Y][i]
-        #                       - z.Withdrawal[Y][i])
-        #
-        # print("StreamFlow orig = ", z.StreamFlow[Y][i], "StreamFlow new = ", z.StreamFlow_temp[Y][i])
-        # print(z.StreamFlow[Y][i] == z.StreamFlow_temp[Y][i])
+    # z.StreamFlow[Y][i] = (z.Runoff[Y][i]
+    #                       + z.GroundWatLE_2[Y][i]
+    #                       + z.PtSrcFlow[Y][i]
+    #                       + z.TileDrain[Y][i]
+    #                       - z.Withdrawal[Y][i])
+    #
+    # print("StreamFlow orig = ", z.StreamFlow[Y][i], "StreamFlow new = ", z.StreamFlow_temp[Y][i])
+    # print(z.StreamFlow[Y][i] == z.StreamFlow_temp[Y][i])
 
-        # z.StreamFlowLE[Y][i] = z.StreamFlow[Y][i]
-        # if z.StreamFlowLE[Y][i] < 0:
-        #     z.StreamFlowLE[Y][i] = 0
+    # z.StreamFlowLE[Y][i] = z.StreamFlow[Y][i]
+    # if z.StreamFlowLE[Y][i] < 0:
+    #     z.StreamFlowLE[Y][i] = 0
 
     # ANNUAL WATER BALANCE CALCULATIONS
     for i in range(12):

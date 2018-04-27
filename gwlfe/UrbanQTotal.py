@@ -6,8 +6,10 @@ from UrbAreaTotal import UrbAreaTotal
 from QrunI import QrunI
 from QrunP import QrunP
 from LU import LU
+from Memoization import memoize
 
 
+@memoize
 def UrbanQTotal(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, Area, CNI_0, AntMoist_0, Grow, CNP_0, Imper, ISRR,
                 ISRA):
     nlu = NLU(NRur, NUrb)
@@ -28,10 +30,10 @@ def UrbanQTotal(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, Area, CNI_0
                         for l in range(NRur, nlu):
                             if urb_area_total > 0:
                                 result[Y][i][j] += (
-                                            (qrun_i[Y][i][j][l] * (Imper[l] * (1 - ISRR[lu[l]]) * (1 - ISRA[lu[l]]))
-                                             + qrun_p[Y][i][j][l] *
-                                             (1 - (Imper[l] * (1 - ISRR[lu[l]]) * (1 - ISRA[lu[l]]))))
-                                            * Area[l] / urb_area_total)
+                                        (qrun_i[Y][i][j][l] * (Imper[l] * (1 - ISRR[lu[l]]) * (1 - ISRA[lu[l]]))
+                                         + qrun_p[Y][i][j][l] *
+                                         (1 - (Imper[l] * (1 - ISRR[lu[l]]) * (1 - ISRA[lu[l]]))))
+                                        * Area[l] / urb_area_total)
     return result
 
 

@@ -3,8 +3,10 @@ from Timer import time_function
 from UrbanQTotal_1 import UrbanQTotal_1
 from RuralQTotal import RuralQTotal
 from Water import Water
+from Memoization import memoize
 
 
+@memoize
 def QTotal(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0, Imper,
            ISRR, ISRA, CN):
     result = np.zeros((NYrs, 12, 31))

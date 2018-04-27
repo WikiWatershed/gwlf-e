@@ -1,4 +1,11 @@
 from numba import jit
+import numpy as np
+
+
+def ymd_to_daily(ymd_array, leap_year=False):
+    if (leap_year == False):
+        mask = np.r_[0:31, 32:59, 62:93, 94:]
+    return np.ravel(ymd_array)[0:31]
 
 
 @jit(cache=True, nopython=True)
@@ -12,6 +19,7 @@ def get_value_for_yesterday(variable, variable_0, Y_in, i_in, j_in, NYrs, DaysMo
                 else:
                     yesterday = variable[Y][i][j]
 
+
 @jit(cache=True, nopython=True)
 def get_value_for_yesterday_yesterday(variable, variable_0, Y_in, i_in, j_in, NYrs, DaysMonth):
     yesterday_yesterday = variable_0
@@ -24,6 +32,7 @@ def get_value_for_yesterday_yesterday(variable, variable_0, Y_in, i_in, j_in, NY
                 else:
                     yesterday_yesterday = yesterday
                     yesterday = variable[Y][i][j]
+
 
 @jit(cache=True, nopython=True)
 def get_value_for_yesterday_yesterday_yesterday(variable, variable_0, Y_in, i_in, j_in, NYrs, DaysMonth):
@@ -39,5 +48,3 @@ def get_value_for_yesterday_yesterday_yesterday(variable, variable_0, Y_in, i_in
                     yesterday_yesterday_yesterday = yesterday_yesterday
                     yesterday_yesterday = yesterday
                     yesterday = variable[Y][i][j]
-
-

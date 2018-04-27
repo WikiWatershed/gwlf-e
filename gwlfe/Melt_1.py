@@ -2,8 +2,10 @@ import numpy as np
 from Timer import time_function
 from InitSnow import InitSnow
 from Melt import Melt
+from Memoization import memoize
 
 
+@memoize
 def Melt_1(NYrs, DaysMonth, InitSnow_0, Temp, Prec):
     result = np.zeros((NYrs, 12, 31))
     init_snow = InitSnow(NYrs, DaysMonth, InitSnow_0, Temp, Prec)

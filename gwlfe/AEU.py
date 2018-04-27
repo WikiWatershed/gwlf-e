@@ -1,8 +1,10 @@
 import numpy as np
 from Timer import time_function
 from AreaTotal import AreaTotal
+from Memoization import memoize
 
 
+@memoize
 def TotAEU(NumAnimals, AvgAnimalWt):
     result = 0
     aeu1 = ((NumAnimals[2] / 2) * (AvgAnimalWt[2]) / 1000) + ((NumAnimals[3] / 2) * (AvgAnimalWt[3]) / 1000)
@@ -44,4 +46,3 @@ def AEU(NumAnimals, AvgAnimalWt, NRur, NUrb, Area):
     else:
         result = 0
     return result
-

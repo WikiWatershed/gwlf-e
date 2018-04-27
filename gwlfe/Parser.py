@@ -12,9 +12,7 @@ import numpy as np
 from .datamodel import DataModel
 from .enums import YesOrNo, ETflag, GrowFlag, LandUse, SweepType
 
-
 log = logging.getLogger(__name__)
-
 
 EOL = '<EOL>'
 
@@ -511,8 +509,8 @@ class GmsReader(object):
             z.CN[i] = self.next(float)  # Curve Number
             z.KF[i] = self.next(float)  # K Factor
             z.LS[i] = self.next(float)  # LS Factor
-            z.C[i] = self.next(float)   # C Factor
-            z.P[i] = self.next(float)   # P Factor
+            z.C[i] = self.next(float)  # C Factor
+            z.P[i] = self.next(float)  # P Factor
             self.next(EOL)
 
         # Lines 30 - 35: (for each Urban Land Use Category)
@@ -969,7 +967,8 @@ class GmsReader(object):
         self.next(EOL)
 
         # Line 120:
-        z.n104 = self.next(float)  # BMP Costs $: Conversion of Septic Systems to Centralized Sewage Treatment (per home)
+        z.n104 = self.next(
+            float)  # BMP Costs $: Conversion of Septic Systems to Centralized Sewage Treatment (per home)
         z.n105 = self.next(float)  # BMP Costs $: Conversion from Primary to Secondary Sewage Treatment (per capita)
         z.n106 = self.next(float)  # BMP Costs $: Conversion from Primary to Tertiary Sewage Treatment (per capita)
         z.n106b = self.next(float)  # No longer used (Default = 0)
@@ -1232,7 +1231,8 @@ class GmsReader(object):
             self.next(EOL)
 
         # Line 181: (Nutrient Retention data)
-        z.ShedAreaDrainLake = self.next(float)  # Percentage of watershed area that drains into a lake or wetlands: (0 - 1)
+        z.ShedAreaDrainLake = self.next(
+            float)  # Percentage of watershed area that drains into a lake or wetlands: (0 - 1)
         z.RetentNLake = self.next(float)  # Lake Retention Rate: Nitrogen
         z.RetentPLake = self.next(float)  # Lake Retention Rate: Phosphorus
         z.RetentSedLake = self.next(float)  # Lake Retention Rate: Sediment

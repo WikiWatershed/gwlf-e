@@ -5,7 +5,10 @@ from CNI import CNI
 from CNP import CNP
 from UrbAreaTotal import UrbAreaTotal
 
+from Memoization import memoize
 
+
+@memoize
 def AvCNUrb(NRur, NUrb, CNI_0, CNP_0, Imper, Area):
     result = 0
     nlu = NLU(NRur, NUrb)

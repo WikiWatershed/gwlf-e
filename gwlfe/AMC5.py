@@ -2,8 +2,10 @@ import numpy as np
 from Timer import time_function
 from Water import Water
 import copy
+from Memoization import memoize
 
 
+@memoize
 def AMC5(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0):
     result = np.zeros((NYrs, 12, 31))
     water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)

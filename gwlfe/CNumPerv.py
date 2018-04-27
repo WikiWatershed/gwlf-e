@@ -7,8 +7,10 @@ from CNP import CNP
 from Melt import Melt
 from GrowFactor import GrowFactor
 from AMC5 import AMC5
+from Memoization import memoize
 
 
+@memoize
 def CNumPerv(NYrs, DaysMonth, Temp, NRur, NUrb, CNP_0, InitSnow_0, Prec, Grow, AntMoist_0):
     nlu = NLU(NRur, NUrb)
     result = np.zeros((NYrs, 12, 31, nlu))

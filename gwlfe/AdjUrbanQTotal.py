@@ -4,12 +4,14 @@ from Water import Water
 from UrbanQTotal import UrbanQTotal
 from UrbAreaTotal import UrbAreaTotal
 from AreaTotal import AreaTotal
+from Memoization import memoize
 
 
+@memoize
 def AdjUrbanQTotal(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0, Imper,
                    ISRR, ISRA, Qretention, PctAreaInfil):
     result = np.zeros((NYrs, 12, 31))
-    adj_urban_q_total = 0 #used because this is a buffered variable
+    adj_urban_q_total = 0  # used because this is a buffered variable
     water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     urban_q_total = UrbanQTotal(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, Area, CNI_0, AntMoist_0, Grow,
                                 CNP_0, Imper, ISRR, ISRA)

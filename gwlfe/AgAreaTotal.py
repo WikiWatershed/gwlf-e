@@ -2,7 +2,10 @@ import numpy as np
 from Timer import time_function
 from enums import LandUse
 
+from Memoization import memoize
 
+
+@memoize
 def AgAreaTotal(NRur, Landuse, Area):
     result = 0
     for l in range(NRur):

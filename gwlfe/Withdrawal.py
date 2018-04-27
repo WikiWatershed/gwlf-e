@@ -1,7 +1,9 @@
 import numpy as np
 from Timer import time_function
+from Memoization import memoize
 
 
+@memoize
 def Withdrawal(NYrs, StreamWithdrawal, GroundWithdrawal):
     result = np.zeros((NYrs, 12))
     for Y in range(NYrs):

@@ -4,8 +4,10 @@ from Water import Water
 from UrbAreaTotal import UrbAreaTotal
 from AreaTotal import AreaTotal
 from UrbanQTotal import UrbanQTotal
+from Memoization import memoize
 
 
+@memoize
 def UrbanQTotal_1(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0, Imper,
                   ISRR, ISRA):
     result = np.zeros((NYrs, 12, 31))

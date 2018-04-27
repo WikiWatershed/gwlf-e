@@ -1,8 +1,10 @@
 import numpy as np
 from Timer import time_function
 from NLU import NLU
+from Memoization import memoize
 
 
+@memoize
 def CNP(NRur, NUrb, CNP_0):
     nlu = NLU(NRur, NUrb)
     result = np.zeros((3, nlu))

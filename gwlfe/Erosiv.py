@@ -3,8 +3,10 @@ from Timer import time_function
 from InitSnow import InitSnow
 from Rain import Rain
 from Melt_1 import Melt_1
+from Memoization import memoize
 
 
+@memoize
 def Erosiv(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef):
     result = np.zeros((NYrs, 12, 31))
     init_snow = InitSnow(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
