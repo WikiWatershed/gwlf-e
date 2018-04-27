@@ -400,7 +400,7 @@ class GmsReader(object):
         z.LuTotNitr = np.zeros((z.DimYrs, 16))
         z.LuDisPhos = np.zeros((z.DimYrs, 16))
         z.LuTotPhos = np.zeros((z.DimYrs, 16))
-        z.SedTrans = np.zeros((z.DimYrs, 16))
+        # z.SedTrans = np.zeros((z.DimYrs, 16))
         z.SepticNitr = np.zeros(z.DimYrs)
         z.SepticPhos = np.zeros(z.DimYrs)
 

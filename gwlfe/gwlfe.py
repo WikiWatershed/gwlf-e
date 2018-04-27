@@ -102,6 +102,7 @@ from SEDFEN import SEDFEN
 from StreamBankEros_2 import StreamBankEros_2
 from SedTrans import SedTrans
 from RurEros import RurEros
+from BSed import BSed
 
 log = logging.getLogger(__name__)
 
@@ -321,6 +322,9 @@ def run(z):
              z.ISRR, z.ISRA, z.Qretention, z.PctAreaInfil, z.n25b, z.CN)
 
     z.RurEros = RurEros(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.Acoef, z.NRur, z.KF, z.LS, z.C, z.P, z.Area)
+
+    z.BSed = BSed(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow, z.CNP_0, z.Imper,
+         z.ISRR, z.ISRA, z.Qretention, z.PctAreaInfil, z.n25b, z.CN)
 
 
     # --------- run the remaining parts of the model ---------------------

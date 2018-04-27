@@ -86,12 +86,12 @@ def CalculateLoads(z, Y):
 
     # SEDIMENT YIELD AND TILE DRAINAGE
     for i in range(12):
-        z.BSed[i] = 0
-        for m in range(i, 12):
-            z.BSed[i] += z.SedTrans[Y][m]
+        # z.BSed[i] = 0
+        # for m in range(i, 12):
+        #     z.BSed[i] += z.SedTrans[Y][m]
         for m in range(i + 1):
-            if z.BSed[m] > 0:
-                z.SedYield[Y][i] += z.Erosion[Y][m] / z.BSed[m]
+            if z.BSed[Y][m] > 0:
+                z.SedYield[Y][i] += z.Erosion[Y][m] / z.BSed[Y][m]
 
         z.SedYield[Y][i] = z.SedDelivRatio * z.SedTrans[Y][i] * z.SedYield[Y][i]
         SedYieldTotal += z.SedYield[Y][i]
