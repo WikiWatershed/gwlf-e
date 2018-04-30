@@ -260,7 +260,8 @@ class GmsReader(object):
         z.SatStor_0 = self.next(float)  # Saturated Storage
         # z.InitSnow = self.next(int)  # Initial Snow Days
         z.InitSnow_0 = self.next(int)  # Initial Snow Days
-        z.SedDelivRatio = self.next(float)  # Sediment Delivery Ratio
+        # z.SedDelivRatio = self.next(float)  # Sediment Delivery Ratio
+        z.SedDelivRatio_0 = self.next(float)  # Sediment Delivery Ratio
         z.MaxWaterCap = self.next(float)  # Average Available Water Capacity
         z.StreamLength = self.next(float)  # Total Stream Length (meters)
         z.AgLength = self.next(float)  # Agricultural Stream Length (meters)
@@ -383,8 +384,8 @@ class GmsReader(object):
         # z.GroundWatLE = np.zeros((z.DimYrs, 12))
         # z.AgRunoff = np.zeros((z.DimYrs, 12))
         # z.Runoff = np.zeros((z.DimYrs, 12))
-        z.Erosion = np.zeros((z.DimYrs, 12))
-        z.SedYield = np.zeros((z.DimYrs, 12))
+        # z.Erosion = np.zeros((z.DimYrs, 12))
+        # z.SedYield = np.zeros((z.DimYrs, 12))
         z.GroundNitr = np.zeros((z.DimYrs, 12))
         z.GroundPhos = np.zeros((z.DimYrs, 12))
         z.DisNitr = np.zeros((z.DimYrs, 12))
@@ -1381,7 +1382,7 @@ class GmsWriter(object):
             z.UnsatStor,
             z.SatStor,
             z.InitSnow,
-            z.SedDelivRatio,
+            z.SedDelivRatio_0,
             z.MaxWaterCap,
             z.StreamLength,
             z.AgLength,

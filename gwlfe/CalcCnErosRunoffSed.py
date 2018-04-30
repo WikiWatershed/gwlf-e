@@ -101,7 +101,8 @@ def CalcCN(z, i, Y, j):
         # EROSION, SEDIMENT WASHOFF FOR RURAL AND URBAN LANDUSE
         # z.RurEros = 1.32 * z.Erosiv[Y][i][j] * z.KF[l] * z.LS[l] * z.C[l] * z.P[l] * z.Area[l]
 
-        z.Erosion[Y][i] = z.Erosion[Y][i] + z.RurEros[Y][i][j][l]
+        # z.Erosion[Y][i] = z.Erosion[Y][i] + z.RurEros[Y][i][j][l]
+
         z.ErosWashoff[l][i] = z.ErosWashoff[l][i] + z.RurEros[Y][i][j][l]
         # z.DayErWashoff[l][Y][i][j] = z.RurEros
 

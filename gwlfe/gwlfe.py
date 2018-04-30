@@ -103,6 +103,12 @@ from StreamBankEros_2 import StreamBankEros_2
 from SedTrans import SedTrans
 from RurEros import RurEros
 from BSed import BSed
+from SedDelivRatio import SedDelivRatio
+# from ErosionSedYield import ErosionSedYield
+from Erosion import Erosion
+from SedYield import SedYield
+from SedYield_2 import SedYield_2
+from Erosion_2 import Erosion_2
 
 log = logging.getLogger(__name__)
 
@@ -325,6 +331,48 @@ def run(z):
 
     z.BSed = BSed(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow, z.CNP_0, z.Imper,
          z.ISRR, z.ISRA, z.Qretention, z.PctAreaInfil, z.n25b, z.CN)
+
+    z.SedDelivRatio = SedDelivRatio(z.SedDelivRatio_0)
+
+    # z.SedYield_temp = ErosionSedYield(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.Acoef, z.NRur, z.KF, z.LS, z.C, z.P, z.Area, z.SedDelivRatio_0,
+    #                 z.NUrb, z.CNI_0, z.AntMoist_0, z.Grow, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.Qretention, z.PctAreaInfil, z.n25b, z.CN,
+    #                 z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0, z.RecessionCoef, z.SeepCoef,
+    #                 z.Landuse, z.TileDrainDensity, z.PointFlow, z.StreamWithdrawal, z.GroundWithdrawal,
+    #                 z.NumAnimals, z.AvgAnimalWt, z.StreamFlowVolAdj, z.SedAFactor_0, z.AvKF, z.AvSlope, z.SedAAdjust, z.StreamLength,
+    #                 z.n42b, z.n46c, z.n85d, z.AgLength, z.n42, z.n45, z.n85, z.UrbBankStab)
+    # TODO This is just a temporary variable to help with testing, can be deleted / is not actually used in model
+
+    z.Erosion = Erosion(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.Acoef, z.NRur, z.KF, z.LS, z.C, z.P,
+                        z.Area)
+
+    z.SedYield = SedYield(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.Acoef, z.NRur, z.KF, z.LS, z.C, z.P,
+                          z.Area, z.NUrb, z.CNI_0, z.AntMoist_0, z.Grow,
+                          z.ISRR, z.ISRA, z.Qretention, z.PctAreaInfil, z.n25b, z.CN, z.CNP_0, z.Imper,
+                          z.SedDelivRatio_0)
+
+    z.SedYield_2 = SedYield_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
+                              z.AntMoist_0,
+                              z.Grow, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs,
+                              z.MaxWaterCap, z.SatStor_0,
+                              z.RecessionCoef, z.SeepCoef, z.Qretention, z.PctAreaInfil, z.n25b, z.Landuse,
+                              z.TileDrainDensity, z.PointFlow,
+                              z.StreamWithdrawal, z.GroundWithdrawal, z.NumAnimals, z.AvgAnimalWt, z.StreamFlowVolAdj,
+                              z.SedAFactor_0,
+                              z.AvKF, z.AvSlope, z.SedAAdjust, z.StreamLength, z.n42b, z.n46c, z.n85d, z.AgLength,
+                              z.n42, z.n45, z.n85, z.UrbBankStab,
+                              z.Acoef, z.KF, z.LS, z.C, z.P, z.SedDelivRatio_0)
+
+    z.Erosion_2 = Erosion_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
+                            z.AntMoist_0,
+                            z.Grow, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs,
+                            z.MaxWaterCap, z.SatStor_0,
+                            z.RecessionCoef, z.SeepCoef, z.Qretention, z.PctAreaInfil, z.n25b, z.Landuse,
+                            z.TileDrainDensity, z.PointFlow,
+                            z.StreamWithdrawal, z.GroundWithdrawal, z.NumAnimals, z.AvgAnimalWt, z.StreamFlowVolAdj,
+                            z.SedAFactor_0,
+                            z.AvKF, z.AvSlope, z.SedAAdjust, z.StreamLength, z.n42b, z.n46c, z.n85d, z.AgLength, z.n42,
+                            z.n45, z.n85, z.UrbBankStab,
+                            z.SedDelivRatio_0, z.Acoef, z.KF, z.LS, z.C, z.P)
 
 
     # --------- run the remaining parts of the model ---------------------

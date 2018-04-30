@@ -24,8 +24,8 @@ def CalculateAnnualMeanLoads(z, Y):
     z.AvSeptPhos += z.SepticPhos[Y] / z.NYrs
 
     # Add the Stream Bank Erosion to sediment yield
-    for i in range(12):
-        z.SedYield[Y][i] += z.StreamBankEros_2[Y][i] / 1000
+    # for i in range(12):
+    #     z.SedYield[Y][i] += z.StreamBankEros_2[Y][i] / 1000
 
     z.CalendarYr = z.WxYrBeg + (Y - 1)
 
@@ -39,8 +39,8 @@ def CalculateAnnualMeanLoads(z, Y):
 
         # If the Monthly Erosion is < the Sediment Yield
         # recalculate using Sediment Delivery Ratio
-        if z.SedDelivRatio > 0 and z.Erosion[Y][i] < z.SedYield[Y][i]:
-            z.Erosion[Y][i] = z.SedYield[Y][i] / z.SedDelivRatio
+        # if z.SedDelivRatio > 0 and z.Erosion[Y][i] < z.SedYield[Y][i]:
+        #     z.Erosion[Y][i] = z.SedYield[Y][i] / z.SedDelivRatio
 
         # z.AvPtSrcFlow[i] += z.PtSrcFlow[Y][i] / z.NYrs
         z.AvTileDrain[i] += z.TileDrain[Y][i] / z.NYrs
@@ -52,7 +52,7 @@ def CalculateAnnualMeanLoads(z, Y):
     # Recalculate the total annual erosion
     z.ErosSum = 0
     for i in range(12):
-        z.ErosSum += z.Erosion[Y][i]
+        z.ErosSum += z.Erosion_2[Y][i]
 
     # COMPUTE ANNUAL MEANS
     # z.AvPrecipitation = AvPrecipitation(z.NYrs,z.Precipitation)
@@ -68,8 +68,8 @@ def CalculateAnnualMeanLoads(z, Y):
             z.AvGroundWater[i] = 0
 
         z.AvRunoff[i] += z.Runoff[Y][i] / z.NYrs
-        z.AvErosion[i] += z.Erosion[Y][i] / z.NYrs
-        z.AvSedYield[i] += z.SedYield[Y][i] / z.NYrs
+        z.AvErosion[i] += z.Erosion_2[Y][i] / z.NYrs
+        z.AvSedYield[i] += z.SedYield_2[Y][i] / z.NYrs
 
         z.AvDisNitr[i] += z.DisNitr[Y][i] / z.NYrs
         z.AvTotNitr[i] += z.TotNitr[Y][i] / z.NYrs
