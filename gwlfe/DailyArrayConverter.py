@@ -1,11 +1,94 @@
 from numba import jit
 import numpy as np
+import math
+import numpy.ma as ma
+
+leap_year = [False, False, False, False, False, False, False, False, False, False, False, False, False, False, False,
+             False, False, False, False, False, False, False, False, False, False, False, False, False, False, False,
+             False, False, False, False, False, False, False, False, False, False, False, False, False, False, False,
+             False, False, False, False, False, False, False, False, False, False, False, False, False, False, False,
+             True, True, False, False, False, False, False, False, False, False, False, False, False, False, False,
+             False, False, False, False, False, False, False, False, False, False, False, False, False, False, False,
+             False, False, False, False, False, False, False, False, False, False, False, False, False, False, False,
+             False, False, False, False, False, False, False, False, False, False, False, False, False, False, False,
+             False, False, False, True, False, False, False, False, False, False, False, False, False, False, False,
+             False, False, False, False, False, False, False, False, False, False, False, False, False, False, False,
+             False, False, False, False, False, False, False, False, False, False, False, False, False, False, False,
+             False, False, False, False, False, False, False, False, False, False, False, False, False, False, False,
+             False, False, False, False, False, True, False, False, False, False, False, False, False, False, False,
+             False, False, False, False, False, False, False, False, False, False, False, False, False, False, False,
+             False, False, False, False, False, False, False, False, False, False, False, False, False, False, False,
+             False, False, False, False, False, False, False, False, False, False, False, False, False, False, False,
+             False, False, False, False, False, False, False, False, False, False, False, False, False, False, False,
+             False, False, False, False, False, False, False, False, False, False, False, False, False, False, False,
+             False, False, False, False, False, False, False, False, True, False, False, False, False, False, False,
+             False, False, False, False, False, False, False, False, False, False, False, False, False, False, False,
+             False, False, False, False, False, False, False, False, False, False, False, False, False, False, False,
+             False, False, False, False, False, False, False, False, False, False, False, False, False, False, False,
+             False, False, False, False, False, False, False, False, False, False, True, False, False, False, False,
+             False, False, False, False, False, False, False, False, False, False, False, False, False, False, False,
+             False, False, False, False, False, False, False, False, False, False, False, False]
+non_leap_year = [False, False, False, False, False, False, False, False, False, False, False, False, False, False,
+                 False, False, False, False, False, False, False, False, False, False, False, False, False, False,
+                 False, False, False, False, False, False, False, False, False, False, False, False, False, False,
+                 False, False, False, False, False, False, False, False, False, False, False, False, False, False,
+                 False, False, False, True, True, True, False, False, False, False, False, False, False, False, False,
+                 False, False, False, False, False, False, False, False, False, False, False, False, False, False,
+                 False, False, False, False, False, False, False, False, False, False, False, False, False, False,
+                 False, False, False, False, False, False, False, False, False, False, False, False, False, False,
+                 False, False, False, False, False, False, False, False, False, False, True, False, False, False, False,
+                 False, False, False, False, False, False, False, False, False, False, False, False, False, False,
+                 False, False, False, False, False, False, False, False, False, False, False, False, False, False,
+                 False, False, False, False, False, False, False, False, False, False, False, False, False, False,
+                 False, False, False, False, False, False, False, False, False, False, False, False, False, False,
+                 False, True, False, False, False, False, False, False, False, False, False, False, False, False, False,
+                 False, False, False, False, False, False, False, False, False, False, False, False, False, False,
+                 False, False, False, False, False, False, False, False, False, False, False, False, False, False,
+                 False, False, False, False, False, False, False, False, False, False, False, False, False, False,
+                 False, False, False, False, False, False, False, False, False, False, False, False, False, False,
+                 False, False, False, False, False, False, False, False, False, False, False, False, False, False,
+                 False, False, False, False, False, False, False, False, False, True, False, False, False, False, False,
+                 False, False, False, False, False, False, False, False, False, False, False, False, False, False,
+                 False, False, False, False, False, False, False, False, False, False, False, False, False, False,
+                 False, False, False, False, False, False, False, False, False, False, False, False, False, False,
+                 False, False, False, False, False, False, False, False, False, False, False, False, False, False, True,
+                 False, False, False, False, False, False, False, False, False, False, False, False, False, False,
+                 False, False, False, False, False, False, False, False, False, False, False, False, False, False,
+                 False, False, False]
 
 
-def ymd_to_daily(ymd_array, leap_year=False):
-    if (leap_year == False):
-        mask = np.r_[0:31, 32:59, 62:93, 94:]
-    return np.ravel(ymd_array)[0:31]
+def mask_builder(DaysMonth):
+    ones = np.ravel(np.ones((12, 31))).astype("int")
+    slices = []
+    for i, month in enumerate(DaysMonth[0]):
+        slices.append(slice(31 * i, 31 * i + month))
+    ones[np.r_[tuple(slices)]] = 0
+    return ones
+
+
+def ymd_to_daily(ymd_array, DaysMonth):
+    month_maps = map(lambda x: leap_year if x[1] == 29 else non_leap_year, DaysMonth)
+    mask = np.ravel(np.array(month_maps))
+    x = ma.array(ymd_array, mask=mask)
+    return x[~x.mask]
+
+
+def daily_to_ymd(daily_array, NYrs, DaysMonth):
+    result = np.zeros((NYrs * 12 * 31,))
+    month_maps = map(lambda x: leap_year if x[1] == 29 else non_leap_year, DaysMonth)
+    mask = np.ravel(np.array(month_maps))
+    x = ma.array(result, mask=mask)
+    x[~x.mask] = daily_array
+    return x.reshape((NYrs, 12, 31))
+
+
+def ymd_to_daily_slow(ymd_array, NYrs, DaysMonth):
+    result = []
+    for Y in range(NYrs):
+        for i in range(12):
+            for j in range(DaysMonth[Y][i]):
+                result.append(ymd_array[Y][i][j])
+    return np.array(result)
 
 
 @jit(cache=True, nopython=True)
