@@ -5,7 +5,7 @@ from CNI import CNI
 from CNP import CNP
 from UrbAreaTotal import UrbAreaTotal
 
-
+@time_function
 def AvCNUrb(NRur, NUrb, CNI_0, CNP_0, Imper, Area):
     result = 0
     nlu = NLU(NRur, NUrb)
@@ -18,6 +18,13 @@ def AvCNUrb(NRur, NUrb, CNI_0, CNP_0, Imper, Area):
             result += ((Imper[l] * cni[1][l] + (1 - Imper[l]) * cnp[1][l]) * Area[l] / urbareatotal)
     return result
 
+@time_function
+def AvCNUrb_2(NRur, NUrb, CNI_0, CNP_0, Imper, Area):
+    result = 0
+    nlu = NLU(NRur, NUrb)
+    cni = CNI(NRur, NUrb, CNI_0)
+    cnp = CNP(NRur, NUrb, CNP_0)
+    urbareatotal = UrbAreaTotal(NRur, NUrb, Area)
+    temp = ((Imper* cni[1] + (1 - Imper) * cnp[1]) * Area / urbareatotal)[NRur:nlu]
+    return np.sum(temp)
 
-def AvCNUrb_2():
-    pass

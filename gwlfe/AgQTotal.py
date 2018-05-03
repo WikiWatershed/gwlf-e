@@ -3,10 +3,10 @@ from Timer import time_function
 from Water import Water
 from Retention import Retention
 from enums import LandUse
-from Qrun import Qrun
+from Qrun import Qrun, Qrun_2
 from AgAreaTotal import AgAreaTotal
 
-
+# @time_function
 def AgQTotal(NYrs,DaysMonth,InitSnow_0, Temp, Prec,NRur,CN, AntMoist_0,NUrb,Grow,Landuse,Area):
     result = np.zeros((NYrs,12,31))
     water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
@@ -38,6 +38,13 @@ def AgQTotal(NYrs,DaysMonth,InitSnow_0, Temp, Prec,NRur,CN, AntMoist_0,NUrb,Grow
                         result[Y][i][j] = 0
     return result
 
-
-def AgQTotal_2():
-    pass
+# @time_function
+def AgQTotal_2(NYrs,DaysMonth,InitSnow_0, Temp, Prec,NRur,CN, AntMoist_0,NUrb,Grow,Landuse,Area):
+    result = np.zeros((NYrs, 12, 31))
+    q_run = Qrun_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, CN, AntMoist_0, Grow)
+    ag_area_total = AgAreaTotal(NRur, Landuse, Area)
+    ag_used = np.array([1,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0])
+    ag_area = Area * ag_used
+    qrun_agarea = q_run * ag_area
+    result = np.sum(qrun_agarea, axis=3) / ag_area_total
+    return result

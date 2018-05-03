@@ -1,9 +1,9 @@
 import numpy as np
 from Timer import time_function
-from Water import Water
-from Retention import Retention
+from Water import Water, Water_2
+from Retention import Retention, Retention_2
 from NLU import NLU
-
+# @time_function
 def Qrun(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, CN, AntMoist_0, Grow):
     nlu = NLU(NRur,NUrb)
     result = np.zeros((NYrs,12,31,nlu))
@@ -21,6 +21,16 @@ def Qrun(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, CN, AntMoist_0, Gr
                                         water[Y][i][j] + 0.8 * retention[Y][i][j][l])
     return result
 
-
-def Qrun_2():
-    pass
+# @time_function
+def Qrun_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, CN, AntMoist_0, Grow):
+    nlu = NLU(NRur, NUrb)
+    result = np.zeros((NYrs, 12, 31, nlu))
+    water = np.repeat(Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)[:, :, :, None], nlu, axis=3)
+    TempE = np.repeat(Temp[:, :, :, None], nlu, axis=3)
+    cnrur = np.tile(CN[None, None, None, :], (NYrs, 12, 31, 1))
+    retention = Retention_2(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, NRur, NUrb, CN, Grow)
+    retention02 = 0.2 * retention
+    val = np.zeros((NYrs, 12, 31, nlu))
+    val = (water - retention02) ** 2 / (water + 0.8 * retention)
+    result[np.where((TempE>0 ) & (water > 0.01) &(water >= retention02) & (cnrur>0))] = val[np.where((TempE>0 ) & (water > 0.01)& (water >= retention02) & (cnrur>0))]
+    return result

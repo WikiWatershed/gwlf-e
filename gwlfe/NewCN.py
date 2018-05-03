@@ -14,6 +14,7 @@ def NewCN(NRur, NUrb, CN):
     return result
 
 # @time_function
+@jit(cache=True, nopython = True)
 def NewCN_2(NRur, NUrb, CN):
     nlu = NLU(NRur, NUrb)
     result = np.zeros((3, nlu))

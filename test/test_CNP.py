@@ -12,9 +12,9 @@ class TestCNP(unittest.TestCase):
         self.z = Parser.GmsReader(input_file).read()
 
 
-    @skip("not ready")
+    # @skip("not ready")
     def test_CNP(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            CNP.CNP_2(),
-            CNP.CNP(), decimal=7)
+            CNP.CNP_2(z.NRur, z.NUrb, z.CNP_0),
+            CNP.CNP(z.NRur, z.NUrb, z.CNP_0), decimal=7)

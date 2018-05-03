@@ -1,12 +1,12 @@
 import numpy as np
 from Timer import time_function
 from Water import Water
-from Qrun import Qrun
+from Qrun import Qrun, Qrun_2
 from RurAreaTotal import RurAreaTotal
 from Retention import Retention
 from AreaTotal import AreaTotal
 
-
+@time_function
 def RuralQTotal(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, CN, NUrb, AntMoist_0, Grow, Area):
     result = np.zeros((NYrs, 12, 31))
     water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
@@ -31,6 +31,11 @@ def RuralQTotal(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, CN, NUrb, AntMois
                     pass
     return result
 
-
-def RuralQTotal_2():
-    pass
+@time_function
+def RuralQTotal_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, CN, NUrb, AntMoist_0, Grow, Area):
+    result = np.zeros((NYrs, 12, 31))
+    q_run = Qrun_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, CN, AntMoist_0, Grow)
+    area_total = AreaTotal(NRur, NUrb, Area)
+    qrun_area = q_run * Area
+    result = np.sum(qrun_area, axis=3)/area_total
+    return result

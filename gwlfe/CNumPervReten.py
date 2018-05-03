@@ -1,11 +1,11 @@
 import numpy as np
 from Timer import time_function
-from CNP import CNP
-from CNumPerv import CNumPerv
+from CNP import CNP,CNP_2
+from CNumPerv import CNumPerv, CNumPerv_2
 from NLU import NLU
-from Water import Water
+from Water import Water, Water_2
 
-
+# @time_function
 def CNumPervReten(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, NRur, NUrb, CNP_0, Grow):
     cnp = CNP(NRur, NUrb, CNP_0)
     c_num_perv = CNumPerv(NYrs, DaysMonth, Temp, NRur, NUrb, CNP_0, InitSnow_0, Prec, Grow, AntMoist_0)
@@ -26,6 +26,16 @@ def CNumPervReten(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, NRur, NUr
                                     result[Y][i][j][l] = 0
     return result
 
+# @time_function
 
-def CNumPervReten_2():
-    pass
+def CNumPervReten_2(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, NRur, NUrb, CNP_0, Grow):
+    nlu = NLU(NRur, NUrb)
+    result = np.zeros((NYrs, 12, 31, nlu))
+    c_num_perv = CNumPerv_2(NYrs, DaysMonth, Temp, NRur, NUrb, CNP_0, InitSnow_0, Prec, Grow, AntMoist_0)
+    cnp = CNP_2(NRur, NUrb, CNP_0)
+    cnp_1 = np.tile(cnp[1][None, None, None, :], (NYrs, 12, 31, 1))
+    water = np.repeat(Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)[:,:,:,None],nlu, axis=3 )
+    Temp = np.repeat(Temp[:, :, :, None], nlu, axis=3)
+    result[np.where((Temp>0) & (water >= 0.05) & (cnp_1>0))] =  2540 / c_num_perv[np.where((Temp>0) & (water >= 0.05) & (cnp_1>0))] - 25.4
+    result[np.where(result<0)] = 0
+    return result

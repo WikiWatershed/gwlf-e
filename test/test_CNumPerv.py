@@ -12,9 +12,9 @@ class TestCNumPerv(unittest.TestCase):
         self.z = Parser.GmsReader(input_file).read()
 
 
-    @skip("not ready")
+    # @skip("not ready")
     def test_CNumPerv(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            CNumPerv.CNumPerv_2(),
-            CNumPerv.CNumPerv(), decimal=7)
+            CNumPerv.CNumPerv_2(z.NYrs, z.DaysMonth, z.Temp, z.NRur, z.NUrb, z.CNP_0, z.InitSnow_0, z.Prec, z.Grow, z.AntMoist_0),
+            CNumPerv.CNumPerv(z.NYrs, z.DaysMonth, z.Temp, z.NRur, z.NUrb, z.CNP_0, z.InitSnow_0, z.Prec, z.Grow, z.AntMoist_0), decimal=7)

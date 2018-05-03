@@ -1,11 +1,11 @@
 import numpy as np
 from Timer import time_function
 from NLU import NLU
-from Water import Water
-from CNI import CNI
-from CNumImpervReten import CNumImpervReten
+from Water import Water, Water_2
+from CNI import CNI, CNI_2
+from CNumImpervReten import CNumImpervReten, CNumImpervReten_2
 
-
+# @time_function
 def QrunI(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, CNI_0, AntMoist_0, Grow):
     result = np.zeros((NYrs, 12, 31, 16))  # TODO: should this be nlu?
     nlu = NLU(NRur, NUrb)
@@ -28,6 +28,17 @@ def QrunI(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, CNI_0, AntMoist_0
                                             water[Y][i][j] + 0.8 * c_num_imperv_reten[Y][i][j][l])
     return result
 
-
-def QRunI_2():
-    pass
+# @time_function
+def QrunI_2(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, CNI_0, AntMoist_0, Grow):
+    nlu = NLU(NRur, NUrb)
+    result = np.zeros((NYrs, 12, 31, nlu))
+    water = np.repeat(Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)[:, :, :, None], nlu, axis=3)
+    TempE = np.repeat(Temp[:, :, :, None], nlu, axis=3)
+    cni = CNI_2(NRur, NUrb, CNI_0)
+    cni_1 = np.tile(cni[1][None, None, None, :], (NYrs, 12, 31, 1))
+    c_num_imperv_reten = CNumImpervReten_2(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, NRur, NUrb, CNI_0, Grow)
+    c_num_imperv_reten02 = 0.2*c_num_imperv_reten
+    val = (water - c_num_imperv_reten02) ** 2 / (water + 0.8 * c_num_imperv_reten)
+    result[np.where((TempE > 0) & (water >= 0.05) & (cni_1 > 0) & (water >= c_num_imperv_reten02))] = val[
+        np.where((TempE > 0) & (water >= 0.05) & (cni_1 > 0) & (water >= c_num_imperv_reten02))]
+    return result

@@ -3,7 +3,7 @@ from Timer import time_function
 from numba import jit
 
 
-@jit(cache=True, nopython = True)
+@jit(cache=True)
 def InitSnowYesterday(NYrs, DaysMonth, InitSnow_0, Temp, Prec):
     # result = np.zeros((NYrs, 12, 31))
     result_yesterday = np.zeros((NYrs, 12, 31))

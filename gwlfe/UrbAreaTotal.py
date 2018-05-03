@@ -2,7 +2,7 @@ import numpy as np
 from Timer import time_function
 from NLU import NLU
 
-
+# @time_function
 def UrbAreaTotal(NRur,NUrb,Area):
     result = 0
     nlu = NLU(NRur,NUrb)
@@ -10,6 +10,7 @@ def UrbAreaTotal(NRur,NUrb,Area):
         result += Area[l]
     return result
 
-
-def UrbAreaTotal_2():
-    pass
+# @time_function
+def UrbAreaTotal_2(NRur,NUrb,Area):
+    nlu = NLU(NRur, NUrb)
+    return np.sum(Area[NRur:nlu])
