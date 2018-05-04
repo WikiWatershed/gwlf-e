@@ -1,6 +1,7 @@
 import numpy as np
 from gwlfe.Timer import time_function
 from InitGrN import InitGrN
+from InitGrN import InitGrN_2
 
 
 def GRAppManN(GRPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN):
@@ -11,5 +12,6 @@ def GRAppManN(GRPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDaily
     return result
 
 
-def GRAppManN_2(GRPctManApp, InitGrN):
-    return GRPctManApp * InitGrN
+def GRAppManN_2(GRPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN):
+    init_gr_n = InitGrN_2(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN)
+    return GRPctManApp * init_gr_n
