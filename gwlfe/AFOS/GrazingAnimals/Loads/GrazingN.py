@@ -1,6 +1,7 @@
 import numpy as np
 from gwlfe.Timer import time_function
 from InitGrN import InitGrN
+from InitGrN import InitGrN_2
 
 
 def GrazingN(PctGrazing,GrazingAnimal_0,NumAnimals,AvgAnimalWt,AnimalDailyN):
@@ -11,5 +12,6 @@ def GrazingN(PctGrazing,GrazingAnimal_0,NumAnimals,AvgAnimalWt,AnimalDailyN):
     return result
 
 
-def GrazingN_2(PctGrazing, InitGrN):
-    return PctGrazing * (InitGrN / 12)
+def GrazingN_2(PctGrazing, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN):
+    init_gr_n = InitGrN_2(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN)
+    return PctGrazing * (init_gr_n / 12)
