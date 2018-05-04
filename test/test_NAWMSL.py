@@ -1,9 +1,8 @@
 import unittest
 from unittest import skip
-from mock import patch
 import numpy as np
 from gwlfe import Parser
-from gwlfe import NAWMSL
+from gwlfe.BMPs.AgAnimal import NAWMSL
 
 
 class TestNAWMSL(unittest.TestCase):

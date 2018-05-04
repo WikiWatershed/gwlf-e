@@ -1,10 +1,8 @@
 import unittest
 from unittest import skip
-from mock import patch
 import numpy as np
 from gwlfe import Parser
-from gwlfe import GRLoadN
-from gwlfe import gwlfe
+from gwlfe.AFOS.GrazingAnimals.Loads import GRLoadN
 
 
 class TestGRLoadN(unittest.TestCase):

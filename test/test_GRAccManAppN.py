@@ -2,7 +2,7 @@ import unittest
 from unittest import skip
 import numpy as np
 from gwlfe import Parser
-from gwlfe import GRAccManAppN
+from gwlfe.AFOS.GrazingAnimals.Loads import GRAccManAppN
 
 
 class TestGRAccManAppN(unittest.TestCase):

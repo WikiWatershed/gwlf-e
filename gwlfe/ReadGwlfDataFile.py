@@ -10,32 +10,21 @@ Imported from ReadAllDataFiles.bas
 """
 
 import logging
-import numpy as np
 
 from .enums import SweepType, YesOrNo
 from . import PrelimQualCalculations
 
 log = logging.getLogger(__name__)
 
-from GRAppManN import GRAppManN
-import GrazingN
-import GRInitBarnN
-from GRLoadN import GRLoadN
-from InitGrN import InitGrN
-from GRStreamN import GRStreamN
-from GRAppManN import GRAppManN
-from GRAccManAppN import GRAccManAppN
-from InitNgN import InitNgN
-from NGAppManN import NGAppManN
-from NGAccManAppN import NGAccManAppN
-from NGInitBarnN import NGInitBarnN
-from LossFactAdj import LossFactAdj
-from NGLostBarnN import NGLostBarnN
-from GRLostBarnN import GRLostBarnN
-from GRInitBarnN import GRInitBarnN
-from GRLostManN import GRLostManN
-from NGLostManN import NGLostManN
-from GRLossN import GRLossN
+from AFOS.GrazingAnimals.Loads import GrazingN
+from AFOS.GrazingAnimals.Losses.GRStreamN import GRStreamN
+from AFOS.GrazingAnimals.Loads.GRAccManAppN import GRAccManAppN
+from AFOS.nonGrazingAnimals.Loads.NGAppManN import NGAppManN
+from AFOS.nonGrazingAnimals.Losses.NGLostBarnN import NGLostBarnN
+from AFOS.GrazingAnimals.Losses.GRLostBarnN import GRLostBarnN
+from AFOS.GrazingAnimals.Losses.GRLostManN import GRLostManN
+from AFOS.nonGrazingAnimals.Losses.NGLostManN import NGLostManN
+from AFOS.GrazingAnimals.Losses.GRLossN import GRLossN
 
 
 def ReadAllData(z):

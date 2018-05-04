@@ -14,44 +14,17 @@ import logging
 
 import numpy as np
 
-from .enums import ETflag, GrowFlag
-from . import ReadGwlfDataFile
-from . import PrelimCalculations
-from . import CalcCnErosRunoffSed
-from . import AFOS
-from . import CalcLoads
-from . import StreamBank
-from . import AnnualMeans
-from . import WriteOutputFiles
-import Precipitation
-import ET
-import PtSrcFlow
-import GRLostManN
-from GRLostBarnN import GRLostBarnNSum
-from GRLostBarnN import AvGRLostBarnN
-from GRLostBarnN import AvGRLostBarnNSum
-import GRLossN
-from GRStreamN import AvGRStreamN
-import LossFactAdj
-import NGLostBarnN
-import NGLostManN
-from AnimalN import AnimalN
-from NGLostBarnN import AvNGLostBarnN
-from NGLostBarnN import AvNGLostBarnNSum
-from NGLostBarnN import NGLostBarnNSum
-from GRSN import GRSN
-from GRLBN import GRLBN
-from NGLBN import NGLBN
-from NFENCING import NFENCING
-from NAWMSL import NAWMSL
-from NRUNCON import NRUNCON
-from NAWMSP import NAWMSP
-from AvAnimalN import AvAnimalN
-from N7b import N7b
-from AvAnimalNSum import AvAnimalNSum
-from AvAnimalNSum_1 import AvAnimalNSum_1
-from N7b_1 import N7b_1
-from Constants import NPConvert
+from .enums import GrowFlag
+import ReadGwlfDataFile
+import PrelimCalculations
+import CalcCnErosRunoffSed
+import AFOS_old as AFOS
+import CalcLoads
+import StreamBank
+import AnnualMeans
+import WriteOutputFiles
+from MultiUse_Fxns import Precipitation, PtSrcFlow, ET, LossFactAdj
+from Outputs.AvAnimalNSum.AnimalN import AnimalN
 
 log = logging.getLogger(__name__)
 

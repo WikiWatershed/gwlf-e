@@ -1,9 +1,8 @@
 import unittest
 from unittest import skip
-from mock import patch
 import numpy as np
 from gwlfe import Parser
-from gwlfe import AvAnimalNSum
+from gwlfe.Outputs.AvAnimalNSum import AvAnimalNSum
 
 
 class TestAvAnimalNSum(unittest.TestCase):

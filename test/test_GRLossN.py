@@ -2,7 +2,7 @@ import unittest
 from unittest import skip
 import numpy as np
 from gwlfe import Parser
-from gwlfe import GRLossN
+from gwlfe.AFOS.GrazingAnimals.Losses import GRLossN
 
 
 class TestGRLossN(unittest.TestCase):

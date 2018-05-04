@@ -2,7 +2,7 @@ import unittest
 from unittest import skip
 import numpy as np
 from gwlfe import Parser
-from gwlfe import GRAppManN
+from gwlfe.AFOS.GrazingAnimals.Loads import GRAppManN
 
 
 class TestGrAppManN(unittest.TestCase):

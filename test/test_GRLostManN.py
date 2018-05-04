@@ -3,7 +3,7 @@ from mock import patch
 from unittest import skip
 import numpy as np
 from gwlfe import Parser
-from gwlfe import GRLostManN
+from gwlfe.AFOS.GrazingAnimals.Losses import GRLostManN
 
 
 class TestGRLostManN(unittest.TestCase):
@@ -19,6 +19,6 @@ class TestGRLostManN(unittest.TestCase):
         test_patch.return_value = np.load("LossFactAdj.npy")
         np.testing.assert_array_almost_equal(
             GRLostManN.GRLostManN(z.NYrs, self.mock_GRAppManN, z.GRAppNRate, z.Precipitation, z.DaysMonth,
-                                              z.GRPctSoilIncRate),
+                                  z.GRPctSoilIncRate),
             GRLostManN.GRLostManN_2(z.NYrs, self.mock_GRAppManN, z.GRAppNRate, z.Precipitation, z.DaysMonth,
-                                              z.GRPctSoilIncRate), decimal=7)
+                                    z.GRPctSoilIncRate), decimal=7)

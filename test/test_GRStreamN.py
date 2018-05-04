@@ -1,9 +1,8 @@
 import unittest
 from unittest import skip
-from mock import patch
 import numpy as np
 from gwlfe import Parser
-from gwlfe import GRStreamN
+from gwlfe.AFOS.GrazingAnimals.Losses import GRStreamN
 
 
 class TestGRStreamN(unittest.TestCase):

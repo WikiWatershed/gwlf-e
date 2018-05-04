@@ -8,12 +8,9 @@ Imported from AnnualMeans.bas
 """
 
 import logging
-from Precipitation import AvPrecipitation
-from Precipitation import AvPrecipitation_2
-from ET import AvEvapoTrans
-from ET import AvEvapoTrans_2
-from PtSrcFlow import AvPtSrcFlow
-from PtSrcFlow import AvPtSrcFlow_2
+from MultiUse_Fxns.Precipitation import AvPrecipitation_2
+from MultiUse_Fxns.ET import AvEvapoTrans_2
+from MultiUse_Fxns.PtSrcFlow import AvPtSrcFlow_2
 
 log = logging.getLogger(__name__)
 

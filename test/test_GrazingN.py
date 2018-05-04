@@ -2,7 +2,7 @@ import unittest
 from unittest import skip
 import numpy as np
 from gwlfe import Parser
-from gwlfe import GrazingN
+from gwlfe.AFOS.GrazingAnimals.Loads import GrazingN
 
 
 class TestGrazingN(unittest.TestCase):

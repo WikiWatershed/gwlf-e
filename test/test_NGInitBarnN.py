@@ -1,9 +1,8 @@
 import unittest
 from unittest import skip
-from mock import patch
 import numpy as np
 from gwlfe import Parser
-from gwlfe import NGInitBarnN
+from gwlfe.AFOS.nonGrazingAnimals.Loads import NGInitBarnN
 
 
 class TestNGInitBarnN(unittest.TestCase):

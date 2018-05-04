@@ -1,7 +1,7 @@
 import unittest
 import numpy as np
 from gwlfe import Parser
-from gwlfe import LossFactAdj
+from gwlfe.MultiUse_Fxns import LossFactAdj
 
 
 class TestLossFactAdj(unittest.TestCase):

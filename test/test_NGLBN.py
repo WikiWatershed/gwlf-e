@@ -1,9 +1,8 @@
 import unittest
 from unittest import skip
-from mock import patch
 import numpy as np
 from gwlfe import Parser
-from gwlfe import NGLBN
+from gwlfe.AFOS.nonGrazingAnimals.Losses import NGLBN
 
 
 class TestNGLBN(unittest.TestCase):

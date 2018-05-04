@@ -9,9 +9,9 @@ import numpy as np
 
 from . import LoadReductions
 from .enums import YesOrNo, LandUse
-from Constants import NPConvert
-from AvAnimalNSum_1 import AvAnimalNSum_1
-from N7b_1 import N7b_1
+from MultiUse_Fxns.Constants import NPConvert
+from Outputs.AvAnimalNSum.AvAnimalNSum_1 import AvAnimalNSum_1
+from Outputs.AvAnimalNSum.N7b_1 import N7b_1
 
 log = logging.getLogger(__name__)
 

@@ -1,7 +1,7 @@
 import unittest
 import numpy as np
 from gwlfe import Parser
-from gwlfe import Precipitation
+from gwlfe.MultiUse_Fxns import Precipitation
 
 
 class TestPrecipitation(unittest.TestCase):
@@ -17,4 +17,4 @@ class TestPrecipitation(unittest.TestCase):
     def test_AvPrecipitation(self):
         z = self.z
         np.testing.assert_array_almost_equal(Precipitation.AvPrecipitation_2(z.Precipitation),
-                                             Precipitation.AvPrecipitation(z.NYrs,z.Precipitation), decimal=7)
+                                             Precipitation.AvPrecipitation(z.NYrs, z.Precipitation), decimal=7)

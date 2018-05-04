@@ -1,7 +1,7 @@
 import unittest
 import numpy as np
 from gwlfe import Parser
-from gwlfe import ET
+from gwlfe.MultiUse_Fxns import ET
 
 
 class TestET(unittest.TestCase):

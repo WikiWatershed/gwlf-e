@@ -3,7 +3,7 @@ from unittest import skip
 from mock import patch
 import numpy as np
 from gwlfe import Parser
-from gwlfe import NGLostBarnN
+from gwlfe.AFOS.nonGrazingAnimals.Losses import NGLostBarnN
 
 
 class TestNGLostBarnN(unittest.TestCase):

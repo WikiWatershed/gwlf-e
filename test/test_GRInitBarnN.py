@@ -2,7 +2,7 @@ import unittest
 from unittest import skip
 import numpy as np
 from gwlfe import Parser
-from gwlfe import GRInitBarnN
+from gwlfe.AFOS.GrazingAnimals.Loads import GRInitBarnN
 
 
 class TestGRInitBarnN(unittest.TestCase):

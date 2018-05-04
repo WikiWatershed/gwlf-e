@@ -1,9 +1,8 @@
 import unittest
 from unittest import skip
-from mock import patch
 import numpy as np
 from gwlfe import Parser
-from gwlfe import N7b
+from gwlfe.Outputs.AvAnimalNSum import N7b
 
 
 class Testn7b(unittest.TestCase):
