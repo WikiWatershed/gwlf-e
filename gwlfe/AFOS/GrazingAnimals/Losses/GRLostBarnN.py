@@ -1,12 +1,13 @@
 import numpy as np
-import gwlfe.MultiUse_Fxns.LossFactAdj
+from gwlfe.MultiUse_Fxns.LossFactAdj import LossFactAdj
+from gwlfe.MultiUse_Fxns.LossFactAdj import LossFactAdj_2
 from gwlfe.AFOS.GrazingAnimals.Loads import GRInitBarnN
 
 
 def GRLostBarnN(NYrs, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, GRPctManApp, PctGrazing, GRBarnNRate, Prec,
                 DaysMonth, AWMSGrPct, GrAWMSCoeffN, RunContPct, RunConCoeffN):
     result = np.zeros((NYrs, 12))
-    loss_fact_adj = gwlfe.MultiUse_Fxns.LossFactAdj.LossFactAdj(NYrs, Prec, DaysMonth)
+    loss_fact_adj = LossFactAdj(NYrs, Prec, DaysMonth)
     gr_init_barn_n = GRInitBarnN.GRInitBarnN(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, GRPctManApp,
                                              PctGrazing)
     for Y in range(NYrs):
@@ -23,7 +24,7 @@ def GRLostBarnN(NYrs, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, GR
 
 def GRLostBarnN_2(NYrs, GRAppManN, InitGrN, GRPctManApp, GrazingN, GRBarnNRate, Precipitation, DaysMonth, AWMSGrPct,
                   GrAWMSCoeffN, RunContPct):
-    loss_fact_adj = gwlfe.MultiUse_Fxns.LossFactAdj.LossFactAdj(NYrs, Precipitation, DaysMonth)
+    loss_fact_adj = LossFactAdj(NYrs, Precipitation, DaysMonth)
     gr_init_barn_n = GRInitBarnN.GRInitBarnN(GRAppManN, InitGrN, GRPctManApp, GrazingN)
     result = (np.tile(gr_init_barn_n, NYrs) * np.tile(GRBarnNRate, NYrs) * np.ndarray.flatten(loss_fact_adj) * (
             1 - (AWMSGrPct * GrAWMSCoeffN) + (RunContPct * RunContPct)))
@@ -32,44 +33,6 @@ def GRLostBarnN_2(NYrs, GRAppManN, InitGrN, GRPctManApp, GrazingN, GRBarnNRate, 
     return np.reshape(result, (NYrs, 12))
 
 
-def GRLostBarnNSum(NYrs, GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN, GRPctManApp, PctGrazing, GRBarnNRate,
-                   Prec, DaysMonth, AWMSGrPct, GrAWMSCoeffN, RunContPct, RunConCoeffN):
-    result = np.zeros((NYrs, 12))
-    gr_lost_barn_n = GRLostBarnN(NYrs, GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN, GRPctManApp, PctGrazing,
-                                 GRBarnNRate, Prec, DaysMonth, AWMSGrPct, GrAWMSCoeffN, RunContPct, RunConCoeffN)
-    for Y in range(NYrs):
-        for i in range(12):
-            result[Y] += gr_lost_barn_n[Y][i]
-    return result
 
 
-def GRLostBarnNSum_2():
-    pass
 
-
-def AvGRLostBarnN(NYrs, GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN, GRPctManApp, PctGrazing, GRBarnNRate,
-                  Prec, DaysMonth, AWMSGrPct, GrAWMSCoeffN, RunContPct, RunConCoeffN):
-    result = np.zeros((12,))
-    gr_lost_barn_n = GRLostBarnN(NYrs, GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN, GRPctManApp, PctGrazing,
-                                 GRBarnNRate, Prec, DaysMonth, AWMSGrPct, GrAWMSCoeffN, RunContPct, RunConCoeffN)
-    for Y in range(NYrs):
-        for i in range(12):
-            result[i] += gr_lost_barn_n[Y][i] / NYrs
-    return result
-
-
-def AvGRLostBarnN_2():
-    pass
-
-
-def AvGRLostBarnNSum(NYrs, GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN, GRPctManApp, PctGrazing, GRBarnNRate,
-                     Prec, DaysMonth, AWMSGrPct, GrAWMSCoeffN, RunContPct, RunConCoeffN):
-    av_gr_lost_barn_n = AvGRLostBarnN(NYrs, GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN, GRPctManApp,
-                                      PctGrazing, GRBarnNRate, Prec, DaysMonth, AWMSGrPct, GrAWMSCoeffN, RunContPct,
-                                      RunConCoeffN)
-    result = sum(av_gr_lost_barn_n)
-    return result
-
-
-def AvGRLostBarnNSum_2():
-    pass

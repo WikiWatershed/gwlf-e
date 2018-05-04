@@ -8,7 +8,7 @@ Imported from AnnualMeans.bas
 """
 
 import logging
-from MultiUse_Fxns.Precipitation import AvPrecipitation_2
+from MultiUse_Fxns.AvPrecipitation import AvPrecipitation_2
 from MultiUse_Fxns.ET import AvEvapoTrans_2
 from MultiUse_Fxns.PtSrcFlow import AvPtSrcFlow_2
 
