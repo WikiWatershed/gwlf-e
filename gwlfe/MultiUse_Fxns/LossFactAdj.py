@@ -13,5 +13,5 @@ def LossFactAdj(NYrs, Prec, DaysMonth):
     return result
 
 
-def LossFactAdj_2(NYrs, Prec, DaysMonth):
-    return Precipitation_2(Prec) / DaysMonth / 0.3301
+def LossFactAdj_2(Prec, DaysMonth):
+    return Precipitation_2(Prec,) / DaysMonth / 0.3301
