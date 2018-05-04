@@ -2,6 +2,7 @@ import numpy as np
 from Timer import time_function
 from enums import YesOrNo
 
+
 def GrazingAnimal(GrazingAnimal_0):
     return GrazingAnimal_0
 
