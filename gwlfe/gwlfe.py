@@ -60,6 +60,7 @@ def run(z):
                         z.NGAppNRate, z.Prec, z.DaysMonth, z.NGPctSoilIncRate, z.GRPctManApp, z.GRAppNRate,
                         z.GRPctSoilIncRate, z.NGBarnNRate, z.AWMSNgPct, z.NgAWMSCoeffN, z.RunContPct, z.RunConCoeffN,
                         z.PctGrazing, z.GRBarnNRate, z.AWMSGrPct, z.GrAWMSCoeffN, z.PctStreams, z.GrazingNRate)
+    z.GrazingAnimal = GrazingAnimal(z.GrazingAnimal_0)
     ReadGwlfDataFile.ReadAllData(z)
 
     # CALCLULATE PRELIMINARY INITIALIZATIONS AND VALUES FOR
