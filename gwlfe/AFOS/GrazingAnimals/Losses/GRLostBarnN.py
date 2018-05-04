@@ -3,11 +3,11 @@ import gwlfe.MultiUse_Fxns.LossFactAdj
 from gwlfe.AFOS.GrazingAnimals.Loads import GRInitBarnN
 
 
-def GRLostBarnN(NYrs, GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN, GRPctManApp, PctGrazing, GRBarnNRate, Prec,
+def GRLostBarnN(NYrs, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, GRPctManApp, PctGrazing, GRBarnNRate, Prec,
                 DaysMonth, AWMSGrPct, GrAWMSCoeffN, RunContPct, RunConCoeffN):
     result = np.zeros((NYrs, 12))
     loss_fact_adj = gwlfe.MultiUse_Fxns.LossFactAdj.LossFactAdj(NYrs, Prec, DaysMonth)
-    gr_init_barn_n = GRInitBarnN.GRInitBarnN(GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN, GRPctManApp,
+    gr_init_barn_n = GRInitBarnN.GRInitBarnN(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, GRPctManApp,
                                              PctGrazing)
     for Y in range(NYrs):
         for i in range(12):

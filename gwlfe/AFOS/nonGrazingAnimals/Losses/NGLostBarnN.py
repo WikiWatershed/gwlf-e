@@ -3,11 +3,11 @@ from gwlfe.MultiUse_Fxns.LossFactAdj import LossFactAdj
 from gwlfe.AFOS.nonGrazingAnimals.Loads.NGInitBarnN import NGInitBarnN
 
 
-def NGLostBarnN(NYrs, NGPctManApp, GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN, NGBarnNRate, Prec,
+def NGLostBarnN(NYrs, NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, NGBarnNRate, Prec,
                 DaysMonth, AWMSNgPct, NgAWMSCoeffN, RunContPct, RunConCoeffN):
     result = np.zeros((NYrs, 12))
     loss_fact_adj = LossFactAdj(NYrs, Prec, DaysMonth)
-    ng_init_barn_n = NGInitBarnN(NGPctManApp, GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN)
+    ng_init_barn_n = NGInitBarnN(NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN)
     for Y in range(NYrs):
         for i in range(12):
             result[Y][i] = (ng_init_barn_n[i] * NGBarnNRate[i] * loss_fact_adj[Y][i]

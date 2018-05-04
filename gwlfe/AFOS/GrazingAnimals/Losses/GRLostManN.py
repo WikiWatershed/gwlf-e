@@ -2,10 +2,10 @@ import numpy as np
 import gwlfe.MultiUse_Fxns.LossFactAdj
 from gwlfe.AFOS.GrazingAnimals.Loads.GRAppManN import GRAppManN
 
-def GRLostManN(NYrs, GRPctManApp,GrazingAnimal,NumAnimals,AvgAnimalWt,AnimalDailyN, GRAppNRate, Prec, DaysMonth, GRPctSoilIncRate):
+def GRLostManN(NYrs, GRPctManApp,GrazingAnimal_0,NumAnimals,AvgAnimalWt,AnimalDailyN, GRAppNRate, Prec, DaysMonth, GRPctSoilIncRate):
     result = np.zeros((NYrs, 12))
     loss_fact_adj = gwlfe.MultiUse_Fxns.LossFactAdj.LossFactAdj(NYrs, Prec, DaysMonth)
-    gr_app_man_n = GRAppManN(GRPctManApp,GrazingAnimal,NumAnimals,AvgAnimalWt,AnimalDailyN)
+    gr_app_man_n = GRAppManN(GRPctManApp,GrazingAnimal_0,NumAnimals,AvgAnimalWt,AnimalDailyN)
     for Y in range(NYrs):
         for i in range(12):
             result[Y][i] = (gr_app_man_n[i] * GRAppNRate[i] * loss_fact_adj[Y][i] * (1 - GRPctSoilIncRate[i]))

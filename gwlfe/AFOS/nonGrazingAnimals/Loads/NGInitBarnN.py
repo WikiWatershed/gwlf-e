@@ -4,10 +4,10 @@ from NGAppManN import NGAppManN
 from NGAccManAppN import NGAccManAppN
 
 
-def NGInitBarnN(NGPctManApp, GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN):
+def NGInitBarnN(NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN):
     result = np.zeros((12,))
-    ng_app_man_n = NGAppManN(NGPctManApp, GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN)
-    ng_acc_man_app_n = NGAccManAppN(GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN, NGPctManApp)
+    ng_app_man_n = NGAppManN(NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN)
+    ng_acc_man_app_n = NGAccManAppN(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, NGPctManApp)
     for i in range(12):
         result[i] = ng_acc_man_app_n[i] - ng_app_man_n[i]
         if result[i] < 0:

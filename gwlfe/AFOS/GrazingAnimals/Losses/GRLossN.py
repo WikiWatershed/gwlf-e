@@ -4,11 +4,11 @@ from gwlfe.AFOS.GrazingAnimals.Loads.GrazingN import GrazingN
 from gwlfe.MultiUse_Fxns.LossFactAdj import LossFactAdj
 
 
-def GRLossN(NYrs, PctStreams, PctGrazing, GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN, GrazingNRate, Prec,
+def GRLossN(NYrs, PctStreams, PctGrazing, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, GrazingNRate, Prec,
             DaysMonth):
     result = np.zeros((NYrs, 12))
-    gr_stream_n = GRStreamN(PctStreams, PctGrazing, GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN)
-    grazing_n = GrazingN(PctGrazing, GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN)
+    gr_stream_n = GRStreamN(PctStreams, PctGrazing, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN)
+    grazing_n = GrazingN(PctGrazing, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN)
     loss_fact_adj = LossFactAdj(NYrs, Prec, DaysMonth)
     for Y in range(NYrs):
         for i in range(12):

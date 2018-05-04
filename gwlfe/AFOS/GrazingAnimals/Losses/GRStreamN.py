@@ -1,9 +1,9 @@
 import numpy as np
 from gwlfe.AFOS.GrazingAnimals.Loads.GrazingN import GrazingN
 
-def GRStreamN(PctStreams,PctGrazing,GrazingAnimal,NumAnimals,AvgAnimalWt,AnimalDailyN):
+def GRStreamN(PctStreams,PctGrazing,GrazingAnimal_0,NumAnimals,AvgAnimalWt,AnimalDailyN):
     result = np.zeros((12,))
-    grazing_n = GrazingN(PctGrazing,GrazingAnimal,NumAnimals,AvgAnimalWt,AnimalDailyN)
+    grazing_n = GrazingN(PctGrazing,GrazingAnimal_0,NumAnimals,AvgAnimalWt,AnimalDailyN)
     for i in range(12):
         result[i] = PctStreams[i] * grazing_n[i]
     return result

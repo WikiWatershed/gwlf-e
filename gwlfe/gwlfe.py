@@ -54,10 +54,9 @@ def run(z):
     z.PtSrcFlow = PtSrcFlow.PtSrcFlow_2(z.NYrs, z.PointFlow)
 
     z.LossFactAdj = LossFactAdj.LossFactAdj(z.NYrs, z.Prec, z.DaysMonth)  # not fully removed
-    
-    z.GrazingAnimal = GrazingAnimal(z.GrazingAnimal_0)
 
-    z.AnimalN = AnimalN(z.NYrs, z.NGPctManApp, z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN,
+
+    z.AnimalN = AnimalN(z.NYrs, z.NGPctManApp, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN,
                         z.NGAppNRate, z.Prec, z.DaysMonth, z.NGPctSoilIncRate, z.GRPctManApp, z.GRAppNRate,
                         z.GRPctSoilIncRate, z.NGBarnNRate, z.AWMSNgPct, z.NgAWMSCoeffN, z.RunContPct, z.RunConCoeffN,
                         z.PctGrazing, z.GRBarnNRate, z.AWMSGrPct, z.GrAWMSCoeffN, z.PctStreams, z.GrazingNRate)
