@@ -9,12 +9,11 @@ class TestGRInitBarnN(unittest.TestCase):
     def setUp(self):
         input_file = open('input_4.gms', 'r')
         self.z = Parser.GmsReader(input_file).read()
-        self.mock_GRAppManN = np.load("GRAppManN.npy")
-        self.mock_GrazingN = np.load("GrazingN.npy")
 
-    @skip("not ready")
     def test_GRInitBarnN(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            GRInitBarnN.GRInitBarnN(self.mock_GRAppManN, z.InitGrN, z.GRPctManApp, self.mock_GrazingN),
-            GRInitBarnN.GRInitBarnN_2(self.mock_GRAppManN, z.InitGrN, z.GRPctManApp, self.mock_GrazingN), decimal=7)
+            GRInitBarnN.GRInitBarnN(z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN, z.GRPctManApp,
+                                    z.PctGrazing),
+            GRInitBarnN.GRInitBarnN_2(z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN, z.GRPctManApp,
+                                      z.PctGrazing), decimal=7)
