@@ -1,12 +1,12 @@
 import numpy as np
 from Timer import time_function
-from CNI import CNI
-from CNumImperv import CNumImperv
+from CNI import CNI, CNI_2
+from CNumImperv import CNumImperv, CNumImperv_2
 from NLU import NLU
-from Water import Water
+from Water import Water, Water_2
 from Memoization import memoize
 
-
+# @time_function
 @memoize
 def CNumImpervReten(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, NRur, NUrb, CNI_0,
                     Grow):  # TODO: this is exactly the same as perv and retention
@@ -29,6 +29,15 @@ def CNumImpervReten(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, NRur, N
                                     result[Y][i][j][l] = 0
     return result
 
-
-def CNumImpervReten_2():
-    pass
+# @time_function
+def CNumImpervReten_2(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, NRur, NUrb, CNI_0, Grow):
+    cni = CNI_2(NRur, NUrb, CNI_0)
+    cni_1 = np.tile(cni[1][None, None, None, :], (NYrs, 12, 31, 1))
+    c_num_imperv = CNumImperv_2(NYrs, NRur, NUrb, DaysMonth, InitSnow_0, Temp, Prec, CNI_0, Grow, AntMoist_0)
+    nlu = NLU(NRur, NUrb)
+    water = np.repeat(Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)[:, :, :, None], nlu, axis=3)
+    result = np.zeros((NYrs, 12, 31, nlu))
+    TempE = np.repeat(Temp[:, :, :, None], nlu, axis=3)
+    result[np.where((TempE>0) & (water >= 0.05) & (cni_1>0))] =  2540 / c_num_imperv[np.where((TempE>0) & (water >= 0.05) & (cni_1>0))] - 25.4
+    result[np.where(result<0)] = 0
+    return result

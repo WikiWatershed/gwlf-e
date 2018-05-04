@@ -12,9 +12,9 @@ class TestGrowFactor(unittest.TestCase):
         self.z = Parser.GmsReader(input_file).read()
 
 
-    @skip("not ready")
+    # @skip("not ready")
     def test_GrowFactor(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            GrowFactor.GrowFactor_2(),
-            GrowFactor.GrowFactor(), decimal=7)
+            GrowFactor.GrowFactor_2(z.Grow),
+            GrowFactor.GrowFactor(z.Grow), decimal=7)

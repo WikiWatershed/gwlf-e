@@ -12,9 +12,8 @@ class TestWater(unittest.TestCase):
         self.z = Parser.GmsReader(input_file).read()
 
 
-    @skip("not ready")
     def test_Water(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            Water.Water_2(),
-            Water.Water(), decimal=7)
+            Water.Water_2(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec),
+            Water.Water(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec), decimal=7)

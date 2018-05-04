@@ -12,9 +12,9 @@ class TestRetention(unittest.TestCase):
         self.z = Parser.GmsReader(input_file).read()
 
 
-    @skip("not ready")
+    # @skip("not ready")
     def test_Retention(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            Retention.Retention_2(),
-            Retention.Retention(), decimal=7)
+            Retention.Retention_2(z.NYrs, z.DaysMonth, z.Temp, z.Prec, z.InitSnow_0, z.AntMoist_0, z.NRur, z.NUrb, z.CN, z.Grow),
+            Retention.Retention(z.NYrs, z.DaysMonth, z.Temp, z.Prec, z.InitSnow_0, z.AntMoist_0, z.NRur, z.NUrb, z.CN, z.Grow), decimal=7)

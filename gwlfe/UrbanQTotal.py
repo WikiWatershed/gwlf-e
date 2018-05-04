@@ -1,10 +1,10 @@
 import numpy as np
 from Timer import time_function
 from NLU import NLU
-from Water import Water
+from Water import Water, Water_2
 from UrbAreaTotal import UrbAreaTotal
-from QrunI import QrunI
-from QrunP import QrunP
+from QrunI import QrunI, QrunI_2
+from QrunP import QrunP, QrunP_2
 from LU import LU
 from Memoization import memoize
 
@@ -30,12 +30,26 @@ def UrbanQTotal(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, Area, CNI_0
                         for l in range(NRur, nlu):
                             if urb_area_total > 0:
                                 result[Y][i][j] += (
-                                        (qrun_i[Y][i][j][l] * (Imper[l] * (1 - ISRR[lu[l]]) * (1 - ISRA[lu[l]]))
-                                         + qrun_p[Y][i][j][l] *
-                                         (1 - (Imper[l] * (1 - ISRR[lu[l]]) * (1 - ISRA[lu[l]]))))
-                                        * Area[l] / urb_area_total)
+                                            (qrun_i[Y][i][j][l] * (Imper[l] * (1 - ISRR[lu[l]]) * (1 - ISRA[lu[l]]))
+                                             + qrun_p[Y][i][j][l] *
+                                             (1 - (Imper[l] * (1 - ISRR[lu[l]]) * (1 - ISRA[lu[l]]))))
+                                            * Area[l] / urb_area_total)
     return result
 
-
-def UrbanQTotal_2():
-    pass
+@time_function
+def UrbanQTotal_2(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, Area, CNI_0, AntMoist_0, Grow, CNP_0, Imper, ISRR,
+                ISRA):
+    nlu = NLU(NRur, NUrb)
+    result = np.zeros((NYrs, 12, 31))
+    urb_area_total = UrbAreaTotal(NRur, NUrb, Area)
+    qrun_i = QrunI_2(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, CNI_0, AntMoist_0, Grow)
+    qrun_p = QrunP_2(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, CNP_0, AntMoist_0, Grow)
+    lu = LU(NRur, NUrb)
+    z= np.zeros((10,))
+    ISRR = np.hstack((z,ISRR))
+    ISRA = np.hstack((z,ISRA))
+    x = (Imper * (1 - ISRR) * (1 - ISRA))
+    temp = (qrun_i * x + qrun_p * (1- x)) * Area
+    if urb_area_total>0:
+        result = np.sum(temp, axis=3)/urb_area_total
+    return result

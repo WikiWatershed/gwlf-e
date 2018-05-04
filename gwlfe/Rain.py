@@ -1,5 +1,7 @@
 import numpy as np
 from Timer import time_function
+from numba import jit
+
 from Memoization import memoize
 
 
@@ -17,6 +19,7 @@ def Rain(NYrs, DaysMonth, Temp, Prec):
                     result[Y][i][j] = Prec[Y][i][j]
     return result
 
-
-def Rain_2():
-    pass
+# @time_function
+# @jit(cache=True, nopython = True)
+def Rain_2(Temp, Prec):
+    return np.where(Temp <= 0,0,Prec )

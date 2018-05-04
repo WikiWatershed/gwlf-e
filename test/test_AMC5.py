@@ -14,9 +14,9 @@ class TestAMC5(unittest.TestCase):
         self.static_z = pickle.load(open("z.pickle","rb"))
 
 
-    @skip("not ready")
+    # @skip("not ready")
     def test_AMC5(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            AMC5.AMC5_2(),
-            AMC5.AMC5(), decimal=7)
+            AMC5.AMC5_2(z.NYrs, z.DaysMonth, z.Temp, z.Prec, z.InitSnow_0, z.AntMoist_0),
+            AMC5.AMC5(z.NYrs, z.DaysMonth, z.Temp, z.Prec, z.InitSnow_0, z.AntMoist_0), decimal=7)

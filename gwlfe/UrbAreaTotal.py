@@ -5,13 +5,14 @@ from Memoization import memoize
 
 
 @memoize
-def UrbAreaTotal(NRur, NUrb, Area):
+def UrbAreaTotal(NRur,NUrb,Area):
     result = 0
-    nlu = NLU(NRur, NUrb)
+    nlu = NLU(NRur,NUrb)
     for l in range(NRur, nlu):
         result += Area[l]
     return result
 
-
-def UrbAreaTotal_2():
-    pass
+# @time_function
+def UrbAreaTotal_2(NRur,NUrb,Area):
+    nlu = NLU(NRur, NUrb)
+    return np.sum(Area[NRur:nlu])

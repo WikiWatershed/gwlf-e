@@ -12,9 +12,9 @@ class TestCNumPervReten(unittest.TestCase):
         self.z = Parser.GmsReader(input_file).read()
 
 
-    @skip("not ready")
+    # @skip("not ready")
     def test_CNumPervReten(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            CNumPervReten.CNumPervReten_2(),
-            CNumPervReten.CNumPervReten(), decimal=7)
+            CNumPervReten.CNumPervReten_2(z.NYrs, z.DaysMonth, z.Temp, z.Prec, z.InitSnow_0, z.AntMoist_0, z.NRur, z.NUrb, z.CNP_0, z.Grow),
+            CNumPervReten.CNumPervReten(z.NYrs, z.DaysMonth, z.Temp, z.Prec, z.InitSnow_0, z.AntMoist_0, z.NRur, z.NUrb, z.CNP_0, z.Grow), decimal=7)
