@@ -2,19 +2,22 @@ import numpy as np
 from gwlfe.Timer import time_function
 from gwlfe.enums import YesOrNo
 from GRLoadN import GRLoadN
+from GRLoadN import GRLoadN_2
+from gwlfe.GrazingAnimal import GrazingAnimal
 
-@time_function
-def InitGrN(GrazingAnimal,NumAnimals,AvgAnimalWt,AnimalDailyN):
+
+def InitGrN(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN):
     result = 0
-    gr_load_n = GRLoadN(GrazingAnimal,NumAnimals,AvgAnimalWt,AnimalDailyN)
+    gr_load_n = GRLoadN(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN)
+    grazing_animal = GrazingAnimal(GrazingAnimal_0)
     for a in range(9):
-        if GrazingAnimal[a] is YesOrNo.NO:
+        if grazing_animal[a] is YesOrNo.NO:
             pass
-        elif GrazingAnimal[a] is YesOrNo.YES:
+        elif grazing_animal[a] is YesOrNo.YES:
             result += gr_load_n[a]
     return result
 
-@time_function
-def InitGrN_2(GrazingAnimal,NumAnimals,AvgAnimalWt,AnimalDailyN):
-    gr_load_n = GRLoadN(GrazingAnimal,NumAnimals,AvgAnimalWt,AnimalDailyN)
-    return np.sum(gr_load_n[gr_load_n == YesOrNo.Yes])
+
+def InitGrN_2(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN):
+    gr_load_n = GRLoadN_2(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN)
+    return np.sum(gr_load_n)

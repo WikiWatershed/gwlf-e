@@ -25,6 +25,7 @@ import AnnualMeans
 import WriteOutputFiles
 from MultiUse_Fxns import Precipitation, PtSrcFlow, ET, LossFactAdj
 from Outputs.AvAnimalNSum.AnimalN import AnimalN
+from GrazingAnimal import GrazingAnimal
 
 log = logging.getLogger(__name__)
 
@@ -53,6 +54,8 @@ def run(z):
     z.PtSrcFlow = PtSrcFlow.PtSrcFlow_2(z.NYrs, z.PointFlow)
 
     z.LossFactAdj = LossFactAdj.LossFactAdj(z.NYrs, z.Prec, z.DaysMonth)  # not fully removed
+    
+    z.GrazingAnimal = GrazingAnimal(z.GrazingAnimal_0)
 
     z.AnimalN = AnimalN(z.NYrs, z.NGPctManApp, z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN,
                         z.NGAppNRate, z.Prec, z.DaysMonth, z.NGPctSoilIncRate, z.GRPctManApp, z.GRAppNRate,
