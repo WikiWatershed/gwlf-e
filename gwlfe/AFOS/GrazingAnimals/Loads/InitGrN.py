@@ -3,6 +3,7 @@ from gwlfe.Timer import time_function
 from gwlfe.enums import YesOrNo
 from GRLoadN import GRLoadN
 
+@time_function
 def InitGrN(GrazingAnimal,NumAnimals,AvgAnimalWt,AnimalDailyN):
     result = 0
     gr_load_n = GRLoadN(GrazingAnimal,NumAnimals,AvgAnimalWt,AnimalDailyN)
@@ -13,6 +14,7 @@ def InitGrN(GrazingAnimal,NumAnimals,AvgAnimalWt,AnimalDailyN):
             result += gr_load_n[a]
     return result
 
-
-def InitGrN_2():
-    pass
+@time_function
+def InitGrN_2(GrazingAnimal,NumAnimals,AvgAnimalWt,AnimalDailyN):
+    gr_load_n = GRLoadN(GrazingAnimal,NumAnimals,AvgAnimalWt,AnimalDailyN)
+    return np.sum(gr_load_n[gr_load_n == YesOrNo.Yes])

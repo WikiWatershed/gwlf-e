@@ -14,7 +14,8 @@ def GRAccManAppN(GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN, GRPctManA
     return result
 
 
-def GRAccManAppN_2(InitGrN, GRPctManApp, GrazingN):
+def GRAccManAppN_2(_InitGrN, GRPctManApp, GrazingN):
+    init_gr_n = InitGrN()
     result = (np.repeat(InitGrN / 12, 12)) - (GRPctManApp * np.repeat(InitGrN, 12)) - GrazingN
     result = np.maximum(result, 0)
     return result

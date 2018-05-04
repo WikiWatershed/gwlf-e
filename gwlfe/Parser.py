@@ -1154,7 +1154,7 @@ class GmsReader(object):
         # Line 148-156: (For each Animal type)
         z.AnimalName = np.zeros(z.NAnimals, dtype=object)
         z.NumAnimals = np.zeros(z.NAnimals, dtype=int)
-        z.GrazingAnimal = np.zeros(z.NAnimals, dtype=object)
+        z.GrazingAnimal_0 = np.zeros(z.NAnimals, dtype=object)
         z.AvgAnimalWt = np.zeros(z.NAnimals)
         z.AnimalDailyN = np.zeros(z.NAnimals)
         z.AnimalDailyP = np.zeros(z.NAnimals)
@@ -1163,7 +1163,7 @@ class GmsReader(object):
         for i in range(z.NAnimals):
             z.AnimalName[i] = self.next(str)  # Animal Name
             z.NumAnimals[i] = self.next(int)  # Number of Animals
-            z.GrazingAnimal[i] = self.next(YesOrNo.parse)  # Flag: Grazing Animal (“N” No, “Y” Yes)
+            z.GrazingAnimal_0[i] = self.next(YesOrNo.parse)  # Flag: Grazing Animal (“N” No, “Y” Yes)
             z.AvgAnimalWt[i] = self.next(float)  # Average Animal Weight (kg)
             z.AnimalDailyN[i] = self.next(float)  # Animal Daily Loads: Nitrogen (kg/AEU)
             z.AnimalDailyP[i] = self.next(float)  # Animal Daily Loads: Phosphorus (kg/AEU)
@@ -1994,7 +1994,7 @@ class GmsWriter(object):
             self.writerow([
                 z.AnimalName[i],
                 z.NumAnimals[i],
-                z.GrazingAnimal[i],
+                z.GrazingAnimal_0[i],
                 z.AvgAnimalWt[i],
                 z.AnimalDailyN[i],
                 z.AnimalDailyP[i],
