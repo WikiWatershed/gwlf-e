@@ -506,7 +506,7 @@ def run(z):
                 if z.Temp[Y][i][j] > 0 and z.Water[Y][i][j] > 0.01:
                     CalcCnErosRunoffSed.CalcCN(z, i, Y, j)
                 else:
-                    pass
+                    print("mike's print statement")
                 # print("n-1 init snow (",Y,i,j,")",z.InitSnow)
 
                 # DAILY CN
