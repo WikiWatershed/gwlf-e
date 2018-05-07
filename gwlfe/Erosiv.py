@@ -26,7 +26,6 @@ def Erosiv(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef):
                 init_snow_yesterday = init_snow[Y][i][j]
     return result
 
-@time_function
 def Erosiv_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef):
     result = np.zeros((NYrs, 12, 31))
     rain = Rain_2(Temp, Prec)

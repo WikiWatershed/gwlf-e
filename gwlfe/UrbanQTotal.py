@@ -36,7 +36,7 @@ def UrbanQTotal(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, Area, CNI_0
                                             * Area[l] / urb_area_total)
     return result
 
-@time_function
+# @time_function
 def UrbanQTotal_2(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, Area, CNI_0, AntMoist_0, Grow, CNP_0, Imper, ISRR,
                 ISRA):
     nlu = NLU(NRur, NUrb)

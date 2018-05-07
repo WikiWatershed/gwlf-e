@@ -19,7 +19,7 @@ from .enums import ETflag, GrowFlag
 from . import ReadGwlfDataFile
 from . import PrelimCalculations
 from . import CalcCnErosRunoffSed
-from . import AFOS
+from . import AFOS_old
 from . import CalcLoads
 from . import StreamBank
 from . import AnnualMeans
@@ -695,7 +695,7 @@ def run(z):
             #     z.Runoff[Y][i] = 0
 
         # CALCULATE ANIMAL FEEDING OPERATIONS OUTPUT
-        AFOS.AnimalOperations(z, Y)
+        AFOS_old.AnimalOperations(z, Y)
 
         # CALCULATE NUTRIENT AND SEDIMENT LOADS
         CalcLoads.CalculateLoads(z, Y)

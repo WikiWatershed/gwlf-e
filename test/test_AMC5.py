@@ -11,7 +11,6 @@ class TestAMC5(unittest.TestCase):
     def setUp(self):
         input_file = open('input_4.gms', 'r')
         self.z = Parser.GmsReader(input_file).read()
-        self.static_z = pickle.load(open("z.pickle","rb"))
 
 
     # @skip("not ready")
