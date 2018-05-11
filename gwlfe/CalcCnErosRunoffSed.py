@@ -25,8 +25,8 @@ def CalcCN(z, i, Y, j):
     j - number of days in month
     """
     # z.UrbanQTotal = 0
-    z.UncontrolledQ = 0
-    z.RetentionEff = 0
+    # z.UncontrolledQ = 0
+    # z.RetentionEff = 0
 
     # Calculate Curve Number (CN)
     for l in range(z.NRur):
@@ -207,18 +207,18 @@ def CalcCN(z, i, Y, j):
             #                                1 - (z.Imper[l] * (1 - z.ISRR[z.lu[l]]) * (1 - z.ISRA[z.lu[l]]))))
             #                       * z.Area[l] / z.UrbAreaTotal)
 
-            if z.AreaTotal > 0:
-                z.UncontrolledQ += ((z.QrunI[Y][i][j][l] * (z.Imper[l] * (1 - z.ISRR[z.lu[l]]) *
-                                                            (1 - z.ISRA[z.lu[l]])) + z.QrunP[Y][i][j][l] * (
-                                             1 - (z.Imper[l] *
-                                                  (1 - z.ISRR[
-                                                      z.lu[
-                                                          l]]) * (
-                                                          1 -
-                                                          z.ISRA[
-                                                              z.lu[
-                                                                  l]])))) *
-                                    z.Area[l] / z.AreaTotal)
+            # if z.AreaTotal > 0:
+            #     z.UncontrolledQ += ((z.QrunI[Y][i][j][l] * (z.Imper[l] * (1 - z.ISRR[z.lu[l]]) *
+            #                                                 (1 - z.ISRA[z.lu[l]])) + z.QrunP[Y][i][j][l] * (
+            #                                  1 - (z.Imper[l] *
+            #                                       (1 - z.ISRR[
+            #                                           z.lu[
+            #                                               l]]) * (
+            #                                               1 -
+            #                                               z.ISRA[
+            #                                                   z.lu[
+            #                                                       l]])))) *
+            #                         z.Area[l] / z.AreaTotal)
 
             z.WashImperv[l] = (1 - math.exp(-1.81 * z.QrunI[Y][i][j][l])) * z.ImpervAccum[l]
             z.ImpervAccum[l] -= z.WashImperv[l]
@@ -233,14 +233,14 @@ def CalcCN(z, i, Y, j):
         # z.AdjUrbanQTotal = z.UrbanQTotal[Y][i][j]
 
         # Runoff retention
-        if z.Qretention > 0:
-            if z.UrbanQTotal[Y][i][j] > 0:
-                if z.UrbanQTotal[Y][i][j] <= z.Qretention * z.PctAreaInfil:
-                    z.RetentionEff = 1
-                    # z.AdjUrbanQTotal = 0
-                else:
-                    z.RetentionEff = z.Qretention * z.PctAreaInfil / z.UrbanQTotal[Y][i][j]
-                    # z.AdjUrbanQTotal = z.UrbanQTotal[Y][i][j] - z.Qretention * z.PctAreaInfil
+        # if z.Qretention > 0:
+        #     if z.UrbanQTotal[Y][i][j] > 0:
+        #         if z.UrbanQTotal[Y][i][j] <= z.Qretention * z.PctAreaInfil:
+        #             # z.RetentionEff = 1
+        #             # z.AdjUrbanQTotal = 0
+        #         else:
+        #             z.RetentionEff = z.Qretention * z.PctAreaInfil / z.UrbanQTotal[Y][i][j]
+        #             # z.AdjUrbanQTotal = z.UrbanQTotal[Y][i][j] - z.Qretention * z.PctAreaInfil
 
     # if z.UrbAreaTotal > 0:
     #     z.AdjUrbanQTotal = z.AdjUrbanQTotal * z.UrbAreaTotal / z.AreaTotal
