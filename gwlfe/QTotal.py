@@ -25,6 +25,7 @@ def QTotal(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, Ant
                     result[Y][i][j] = urban_q_total_1[Y][i][j] + urban_q_total_1[Y][i][j]
     return result
 
+@memoize
 # @time_function
 def QTotal_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0, Imper,
            ISRR, ISRA, CN):
