@@ -11,10 +11,12 @@ class TestSedTrans(unittest.TestCase):
         input_file = open('input_4.gms', 'r')
         self.z = Parser.GmsReader(input_file).read()
 
-
-    @skip('Not Ready Yet.')
     def test_SedTrans(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            SedTrans.SedTrans_2(),
-            SedTrans.SedTrans(), decimal=7)
+            SedTrans.SedTrans_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
+                                z.AntMoist_0, z.Grow, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.Qretention, z.PctAreaInfil,
+                                z.n25b, z.CN),
+            SedTrans.SedTrans(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
+                              z.AntMoist_0, z.Grow, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.Qretention, z.PctAreaInfil,
+                              z.n25b, z.CN), decimal=7)
