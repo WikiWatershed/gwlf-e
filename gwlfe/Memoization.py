@@ -30,7 +30,6 @@ def memoize(f):
             self.f = f
             self.result = None
             self.__name__ = f.__name__
-            self.__globals__ = f.__globals__
 
         def __call__(self, *args):
             if self.result is None:

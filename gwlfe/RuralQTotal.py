@@ -33,8 +33,6 @@ def RuralQTotal(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, CN, NUrb, AntMois
                     pass
     return result
 
-# @time_function
-@memoize
 def RuralQTotal_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, CN, NUrb, AntMoist_0, Grow, Area):
     result = np.zeros((NYrs, 12, 31))
     q_run = Qrun_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, CN, AntMoist_0, Grow)
