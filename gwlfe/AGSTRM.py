@@ -10,5 +10,8 @@ def AGSTRM(AgLength, StreamLength):
     return result
 
 
-def AGSTRM_2():
-    pass
+def AGSTRM_2(AgLength, StreamLength):
+    if(StreamLength > 0):
+        return AgLength / StreamLength
+    else:
+        return 0
