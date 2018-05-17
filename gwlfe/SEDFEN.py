@@ -31,5 +31,19 @@ def SEDFEN(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, Ant
     return result
 
 
-def SEDFEN_2():
-    pass
+def SEDFEN_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow,
+             CNP_0, Imper, ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0,
+             RecessionCoef, SeepCoef, Qretention, PctAreaInfil, n25b, Landuse, TileDrainDensity, PointFlow,
+             StreamWithdrawal, GroundWithdrawal, NumAnimals, AvgAnimalWt, StreamFlowVolAdj, SedAFactor_0, AvKF, AvSlope,
+             SedAAdjust, StreamLength, AgLength, n42, n45, n85):
+    streambankeros = StreamBankEros(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow,
+                                    CNP_0, Imper, ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap,
+                                    SatStor_0, RecessionCoef, SeepCoef, Qretention, PctAreaInfil, n25b, Landuse,
+                                    TileDrainDensity, PointFlow, StreamWithdrawal, GroundWithdrawal, NumAnimals,
+                                    AvgAnimalWt, StreamFlowVolAdj, SedAFactor_0, AvKF, AvSlope, SedAAdjust,
+                                    StreamLength)
+    agstrm = AGSTRM(AgLength, StreamLength)
+    if n42 > 0:
+        return (n45 / n42) * streambankeros * agstrm * n85
+    else:
+        return np.zeros((NYrs, 12))

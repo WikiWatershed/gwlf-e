@@ -24,7 +24,6 @@ def memoize_with_args(f):
 #             #     return ret
 #             return self.f(*args)
 #     return memodict(f)
-
 def memoize(f):
     class memodict():
         def __init__(self, f):
