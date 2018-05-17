@@ -4,11 +4,9 @@ from numba import jit
 
 from Memoization import memoize
 
-
-@memoize
-def Rain(NYrs, DaysMonth, Temp, Prec):
+@jit
+def Rain_inner(NYrs, DaysMonth, Temp, Prec):
     result = np.zeros((NYrs, 12, 31))
-
     for Y in range(NYrs):
         for i in range(12):
             for j in range(DaysMonth[Y][i]):
@@ -18,6 +16,10 @@ def Rain(NYrs, DaysMonth, Temp, Prec):
                 else:
                     result[Y][i][j] = Prec[Y][i][j]
     return result
+
+@memoize
+def Rain(NYrs, DaysMonth, Temp, Prec):
+    return Rain_inner(NYrs,DaysMonth,Temp,Prec)
 
 # @time_function
 # @jit(cache=True, nopython = True)
