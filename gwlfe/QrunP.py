@@ -33,7 +33,7 @@ def QrunP(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, CNP_0, AntMoist_0
     return result
 
 # @time_function
-
+@memoize
 def QrunP_2(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, CNP_0, AntMoist_0, Grow):
     nlu = NLU(NRur, NUrb)
     result = np.zeros((NYrs, 12, 31, nlu))

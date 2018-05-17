@@ -30,6 +30,7 @@ def memoize(f):
         def __init__(self, f):
             self.f = f
             self.result = None
+            self.__name__ = f.__name__
 
         def __call__(self, *args):
             if self.result is None:
@@ -38,6 +39,18 @@ def memoize(f):
             return self.result
 
     return memodict(f)
+
+# def memoize(f):
+#     class memodict():
+#         def __init__(self, f):
+#             self.f = f
+#             self.result = None
+#             self.__name__ = f.__name__
+#
+#         def __call__(self, *args):
+#             return self.f(*args)
+#
+#     return memodict(f)
 
 # def memoize_list(f):
 #     """ Memoization decorator for functions taking one or more arguments. """

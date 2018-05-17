@@ -4,8 +4,12 @@ from Water import Water
 from AdjUrbanQTotal import AdjUrbanQTotal
 from RuralQTotal import RuralQTotal
 from Memoization import memoize
+from Water import Water_2
+from AdjUrbanQTotal import AdjUrbanQTotal_2
+from RuralQTotal import RuralQTotal_2
 
 
+# @time_function
 @memoize
 def AdjQTotal(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0, Imper,
               ISRR, ISRA, Qretention, PctAreaInfil, n25b, CN):
@@ -23,6 +27,14 @@ def AdjQTotal(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, 
                     result[Y][i][j] = (adj_urban_q_total[Y][i][j] * (1 - (n25b * 0.2))) + rural_q_total[Y][i][j]
     return result
 
-
-def AdjQTotal_2():
-    pass
+# @time_function
+@memoize
+def AdjQTotal_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0, Imper,
+              ISRR, ISRA, Qretention, PctAreaInfil, n25b, CN):
+    result = np.zeros((NYrs, 12, 31))
+    water = Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
+    adj_urban_q_total = AdjUrbanQTotal_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
+                                       Grow, CNP_0, Imper,ISRR, ISRA, Qretention, PctAreaInfil)
+    rural_q_total = RuralQTotal_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, CN, NUrb, AntMoist_0, Grow, Area)
+    result[np.where((Temp>0) & (water>0.01))] = (adj_urban_q_total[np.where((Temp>0) & (water>0.01))]* (1 - (n25b * 0.2))) + rural_q_total[np.where((Temp>0) & (water>0.01))]
+    return result

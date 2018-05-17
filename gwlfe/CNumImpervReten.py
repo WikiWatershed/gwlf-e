@@ -30,6 +30,7 @@ def CNumImpervReten(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, NRur, N
     return result
 
 # @time_function
+@memoize
 def CNumImpervReten_2(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, NRur, NUrb, CNI_0, Grow):
     cni = CNI_2(NRur, NUrb, CNI_0)
     cni_1 = np.tile(cni[1][None, None, None, :], (NYrs, 12, 31, 1))
