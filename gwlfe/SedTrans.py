@@ -5,7 +5,7 @@ from Water import Water
 from AdjQTotal import AdjQTotal
 
 
-@time_function
+# @time_function
 def SedTrans(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0, Imper,
              ISRR, ISRA, Qretention, PctAreaInfil, n25b, CN):
     result = np.zeros((NYrs, 12))  # These used to be (NYrs,16) but it looks like a mistake
@@ -23,7 +23,7 @@ def SedTrans(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, A
     return result
 
 
-@time_function
+# @time_function
 def SedTrans_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0, Imper,
                ISRR, ISRA, Qretention, PctAreaInfil, n25b, CN):
     water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
