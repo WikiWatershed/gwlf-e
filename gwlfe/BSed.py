@@ -6,7 +6,7 @@ from SedTrans import SedTrans
 
 def BSed(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0, Imper,
               ISRR, ISRA, Qretention, PctAreaInfil, n25b, CN):
-    result = np.zeros((NYrs, 16))
+    result = np.zeros((NYrs, 12))#These used to be (NYrs,16) but it looks like a mistake
     sedtrans = SedTrans(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0, Imper,
               ISRR, ISRA, Qretention, PctAreaInfil, n25b, CN)
     for Y in range(NYrs):

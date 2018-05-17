@@ -27,5 +27,14 @@ def SedYield(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef, NRur, KF, LS, C, P,
     return result
 
 
-def SedYield_2():
-    pass
+def SedYield_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef, NRur, KF, LS, C, P, Area, NUrb, CNI_0, AntMoist_0, Grow,
+             ISRR, ISRA, Qretention, PctAreaInfil, n25b, CN, CNP_0, Imper, SedDelivRatio_0):
+    result = np.zeros((NYrs, 12))
+    erosion = Erosion(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef, NRur, KF, LS, C, P, Area)
+    bsed = BSed(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0, Imper,
+                ISRR, ISRA, Qretention, PctAreaInfil, n25b, CN)
+    seddelivratio = SedDelivRatio(SedDelivRatio_0)
+    sedtrans = SedTrans(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0,
+                        Imper, ISRR, ISRA, Qretention, PctAreaInfil, n25b, CN)
+
+    return seddelivratio * sedtrans * np.cumsum(np.where(bsed > 0, erosion / bsed, 0), axis=1)
