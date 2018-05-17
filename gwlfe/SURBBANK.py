@@ -26,5 +26,18 @@ def SURBBANK(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, A
     return result
 
 
-def SURBBANK_2():
-    pass
+def SURBBANK_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0, Imper,
+               ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0, RecessionCoef, SeepCoef,
+               Qretention, PctAreaInfil, n25b, Landuse, TileDrainDensity, PointFlow, StreamWithdrawal,
+               GroundWithdrawal, NumAnimals, AvgAnimalWt, StreamFlowVolAdj, SedAFactor_0, AvKF, AvSlope, SedAAdjust,
+               StreamLength, UrbBankStab, n42b, n85d):
+    streambankeros = StreamBankEros(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow,
+                                    CNP_0, Imper,
+                                    ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0,
+                                    RecessionCoef, SeepCoef, Qretention, PctAreaInfil, n25b, Landuse, TileDrainDensity,
+                                    PointFlow, StreamWithdrawal, GroundWithdrawal, NumAnimals, AvgAnimalWt,
+                                    StreamFlowVolAdj, SedAFactor_0, AvKF, AvSlope, SedAAdjust, StreamLength)
+    if n42b > 0:
+        return (UrbBankStab / n42b) * streambankeros * n85d
+    else:
+        return np.zeros((NYrs, 12))
