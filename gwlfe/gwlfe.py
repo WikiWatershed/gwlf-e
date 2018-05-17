@@ -109,6 +109,8 @@ from Erosion import Erosion
 from SedYield import SedYield
 from SedYield_2 import SedYield_2
 from Erosion_2 import Erosion_2
+from UncontrolledQ import UncontrolledQ
+from RetentionEff import RetentionEff
 
 log = logging.getLogger(__name__)
 
@@ -374,6 +376,12 @@ def run(z):
                             z.n45, z.n85, z.UrbBankStab,
                             z.SedDelivRatio_0, z.Acoef, z.KF, z.LS, z.C, z.P)
 
+    z.UncontrolledQ = UncontrolledQ(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.CNP_0, z.AntMoist_0, z.Grow, z.Imper,
+                  z.ISRR, z.ISRA)
+
+    z.RetentionEff = RetentionEff(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.Qretention, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow, z.CNP_0,
+                 z.Imper, z.ISRR, z.ISRA, z.PctAreaInfil)
+
 
     # --------- run the remaining parts of the model ---------------------
 
@@ -506,7 +514,7 @@ def run(z):
                 if z.Temp[Y][i][j] > 0 and z.Water[Y][i][j] > 0.01:
                     CalcCnErosRunoffSed.CalcCN(z, i, Y, j)
                 else:
-                    print("austin's change")
+                    pass
                 # print("n-1 init snow (",Y,i,j,")",z.InitSnow)
 
                 # DAILY CN
