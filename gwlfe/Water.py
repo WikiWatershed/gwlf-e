@@ -17,7 +17,8 @@ def Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec):
     return result
 
 # @time_function
-@jit(cache=True)
+# @jit(cache=True)
+@memoize
 def Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec):
     melt_1 = Melt_1_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     rain = Rain_2(Temp, Prec)

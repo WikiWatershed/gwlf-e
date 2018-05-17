@@ -23,7 +23,7 @@ def Melt_1(NYrs, DaysMonth, InitSnow_0, Temp, Prec):
     return result
 
 # @time_function
-@jit(cache=True)
+# @jit(cache=True)
 def Melt_1_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec):
     # result = np.zeros((NYrs, 12, 31))
     init_snow_yesterday = InitSnowYesterday(NYrs, DaysMonth, InitSnow_0, Temp, Prec)

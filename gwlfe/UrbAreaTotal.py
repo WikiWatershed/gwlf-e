@@ -13,6 +13,7 @@ def UrbAreaTotal(NRur,NUrb,Area):
     return result
 
 # @time_function
+@memoize
 def UrbAreaTotal_2(NRur,NUrb,Area):
     nlu = NLU(NRur, NUrb)
     return np.sum(Area[NRur:nlu])

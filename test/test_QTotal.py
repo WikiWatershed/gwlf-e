@@ -12,9 +12,11 @@ class TestQTotal(unittest.TestCase):
         self.z = Parser.GmsReader(input_file).read()
 
 
-    @skip("not ready")
+    # @skip("not ready")
     def test_QTotal(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            QTotal.QTotal_2(),
-            QTotal.QTotal(), decimal=7)
+            QTotal.QTotal(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0,
+                            z.Grow, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN),
+            QTotal.QTotal_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0,
+                            z.Grow, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN), decimal=7)

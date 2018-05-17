@@ -12,9 +12,8 @@ class TestAreaTotal(unittest.TestCase):
         self.z = Parser.GmsReader(input_file).read()
 
 
-    @skip("not ready")
     def test_AreaTotal(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            AreaTotal.AreaTotal_2(),
-            AreaTotal.AreaTotal(), decimal=7)
+            AreaTotal.AreaTotal_2(z.Area),
+            AreaTotal.AreaTotal(z.NRur, z.NUrb, z.Area), decimal=7)

@@ -8,7 +8,7 @@ from QrunP import QrunP, QrunP_2
 from LU import LU
 from Memoization import memoize
 
-
+# @time_function
 @memoize
 def UrbanQTotal(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, Area, CNI_0, AntMoist_0, Grow, CNP_0, Imper, ISRR,
                 ISRA):
@@ -37,14 +37,13 @@ def UrbanQTotal(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, Area, CNI_0
     return result
 
 # @time_function
+@memoize
 def UrbanQTotal_2(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, Area, CNI_0, AntMoist_0, Grow, CNP_0, Imper, ISRR,
                 ISRA):
-    nlu = NLU(NRur, NUrb)
     result = np.zeros((NYrs, 12, 31))
     urb_area_total = UrbAreaTotal(NRur, NUrb, Area)
     qrun_i = QrunI_2(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, CNI_0, AntMoist_0, Grow)
     qrun_p = QrunP_2(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, CNP_0, AntMoist_0, Grow)
-    lu = LU(NRur, NUrb)
     z= np.zeros((10,))
     ISRR = np.hstack((z,ISRR))
     ISRA = np.hstack((z,ISRA))

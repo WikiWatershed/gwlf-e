@@ -5,6 +5,7 @@ from Memoization import memoize
 
 
 @memoize
+# @time_function
 def AreaTotal(NRur, NUrb, Area):
     result = 0
     nlu = NLU(NRur, NUrb)
@@ -14,6 +15,6 @@ def AreaTotal(NRur, NUrb, Area):
         result += Area[l]
     return result
 
-
-def AreaTotal_2():
-    pass
+# @time_function
+def AreaTotal_2(Area):
+    return np.sum(Area)
