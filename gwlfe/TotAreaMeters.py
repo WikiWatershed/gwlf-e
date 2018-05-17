@@ -10,7 +10,3 @@ def TotAreaMeters(NRur, NUrb, Area):
     areatotal = AreaTotal(NRur, NUrb, Area)
     result = areatotal * 10000
     return result
-
-
-def TotAreaMeters_2():
-    pass

@@ -12,9 +12,9 @@ class TestTotAreaMeters(unittest.TestCase):
         self.z = Parser.GmsReader(input_file).read()
 
 
-    @skip('Not Ready Yet.')
     def test_TotAreaMeters(self):
-        z = self.z
-        np.testing.assert_array_almost_equal(
-            TotAreaMeters.TotAreaMeters_2(),
-            TotAreaMeters.TotAreaMeters(), decimal=7)
+        pass #no need to vectorize
+        # z = self.z
+        # np.testing.assert_array_almost_equal(
+        #     TotAreaMeters.TotAreaMeters_2(),
+        #     TotAreaMeters.TotAreaMeters(), decimal=7)
