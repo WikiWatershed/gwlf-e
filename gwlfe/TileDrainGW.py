@@ -4,7 +4,6 @@ from GwAgLE import GwAgLE
 from Memoization import memoize
 
 
-@memoize
 def TileDrainGW(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0, Imper,
                 ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0, RecessionCoef, SeepCoef,
                 Landuse, TileDrainDensity):
@@ -18,5 +17,13 @@ def TileDrainGW(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0
     return result
 
 
-def TileDrainGW_2():
-    pass
+def TileDrainGW_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0, Imper,
+                  ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0, RecessionCoef, SeepCoef,
+                  Landuse, TileDrainDensity):
+    if (TileDrainDensity > 0):
+        gwagle = GwAgLE(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0,
+                        Imper, ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0, RecessionCoef,
+                        SeepCoef, Landuse)
+        return gwagle * TileDrainDensity
+    else:
+        return np.zeros((NYrs, 12))
