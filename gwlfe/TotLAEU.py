@@ -2,7 +2,6 @@ import numpy as np
 from Timer import time_function
 from Memoization import memoize
 
-
 def TotLAEU(NumAnimals, AvgAnimalWt):
     result = 0
     aeu3 = (NumAnimals[5] * AvgAnimalWt[5]) / 1000

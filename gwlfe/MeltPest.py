@@ -4,7 +4,7 @@ from InitSnow import InitSnow
 from Melt import Melt
 from Memoization import memoize
 
-
+# Not used in other calculations
 @memoize
 def MeltPest(NYrs, DaysMonth, InitSnow_0, Temp, Prec):
     result = np.zeros((NYrs, 12, 31))

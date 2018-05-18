@@ -12,6 +12,6 @@ def LU_1(NRur, NUrb):
         result[l] = l - 11
     return result
 
-
+#Tried, it was slower. LU_1 is faster
 def LU_1_2():
     pass

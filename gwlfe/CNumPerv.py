@@ -7,7 +7,7 @@ from CNP import CNP, CNP_2
 from Melt import Melt, Melt_2
 from Melt_1 import Melt_1_2
 from GrowFactor import GrowFactor
-from AMC5 import AMC5, AMC5_3
+from AMC5 import AMC5, AMC5_yesterday
 from numba import jit
 from Memoization import memoize
 
@@ -70,7 +70,7 @@ def CNumPerv_2(NYrs, DaysMonth, Temp, NRur, NUrb, CNP_0, InitSnow_0, Prec, Grow,
     water = Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     melt = Melt_1_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     grow_factor = GrowFactor(Grow)
-    amc5 = AMC5_3(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0)
+    amc5 = AMC5_yesterday(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0)
 
     for Y in range(NYrs):
         for i in range(12):

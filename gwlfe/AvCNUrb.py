@@ -21,6 +21,7 @@ def AvCNUrb(NRur, NUrb, CNI_0, CNP_0, Imper, Area):
             result += ((Imper[l] * cni[1][l] + (1 - Imper[l]) * cnp[1][l]) * Area[l] / urbareatotal)
     return result
 
+# Tried, slower than original.
 # @time_function
 def AvCNUrb_2(NRur, NUrb, CNI_0, CNP_0, Imper, Area):
     result = 0

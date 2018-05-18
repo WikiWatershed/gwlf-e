@@ -3,7 +3,7 @@ from Timer import time_function
 from DailyArrayConverter import get_value_for_yesterday
 from MeltPest import MeltPest
 from NewCN import NewCN, NewCN_2
-from AMC5 import AMC5, AMC5_1, AMC5_3
+from AMC5 import AMC5, AMC5_1, AMC5_yesterday
 from GrowFactor import GrowFactor
 from Water import Water, Water_2
 from Melt import  Melt
@@ -12,6 +12,7 @@ from numba import jit
 from Memoization import memoize
 
 @memoize
+# @time_function
 def CNum(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, CN, NRur, NUrb, Grow):
     result = np.zeros((NYrs, 12, 31, 10))
     water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
@@ -60,17 +61,11 @@ def CNum(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, CN, NRur, NUrb, Gr
                         # result[Y][i][j][l] = CNum
     return result
 
-def signfunc( array, i, j, k, x, y, z):
-    a = 0.5 * (x+z)
-    b = 0.5 * (y-x)
-    c = 0.5 * (z-y)
-    return a * np.sign(array - i) + b * np.sign(array - j) + c * np.sign(array - k)
-
 # @time_function
-def CNum_2(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, CN, NRur, NUrb, Grow):
+def CNum_1(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, CN, NRur, NUrb, Grow):
     melt_pest = np.repeat(Melt_1_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)[:,:,:,None],NRur, axis=3 )
     newcn = NewCN_2(NRur, NUrb, CN)
-    amc5 = np.repeat(AMC5_3(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0)[:,:,:,None], NRur,axis=3)
+    amc5 = np.repeat(AMC5_yesterday(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0)[:,:,:,None], NRur,axis=3)
     g = GrowFactor(Grow)
     grow_factor = np.tile(GrowFactor(Grow)[None,:,None,None], (NYrs , 1, 31, NRur))
     water = np.repeat(Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)[:,:,:,None],NRur, axis=3 )
@@ -80,25 +75,12 @@ def CNum_2(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, CN, NRur, NUrb, 
     newcn_2 = np.tile(newcn[2, :10][None,None,None,:], (NYrs , 12, 31, 1))
     result_0 = np.zeros((NYrs, 12, 31, NRur))
     result_1 = np.zeros((NYrs, 12, 31, NRur))
-
-    # result_2 = np.zeros((NYrs, 12, 31, NRur))
-    # result_3 = np.zeros((NYrs, 12, 31, NRur))
     result = np.zeros((NYrs, 12, 31, NRur))  # TODO: should we just generalize to NLU?
     # result[np.where((Temp > 0) & (water > 0.01) & (melt_pest <= 0) & (grow_factor>0))]
     result_0[np.where((Temp > 0) & (water> 0.01) & (CN_0>0 ))] = 1
     result_1[np.where((result_0 == 1) & (melt_pest <= 0) & (grow_factor > 0 )) ] = 1
     result_1[np.where((result_0 == 1) & (melt_pest <= 0) & (grow_factor <= 0))] = 2
     result_1[np.where((result_0 == 1) & (melt_pest > 0))] = 3
-    # temp = signfunc(amc5, 0, 3.56-10e-8, 5.33-10e-8, newcn_0 + (CN_0 -newcn_0) * amc5/3.56 ,
-    #                                                 CN_0 + (newcn_2 - CN_0) * (amc5 - 3.56) / 1.77,
-    #                                                 newcn_2)
-
-    # result =  np.where(result_1 ==1 , 1, 0) * temp
-    # temp = signfunc(amc5, 0, 1.27 - 10e-8, 2.79 - 10e-8,newcn_0 + (CN_0 - newcn_0) * amc5 / 1.27 ,
-    #                                                     CN_0 + (newcn_2 - CN_0) * (amc5 - 1.27) / 1.52,
-    #                                                     newcn_2)
-    # result = np.where(result_1 ==2, 1, 0) * temp
-    # result[np.where(result_1 == 3)] = newcn_2[np.where(result_1 == 3)]
     A = CN_0 + (newcn_2 - CN_0) * (amc5 - 3.56) / 1.77
     result[np.where((result_1 == 1))] = A[np.where((result_1 == 1))]
     result[np.where((result_1 == 1) & (amc5 >= 5.33))] = newcn_2[np.where((result_1 == 1) & (amc5 >= 5.33))]
@@ -112,13 +94,14 @@ def CNum_2(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, CN, NRur, NUrb, 
     result[result_1==3] = newcn_2[result_1==3]
     return result
 
-
+# CNUM_2 is faster than CNUM_1. CNUM_1 is
 # @time_function
-# @jit(cache = True, nopython = True)
-def CNum_1(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, CN, NRur, NUrb, Grow):
+@memoize
+@jit(cache = True)
+def CNum_2(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, CN, NRur, NUrb, Grow):
     melt_pest = Melt_1_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     newcn = NewCN_2(NRur, NUrb, CN)
-    amc5 = AMC5_3(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0)
+    amc5 = AMC5_yesterday(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0)
     grow_factor = GrowFactor(Grow)
     water = Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     result = np.zeros((NYrs, 12, 31, NRur))  # TODO: should we just generalize to NLU?
