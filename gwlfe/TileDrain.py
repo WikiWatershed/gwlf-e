@@ -1,12 +1,13 @@
 import numpy as np
 from Timer import time_function
 from TileDrainGW import TileDrainGW
+from TileDrainGW import TileDrainGW_2
 from TileDrainRO import TileDrainRO
+from TileDrainRO import TileDrainRO_2
 from Memoization import memoize
 
 
-# @time_function
-@memoize
+# @memoize
 def TileDrain(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0, Imper,
               ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0, RecessionCoef, SeepCoef, Landuse,
               TileDrainDensity):
@@ -23,13 +24,14 @@ def TileDrain(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, 
     return result
 
 
-# @time_function
 def TileDrain_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0, Imper,
                 ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0, RecessionCoef, SeepCoef,
                 Landuse, TileDrainDensity):
-    tiledrainro = TileDrainRO(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, CN, AntMoist_0, NUrb, Grow, Landuse, Area,
-                              TileDrainDensity)
-    tiledraingw = TileDrainGW(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0,
-                              Imper, ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0,
-                              RecessionCoef, SeepCoef, Landuse, TileDrainDensity)
+    tiledrainro = TileDrainRO_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, CN, AntMoist_0, NUrb, Grow, Landuse,
+                                Area,
+                                TileDrainDensity)
+    tiledraingw = TileDrainGW_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow,
+                                CNP_0,
+                                Imper, ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0,
+                                RecessionCoef, SeepCoef, Landuse, TileDrainDensity)
     return tiledrainro + tiledraingw

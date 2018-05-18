@@ -8,7 +8,6 @@ from UrbAreaTotal import UrbAreaTotal_2
 
 
 # @memoize
-@time_function
 def PcntUrbanArea(NRur, NUrb, Area):
     result = 0
     areatotal = AreaTotal(NRur, NUrb, Area)
@@ -19,7 +18,7 @@ def PcntUrbanArea(NRur, NUrb, Area):
         result += urbareatotal / areatotal
     return result
 
-@time_function
+
 def PcntUrbanArea_2(NRur, NUrb, Area):
     result = 0
     areatotal = AreaTotal_2(Area)

@@ -6,7 +6,6 @@ from Memoization import memoize
 from AreaTotal import AreaTotal_2
 
 
-@time_function
 def AEU(NumAnimals, AvgAnimalWt, NRur, NUrb, Area):
     result = 0
     areatotal = AreaTotal(NRur, NUrb, Area)
@@ -17,7 +16,7 @@ def AEU(NumAnimals, AvgAnimalWt, NRur, NUrb, Area):
         result = 0
     return result
 
-@time_function
+
 def AEU_2(NumAnimals, AvgAnimalWt, NRur, NUrb, Area):
     result = 0
     areatotal = AreaTotal_2(Area)

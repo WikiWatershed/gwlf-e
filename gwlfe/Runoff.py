@@ -9,7 +9,6 @@ from QTotal import QTotal_2
 from TileDrainRO import TileDrainRO_2
 from numba import jit
 
-@time_function
 def Runoff(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0, Imper,
            ISRR, ISRA, Qretention, PctAreaInfil, n25b, CN, Landuse, TileDrainDensity):
     result = np.zeros((NYrs, 12))
@@ -34,7 +33,7 @@ def Runoff(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, Ant
                 result[Y][i] = 0
     return result
 
-@time_function
+
 @jit
 def Runoff_1(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0, Imper,
            ISRR, ISRA, Qretention, PctAreaInfil, n25b, CN, Landuse, TileDrainDensity):
@@ -60,7 +59,7 @@ def Runoff_1(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, A
                 result[Y][i] = 0
     return result
 
-@time_function
+
 def Runoff_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0, Imper,
            ISRR, ISRA, Qretention, PctAreaInfil, n25b, CN, Landuse, TileDrainDensity):
     result = np.zeros((NYrs, 12,31))

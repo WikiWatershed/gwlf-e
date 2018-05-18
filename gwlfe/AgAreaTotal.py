@@ -4,7 +4,7 @@ from enums import LandUse as LandUseNames
 from Memoization import memoize
 
 
-@memoize
+# @memoize
 def AgAreaTotal(NRur, Landuse, Area):
     result = 0
     for l in range(NRur):

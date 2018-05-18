@@ -23,14 +23,15 @@ def GwAgLE(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, Ant
                 result[Y][i] = (result[Y][i] + (groundwatle[Y][i] * (agareatotal / areatotal)))
     return result
 
-@time_function
+
 def GwAgLE_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0, Imper,
              ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0, RecessionCoef, SeepCoef, Landuse):
     areatotal = AreaTotal_2(Area)
     agareatotal = AgAreaTotal(NRur, Landuse, Area)
-    groundwatle = GroundWatLE_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0,
-                              Imper, ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0,
-                              RecessionCoef, SeepCoef)
+    groundwatle = GroundWatLE_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow,
+                                CNP_0,
+                                Imper, ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0,
+                                RecessionCoef, SeepCoef)
     if (areatotal > 0):
         return groundwatle * agareatotal / areatotal
     else:

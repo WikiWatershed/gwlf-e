@@ -11,10 +11,10 @@ class TestSedAFactor(unittest.TestCase):
         input_file = open('input_4.gms', 'r')
         self.z = Parser.GmsReader(input_file).read()
 
-
-    @skip("Not Ready Yet.")
     def test_SedAFactor(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            SedAFactor.SedAFactor_2(),
-            SedAFactor.SedAFactor(), decimal=7)
+            SedAFactor.SedAFactor_2(z.NumAnimals, z.AvgAnimalWt, z.NRur, z.NUrb, z.CNI_0, z.CNP_0, z.CN, z.Imper,
+                                    z.Area, z.SedAFactor_0, z.AvKF, z.AvSlope, z.SedAAdjust),
+            SedAFactor.SedAFactor(z.NumAnimals, z.AvgAnimalWt, z.NRur, z.NUrb, z.CNI_0, z.CNP_0, z.CN, z.Imper,
+                                    z.Area, z.SedAFactor_0, z.AvKF, z.AvSlope, z.SedAAdjust), decimal=7)

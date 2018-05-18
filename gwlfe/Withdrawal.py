@@ -3,7 +3,8 @@ from Timer import time_function
 from Memoization import memoize
 
 
-@memoize
+# @memoize
+
 def Withdrawal(NYrs, StreamWithdrawal, GroundWithdrawal):
     result = np.zeros((NYrs, 12))
     for Y in range(NYrs):
@@ -12,5 +13,5 @@ def Withdrawal(NYrs, StreamWithdrawal, GroundWithdrawal):
     return result
 
 
-def Withdrawal_2():
-    pass
+def Withdrawal_2(NYrs, StreamWithdrawal, GroundWithdrawal):
+    return np.reshape(np.repeat(StreamWithdrawal + GroundWithdrawal, NYrs), (NYrs, 12))

@@ -12,9 +12,8 @@ class TestAvCNRur(unittest.TestCase):
         self.z = Parser.GmsReader(input_file).read()
 
 
-    @skip("Not Ready Yet.")
     def test_AvCNRur(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            AvCNRur.AvCNRur_2(),
-            AvCNRur.AvCNRur(), decimal=7)
+            AvCNRur.AvCNRur_2(z.NRur, z.Area, z.CN),
+            AvCNRur.AvCNRur(z.NRur, z.Area, z.CN), decimal=7)

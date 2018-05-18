@@ -12,9 +12,8 @@ class TestWithdrawal(unittest.TestCase):
         self.z = Parser.GmsReader(input_file).read()
 
 
-    @skip('Not Ready Yet.')
     def test_Withdrawal(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            Withdrawal.Withdrawal_2(),
-            Withdrawal.Withdrawal(), decimal=7)
+            Withdrawal.Withdrawal_2(z.NYrs, z.StreamWithdrawal, z.GroundWithdrawal),
+            Withdrawal.Withdrawal(z.NYrs, z.StreamWithdrawal, z.GroundWithdrawal), decimal=7)
