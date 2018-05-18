@@ -2,7 +2,7 @@ import numpy as np
 from Timer import time_function
 from InitSnow import InitSnow
 from InitSnowYesterday import InitSnowYesterday
-from Melt import Melt, Melt_3
+from Melt import Melt, Melt_2
 from numba import jit
 from Memoization import memoize
 
@@ -27,6 +27,6 @@ def Melt_1(NYrs, DaysMonth, InitSnow_0, Temp, Prec):
 def Melt_1_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec):
     # result = np.zeros((NYrs, 12, 31))
     init_snow_yesterday = InitSnowYesterday(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
-    melt = Melt_3(NYrs, DaysMonth, Temp, InitSnow_0, Prec)
+    melt = Melt_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec)
     melt[np.where((Temp> 0) & (init_snow_yesterday > 0.001) & (melt > init_snow_yesterday))] = init_snow_yesterday[np.where((Temp> 0) & (init_snow_yesterday > 0.001) & (melt > init_snow_yesterday))]
     return melt

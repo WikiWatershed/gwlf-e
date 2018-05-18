@@ -16,4 +16,4 @@ class TestMelt(unittest.TestCase):
         z = self.z
         np.testing.assert_array_almost_equal(
             Melt.Melt(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec),
-            Melt.Melt_3(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec), decimal=7)
+            Melt.Melt_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec), decimal=7)

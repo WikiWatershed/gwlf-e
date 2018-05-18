@@ -5,7 +5,7 @@ import copy
 from numba import jit
 from Memoization import memoize
 
-
+# AMC5_yesterday returns the same value as yesterday(AMC5) and faster than any other version
 @memoize
 def AMC5(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0):
     result = np.zeros((NYrs, 12, 31))
@@ -73,12 +73,12 @@ def AMC5_1(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0):
                 AntMoist1[1] = AntMoist1[0]
                 AntMoist1[0] = water[Y][i][j]
     return result
-
+# This is the fastest
 @jit(cache=True)
-def AMC5_3(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0):
+def AMC5_yesterday(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0):
     result = np.zeros((NYrs, 12, 31))
     AntMoist1 = np.zeros((5,))
-    water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
+    water = Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     AMC5 = 0
     for k in range(5):
         AMC5 += AntMoist_0[k]

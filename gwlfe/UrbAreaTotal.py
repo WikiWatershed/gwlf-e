@@ -12,8 +12,10 @@ def UrbAreaTotal(NRur,NUrb,Area):
         result += Area[l]
     return result
 
+
+# Tried, it was slower. UrbAreaTotal is faster
 # @time_function
-@memoize
+#@memoize
 def UrbAreaTotal_2(NRur,NUrb,Area):
     nlu = NLU(NRur, NUrb)
-    return np.sum(Area[NRur:nlu])
+    return np.sum(Area[NRur:])

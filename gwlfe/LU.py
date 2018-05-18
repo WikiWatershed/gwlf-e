@@ -13,6 +13,7 @@ def LU(NRur, NUrb):
     return result
 
 # @time_function
+#lu is faster than lu_2
 def lu_2(NRur, NUrb):
     nlu = NLU(NRur, NUrb)
     result = np.zeros((nlu,)).astype("int")
