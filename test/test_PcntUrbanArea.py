@@ -12,9 +12,9 @@ class TestPcntUrbanArea(unittest.TestCase):
         self.z = Parser.GmsReader(input_file).read()
 
 
-    @skip("Not Ready Yet.")
+    # @skip("Not Ready Yet.")
     def test_PcntUrbanArea(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            PcntUrbanArea.PcntUrbanArea_2(),
-            PcntUrbanArea.PcntUrbanArea(), decimal=7)
+            PcntUrbanArea.PcntUrbanArea_2(z.NRur, z.NUrb, z.Area),
+            PcntUrbanArea.PcntUrbanArea(z.NRur, z.NUrb, z.Area), decimal=7)

@@ -16,5 +16,6 @@ def AreaTotal(NRur, NUrb, Area):
     return result
 
 # @time_function
+@memoize
 def AreaTotal_2(Area):
     return np.sum(Area)

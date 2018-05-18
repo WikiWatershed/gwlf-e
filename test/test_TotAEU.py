@@ -3,18 +3,18 @@ from unittest import skip
 from mock import patch
 import numpy as np
 from gwlfe import Parser
-from gwlfe import AEU
+from gwlfe import TotAEU
 
 
-class TestAEU(unittest.TestCase):
+class TestTotAEU(unittest.TestCase):
     def setUp(self):
         input_file = open('input_4.gms', 'r')
         self.z = Parser.GmsReader(input_file).read()
 
 
-    # @skip("Not Ready Yet.")
-    def test_AEU(self):
+    # @skip("not ready")
+    def test_TotAEU(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            AEU.AEU_2(z.NumAnimals, z.AvgAnimalWt, z.NRur, z.NUrb, z.Area),
-            AEU.AEU(z.NumAnimals, z.AvgAnimalWt, z.NRur, z.NUrb, z.Area), decimal=7)
+            TotAEU.TotAEU_2(z.NumAnimals, z.AvgAnimalWt),
+            TotAEU.TotAEU(z.NumAnimals, z.AvgAnimalWt), decimal=7)

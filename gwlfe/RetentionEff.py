@@ -7,7 +7,8 @@ from Water import Water_2
 from UrbanQTotal import UrbanQTotal_2
 
 
-@memoize
+# @memoize
+@time_function
 def RetentionEff(NYrs, DaysMonth, InitSnow_0, Temp, Prec, Qretention, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0, Imper, ISRR, ISRA, PctAreaInfil):
     result = 0
     water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
@@ -31,7 +32,7 @@ def RetentionEff(NYrs, DaysMonth, InitSnow_0, Temp, Prec, Qretention, NRur, NUrb
     return result
 
 
-def RetentionEff_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, Qretention, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0, Imper, ISRR, ISRA, PctAreaInfil):
+def RetentionEff_3(NYrs, DaysMonth, InitSnow_0, Temp, Prec, Qretention, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0, Imper, ISRR, ISRA, PctAreaInfil):
     result = np.zeros((NYrs, 12, 31))
     water = Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     urbanqtotal = UrbanQTotal_2(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, Area, CNI_0, AntMoist_0, Grow, CNP_0,
@@ -39,4 +40,18 @@ def RetentionEff_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, Qretention, NRur, NU
     result[np.where((Temp>0) & (water > 0.05) & (Qretention>0) & (urbanqtotal > 0 ) & (urbanqtotal <= Qretention * PctAreaInfil))] = 1
     result[np.where((Temp>0) & (water > 0.05) & (Qretention>0) & (urbanqtotal > 0 ) & (urbanqtotal > Qretention * PctAreaInfil))] = \
         Qretention * PctAreaInfil/ urbanqtotal[np.where((Temp>0) & (water > 0.05) & (Qretention>0) & (urbanqtotal > 0 ) & (urbanqtotal > Qretention * PctAreaInfil))]
-    pass
+    np.nonzero(result)
+    return
+@time_function
+def RetentionEff_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, Qretention, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0, Imper, ISRR, ISRA, PctAreaInfil):
+    water = Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
+    urbanqtotal = UrbanQTotal_2(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, Area, CNI_0, AntMoist_0, Grow, CNP_0,
+                              Imper, ISRR, ISRA)
+    try:
+        test = urbanqtotal[np.where((Temp>0) & (water > 0.05) & (Qretention>0) & (urbanqtotal > 0 ))][::-1]
+        if test <=  Qretention * PctAreaInfil:
+            return 1
+        else:
+            return Qretention * PctAreaInfil / test
+    except IndexError:
+        return 0

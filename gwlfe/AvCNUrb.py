@@ -28,6 +28,6 @@ def AvCNUrb_2(NRur, NUrb, CNI_0, CNP_0, Imper, Area):
     cni = CNI(NRur, NUrb, CNI_0)
     cnp = CNP(NRur, NUrb, CNP_0)
     urbareatotal = UrbAreaTotal(NRur, NUrb, Area)
-    temp = ((Imper* cni[1] + (1 - Imper) * cnp[1]) * Area / urbareatotal)[NRur:nlu]
+    temp = ((Imper* cni[1] + (1 - Imper) * cnp[1]) * Area / urbareatotal)[NRur:]
     return np.sum(temp)
 

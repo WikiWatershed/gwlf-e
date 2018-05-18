@@ -60,9 +60,9 @@ from AdjQTotal import AdjQTotal
 from TileDrainRO import TileDrainRO
 from Runoff import Runoff
 from AEU import AEU
-from AEU import TotAEU
+from TotAEU import TotAEU
 from AEU import TotLAEU
-from AEU import TotPAEU
+from TotPAEU import TotPAEU
 from PcntUrbanArea import PcntUrbanArea
 from AvCNUrb import AvCNUrb
 from AvCNRur import AvCNRur

@@ -3,7 +3,7 @@ from Timer import time_function
 from NLU import NLU
 from Memoization import memoize
 
-
+# @time_function
 @memoize
 def UrbAreaTotal(NRur,NUrb,Area):
     result = 0

@@ -72,8 +72,7 @@ def Runoff_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, A
     tile_drain_ro = TileDrainRO_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, CN, AntMoist_0, NUrb, Grow, Landuse,
                                 Area,
                                 TileDrainDensity)
-    result[np.where(adj_q_total > 0)] = adj_q_total[np.where(adj_q_total>0)]
-    result[np.where(adj_q_total <= 0)] = q_total[np.where(adj_q_total <= 0)]
+    result = np.where(adj_q_total>0,adj_q_total,q_total)
     result = np.sum(result, axis=2) - tile_drain_ro
     result[result<0] = 0
     return result
