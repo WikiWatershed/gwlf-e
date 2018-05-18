@@ -1,7 +1,6 @@
 import numpy as np
 from Timer import time_function
 from SedAFactor import SedAFactor
-from SedAFactor import SedAFactor_2
 from StreamFlowVol import StreamFlowVol
 from StreamFlowVol import StreamFlowVol_2
 from Memoization import memoize
