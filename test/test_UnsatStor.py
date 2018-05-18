@@ -11,10 +11,13 @@ class TestUnsatStor(unittest.TestCase):
         input_file = open('input_4.gms', 'r')
         self.z = Parser.GmsReader(input_file).read()
 
-
-    @skip('Not Ready Yet.')
     def test_UnsatStor(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            UnsatStor.UnsatStor_2(),
-            UnsatStor.UnsatStor(), decimal=7)
+            UnsatStor.UnsatStor_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
+                                  z.AntMoist_0, z.Grow, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV,
+                                  z.PcntET, z.DayHrs, z.MaxWaterCap),
+            UnsatStor.UnsatStor(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
+                                z.AntMoist_0, z.Grow, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV,
+                                z.PcntET, z.DayHrs, z.MaxWaterCap),
+            decimal=7)

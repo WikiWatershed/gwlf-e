@@ -6,7 +6,6 @@ from AgAreaTotal import AgAreaTotal
 from Memoization import memoize
 
 
-@memoize
 def GwAgLE(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0, Imper,
            ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0, RecessionCoef, SeepCoef, Landuse):
     result = np.zeros((NYrs, 12))
@@ -23,5 +22,14 @@ def GwAgLE(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, Ant
     return result
 
 
-def GwAgLE_2():
-    pass
+def GwAgLE_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0, Imper,
+             ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0, RecessionCoef, SeepCoef, Landuse):
+    areatotal = AreaTotal(NRur, NUrb, Area)
+    agareatotal = AgAreaTotal(NRur, Landuse, Area)
+    groundwatle = GroundWatLE(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0,
+                              Imper, ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0,
+                              RecessionCoef, SeepCoef)
+    if (areatotal > 0):
+        return groundwatle * agareatotal / areatotal
+    else:
+        return np.zeros((NYrs, 12))
