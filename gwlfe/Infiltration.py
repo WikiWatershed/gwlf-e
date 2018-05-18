@@ -3,9 +3,11 @@ from Timer import time_function
 from QTotal import QTotal
 from Water import Water
 from Memoization import memoize
+from QTotal import QTotal_2
+from Water import Water_2
 
-
-@memoize
+@time_function
+# @memoize
 def Infiltration(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0, Imper,
                  ISRR, ISRA, CN):
     result = np.zeros((NYrs, 12, 31))
@@ -19,6 +21,12 @@ def Infiltration(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_
                     result[Y][i][j] = water[Y][i][j] - qtotal[Y][i][j]
     return result
 
-
-def Infiltration_2():
-    pass
+@time_function
+def Infiltration_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0, Imper,
+                 ISRR, ISRA, CN):
+    result = np.zeros((NYrs, 12, 31))
+    qtotal = QTotal_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0, Imper,
+                    ISRR, ISRA, CN)
+    water = Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
+    result[np.where(qtotal < water)] = water[np.where(qtotal < water)] - qtotal[np.where(qtotal < water)]
+    return result

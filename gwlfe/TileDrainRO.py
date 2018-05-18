@@ -2,8 +2,9 @@ import numpy as np
 from Timer import time_function
 from AgRunoff import AgRunoff
 from Memoization import memoize
+from AgRunoff import AgRunoff_2
 
-
+# @time_function
 @memoize
 def TileDrainRO(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, CN, AntMoist_0, NUrb, Grow, Landuse, Area,
                 TileDrainDensity):
@@ -15,6 +16,8 @@ def TileDrainRO(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, CN, AntMoist_0, N
             result[Y][i] = ag_runoff[Y][i] * TileDrainDensity
     return result
 
-
-def TileDrainRO_2():
-    pass
+# @time_function
+@memoize
+def TileDrainRO_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, CN, AntMoist_0, NUrb, Grow, Landuse, Area,
+                TileDrainDensity):
+    return AgRunoff_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, CN, AntMoist_0, NUrb, Grow, Landuse, Area) * TileDrainDensity

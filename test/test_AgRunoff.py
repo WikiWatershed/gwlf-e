@@ -12,9 +12,9 @@ class TestAgRunoff(unittest.TestCase):
         self.z = Parser.GmsReader(input_file).read()
 
 
-    @skip("not ready")
+    # @skip("not ready")
     def test_AgRunoff(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            AgRunoff.AgRunoff_2(),
-            AgRunoff.AgRunoff(), decimal=7)
+            AgRunoff.AgRunoff_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.CN, z.AntMoist_0, z.NUrb, z.Grow, z.Landuse, z.Area),
+            AgRunoff.AgRunoff(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.CN, z.AntMoist_0, z.NUrb, z.Grow, z.Landuse, z.Area), decimal=7)

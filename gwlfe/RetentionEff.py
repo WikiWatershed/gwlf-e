@@ -3,6 +3,8 @@ from Timer import time_function
 from Memoization import memoize
 from Water import Water
 from UrbanQTotal import UrbanQTotal
+from Water import Water_2
+from UrbanQTotal import UrbanQTotal_2
 
 
 @memoize
@@ -29,5 +31,12 @@ def RetentionEff(NYrs, DaysMonth, InitSnow_0, Temp, Prec, Qretention, NRur, NUrb
     return result
 
 
-def RetentionEff_2():
+def RetentionEff_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, Qretention, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0, Imper, ISRR, ISRA, PctAreaInfil):
+    result = np.zeros((NYrs, 12, 31))
+    water = Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
+    urbanqtotal = UrbanQTotal_2(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, Area, CNI_0, AntMoist_0, Grow, CNP_0,
+                              Imper, ISRR, ISRA)
+    result[np.where((Temp>0) & (water > 0.05) & (Qretention>0) & (urbanqtotal > 0 ) & (urbanqtotal <= Qretention * PctAreaInfil))] = 1
+    result[np.where((Temp>0) & (water > 0.05) & (Qretention>0) & (urbanqtotal > 0 ) & (urbanqtotal > Qretention * PctAreaInfil))] = \
+        Qretention * PctAreaInfil/ urbanqtotal[np.where((Temp>0) & (water > 0.05) & (Qretention>0) & (urbanqtotal > 0 ) & (urbanqtotal > Qretention * PctAreaInfil))]
     pass
