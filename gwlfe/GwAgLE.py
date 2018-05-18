@@ -1,7 +1,9 @@
 import numpy as np
 from Timer import time_function
 from GroundWatLE import GroundWatLE
+from GroundWatLE import GroundWatLE_2
 from AreaTotal import AreaTotal
+from AreaTotal import AreaTotal_2
 from AgAreaTotal import AgAreaTotal
 from Memoization import memoize
 
@@ -21,12 +23,12 @@ def GwAgLE(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, Ant
                 result[Y][i] = (result[Y][i] + (groundwatle[Y][i] * (agareatotal / areatotal)))
     return result
 
-
+@time_function
 def GwAgLE_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0, Imper,
              ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0, RecessionCoef, SeepCoef, Landuse):
-    areatotal = AreaTotal(NRur, NUrb, Area)
+    areatotal = AreaTotal_2(Area)
     agareatotal = AgAreaTotal(NRur, Landuse, Area)
-    groundwatle = GroundWatLE(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0,
+    groundwatle = GroundWatLE_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0,
                               Imper, ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0,
                               RecessionCoef, SeepCoef)
     if (areatotal > 0):

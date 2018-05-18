@@ -2,6 +2,7 @@ import numpy as np
 from numba import jit
 from Timer import time_function
 from Percolation import Percolation
+from Percolation import Percolation_2
 from DeepSeep import DeepSeep_inner
 from Memoization import memoize
 
@@ -43,9 +44,11 @@ def GrFlow_inner(NYrs, SatStor_0, DaysMonth, RecessionCoef, SeepCoef, percolatio
     return result
 
 
+@memoize
 def GrFlow_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0, Imper,
              ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0, RecessionCoef, SeepCoef):
-    percolation = Percolation(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0,
-                              Imper, ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap)
+    percolation = Percolation_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow,
+                                CNP_0,
+                                Imper, ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap)
 
     return DeepSeep_inner(NYrs, SatStor_0, DaysMonth, RecessionCoef, SeepCoef, percolation)[1]

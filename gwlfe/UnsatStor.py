@@ -1,6 +1,7 @@
 import numpy as np
 from Timer import time_function
 from Infiltration import Infiltration
+from Infiltration import Infiltration_2
 from ET import DailyET_2
 from Memoization import memoize
 from numba import jit
@@ -51,10 +52,11 @@ def UnsatStor_inner(NYrs, DaysMonth, MaxWaterCap, UnsatStor_0, infiltration, et)
                 unsatstor_carryover = result[Y][i][j]
     return result
 
+
 @memoize
 def UnsatStor_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0, Imper,
                 ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap):
-    infiltration = Infiltration(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow,
+    infiltration = Infiltration_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow,
                                 CNP_0, Imper, ISRR, ISRA, CN)
     et = DailyET_2(Temp, KV, PcntET, DayHrs)
     return UnsatStor_inner(NYrs, DaysMonth, MaxWaterCap, UnsatStor_0, infiltration, et)

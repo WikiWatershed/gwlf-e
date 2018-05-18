@@ -2,6 +2,7 @@ import numpy as np
 from numba import jit
 from Timer import time_function
 from Percolation import Percolation
+from Percolation import Percolation_2
 from Memoization import memoize
 
 
@@ -26,9 +27,10 @@ def DeepSeep(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, A
                 satstor_carryover = satstor[Y][i][j]
     return result
 
+
 @memoize
-@jit(cache=True,nopython=True)
-def DeepSeep_inner(NYrs,SatStor_0,DaysMonth,RecessionCoef,SeepCoef,percolation):
+@jit(cache=True, nopython=True)
+def DeepSeep_inner(NYrs, SatStor_0, DaysMonth, RecessionCoef, SeepCoef, percolation):
     deepseep = np.zeros((NYrs, 12, 31))
     grflow = np.zeros((NYrs, 12, 31))
     satstor = np.zeros((NYrs, 12, 31))
@@ -43,11 +45,14 @@ def DeepSeep_inner(NYrs,SatStor_0,DaysMonth,RecessionCoef,SeepCoef,percolation):
                 if satstor[Y][i][j] < 0:
                     satstor[Y][i][j] = 0
                 satstor_carryover = satstor[Y][i][j]
-    return deepseep,grflow,satstor
+    return deepseep, grflow, satstor
 
+
+@memoize
 def DeepSeep_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0, Imper,
-             ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0, RecessionCoef, SeepCoef):
-    percolation = Percolation(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0,
-                              Imper, ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap)
+               ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0, RecessionCoef, SeepCoef):
+    percolation = Percolation_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow,
+                                CNP_0,
+                                Imper, ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap)
 
-    return DeepSeep_inner(NYrs,SatStor_0,DaysMonth,RecessionCoef,SeepCoef,percolation)[0]
+    return DeepSeep_inner(NYrs, SatStor_0, DaysMonth, RecessionCoef, SeepCoef, percolation)[0]
