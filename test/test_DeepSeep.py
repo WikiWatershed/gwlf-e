@@ -12,9 +12,12 @@ class TestDeepSeep(unittest.TestCase):
         self.z = Parser.GmsReader(input_file).read()
 
 
-    @skip('Not Ready Yet.')
     def test_DeepSeep(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            DeepSeep.DeepSeep_2(),
-            DeepSeep.DeepSeep(), decimal=7)
+            DeepSeep.DeepSeep_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
+                                z.AntMoist_0, z.Grow, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV,
+                                z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0, z.RecessionCoef, z.SeepCoef),
+            DeepSeep.DeepSeep(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
+                                z.AntMoist_0, z.Grow, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV,
+                                z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0, z.RecessionCoef, z.SeepCoef), decimal=7)
