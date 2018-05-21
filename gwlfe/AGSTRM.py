@@ -3,7 +3,7 @@ from Timer import time_function
 from Memoization import memoize
 
 
-# @memoize
+@memoize
 def AGSTRM(AgLength, StreamLength):
     result = 0.0
     result = AgLength / StreamLength if StreamLength > 0 else 0

@@ -30,3 +30,6 @@ def ET_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMo
                     pass
                 unsatstor_carryover = result[Y][i][j]
     return et
+
+def ET_2_2():
+    pass

@@ -18,13 +18,13 @@ from Memoization import memoize
 
 @memoize
 def CalculateLoads(z, Y):
-    PrecipitationTotal = 0
-    RunoffTotal = 0
+    # PrecipitationTotal = 0
+    # RunoffTotal = 0
     GroundWatLETotal = np.zeros(z.WxYrs)
-    EvapotransTotal = 0
+    # EvapotransTotal = 0
     # PtSrcFlowTotal = 0
-    WithdrawalTotal = 0
-    StreamFlowTotal = 0
+    # WithdrawalTotal = 0
+    # StreamFlowTotal = 0
     SedYieldTotal = 0
     ErosionTotal = 0
     DisNitrTotal = 0
@@ -58,20 +58,20 @@ def CalculateLoads(z, Y):
     # ANNUAL WATER BALANCE CALCULATIONS
     for i in range(12):
         # Calculate landuse runoff for rural areas
-        for l in range(z.NRur):
-            z.LuRunoff[Y][l] += z.RurQRunoff[l][i]
+        # for l in range(z.NRur):
+        #     z.LuRunoff[Y][l] += z.RurQRunoff[l][i]
+        #
+        # # Calculate landuse runoff for urban areas
+        # for l in range(z.NRur, z.NLU):
+        #     z.LuRunoff[Y][l] += z.UrbQRunoff[l][i]
 
-        # Calculate landuse runoff for urban areas
-        for l in range(z.NRur, z.NLU):
-            z.LuRunoff[Y][l] += z.UrbQRunoff[l][i]
-
-        PrecipitationTotal += z.Precipitation[Y][i]
-        RunoffTotal += z.Runoff[Y][i]
+        # PrecipitationTotal += z.Precipitation[Y][i]
+        # RunoffTotal += z.Runoff[Y][i]
         GroundWatLETotal += z.GroundWatLE_2[Y][i]
-        EvapotransTotal += z.Evapotrans[Y][i]
+        # EvapotransTotal += z.Evapotrans[Y][i]
         # PtSrcFlowTotal += z.PtSrcFlow[Y][i]
-        WithdrawalTotal += z.Withdrawal[Y][i]
-        StreamFlowTotal += z.StreamFlow[Y][i]
+        # WithdrawalTotal += z.Withdrawal[Y][i]
+        # StreamFlowTotal += z.StreamFlow[Y][i]
 
     # CALCULATE ANNUAL NITROGEN  LOADS FROM NORMAL SEPTIC SYSTEMS
     AnNormNitr = 0

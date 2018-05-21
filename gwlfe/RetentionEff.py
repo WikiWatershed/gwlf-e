@@ -7,7 +7,7 @@ from Water import Water_2
 from UrbanQTotal import UrbanQTotal_2
 
 
-# @memoize
+# Precipitation.Precipitation(z.NYrs, z.DaysMonth, z.Prec)ize
 def RetentionEff(NYrs, DaysMonth, InitSnow_0, Temp, Prec, Qretention, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0,
                  Imper, ISRR, ISRA, PctAreaInfil):
     result = 0

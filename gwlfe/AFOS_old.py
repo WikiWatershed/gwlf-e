@@ -2,6 +2,7 @@
 from __future__ import print_function
 from __future__ import unicode_literals
 from __future__ import division
+from Precipitation import Precipitation
 
 """
 Imported from AFOS.bas
@@ -15,7 +16,7 @@ log = logging.getLogger(__name__)
 
 def AnimalOperations(z, Y):
     for i in range(12):
-        z.LossFactAdj[Y][i] = (z.Precipitation[Y][i] / z.DaysMonth[Y][i]) / 0.3301
+        z.LossFactAdj[Y][i] = (Precipitation(z.NYrs, z.DaysMonth, z.Prec)[Y][i] / z.DaysMonth[Y][i]) / 0.3301
 
         # Non-grazing animal losses
         z.NGLostManN[Y][i] = (z.NGAppManN[i] * z.NGAppNRate[i] * z.LossFactAdj[Y][i]

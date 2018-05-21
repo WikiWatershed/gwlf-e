@@ -38,17 +38,3 @@ def PotentET(DayHrs, Temp):
 @memoize
 def DailyET_2(Temp, KV, PcntET, DayHrs):
     return np.where(Temp > 0, np.multiply((KV * PcntET).reshape(12, 1), PotentET(DayHrs, Temp)), 0)
-
-
-@memoize
-def AvEvapoTrans(NYrs, Evapotrans):
-    result = np.zeros((12,))
-    for Y in range(NYrs):
-        for i in range(12):
-            result[i] += Evapotrans[Y][i] / NYrs
-    return result
-
-
-@memoize
-def AvEvapoTrans_2(Evapotrans):
-    return np.average(Evapotrans, axis=0)

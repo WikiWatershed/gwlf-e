@@ -3,14 +3,13 @@ from Timer import time_function
 from numba import jit
 from Memoization import memoize
 
-@memoize
+# @memoize
 def InitSnow(NYrs, DaysMonth, InitSnow_0, Temp, Prec):
     result = np.zeros((NYrs, 12, 31))
     yesterday = InitSnow_0
     for Y in range(NYrs):
         for i in range(12):
             for j in range(DaysMonth[Y][i]):
-
                 if Temp[Y][i][j] <= 0:
                     result[Y][i][j] = yesterday + Prec[Y][i][j]
                 else:

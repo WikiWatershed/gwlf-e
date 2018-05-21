@@ -126,16 +126,6 @@ def run(z):
     # MODEL CALCULATIONS FOR EACH YEAR OF ANALYSIS - WATER BALANCE,
     # NUTRIENTS AND SEDIMENT LOADS
 
-    z.Precipitation = Precipitation.Precipitation(z.NYrs, z.DaysMonth, z.Prec)
-    # z.Precipitation = Precipitation.Precipitation_2(z.Prec)
-    # if (z.Precipitation.any() == z.Precipitation_vect.any()):
-    # print ('True')
-
-    # DailyET_Part1 = ET.DailyET(z.NYrs,z.DaysMonth,z.Temp,z.DayHrs,z.KV,z.PcntET,z.ETFlag)
-    # z.DaysMonth = HashableArray(z.DaysMonth)
-    # z.Temp = HashableArray(z.Temp)
-    # z.Prec = HashableArray(z.Prec)
-
     DailyET_Part1 = ET.DailyET_2(z.Temp, z.KV, z.PcntET, z.DayHrs)
 
     z.PtSrcFlow = PtSrcFlow.PtSrcFlow_2(z.NYrs, z.PointFlow)
@@ -424,18 +414,7 @@ def run(z):
             for j in range(z.DaysMonth[Y][i]):
                 # DAILYWEATHERANALY TEMP[Y][I][J], PREC[Y][I][J]
                 # ***** BEGIN WEATHER DATA ANALYSIS *****
-                z.DailyTemp = z.Temp[Y][i][j]
-                # z.DailyPrec = z.Prec[Y][i][j]
-                # z.Melt = 0
-                # z.Rain = 0
-                # z.Water = 0
-                # z.Erosiv = 0
                 z.ET = 0
-                # z.QTotal = 0
-                # z.AgQTotal = 0
-                # z.RuralQTotal = 0
-                # z.UrbanQTotal = 0 # duplicate
-
                 # Question: Are these values supposed to accumulate for each
                 # day, each month, and each year? Or should these be
                 # re-initialized to a default value at some point?
@@ -448,66 +427,6 @@ def run(z):
                 # TODO: If Water is <= 0.01, then CalcCNErosRunoffSed
                 # never executes, and CNum will remain undefined.
                 # What should the default value for CNum be in this case?
-                # z.CNum = 0
-
-                # RAIN , SNOWMELT, EVAPOTRANSPIRATION (ET)
-                # print(z.InitSnow,get_value_for_yesterday(z.InitSnow_2,z.InitSnow_0,Y,i,j,z.NYrs,z.DaysMonth))
-                # if z.DailyTemp > 0 and get_value_for_yesterday(z.InitSnow, z.InitSnow_0, Y, i, j, z.NYrs,
-                #                                                z.DaysMonth) > 0.001:
-                #     z.Melt = 0.45 * z.DailyTemp
-                # else:
-                #     z.Melt = 0
-
-                # if z.DailyTemp > 0 and get_value_for_yesterday(z.InitSnow, z.InitSnow_0, Y, i, j, z.NYrs,
-                #                                                z.DaysMonth) > 0.001 and z.Melt[Y][i][
-                #     j] > get_value_for_yesterday(
-                #     z.InitSnow, z.InitSnow_0, Y, i, j, z.NYrs, z.DaysMonth):
-                #     z.Melt_1 = get_value_for_yesterday(z.InitSnow, z.InitSnow_0, Y, i, j, z.NYrs, z.DaysMonth)
-                # else:
-                #     z.Melt_1 = z.Melt[Y][i][j]
-
-                # AVAILABLE WATER CALCULATION
-                # z.Water = z.Rain[Y][i][j] + z.Melt_1[Y][i][j]
-                # z.DailyWater[Y][i][j] = z.Water[Y][i][j]
-
-                # if z.DailyTemp <= 0:
-                #     z.InitSnow_2[Y][i][j] = get_value_for_yesterday(z.InitSnow_2,z.InitSnow_0,Y,i,j,z.NYrs,z.DaysMonth) + z.DailyPrec
-                # else:
-                #     if get_value_for_yesterday(z.InitSnow_2,z.InitSnow_0,Y,i,j,z.NYrs,z.DaysMonth) > 0.001:
-                #         if(z.Melt > get_value_for_yesterday(z.InitSnow_2, z.InitSnow_0, Y, i, j, z.NYrs, z.DaysMonth)):
-                #             z.InitSnow_2[Y][i][j] = 0
-                #         else:
-                #             z.InitSnow_2[Y][i][j] = get_value_for_yesterday(z.InitSnow_2, z.InitSnow_0, Y, i, j, z.NYrs,
-                #                                                             z.DaysMonth) - z.Melt
-                #     else:
-                #         z.InitSnow_2[Y][i][j] = get_value_for_yesterday(z.InitSnow_2,z.InitSnow_0,Y,i,j,z.NYrs,z.DaysMonth)
-                # print(z.InitSnow_3[Y][i][j],z.InitSnow_2[Y][i][j] )
-
-                # if z.DailyTemp > 0 and get_value_for_yesterday(z.InitSnow, z.InitSnow_0, Y, i, j, z.NYrs,
-                #                                                z.DaysMonth) > 0.001:
-                #     z.MeltPest[Y][i][j] = z.Melt[Y][i][j]
-                # else:
-                #     z.MeltPest[Y][i][j] = 0
-                # if z.DailyTemp > 0 and get_value_for_yesterday(z.InitSnow, z.InitSnow_0, Y, i, j, z.NYrs, z.DaysMonth) > 0.001:
-                #         if z.Melt[Y][i][j] > get_value_for_yesterday(z.InitSnow, z.InitSnow_0, Y, i, j, z.NYrs,
-                #                                                      z.DaysMonth):
-                #             z.MeltPest[Y][i][j] = get_value_for_yesterday(z.InitSnow, z.InitSnow_0, Y, i, j, z.NYrs,
-                #                                                           z.DaysMonth)
-                #         else:
-                #             z.MeltPest[Y][i][j] = z.Melt[Y][i][j]
-                # else:
-                #     z.MeltPest[Y][i][j] = 0
-
-                # Compute erosivity when erosion occurs, i.e., with rain and no InitSnow left
-                # if z.DailyTemp > 0:
-                #     if (get_value_for_yesterday(z.InitSnow, z.InitSnow_0, Y, i, j, z.NYrs, z.DaysMonth) > 0.001):
-                #         if z.Rain[Y][i][j] > 0 and get_value_for_yesterday(z.InitSnow, z.InitSnow_0, Y, i, j, z.NYrs,
-                #                                                            z.DaysMonth) - z.Melt_1[Y][i][j] < 0.001:
-                #             z.Erosiv = 6.46 * z.Acoef[i] * z.Rain[Y][i][j] ** 1.81
-                #     else:
-                #         if z.Rain[Y][i][j] > 0 and get_value_for_yesterday(z.InitSnow, z.InitSnow_0, Y, i, j, z.NYrs,
-                #                                                            z.DaysMonth) < 0.001:
-                #             z.Erosiv = 6.46 * z.Acoef[i] * z.Rain[Y][i][j] ** 1.81
 
                 # IF WATER AVAILABLE, THEN CALL SUB TO COMPUTE CN, RUNOFF,
                 # EROSION AND SEDIMENT
@@ -515,41 +434,7 @@ def run(z):
                     CalcCnErosRunoffSed.CalcCN(z, i, Y, j)
                 else:
                     pass
-                # print("n-1 init snow (",Y,i,j,")",z.InitSnow)
 
-                # DAILY CN
-                # z.DailyCN[Y][i][j] = z.CNum
-
-                # UPDATE ANTECEDENT RAIN+MELT CONDITION
-                # Subtract AMC5 by the sum of AntMoist (day 5) and Water
-                # z.AMC5_2 = z.AMC5_2 - z.AntMoist[4] + z.Water[Y][i][j]
-                # z.DailyAMC5[Y][i][j] = z.AMC5
-
-                # Shift AntMoist values to the right.
-                # z.AntMoist[4] = z.AntMoist[3]
-                # z.AntMoist[3] = z.AntMoist[2]
-                # z.AntMoist[2] = z.AntMoist[1]
-                # z.AntMoist[1] = z.AntMoist[0]
-                # z.AntMoist[0] = z.Water[Y][i][j]
-
-                # print(z.AMC5_2,z.AMC5[Y][i][j])
-
-                # CALCULATE ET FROM SATURATED VAPOR PRESSURE,
-                # HAMON (1961) METHOD
-                # if z.ETFlag is ETflag.HAMON_METHOD:
-                #     if z.DailyTemp > 0:
-                #         z.SatVaPressure = (33.8639 * ((0.00738 * z.DailyTemp +
-                #                            0.8072) ** 8 - 0.000019 *
-                #                            np.absolute(1.8 * z.DailyTemp + 48) +
-                #                            0.001316))
-                #         z.PotenET = (0.021 * z.DayHrs[i] ** 2 * z.SatVaPressure
-                #                      / (z.DailyTemp + 273))
-                #         z.ET = z.KV[i] * z.PotenET * z.PcntET[i]
-
-                # Daily ET calculation
-                # z.DailyET[Y][i][j] = z.ET
-                # if (z.DailyET.any() == DailyET_Part1.any()):
-                # print ('True')
                 z.ET = DailyET_Part1[Y][i][j]
                 z.DailyET[Y][i][j] = z.ET
 
@@ -557,54 +442,7 @@ def run(z):
 
                 # ***** WATERSHED WATER BALANCE *****
 
-                # if z.QTotal[Y][i][j] <= z.Water[Y][i][j]:
-                #     z.Infiltration = z.Water[Y][i][j] - z.QTotal[Y][i][j]
-
-                # z.GrFlow_test = z.RecessionCoef * z.SatStor_test
-                # z.DeepSeep = z.SeepCoef * z.SatStor_test
-                #
-                # print("GrFlow orig = ", z.GrFlow_test,"GrFlow new = ", z.GrFlow[Y][i][j])
-                # print(z.GrFlow_test == z.GrFlow[Y][i][j])
-
-                # CALCULATE EVAPOTRANSPIRATION, Percolation, AND THE
-                # NEXT DAY'S UNSATURATED STORAGE AS LIMITED BY THE UNSATURATED
-                # ZONE MAXIMUM WATER CAPACITY
-
-                # z.UnsatStor_temp = z.UnsatStor_temp + z.Infiltration[Y][i][j]
-
-                # Calculate water balance for non-Pesticide componenets
-                # if z.ET >= z.UnsatStor_temp:
-                #     z.ET = z.UnsatStor_temp
-                #     z.UnsatStor_temp = 0
-                # else:
-                #     z.UnsatStor_temp = z.UnsatStor_temp - z.ET
-
-                # Obtain the Percolation, adjust precip and UnsatStor values
-                # if z.UnsatStor_temp > z.MaxWaterCap:
-                #     z.Percolation_2 = z.UnsatStor_temp - z.MaxWaterCap
-                #     z.Perc[Y][i][j] = z.UnsatStor_temp - z.MaxWaterCap # TODO Perc is the same exact thing as Percolation
-                #     z.UnsatStor_temp = z.UnsatStor_temp - z.Percolation_2
-                # else:
-                #     z.Percolation_2 = 0
-                #     z.Perc[Y][i][j] = 0
-
                 z.PercCm[Y][i][j] = z.Percolation[Y][i][j] / 100
-
-                # print("UnsatStor orig = ", z.UnsatStor_temp, "UnsatStor new = ", z.UnsatStor[Y][i][j])
-                # print(z.UnsatStor_temp == z.UnsatStor[Y][i][j])
-                # print("Infiltration = ", z.Infiltration[Y][i][j])
-                # print("MaxWaterCap = ", z.MaxWaterCap)
-
-                # print("Percolation orig = ", z.Percolation_2, "Percolation new = ", z.Percolation[Y][i][j])
-                # print(z.Percolation_2 == z.Percolation[Y][i][j])
-
-                # CALCULATE STORAGE IN SATURATED ZONES AND GROUNDWATER
-                # DISCHARGE
-                # z.SatStor_test = z.SatStor_test + z.Percolation[Y][i][j] - z.GrFlow_test - z.DeepSeep
-                # if z.SatStor_test < 0:
-                #     z.SatStor_test = 0
-
-                # z.Flow = z.QTotal[Y][i][j] + z.GrFlow[Y][i][j]
 
                 z.DailyFlow[Y][i][j] = z.DayRunoff[Y][i][j] + z.GrFlow[Y][i][j]
 
@@ -615,14 +453,7 @@ def run(z):
                 z.MonthFlow[Y][i] = z.MonthFlow[Y][i] + z.DailyFlow[Y][i][j]
 
                 # CALCULATE TOTALS
-                # z.Precipitation[Y][i] = z.Precipitation[Y][i] + z.Prec[Y][i][j]
-                z.Evapotrans[Y][i] = z.Evapotrans[Y][i] + z.ET_2[Y][i][j]
-
-                # z.StreamFlow[Y][i] = z.StreamFlow[Y][i] + z.Flow[Y][i][j]
-
-                # z.GroundWatLE[Y][i] = z.GroundWatLE[Y][i] + z.GrFlow[Y][i][j]
-
-                # grow_factor = GrowFlag.intval(z.Grow[i])
+                # z.Evapotrans[Y][i] = z.Evapotrans[Y][i] + z.ET_2[Y][i][j]
 
                 # CALCULATE DAILY NUTRIENT LOAD FROM PONDING SYSTEMS
                 z.PondNitrLoad = (z.NumPondSys[i] *
@@ -664,43 +495,6 @@ def run(z):
                                        z.PhosPlantUptake * z.GrowFactor[i])
                 z.MonthDischargeNitr[i] = z.MonthDischargeNitr[i] + z.NitrSepticLoad
                 z.MonthDischargePhos[i] = z.MonthDischargePhos[i] + z.PhosSepticLoad
-
-            # CALCULATE WITHDRAWAL AND POINT SOURCE FLOW VALUES
-            # z.Withdrawal[Y][i] = (z.Withdrawal[Y][i] + z.StreamWithdrawal[i] +
-            #                       z.GroundWithdrawal[i])
-            # z.PtSrcFlow[Y][i] = z.PtSrcFlow[Y][i] + z.PointFlow[i]
-
-            # # CALCULATE THE SURFACE RUNOFF PORTION OF TILE DRAINAGE
-            # z.TileDrainRO[Y][i] = (z.AgRunoff[Y][i] * z.TileDrainDensity)
-
-            # CALCULATE SUBSURFACE PORTION OF TILE DRAINAGE
-            # if z.AreaTotal > 0:
-            #     z.GwAgLE[Y][i] = (z.GwAgLE[Y][i] + (z.GroundWatLE[Y][i] *
-            #                                         (z.AgAreaTotal / z.AreaTotal)))
-            # z.TileDrainGW[Y][i] = (z.TileDrainGW[Y][i] + [z.GwAgLE[Y][i] *
-            #                                               z.TileDrainDensity])
-
-            # ADD THE TWO COMPONENTS OF TILE DRAINAGE FLOW
-            # z.TileDrain[Y][i] = (z.TileDrain[Y][i] + z.TileDrainRO[Y][i] +
-            #                      z.TileDrainGW[Y][i])
-
-
-            # print("TileDrain orig = ", z.TileDrain[Y][i], "TileDrain new = ", z.TileDrain_temp[Y][i])
-            # print(z.TileDrain[Y][i] == z.TileDrain_temp[Y][i])
-
-            # ADJUST THE GROUNDWATER FLOW
-            # z.GroundWatLE[Y][i] = z.GroundWatLE[Y][i] - z.TileDrainGW[Y][i]
-            # if z.GroundWatLE[Y][i] < 0:
-            #     z.GroundWatLE[Y][i] = 0
-
-            # print("GroundWatLE orig = ", z.GroundWatLE[Y][i], "GroundWatLE new = ", z.GroundWatLE_2_temp[Y][i])
-            # print(z.GroundWatLE[Y][i] == z.GroundWatLE_2_temp[Y][i])
-
-            # # ADJUST THE SURFACE RUNOFF
-            # z.Runoff[Y][i] = z.Runoff[Y][i] - z.TileDrainRO[Y][i]
-
-            # if z.Runoff[Y][i] < 0:
-            #     z.Runoff[Y][i] = 0
 
         # CALCULATE ANIMAL FEEDING OPERATIONS OUTPUT
         AFOS_old.AnimalOperations(z, Y)

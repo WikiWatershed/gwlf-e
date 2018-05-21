@@ -9,10 +9,9 @@ import numpy as np
 
 from . import LoadReductions
 from .enums import YesOrNo, LandUse
-
+from AvEvapoTrans import AvEvapoTrans
 
 log = logging.getLogger(__name__)
-
 
 CM_TO_M = 1 / 100
 HA_TO_M2 = 10000
@@ -363,14 +362,16 @@ def WriteOutput(z):
 
     # COMPLETE CALCULATING THE TOTAL SOURCE LOADS FOR SEDIMENT, N AND P
     AvTotalSed = (AvTotalSed + (((z.AvStreamBankErosSum / 1000) +
-                  ((z.AvTileDrainSedSum / 1000)) * z.RetentFactorSed * (1 - z.AttenTSS))))
+                                 ((z.AvTileDrainSedSum / 1000)) * z.RetentFactorSed * (1 - z.AttenTSS))))
     AvDisN = (AvDisN + ((z.AvGroundNitrSum + YrPointNitr + z.AvSeptNitr) *
-              z.RetentFactorN * (1 - z.AttenN)))
+                        z.RetentFactorN * (1 - z.AttenN)))
     AvTotalN = (AvTotalN + ((z.AvStreamBankNSum + (z.AvGroundNitrSum + z.AvTileDrainNSum +
-                z.AvAnimalNSum + YrPointNitr + z.AvSeptNitr) * z.RetentFactorN * (1 - z.AttenN))))
+                                                   z.AvAnimalNSum + YrPointNitr + z.AvSeptNitr) * z.RetentFactorN * (
+                                     1 - z.AttenN))))
     AvDisP = AvDisP + ((z.AvGroundPhosSum + YrPointPhos + z.AvSeptPhos) * z.RetentFactorP * (1 - z.AttenP))
     AvTotalP = (AvTotalP + ((z.AvStreamBankPSum + (z.AvGroundPhosSum + z.AvTileDrainPSum +
-                z.AvAnimalPSum + YrPointPhos + z.AvSeptPhos) * z.RetentFactorP * (1 - z.AttenP))))
+                                                   z.AvAnimalPSum + YrPointPhos + z.AvSeptPhos) * z.RetentFactorP * (
+                                     1 - z.AttenP))))
 
     # OBTAIN THE AVERAGE TOTAL MONTHLY LOADS
     AvMonDisN = 0
@@ -799,11 +800,14 @@ def WriteOutput(z):
     output['MeanFlowPerSecond'] = MeanFlowPS
 
     # Equivalent to lines 965 - 988 of source
+    av_evapo_trans = AvEvapoTrans(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
+                                  z.AntMoist_0, z.Grow, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV,
+                                  z.PcntET, z.DayHrs, z.MaxWaterCap)#TODO: once all of the monthly variables have been extracted, rewrite how this works
     output['monthly'] = []
     for i in range(0, 12):
         output['monthly'].append({
             'AvPrecipitation': z.AvPrecipitation[i],
-            'AvEvapoTrans': z.AvEvapoTrans[i],
+            'AvEvapoTrans': av_evapo_trans[i],
             'AvGroundWater': z.AvGroundWater[i],
             'AvRunoff': z.AvRunoff[i],
             'AvStreamFlow': z.AvStreamFlow[i],

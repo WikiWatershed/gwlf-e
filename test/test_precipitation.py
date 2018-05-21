@@ -16,5 +16,5 @@ class TestPrecipitation(unittest.TestCase):
 
     def test_AvPrecipitation(self):
         z = self.z
-        np.testing.assert_array_almost_equal(Precipitation.AvPrecipitation_2(z.Precipitation),
-                                             Precipitation.AvPrecipitation(z.NYrs,z.Precipitation), decimal=7)
+        np.testing.assert_array_almost_equal(Precipitation.AvPrecipitation_2(z.Prec),
+                                             Precipitation.AvPrecipitation(z.NYrs,z.DaysMonth,z.Prec), decimal=7)

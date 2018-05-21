@@ -10,7 +10,7 @@ Imported from AnnualMeans.bas
 import logging
 from Precipitation import AvPrecipitation
 from Precipitation import AvPrecipitation_2
-from ET import AvEvapoTrans
+from AvEvapoTrans import AvEvapoTrans
 # from ET import AvEvapoTrans_2
 from PtSrcFlow import AvPtSrcFlow
 from PtSrcFlow import AvPtSrcFlow_2
@@ -56,12 +56,12 @@ def CalculateAnnualMeanLoads(z, Y):
 
     # COMPUTE ANNUAL MEANS
     # z.AvPrecipitation = AvPrecipitation(z.NYrs,z.Precipitation)
-    z.AvPrecipitation = AvPrecipitation_2(z.Precipitation)
+    z.AvPrecipitation = AvPrecipitation_2(z.Prec)
     # z.AvEvapoTrans = AvEvapoTrans(z.NYrs, z.Evapotrans)
     # z.AvEvapoTrans = AvEvapoTrans_2(z.Evapotrans)
     for i in range(12):
         # z.AvPrecipitation[i] += z.Precipitation[Y][i] / z.NYrs
-        z.AvEvapoTrans[i] += z.Evapotrans[Y][i] / z.NYrs
+        # z.AvEvapoTrans[i] += z.Evapotrans[Y][i] / z.NYrs
         z.AvGroundWater[i] += z.GroundWatLE_2[Y][i] / z.NYrs
 
         if z.AvGroundWater[i] < 0:
@@ -126,7 +126,10 @@ def CalculateAnnualMeanLoads(z, Y):
     z.AvTileDrainPSum = sum(z.AvTileDrainP)
     z.AvTileDrainSedSum = sum(z.AvTileDrainSed)
     # z.AvPrecipitationSum = sum(z.AvPrecipitation)
-    z.AvEvapoTransSum = sum(z.AvEvapoTrans)
+    z.AvEvapoTransSum = sum(
+        AvEvapoTrans(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0,
+                     z.Grow, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs,
+                     z.MaxWaterCap))
     z.AvGroundWaterSum = sum(z.AvGroundWater)
     z.AvRunoffSum = sum(z.AvRunoff)
     z.AvErosionSum = sum(z.AvErosion)

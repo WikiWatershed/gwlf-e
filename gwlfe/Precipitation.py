@@ -18,13 +18,15 @@ def Precipitation_2(Prec):
     return fastPrecipitation
 
 
-def AvPrecipitation(NYrs, Precipitation):
+def AvPrecipitation(NYrs, DaysMonth, Prec):
     result = np.zeros((12,))
+    precipitation = Precipitation(NYrs, DaysMonth, Prec)
     for Y in range(NYrs):
         for i in range(12):
-            result[i] += Precipitation[Y][i] / NYrs
+            result[i] += precipitation[Y][i] / NYrs
     return result
 
 
-def AvPrecipitation_2(Precipitation):
-    return np.average(Precipitation, axis=(0))
+def AvPrecipitation_2(Prec):
+    precipitation = Precipitation_2(Prec)
+    return np.average(precipitation, axis=(0))

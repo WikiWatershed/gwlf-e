@@ -11,6 +11,12 @@ class TestWater(unittest.TestCase):
         input_file = open('input_4.gms', 'r')
         self.z = Parser.GmsReader(input_file).read()
 
+    def test_Water_ground_truth(self):
+        z = self.z
+        np.testing.assert_array_almost_equal(
+            np.load("Water.npy"),
+            Water.Water(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec), decimal=7)
+
 
     def test_Water(self):
         z = self.z

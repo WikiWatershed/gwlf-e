@@ -6,10 +6,8 @@ from InitSnowYesterday import InitSnowYesterday
 #import InitSnow
 from numba import jit
 from Memoization import memoize
-# @time_function
 
-@memoize
-# @time_function
+# @memoize
 def Melt(NYrs, DaysMonth, Temp, InitSnow_0, Prec):
     result = np.zeros((NYrs, 12, 31))
     init_snow = InitSnow(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
@@ -24,8 +22,6 @@ def Melt(NYrs, DaysMonth, Temp, InitSnow_0, Prec):
                 init_snow_yesterday = init_snow[Y][i][j]
     return result
 
-@memoize
-# @time_function
 def Melt_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec):
     init_snow_yesterday = InitSnowYesterday(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     return np.where((Temp>0) & (init_snow_yesterday > 0.001), 0.45 * Temp, 0)
