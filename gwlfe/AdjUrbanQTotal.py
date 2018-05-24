@@ -121,5 +121,5 @@ def AdjUrbanQTotal_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, 
                                 CNP_0, Imper, ISRR, ISRA)
     urb_area_total = UrbAreaTotal_2(NRur, NUrb, Area)
     area_total = AreaTotal_2(Area)
-    # print(AdjUrbanQTotal_2_inner.inspect_types())
+    #print(AdjUrbanQTotal_2_inner.inspect_types())
     return AdjUrbanQTotal_2_inner(NYrs, DaysMonth, Temp, Qretention, PctAreaInfil,water,urban_q_total,urb_area_total,area_total)
