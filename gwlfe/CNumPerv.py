@@ -63,86 +63,50 @@ def CNumPerv(NYrs, DaysMonth, Temp, NRur, NUrb, CNP_0, InitSnow_0, Prec, Grow, A
 
 # @time_function
 @jit(cache = True, nopython = True)
-
-
-for Y in range(NYrs):
-    for i in range(12):
-        for j in range(DaysMonth[Y][i]):
-            if Temp[Y][i][j] > 0 and water[Y][i][j] > 0.01:
-                if water[Y][i][j] < 0.05:
-                    pass
-                else:
-                    for l in range(NRur, nlu):
-                        if cnp[1][l] > 0:
-                            if melt[Y][i][j] <= 0:
-                                if grow_factor[i] > 0:
-                                    # Growing season
-                                    if amc5[Y][i][j] >= 5.33:
-                                        result[Y][i][j][l] = cnp[2][l]
-                                    elif amc5[Y][i][j] < 3.56:
-                                        result[Y][i][j][l] = cnp[0][l] + (
-                                                cnp[1][l] - cnp[0][l]) * amc5[Y][i][j] / 3.56
+def CNumPerv_2_inner(NYrs, DaysMonth, Temp, NRur, nlu, cnp, water, melt, grow_factor, amc5):
+    result = np.zeros((NYrs, 12, 31, nlu))
+    for Y in range(NYrs):
+        for i in range(12):
+            for j in range(DaysMonth[Y][i]):
+                if Temp[Y][i][j] > 0 and water[Y][i][j] > 0.01:
+                    if water[Y][i][j] < 0.05:
+                        pass
+                    else:
+                        for l in range(NRur, nlu):
+                            if cnp[1][l] > 0:
+                                if melt[Y][i][j] <= 0:
+                                    if grow_factor[i] > 0:
+                                        # Growing season
+                                        if amc5[Y][i][j] >= 5.33:
+                                            result[Y][i][j][l] = cnp[2][l]
+                                        elif amc5[Y][i][j] < 3.56:
+                                            result[Y][i][j][l] = cnp[0][l] + (
+                                                    cnp[1][l] - cnp[0][l]) * amc5[Y][i][j] / 3.56
+                                        else:
+                                            result[Y][i][j][l] = cnp[1][l] + (cnp[2][l] - cnp[1][l]) * (
+                                                    amc5[Y][i][j] - 3.56) / 1.77
                                     else:
-                                        result[Y][i][j][l] = cnp[1][l] + (cnp[2][l] - cnp[1][l]) * (
-                                                amc5[Y][i][j] - 3.56) / 1.77
+                                        # Dormant season
+                                        if amc5[Y][i][j] >= 2.79:
+                                            result[Y][i][j][l] = cnp[2][l]
+                                        elif amc5[Y][i][j] < 1.27:
+                                            result[Y][i][j][l] = cnp[0][l] + (
+                                                    cnp[1][l] - cnp[0][l]) * amc5[Y][i][j] / 1.27
+                                        else:
+                                            result[Y][i][j][l] = cnp[1][l] + (cnp[2][l] - cnp[1][l]) * (
+                                                    amc5[Y][i][j] - 1.27) / 1.52
                                 else:
-                                    # Dormant season
-                                    if amc5[Y][i][j] >= 2.79:
-                                        result[Y][i][j][l] = cnp[2][l]
-                                    elif amc5[Y][i][j] < 1.27:
-                                        result[Y][i][j][l] = cnp[0][l] + (
-                                                cnp[1][l] - cnp[0][l]) * amc5[Y][i][j] / 1.27
-                                    else:
-                                        result[Y][i][j][l] = cnp[1][l] + (cnp[2][l] - cnp[1][l]) * (
-                                                amc5[Y][i][j] - 1.27) / 1.52
-                            else:
-                                result[Y][i][j][l] = cnp[2][l]
-return result
-
-
+                                    result[Y][i][j][l] = cnp[2][l]
+    return result
 
 
 
 
 def CNumPerv_2(NYrs, DaysMonth, Temp, NRur, NUrb, CNP_0, InitSnow_0, Prec, Grow, AntMoist_0):
     nlu = NLU(NRur, NUrb)
-    result = np.zeros((NYrs, 12, 31, nlu))
     cnp = CNP_2(NRur, NUrb, CNP_0)
     water = Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     melt = Melt_1_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     grow_factor = GrowFactor(Grow)
     amc5 = AMC5_yesterday(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0)
-
-    # for Y in range(NYrs):
-    #     for i in range(12):
-    #         for j in range(DaysMonth[Y][i]):
-    #             if Temp[Y][i][j] > 0 and water[Y][i][j] > 0.01:
-    #                 if water[Y][i][j] < 0.05:
-    #                     pass
-    #                 else:
-    #                     for l in range(NRur, nlu):
-    #                         if cnp[1][l] > 0:
-    #                             if melt[Y][i][j] <= 0:
-    #                                 if grow_factor[i] > 0:
-    #                                     # Growing season
-    #                                     if amc5[Y][i][j]>= 5.33:
-    #                                         result[Y][i][j][l] = cnp[2][l]
-    #                                     elif amc5[Y][i][j] < 3.56:
-    #                                         result[Y][i][j][l] = cnp[0][l] + (
-    #                                                 cnp[1][l] - cnp[0][l]) * amc5[Y][i][j] / 3.56
-    #                                     else:
-    #                                         result[Y][i][j][l] = cnp[1][l] + (cnp[2][l] - cnp[1][l]) * (
-    #                                                 amc5[Y][i][j] - 3.56) / 1.77
-    #                                 else:
-    #                                     # Dormant season
-    #                                     if amc5[Y][i][j] >= 2.79:
-    #                                         result[Y][i][j][l] = cnp[2][l]
-    #                                     elif amc5[Y][i][j] < 1.27:
-    #                                         result[Y][i][j][l] = cnp[0][l] + (
-    #                                                 cnp[1][l] - cnp[0][l]) * amc5[Y][i][j] / 1.27
-    #                                     else:
-    #                                         result[Y][i][j][l] = cnp[1][l] + (cnp[2][l] - cnp[1][l]) * (
-    #                                                 amc5[Y][i][j] - 1.27) / 1.52
-    #                             else:
-    #                                 result[Y][i][j][l] = cnp[2][l]
-    return result
+    return CNumPerv_2_inner(NYrs, DaysMonth, Temp, NRur, nlu, cnp, water, melt, grow_factor, amc5)
