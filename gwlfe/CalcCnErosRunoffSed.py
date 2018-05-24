@@ -31,7 +31,7 @@ def CalcCN(z, i, Y, j):
     # Calculate Curve Number (CN)
     for l in range(z.NRur):
         # z.Qrun = 0
-        grow_factor = GrowFlag.intval(z.Grow[i])
+        # grow_factor = GrowFlag.intval(z.Grow[i])
 
         if z.CN[l] > 0:
             # print("test2",z.CNum)
@@ -106,14 +106,14 @@ def CalcCN(z, i, Y, j):
         z.ErosWashoff[l][i] = z.ErosWashoff[l][i] + z.RurEros[Y][i][j][l]
         # z.DayErWashoff[l][Y][i][j] = z.RurEros
 
-        if z.SedDelivRatio == 0:
-            z.SedDelivRatio = 0.0001
+        # if z.SedDelivRatio == 0:
+        #     z.SedDelivRatio = 0.0001
 
     for l in range(z.NRur, z.NLU):
         # z.QrunI[l] = 0
         # z.QrunP[l] = 0
         z.WashImperv[l] = 0
-        z.WashPerv[l] = 0
+        # z.WashPerv[l] = 0
 
     for q in range(z.Nqual):
         z.NetSolidLoad[q] = 0
@@ -223,8 +223,11 @@ def CalcCN(z, i, Y, j):
             z.WashImperv[l] = (1 - math.exp(-1.81 * z.QrunI[Y][i][j][l])) * z.ImpervAccum[l]
             z.ImpervAccum[l] -= z.WashImperv[l]
 
-            z.WashPerv[l] = (1 - math.exp(-1.81 * z.QrunP[Y][i][j][l])) * z.PervAccum[l]
-            z.PervAccum[l] -= z.WashPerv[l]
+            # z.WashPerv[l] = (1 - math.exp(-1.81 * z.QrunP[Y][i][j][l])) * z.PervAccum[l]
+            # z.PervAccum[l] -= z.WashPerv[l]
+
+            # print("WashPerv old = ", z.WashPerv[l], "WashPerv new = ", z.WashPerv_temp[Y][i][j][l])
+
 
             z.UrbQRunoff[l][i] += (z.QrunI[Y][i][j][l] * (z.Imper[l] * (1 - z.ISRR[z.lu[l]]) * (1 - z.ISRA[z.lu[l]]))
                                    + z.QrunP[Y][i][j][l] * (
@@ -340,7 +343,7 @@ def BasinWater(z, i, Y, j):
                             (z.Imper[l] * (1 - z.ISRR[z.lu_1[l]]) * (1 - z.ISRA[z.lu_1[l]]))
                             * (z.SweepFrac[i] + (
                             (1 - z.SweepFrac[i]) * ((1 - z.UrbSweepFrac) * z.Area[l]) / z.Area[l])))
-                                       + z.LoadRatePerv[l][q] * z.WashPerv[l] * (
+                                       + z.LoadRatePerv[l][q] * z.WashPerv[Y][i][j][l] * (
                                                1 - (z.Imper[l] * (1 - z.ISRR[z.lu_1[l]]) * (1 - z.ISRA[z.lu_1[l]]))))
                                       * z.Area[l]) - z.UrbLoadRed)
                 else:

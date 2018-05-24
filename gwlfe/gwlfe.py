@@ -111,6 +111,7 @@ from SedYield_2 import SedYield_2
 from Erosion_2 import Erosion_2
 from UncontrolledQ import UncontrolledQ
 from RetentionEff import RetentionEff
+from WashPerv import WashPerv
 
 log = logging.getLogger(__name__)
 
@@ -382,6 +383,8 @@ def run(z):
     z.RetentionEff = RetentionEff(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.Qretention, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow, z.CNP_0,
                  z.Imper, z.ISRR, z.ISRA, z.PctAreaInfil)
 
+    z.WashPerv = WashPerv(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.CNP_0, z.AntMoist_0, z.Grow, z.NRur, z.NUrb)
+
 
     # --------- run the remaining parts of the model ---------------------
 
@@ -442,8 +445,10 @@ def run(z):
                 for l in range(z.NLU):
                     z.ImpervAccum[l] = (z.ImpervAccum[l] * np.exp(-0.12) +
                                         (1 / 0.12) * (1 - np.exp(-0.12)))
-                    z.PervAccum[l] = (z.PervAccum[l] * np.exp(-0.12) +
-                                      (1 / 0.12) * (1 - np.exp(-0.12)))
+                    # print("PervAccum old b4 = ", z.PervAccum[l], "PervAccum new b4 = ", z.WashPerv_temp[l])
+                    # z.PervAccum[l] = (z.PervAccum[l] * np.exp(-0.12) +
+                    #                   (1 / 0.12) * (1 - np.exp(-0.12)))
+                    # print("PervAccum old after = ", z.PervAccum[l], "PervAccum new after = ", z.WashPerv_temp[l])
 
                 # TODO: If Water is <= 0.01, then CalcCNErosRunoffSed
                 # never executes, and CNum will remain undefined.
