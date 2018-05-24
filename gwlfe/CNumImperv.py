@@ -62,16 +62,10 @@ def CNumImperv(NYrs, NRur, NUrb, DaysMonth, InitSnow_0, Temp, Prec, CNI_0, Grow,
     return result
 
 # @time_function
-@jit(cache = True)
-def CNumImperv_2(NYrs, NRur, NUrb, DaysMonth, InitSnow_0, Temp, Prec, CNI_0, Grow, AntMoist_0):
-    nlu = NLU(NRur, NUrb)
-    result = np.zeros((NYrs, 12, 31, nlu))
-    cni = CNI_2(NRur, NUrb, CNI_0)
-    water = Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
-    melt = Melt_1_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
-    grow_factor = GrowFactor(Grow)
-    amc5 = AMC5_yesterday(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0)
 
+@jit(cache = True, nopython = True)
+def CNumImperv_2_inner(NYrs, NRur, DaysMonth, Temp, nlu, cni, water, melt, grow_factor, amc5):
+    result = np.zeros((NYrs, 12, 31, nlu))
     for Y in range(NYrs):
         for i in range(12):
             for j in range(DaysMonth[Y][i]):
@@ -105,3 +99,15 @@ def CNumImperv_2(NYrs, NRur, NUrb, DaysMonth, InitSnow_0, Temp, Prec, CNI_0, Gro
                                 else:
                                     result[Y][i][j][l] = cni[2][l]
     return result
+
+
+
+
+def CNumImperv_2(NYrs, NRur, NUrb, DaysMonth, InitSnow_0, Temp, Prec, CNI_0, Grow, AntMoist_0):
+    nlu = NLU(NRur, NUrb)
+    cni = CNI_2(NRur, NUrb, CNI_0)
+    water = Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
+    melt = Melt_1_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
+    grow_factor = GrowFactor(Grow)
+    amc5 = AMC5_yesterday(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0)
+    return CNumImperv_2_inner(NYrs, NRur, DaysMonth, Temp, nlu, cni, water, melt, grow_factor, amc5)

@@ -10,7 +10,10 @@ from UrbanQTotal import UrbanQTotal_2
 from UrbAreaTotal import UrbAreaTotal_2
 from AreaTotal import AreaTotal_2
 from numba import jit
+# from numba.pycc import CC
 import  DailyArrayConverter as DAC
+
+# cc = CC('gwlfe_compiled')
 
 # @time_function
 @memoize
@@ -77,9 +80,11 @@ def AdjUrbanQTotal(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CN
 #         result[j] = adj_urban_q_total
 #     return DAC.daily_to_ymd(result,NYrs, DaysMonth)
 
-@jit
-def AdjUrbanQTotal_2_inner(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0, Imper,
-                   ISRR, ISRA, Qretention, PctAreaInfil,water,urban_q_total,urb_area_total,area_total):
+
+
+@jit(cache = True, nopython = True)
+# @cc.export('AdjUrbanQTotal_2_inner', '(int64, int64[:,::1], float64[:,:,::1], float64, float64, float64[:,:,::1], float64[:,:,::1], float64, float64)')
+def AdjUrbanQTotal_2_inner(NYrs, DaysMonth, Temp, Qretention, PctAreaInfil,water,urban_q_total,urb_area_total,area_total):
     result = np.zeros((NYrs, 12, 31))
     adj_urban_q_total = 0
     for Y in range(NYrs):
@@ -110,10 +115,11 @@ def AdjUrbanQTotal_2_inner(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, 
 @memoize
 def AdjUrbanQTotal_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0, Imper,
                    ISRR, ISRA, Qretention, PctAreaInfil):
+    #cc.compile()
     water = Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     urban_q_total = UrbanQTotal_2(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, Area, CNI_0, AntMoist_0, Grow,
                                 CNP_0, Imper, ISRR, ISRA)
     urb_area_total = UrbAreaTotal_2(NRur, NUrb, Area)
     area_total = AreaTotal_2(Area)
-    return AdjUrbanQTotal_2_inner(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0, Imper,
-                   ISRR, ISRA, Qretention, PctAreaInfil,water,urban_q_total,urb_area_total,area_total)
+    # print(AdjUrbanQTotal_2_inner.inspect_types())
+    return AdjUrbanQTotal_2_inner(NYrs, DaysMonth, Temp, Qretention, PctAreaInfil,water,urban_q_total,urb_area_total,area_total)

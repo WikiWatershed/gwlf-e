@@ -74,11 +74,10 @@ def AMC5_1(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0):
                 AntMoist1[0] = water[Y][i][j]
     return result
 # This is the fastest
-@jit(cache=True)
-def AMC5_yesterday(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0):
+@jit(cache=True, nopython = True)
+def AMC5_yesterday_inner(NYrs, DaysMonth, AntMoist_0, water):
     result = np.zeros((NYrs, 12, 31))
     AntMoist1 = np.zeros((5,))
-    water = Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     AMC5 = 0
     for k in range(5):
         AMC5 += AntMoist_0[k]
@@ -94,3 +93,25 @@ def AMC5_yesterday(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0):
                 AntMoist1[1] = AntMoist1[0]
                 AntMoist1[0] = water[Y][i][j]
     return result
+
+
+
+def AMC5_yesterday(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0):
+    # result = np.zeros((NYrs, 12, 31))
+    # AntMoist1 = np.zeros((5,))
+    water = Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
+    # AMC5 = 0
+    # for k in range(5):
+    #     AMC5 += AntMoist_0[k]
+    #     AntMoist1[k] = AntMoist_0[k]
+    # for Y in range(NYrs):
+    #     for i in range(12):
+    #         for j in range(DaysMonth[Y][i]):
+    #             result[Y][i][j] = AMC5
+    #             AMC5 = AMC5 - AntMoist1[4] + water[Y][i][j]
+    #             AntMoist1[4] = AntMoist1[3]
+    #             AntMoist1[3] = AntMoist1[2]
+    #             AntMoist1[2] = AntMoist1[1]
+    #             AntMoist1[1] = AntMoist1[0]
+    #             AntMoist1[0] = water[Y][i][j]
+    return AMC5_yesterday_inner(NYrs, DaysMonth, AntMoist_0, water)
