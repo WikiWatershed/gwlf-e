@@ -109,10 +109,10 @@ def CalcCN(z, i, Y, j):
         # if z.SedDelivRatio == 0:
         #     z.SedDelivRatio = 0.0001
 
-    for l in range(z.NRur, z.NLU):
+    # for l in range(z.NRur, z.NLU):
         # z.QrunI[l] = 0
         # z.QrunP[l] = 0
-        z.WashImperv[l] = 0
+        # z.WashImperv[l] = 0
         # z.WashPerv[l] = 0
 
     for q in range(z.Nqual):
@@ -220,14 +220,17 @@ def CalcCN(z, i, Y, j):
             #                                                       l]])))) *
             #                         z.Area[l] / z.AreaTotal)
 
-            z.WashImperv[l] = (1 - math.exp(-1.81 * z.QrunI[Y][i][j][l])) * z.ImpervAccum[l]
-            z.ImpervAccum[l] -= z.WashImperv[l]
-
+            # z.WashImperv[l] = (1 - math.exp(-1.81 * z.QrunI[Y][i][j][l])) * z.ImpervAccum[l]
+            # z.ImpervAccum[l] -= z.WashImperv[l]
+            #
             # z.WashPerv[l] = (1 - math.exp(-1.81 * z.QrunP[Y][i][j][l])) * z.PervAccum[l]
             # z.PervAccum[l] -= z.WashPerv[l]
+            #
+            # print("WashImperv old = ", z.WashImperv[l], "WashImperv new = ", z.WashImperv_temp[Y][i][j][l])
+            # print(z.WashImperv[l] == z.WashImperv_temp[Y][i][j][l])
 
             # print("WashPerv old = ", z.WashPerv[l], "WashPerv new = ", z.WashPerv_temp[Y][i][j][l])
-
+            # print(z.WashPerv[l] == z.WashPerv_temp[Y][i][j][l])
 
             z.UrbQRunoff[l][i] += (z.QrunI[Y][i][j][l] * (z.Imper[l] * (1 - z.ISRR[z.lu[l]]) * (1 - z.ISRA[z.lu[l]]))
                                    + z.QrunP[Y][i][j][l] * (
@@ -339,7 +342,7 @@ def BasinWater(z, i, Y, j):
                 # lu_1 = l - 11
 
                 if z.Area[l] > 0:
-                    z.SurfaceLoad = (((z.LoadRateImp[l][q] * z.WashImperv[l] * (
+                    z.SurfaceLoad = (((z.LoadRateImp[l][q] * z.WashImperv[Y][i][j][l] * (
                             (z.Imper[l] * (1 - z.ISRR[z.lu_1[l]]) * (1 - z.ISRA[z.lu_1[l]]))
                             * (z.SweepFrac[i] + (
                             (1 - z.SweepFrac[i]) * ((1 - z.UrbSweepFrac) * z.Area[l]) / z.Area[l])))

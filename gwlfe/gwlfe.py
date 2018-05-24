@@ -112,6 +112,7 @@ from Erosion_2 import Erosion_2
 from UncontrolledQ import UncontrolledQ
 from RetentionEff import RetentionEff
 from WashPerv import WashPerv
+from WashImperv import WashImperv
 
 log = logging.getLogger(__name__)
 
@@ -385,6 +386,8 @@ def run(z):
 
     z.WashPerv = WashPerv(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.CNP_0, z.AntMoist_0, z.Grow, z.NRur, z.NUrb)
 
+    z.WashImperv = WashImperv(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.CNI_0, z.AntMoist_0, z.Grow, z.NRur, z.NUrb)
+
 
     # --------- run the remaining parts of the model ---------------------
 
@@ -442,12 +445,12 @@ def run(z):
                 # Question: Are these values supposed to accumulate for each
                 # day, each month, and each year? Or should these be
                 # re-initialized to a default value at some point?
-                for l in range(z.NLU):
-                    z.ImpervAccum[l] = (z.ImpervAccum[l] * np.exp(-0.12) +
-                                        (1 / 0.12) * (1 - np.exp(-0.12)))
-                    # print("PervAccum old b4 = ", z.PervAccum[l], "PervAccum new b4 = ", z.WashPerv_temp[l])
-                    # z.PervAccum[l] = (z.PervAccum[l] * np.exp(-0.12) +
-                    #                   (1 / 0.12) * (1 - np.exp(-0.12)))
+                # for l in range(z.NLU):
+                #     z.ImpervAccum[l] = (z.ImpervAccum[l] * np.exp(-0.12) +
+                #                         (1 / 0.12) * (1 - np.exp(-0.12)))
+                #     # print("PervAccum old b4 = ", z.PervAccum[l], "PervAccum new b4 = ", z.WashPerv_temp[l])
+                #     z.PervAccum[l] = (z.PervAccum[l] * np.exp(-0.12) +
+                #                       (1 / 0.12) * (1 - np.exp(-0.12)))
                     # print("PervAccum old after = ", z.PervAccum[l], "PervAccum new after = ", z.WashPerv_temp[l])
 
                 # TODO: If Water is <= 0.01, then CalcCNErosRunoffSed

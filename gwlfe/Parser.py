@@ -49,11 +49,11 @@ class GmsReader(object):
         z.RunConCoeffP = 0.15
         z.PhytaseCoeff = 0.16
 
-        z.ImpervAccum = np.zeros(16)
+        # z.ImpervAccum = np.zeros(16)
         # z.PervAccum = np.zeros(16)
         # z.QrunI = np.zeros(16)
         # z.QrunP = np.zeros(16)
-        z.WashPerv = np.zeros(16)
+        # z.WashPerv = np.zeros(16)
         z.NetDisLoad = np.zeros(3)
 
         z.AvGRStreamFC = 0
@@ -114,7 +114,7 @@ class GmsReader(object):
         z.DayPondPhos = np.zeros((12, 31))
         z.DayNormNitr = np.zeros((12, 31))
         z.DayNormPhos = np.zeros((12, 31))
-        z.WashImperv = np.zeros(16)
+        # z.WashImperv = np.zeros(16)
         z.NetSolidLoad = np.zeros(3)
         z.DayShortNitr = np.zeros((12, 31))
         z.DayShortPhos = np.zeros((12, 31))
