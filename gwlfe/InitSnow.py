@@ -21,7 +21,7 @@ def InitSnow(NYrs, DaysMonth, InitSnow_0, Temp, Prec):
     return result
 
 
-# @time_function
+@time_function
 @jit(cache=True, nopython = True)
 def InitSnow_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec):
     result = np.zeros((NYrs, 12, 31))

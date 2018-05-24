@@ -3,9 +3,9 @@ from Timer import time_function
 from numba import jit
 
 from Memoization import memoize
-@memoize
-@jit(cache=True, nopython = True)
 
+
+@memoize
 def NLU(NRur, NUrb):
     result = NRur + NUrb
     return result

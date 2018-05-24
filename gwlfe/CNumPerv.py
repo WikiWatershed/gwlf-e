@@ -100,7 +100,7 @@ def CNumPerv_2_inner(NYrs, DaysMonth, Temp, NRur, nlu, cnp, water, melt, grow_fa
                                 if melt[Y][i][j] <= 0:
                                     if grow_factor[i] > 0:
                                         # Growing season
-                                        if amc5[Y][i][j] >= 5.33:
+                                        if amc5[Y][i][j]>= 5.33:
                                             result[Y][i][j][l] = cnp[2][l]
                                         elif amc5[Y][i][j] < 3.56:
                                             result[Y][i][j][l] = cnp[0][l] + (
@@ -136,3 +136,15 @@ def CNumPerv_2(NYrs, DaysMonth, Temp, NRur, NUrb, CNP_0, InitSnow_0, Prec, Grow,
     temp = CNumPerv_2_inner(NYrs, DaysMonth, Temp, NRur, nlu, cnp, water, melt, grow_factor, amc5)
     # print(CNumPerv_2_inner.inspect_types())
     return temp
+def CNumPerv_3(NYrs, DaysMonth, Temp, NRur, NUrb, CNP_0, InitSnow_0, Prec, Grow, AntMoist_0):
+    nlu = NLU(NRur, NUrb)
+    result = np.zeros((NYrs, 12, 31))
+    cnp = CNP_2(NRur, NUrb, CNP_0)
+    water = Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
+    melt = Melt_1_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
+    grow_factor = GrowFactor(Grow)
+    amc5 = AMC5_yesterday(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0)
+
+    non_zero = result[(Temp > 0) & (water > 0.05)]
+
+    temp = np.where(melt <= 0,2,cnp[2])

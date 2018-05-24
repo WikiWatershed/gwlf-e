@@ -29,6 +29,7 @@ import ET
 import PtSrcFlow
 from InitSnow import InitSnow
 from Water import Water
+from Water import Water_2
 from Erosiv import Erosiv
 from NLU import NLU
 from CNI import CNI
@@ -37,6 +38,7 @@ from LU import LU
 from LU_1 import LU_1
 from GrowFactor import GrowFactor
 from Retention import Retention
+from Retention import Retention_2
 from QrunP import QrunP
 from QrunI import QrunI
 from Qrun import Qrun
@@ -111,6 +113,8 @@ from SedYield_2 import SedYield_2
 from Erosion_2 import Erosion_2
 from UncontrolledQ import UncontrolledQ
 from RetentionEff import RetentionEff
+from Timer import time_function
+
 
 log = logging.getLogger(__name__)
 
@@ -126,21 +130,9 @@ def run(z):
     # MODEL CALCULATIONS FOR EACH YEAR OF ANALYSIS - WATER BALANCE,
     # NUTRIENTS AND SEDIMENT LOADS
 
-    DailyET_Part1 = ET.DailyET_2(z.Temp, z.KV, z.PcntET, z.DayHrs)
-
-    z.PtSrcFlow = PtSrcFlow.PtSrcFlow_2(z.NYrs, z.PointFlow)
-
     z.InitSnow = InitSnow(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec)
 
-    z.Water = Water(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec)
-
-    z.Erosiv = Erosiv(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.Acoef)
-
-    z.NLU = NLU(z.NRur, z.NUrb)
-
-    z.CNI = CNI(z.NRur, z.NUrb, z.CNI_0)
-
-    z.CNP = CNP(z.NRur, z.NUrb, z.CNP_0)
+    z.Water = Water_2(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec)
 
     z.lu = LU(z.NRur, z.NUrb)
 
@@ -148,7 +140,7 @@ def run(z):
 
     z.GrowFactor = GrowFactor(z.Grow)
 
-    z.Retention = Retention(z.NYrs, z.DaysMonth, z.Temp, z.Prec, z.InitSnow_0, z.AntMoist_0, z.NRur, z.NUrb, z.CN,
+    z.Retention = Retention_2(z.NYrs, z.DaysMonth, z.Temp, z.Prec, z.InitSnow_0, z.AntMoist_0, z.NRur, z.NUrb, z.CN,
                             z.Grow)
 
     z.QrunP = QrunP(z.NYrs, z.DaysMonth, z.NRur, z.NUrb, z.Temp, z.InitSnow_0, z.Prec, z.CNP_0, z.AntMoist_0, z.Grow)
@@ -414,7 +406,6 @@ def run(z):
             for j in range(z.DaysMonth[Y][i]):
                 # DAILYWEATHERANALY TEMP[Y][I][J], PREC[Y][I][J]
                 # ***** BEGIN WEATHER DATA ANALYSIS *****
-                z.ET = 0
                 # Question: Are these values supposed to accumulate for each
                 # day, each month, and each year? Or should these be
                 # re-initialized to a default value at some point?
@@ -434,9 +425,6 @@ def run(z):
                     CalcCnErosRunoffSed.CalcCN(z, i, Y, j)
                 else:
                     pass
-
-                z.ET = DailyET_Part1[Y][i][j]
-                z.DailyET[Y][i][j] = z.ET
 
                 # ***** END WEATHER DATA ANALYSIS *****
 

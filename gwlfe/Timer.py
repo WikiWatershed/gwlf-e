@@ -18,7 +18,7 @@ def time_function(method):
             method.result = None  # for memoized functions
 
         function_to_time = timeit.Timer(lambda: method(*args), setup=reset_scope)
-        runs = function_to_time.repeat(number=1, repeat=100)
+        runs = function_to_time.repeat(number=1, repeat=10)
         print("300 loops of %r, average time per loop: %f, best: %f, worst: %f" % (
             method.__name__, reject_outliers(np.array(runs)), np.min(runs), np.max(runs)))
 

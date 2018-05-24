@@ -1,7 +1,9 @@
 import numpy as np
 from Timer import time_function
 from Erosiv import Erosiv
+from Memoization import memoize
 
+@memoize
 def RurEros(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef, NRur, KF, LS, C, P, Area):
     result = np.zeros((NYrs, 12, 31, NRur))
     erosiv = Erosiv(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef)
