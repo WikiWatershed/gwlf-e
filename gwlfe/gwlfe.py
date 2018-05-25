@@ -113,6 +113,7 @@ from UncontrolledQ import UncontrolledQ
 from RetentionEff import RetentionEff
 from WashPerv import WashPerv
 from WashImperv import WashImperv
+from RurQRunoff import RurQRunoff
 
 log = logging.getLogger(__name__)
 
@@ -388,6 +389,7 @@ def run(z):
 
     z.WashImperv = WashImperv(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.CNI_0, z.AntMoist_0, z.Grow, z.NRur, z.NUrb)
 
+    z.RurQRunoff = RurQRunoff(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.NRur, z.NUrb, z.CN, z.Grow)
 
     # --------- run the remaining parts of the model ---------------------
 
@@ -422,7 +424,7 @@ def run(z):
                 z.QRunoff[l, i] = 0
                 z.AgQRunoff[l, i] = 0
                 z.ErosWashoff[l, i] = 0
-                z.RurQRunoff[l, i] = 0
+                # z.RurQRunoff[l, i] = 0
                 z.UrbQRunoff[l, i] = 0
                 z.LuErosion[Y, l] = 0
 

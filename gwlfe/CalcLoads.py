@@ -59,7 +59,9 @@ def CalculateLoads(z, Y):
     for i in range(12):
         # Calculate landuse runoff for rural areas
         for l in range(z.NRur):
-            z.LuRunoff[Y][l] += z.RurQRunoff[l][i]
+            z.LuRunoff[Y][l] += z.RurQRunoff[Y][l][i]
+            # print("RurQRunoff old = ", z.RurQRunoff[l][i], "RurQRunoff new = ", z.RurQRunoff_temp[Y][l][i])
+            # print(z.RurQRunoff[l][i] == z.RurQRunoff_temp[Y][l][i])
 
         # Calculate landuse runoff for urban areas
         for l in range(z.NRur, z.NLU):
@@ -124,8 +126,8 @@ def CalculateLoads(z, Y):
                 z.NConc = z.ManNitr[l]
                 z.PConc = z.ManPhos[l]
 
-            nRunoff = 0.1 * z.NConc * z.RurQRunoff[l][i] * z.Area[l]
-            pRunoff = 0.1 * z.PConc * z.RurQRunoff[l][i] * z.Area[l]
+            nRunoff = 0.1 * z.NConc * z.RurQRunoff[Y][l][i] * z.Area[l]
+            pRunoff = 0.1 * z.PConc * z.RurQRunoff[Y][l][i] * z.Area[l]
 
             z.DisNitr[Y][i] += nRunoff
             z.DisPhos[Y][i] += pRunoff

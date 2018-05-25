@@ -33,7 +33,7 @@ def CalcCN(z, i, Y, j):
         # z.Qrun = 0
         # grow_factor = GrowFlag.intval(z.Grow[i])
 
-        if z.CN[l] > 0:
+        # if z.CN[l] > 0:
             # print("test2",z.CNum)
             # if z.Melt[Y][i][j] <= 0:
             #
@@ -74,11 +74,11 @@ def CalcCN(z, i, Y, j):
 
             # z.Water balance and runoff calculation
             # if z.Water[Y][i][j] >= 0.2 * z.Retention[Y][i][j][l]:
-            if z.Water[Y][i][j] >= 0.2 * z.Retention[Y][i][j][l]:
+            # if z.Water[Y][i][j] >= 0.2 * z.Retention[Y][i][j][l]:
                 # z.Qrun = (z.Water[Y][i][j] - 0.2 * z.Retention[Y][i][j][l]) ** 2 / (
                 #             z.Water[Y][i][j] + 0.8 * z.Retention[Y][i][j][l])
                 # z.RuralQTotal += z.Qrun[Y][i][j][l] * z.Area[l] / z.RurAreaTotal
-                z.RurQRunoff[l][i] += z.Qrun[Y][i][j][l]
+                # z.RurQRunoff[l][i] += z.Qrun[Y][i][j][l]
                 # TODO: (what is done with "DayQRunoff"? - appears not to be used)
                 # z.DayQRunoff[Y][i][j] = z.Qrun[Y][i][j][l]
                 # TODO: (What is done with "AgQRunoff? - apparently nothing)
@@ -94,8 +94,8 @@ def CalcCN(z, i, Y, j):
                 #     # z.AgQRunoff[l][i] += z.Qrun[Y][i][j][l]
             # else:
             #     z.Qrun[Y][i][j][l] = 0
-        else:
-            pass
+        # else:
+        #     pass
             # print("test1",z.CNum_2[Y][i][j-3][l])
 
         # EROSION, SEDIMENT WASHOFF FOR RURAL AND URBAN LANDUSE
