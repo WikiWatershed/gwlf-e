@@ -115,6 +115,7 @@ from WashPerv import WashPerv
 from WashImperv import WashImperv
 from RurQRunoff import RurQRunoff
 from ErosWashoff import ErosWashoff
+from UrbQRunoff import UrbQRunoff
 
 log = logging.getLogger(__name__)
 
@@ -394,6 +395,9 @@ def run(z):
 
     z.ErosWashoff = ErosWashoff(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.NRur, z.NUrb, z.Acoef, z.KF, z.LS, z.C, z.P, z.Area)
 
+    z.UrbQRunoff = UrbQRunoff(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.NRur, z.NUrb, z.CNI_0, z.CNP_0, z.AntMoist_0, z.Grow, z.Imper, z.ISRR, z.ISRA)
+
+
     # --------- run the remaining parts of the model ---------------------
 
     ReadGwlfDataFile.ReadAllData(z)
@@ -428,7 +432,7 @@ def run(z):
                 z.AgQRunoff[l, i] = 0
                 # z.ErosWashoff[l, i] = 0
                 # z.RurQRunoff[l, i] = 0
-                z.UrbQRunoff[l, i] = 0
+                # z.UrbQRunoff[l, i] = 0
                 z.LuErosion[Y, l] = 0
 
             # DAILY CALCULATIONS

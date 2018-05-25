@@ -65,7 +65,7 @@ def CalculateLoads(z, Y):
 
         # Calculate landuse runoff for urban areas
         for l in range(z.NRur, z.NLU):
-            z.LuRunoff[Y][l] += z.UrbQRunoff[l][i]
+            z.LuRunoff[Y][l] += z.UrbQRunoff[Y][l][i]
 
         PrecipitationTotal += z.Precipitation[Y][i]
         RunoffTotal += z.Runoff[Y][i]

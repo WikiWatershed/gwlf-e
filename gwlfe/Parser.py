@@ -103,7 +103,7 @@ class GmsReader(object):
         z.QRunoff = np.zeros((16, 12))
         z.AgQRunoff = np.zeros((16, 12))
         # z.RurQRunoff = np.zeros((16, 12))
-        z.UrbQRunoff = np.zeros((16, 12))
+        # z.UrbQRunoff = np.zeros((16, 12))
         z.DailyLoad = np.zeros((50, 12, 31))
         z.SepticsDay = np.zeros(12)
         z.MonthlyLoad = np.zeros((12, 31))

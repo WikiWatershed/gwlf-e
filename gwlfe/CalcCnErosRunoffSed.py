@@ -118,11 +118,11 @@ def CalcCN(z, i, Y, j):
     for q in range(z.Nqual):
         z.NetSolidLoad[q] = 0
         z.NetDisLoad[q] = 0
-    if z.Water[Y][i][j] < 0.05:
+    # if z.Water[Y][i][j] < 0.05:
         # z.AdjUrbanQTotal = get_value_for_yesterday(z.AdjUrbanQTotal_1,0,Y,i,j,z.NYrs,z.DaysMonth)
-        pass
-    else:
-        for l in range(z.NRur, z.NLU):
+        # pass
+    # else:
+    #     for l in range(z.NRur, z.NLU):
             # grow_factor = GrowFlag.intval(z.Grow[i])
 
             # Find curve number
@@ -232,9 +232,9 @@ def CalcCN(z, i, Y, j):
             # print("WashPerv old = ", z.WashPerv[l], "WashPerv new = ", z.WashPerv_temp[Y][i][j][l])
             # print(z.WashPerv[l] == z.WashPerv_temp[Y][i][j][l])
 
-            z.UrbQRunoff[l][i] += (z.QrunI[Y][i][j][l] * (z.Imper[l] * (1 - z.ISRR[z.lu[l]]) * (1 - z.ISRA[z.lu[l]]))
-                                   + z.QrunP[Y][i][j][l] * (
-                                           1 - (z.Imper[l] * (1 - z.ISRR[z.lu[l]]) * (1 - z.ISRA[z.lu[l]]))))
+            # z.UrbQRunoff[l][i] += (z.QrunI[Y][i][j][l] * (z.Imper[l] * (1 - z.ISRR[z.lu[l]]) * (1 - z.ISRA[z.lu[l]]))
+            #                        + z.QrunP[Y][i][j][l] * (
+            #                                1 - (z.Imper[l] * (1 - z.ISRR[z.lu[l]]) * (1 - z.ISRA[z.lu[l]]))))
 
         # z.AdjUrbanQTotal = z.UrbanQTotal[Y][i][j]
 
