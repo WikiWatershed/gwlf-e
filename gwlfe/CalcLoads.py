@@ -102,8 +102,10 @@ def CalculateLoads(z, Y):
 
         # CALCULATION OF THE LANDUSE EROSION AND SEDIMENT YIELDS
         for l in range(z.NRur):
-            z.LuErosion[Y][l] += z.ErosWashoff[l][i]
+            z.LuErosion[Y][l] += z.ErosWashoff[Y][l][i]
             z.LuSedYield[Y][l] = z.LuErosion[Y][l] * z.SedDelivRatio
+            # print("ErosWashoff old = ", z.ErosWashoff[l][i], "ErosWashoff new = ", z.ErosWashoff_temp[Y][l][i])
+            # print(z.ErosWashoff[l][i] == z.ErosWashoff_temp[Y][l][i])
 
         # Add in the urban calucation for sediment
         for l in range(z.NRur, z.NLU):
@@ -137,8 +139,8 @@ def CalculateLoads(z, Y):
             z.LuDisPhos[Y][l] += pRunoff
 
             # ADD SOLID RURAL NUTRIENTS
-            z.LuTotNitr[Y][l] += 0.001 * z.SedDelivRatio * z.ErosWashoff[l][i] * z.SedNitr
-            z.LuTotPhos[Y][l] += 0.001 * z.SedDelivRatio * z.ErosWashoff[l][i] * z.SedPhos
+            z.LuTotNitr[Y][l] += 0.001 * z.SedDelivRatio * z.ErosWashoff[Y][l][i] * z.SedNitr
+            z.LuTotPhos[Y][l] += 0.001 * z.SedDelivRatio * z.ErosWashoff[Y][l][i] * z.SedPhos
 
         z.TotNitr[Y][i] = z.DisNitr[Y][i] + 0.001 * z.SedNitr * z.SedYield[Y][i]
         z.TotPhos[Y][i] = z.DisPhos[Y][i] + 0.001 * z.SedPhos * z.SedYield[Y][i]

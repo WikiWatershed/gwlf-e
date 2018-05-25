@@ -99,7 +99,7 @@ class GmsReader(object):
         z.BSed = np.zeros(16)
         z.UrbanSed = np.zeros(16)
         z.UrbanErosion = np.zeros(16)
-        z.ErosWashoff = np.zeros((16, 12))
+        # z.ErosWashoff = np.zeros((16, 12))
         z.QRunoff = np.zeros((16, 12))
         z.AgQRunoff = np.zeros((16, 12))
         # z.RurQRunoff = np.zeros((16, 12))

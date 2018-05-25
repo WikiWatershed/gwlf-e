@@ -29,7 +29,7 @@ def CalcCN(z, i, Y, j):
     # z.RetentionEff = 0
 
     # Calculate Curve Number (CN)
-    for l in range(z.NRur):
+    # for l in range(z.NRur):
         # z.Qrun = 0
         # grow_factor = GrowFlag.intval(z.Grow[i])
 
@@ -103,7 +103,7 @@ def CalcCN(z, i, Y, j):
 
         # z.Erosion[Y][i] = z.Erosion[Y][i] + z.RurEros[Y][i][j][l]
 
-        z.ErosWashoff[l][i] = z.ErosWashoff[l][i] + z.RurEros[Y][i][j][l]
+        # z.ErosWashoff[l][i] = z.ErosWashoff[l][i] + z.RurEros[Y][i][j][l]
         # z.DayErWashoff[l][Y][i][j] = z.RurEros
 
         # if z.SedDelivRatio == 0:
