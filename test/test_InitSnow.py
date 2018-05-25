@@ -12,7 +12,7 @@ class TestInitSnow(unittest.TestCase):
         self.z = Parser.GmsReader(input_file).read()
 
 
-    # @skip("not ready")
+    @skip("not ready")
     def test_InitSnow(self):
         z = self.z
         # initsnow, _ = InitSnow.InitSnow_2(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec)

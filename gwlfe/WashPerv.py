@@ -21,10 +21,13 @@ def WashPerv(NYrs, DaysMonth, InitSnow_0, Temp, Prec, CNP_0, AntMoist_0, Grow, N
                 for l in range(nlu):
                     pervaccum[l] = carryover[l]
                     pervaccum[l] = (pervaccum[l] * np.exp(-0.12) + (1 / 0.12) * (1 - np.exp(-0.12)))
-                if Temp[Y][i][j] > 0 and water[Y][i][j] > 0.05:
-                    for l in range(NRur, nlu):
-                        washperv[Y][i][j][l] = (1 - math.exp(-1.81 * qrunp[Y][i][j][l])) * pervaccum[l]
-                        pervaccum[l] -= washperv[Y][i][j][l]
+                if Temp[Y][i][j] > 0 and water[Y][i][j] > 0.01:
+                    if water[Y][i][j] < 0.05:
+                        pass
+                    else:
+                        for l in range(NRur, nlu):
+                            washperv[Y][i][j][l] = (1 - math.exp(-1.81 * qrunp[Y][i][j][l])) * pervaccum[l]
+                            pervaccum[l] -= washperv[Y][i][j][l]
                 else:
                     pass
                 for l in range(nlu):

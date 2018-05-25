@@ -35,6 +35,5 @@ def WashImperv(NYrs, DaysMonth, InitSnow_0, Temp, Prec, CNI_0, AntMoist_0, Grow,
     return result
 
 
-
 def WashImperv_2():
     pass
