@@ -23,6 +23,7 @@ from Erosion import Erosion_2
 from SedYield import SedYield_2
 from RurQRunoff import RurQRunoff
 from ErosWashoff import ErosWashoff
+from UrbQRunoff import UrbQRunoff
 
 
 def CalculateLoads(z, Y):
@@ -74,7 +75,8 @@ def CalculateLoads(z, Y):
 
         # Calculate landuse runoff for urban areas
         for l in range(z.NRur, z.NLU):
-            z.LuRunoff[Y][l] += z.UrbQRunoff[Y][l][i]
+            z.LuRunoff[Y][l] += UrbQRunoff(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.NRur, z.NUrb, z.CNI_0, z.CNP_0,
+                              z.AntMoist_0, z.Grow_0, z.Imper, z.ISRR, z.ISRA)[Y][l][i]
 
         # PrecipitationTotal += z.Precipitation[Y][i]
         # RunoffTotal += z.Runoff[Y][i]
