@@ -350,7 +350,7 @@ class GmsReader(object):
         z.DailyRetent = np.zeros((z.DimYrs, 12, 31))
         z.SatStorPest = np.zeros((z.DimYrs, 12, 31))
         # z.UrbanRunoff = np.zeros((z.DimYrs, 12))
-        z.RuralRunoff = np.zeros((z.DimYrs, 12))
+        # z.RuralRunoff = np.zeros((z.DimYrs, 12))
         z.DailyInfilt = np.zeros((z.DimYrs, 12, 31))
         # z.StreamFlowVol = np.zeros((z.DimYrs, 12))
         # z.DailyCN = np.zeros((z.DimYrs, 12, 31))
