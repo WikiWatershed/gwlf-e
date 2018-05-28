@@ -116,6 +116,7 @@ from WashImperv import WashImperv
 from RurQRunoff import RurQRunoff
 from ErosWashoff import ErosWashoff
 from UrbQRunoff import UrbQRunoff
+from UrbLoadRed import UrbLoadRed
 
 log = logging.getLogger(__name__)
 
@@ -397,6 +398,8 @@ def run(z):
 
     z.UrbQRunoff = UrbQRunoff(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.NRur, z.NUrb, z.CNI_0, z.CNP_0, z.AntMoist_0, z.Grow, z.Imper, z.ISRR, z.ISRA)
 
+    z.UrbLoadRed = UrbLoadRed(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow, z.CNP_0,
+               z.Imper, z.ISRR, z.ISRA, z.Qretention, z.PctAreaInfil, z.Nqual, z.Storm, z.UrbBMPRed)
 
     # --------- run the remaining parts of the model ---------------------
 

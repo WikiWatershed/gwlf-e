@@ -321,7 +321,7 @@ def BasinWater(z, i, Y, j):
     # MAYBE THEY SHOULD BE IN "CALCULATE LOADS" SUBROUTINE???
     z.DissolvedLoad = 0
     z.SolidLoad = 0
-    z.UrbLoadRed = 0
+    # z.UrbLoadRed = 0
 
     if z.AdjUrbanQTotal_1[Y][i][j] > 0.001:
         for l in range(z.NRur, z.NLU):
@@ -329,13 +329,13 @@ def BasinWater(z, i, Y, j):
                 z.SolidBasinMass[q] = 0
                 z.DisBasinMass[q] = 0
 
-                if z.Storm > 0:
-                    z.UrbLoadRed = (z.Water[Y][i][j] / z.Storm) * z.UrbBMPRed[l][q]
-                else:
-                    z.UrbLoadRed = 0
-
-                if z.Water[Y][i][j] > z.Storm:
-                    z.UrbLoadRed = z.UrbBMPRed[l][q]
+                # if z.Storm > 0:
+                #     z.UrbLoadRed = (z.Water[Y][i][j] / z.Storm) * z.UrbBMPRed[l][q]
+                # else:
+                #     z.UrbLoadRed = 0
+                #
+                # if z.Water[Y][i][j] > z.Storm:
+                #     z.UrbLoadRed = z.UrbBMPRed[l][q]
 
                 # TODO: Should 11 be NRur + 1?
                 # What is this trying to do?
