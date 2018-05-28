@@ -118,6 +118,8 @@ from ErosWashoff import ErosWashoff
 from UrbQRunoff import UrbQRunoff
 from UrbLoadRed import UrbLoadRed
 from FilterEff import FilterEff
+from UrbanRunoff import UrbanRunoff
+from UrbRunoffLiter import UrbRunoffLiter
 
 log = logging.getLogger(__name__)
 
@@ -403,6 +405,12 @@ def run(z):
                z.Imper, z.ISRR, z.ISRA, z.Qretention, z.PctAreaInfil, z.Nqual, z.Storm, z.UrbBMPRed)
 
     z.FilterEff = FilterEff(z.FilterWidth)
+
+    z.UrbanRunoff = UrbanRunoff(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow, z.CNP_0, z.Imper,
+                z.ISRR, z.ISRA)
+
+    z.UrbRunoffLiter = UrbRunoffLiter(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow, z.CNP_0, z.Imper,
+                     z.ISRR, z.ISRA)
 
     # --------- run the remaining parts of the model ---------------------
 
