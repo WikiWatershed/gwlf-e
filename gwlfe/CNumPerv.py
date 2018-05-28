@@ -16,13 +16,13 @@ from CompiledFunction import compiled
 
 cc = CC('gwlfe_compiled')
 @memoize
-def CNumPerv(NYrs, DaysMonth, Temp, NRur, NUrb, CNP_0, InitSnow_0, Prec, Grow, AntMoist_0):
+def CNumPerv(NYrs, DaysMonth, Temp, NRur, NUrb, CNP_0, InitSnow_0, Prec, Grow_0, AntMoist_0):
     nlu = NLU(NRur, NUrb)
     result = np.zeros((NYrs, 12, 31, nlu))
     cnp = CNP(NRur, NUrb, CNP_0)
     water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     melt = Melt(NYrs, DaysMonth, Temp, InitSnow_0, Prec)
-    grow_factor = GrowFactor(Grow)
+    grow_factor = GrowFactor(Grow_0)
     amc5 = AMC5(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0)
 
     for Y in range(NYrs):
@@ -126,26 +126,26 @@ def CNumPerv_2_inner(NYrs, DaysMonth, Temp, NRur, nlu, cnp, water, melt, grow_fa
     return result
 
 
-def CNumPerv_2(NYrs, DaysMonth, Temp, NRur, NUrb, CNP_0, InitSnow_0, Prec, Grow, AntMoist_0):
+def CNumPerv_2(NYrs, DaysMonth, Temp, NRur, NUrb, CNP_0, InitSnow_0, Prec, Grow_0, AntMoist_0):
     # cc.compile()
     nlu = NLU(NRur, NUrb)
     cnp = CNP_2(NRur, NUrb, CNP_0)
     water = Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     melt = Melt_1_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
-    grow_factor = GrowFactor(Grow)
+    grow_factor = GrowFactor(Grow_0)
     amc5 = AMC5_yesterday(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0)
     # print(CNumPerv_2_inner.inspect_types())
     return CNumPerv_2_inner(NYrs, DaysMonth, Temp, NRur, nlu, cnp, water, melt, grow_factor, amc5)
 
 
-# def CNumPerv_3(NYrs, DaysMonth, Temp, NRur, NUrb, CNP_0, InitSnow_0, Prec, Grow, AntMoist_0):
+# def CNumPerv_3(NYrs, DaysMonth, Temp, NRur, NUrb, CNP_0, InitSnow_0, Prec, Grow_0, AntMoist_0):
 #     nlu = NLU(NRur, NUrb)
 #     result = np.zeros((NYrs, 12, 31, 16))
 #     landuse = np.zeros((16,))
 #     cnp = CNP_2(NRur, NUrb, CNP_0)
 #     water = Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
 #     melt = Melt_1_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
-#     grow_factor = GrowFactor(Grow)
+#     grow_factor = GrowFactor(Grow_0)
 #     amc5 = AMC5_yesterday(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0)
 #
 #     non_zero = result[(Temp > 0) & (water > 0.05)]

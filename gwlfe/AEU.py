@@ -17,7 +17,7 @@ def AEU(NumAnimals, AvgAnimalWt, NRur, NUrb, Area):
     return result
 
 
-def AEU_2(NumAnimals, AvgAnimalWt, NRur, NUrb, Area):
+def AEU_2(NumAnimals, AvgAnimalWt, Area):
     result = 0
     areatotal = AreaTotal_2(Area)
     totLAEU = TotLAEU(NumAnimals, AvgAnimalWt)

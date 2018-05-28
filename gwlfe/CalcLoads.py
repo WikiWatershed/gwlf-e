@@ -14,6 +14,7 @@ import numpy as np
 log = logging.getLogger(__name__)
 
 from Memoization import memoize
+from AreaTotal import AreaTotal_2
 
 
 def CalculateLoads(z, Y):
@@ -167,8 +168,8 @@ def CalculateLoads(z, Y):
         z.UplandP[Y][i] = z.TotPhos[Y][i]
 
         # ADD GROUNDWATER, POINT SOURCES,
-        z.GroundNitr[Y][i] = 0.1 * z.GrNitrConc * z.GroundWatLE_2[Y][i] * z.AreaTotal
-        z.GroundPhos[Y][i] = 0.1 * z.GrPhosConc * z.GroundWatLE_2[Y][i] * z.AreaTotal
+        z.GroundNitr[Y][i] = 0.1 * z.GrNitrConc * z.GroundWatLE_2[Y][i] * AreaTotal_2(z.Area)
+        z.GroundPhos[Y][i] = 0.1 * z.GrPhosConc * z.GroundWatLE_2[Y][i] * AreaTotal_2(z.Area)
         z.DisNitr[Y][i] += z.GroundNitr[Y][i] + z.PointNitr[i]
         z.DisPhos[Y][i] += z.GroundPhos[Y][i] + z.PointPhos[i]
         z.TotNitr[Y][i] += z.GroundNitr[Y][i] + z.PointNitr[i]

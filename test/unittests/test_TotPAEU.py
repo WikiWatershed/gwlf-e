@@ -11,10 +11,8 @@ class TestTotPAEU(unittest.TestCase):
         input_file = open('unittests/input_4.gms', 'r')
         self.z = Parser.GmsReader(input_file).read()
 
-
-    @skip("not ready")
     def test_TotPAEU(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            TotPAEU.TotPAEU_2(),
-            TotPAEU.TotPAEU(), decimal=7)
+            TotPAEU.TotPAEU_2(z.NumAnimals, z.AvgAnimalWt),
+            TotPAEU.TotPAEU(z.NumAnimals, z.AvgAnimalWt), decimal=7)

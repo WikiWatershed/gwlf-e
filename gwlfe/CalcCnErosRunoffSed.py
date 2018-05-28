@@ -14,6 +14,8 @@ from DailyArrayConverter import get_value_for_yesterday
 from Water import Water_2
 from LU import LU
 from LU_1 import LU_1
+from UrbAreaTotal import UrbAreaTotal_2
+from UrbanQTotal_1 import UrbanQTotal_1_2
 
 from .enums import GrowFlag, LandUse
 
@@ -334,13 +336,15 @@ def BasinWater(z, i, Y, j):
     # WATERSHED TOTALS
 
     z.RuralRunoff[Y][i] += z.RuralQTotal[Y][i][j]
-    z.UrbanRunoff[Y][i] += z.UrbanQTotal_1[Y][i][j]
+    z.UrbanRunoff[Y][i] += UrbanQTotal_1_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
+                                    z.AntMoist_0, z.Grow_0,
+                                    z.CNP_0, z.Imper, z.ISRR, z.ISRA)[Y][i][j]
     # TODO: (Are z.AgRunoff and z.AgQTotal actually in cm?)
     # z.AgRunoff[Y][i] += z.AgQTotal[Y][i][j]
 
     # Convert Urban runoff from cm to Liters
     # TODO: (Maybe use z.UrbanRunoff[y][i] instead in the above equation)
-    z.UrbRunoffLiter[Y][i] = (z.UrbanRunoff[Y][i] / 100) * z.UrbAreaTotal * 10000 * 1000
+    z.UrbRunoffLiter[Y][i] = (z.UrbanRunoff[Y][i] / 100) * UrbAreaTotal_2(z.NRur, z.NUrb, z.Area) * 10000 * 1000
 
     # Calculate Daily runoff (used in output for daily flow file)
     if z.AdjQTotal[Y][i][j] > 0:

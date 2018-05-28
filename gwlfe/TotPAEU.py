@@ -11,5 +11,6 @@ def TotPAEU(NumAnimals, AvgAnimalWt):
     return result
 
 
-def TotPAEU_2():
-    pass
+def TotPAEU_2(NumAnimals, AvgAnimalWt):
+    return (NumAnimals[2] / 2 * AvgAnimalWt[2] + NumAnimals[3] / 2 * AvgAnimalWt[3] + NumAnimals[7] * AvgAnimalWt[
+        7]) / 1000

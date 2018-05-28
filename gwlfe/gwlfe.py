@@ -39,13 +39,13 @@ from LU_1 import LU_1
 from GrowFactor import GrowFactor_2
 from Retention import Retention
 from Retention import Retention_2
-from QrunP import QrunP
-from QrunI import QrunI
-from Qrun import Qrun
-from UrbAreaTotal import UrbAreaTotal
-from UrbanQTotal import UrbanQTotal
-from AreaTotal import AreaTotal
-from UrbanQTotal_1 import UrbanQTotal_1
+from QrunP import QrunP_2
+from QrunI import QrunI_2
+from Qrun import Qrun_2
+from UrbAreaTotal import UrbAreaTotal_2
+from UrbanQTotal import UrbanQTotal_2
+from AreaTotal import AreaTotal_2
+from UrbanQTotal_1 import UrbanQTotal_1_2
 from AdjUrbanQTotal import AdjUrbanQTotal
 from AdjUrbanQTotal_1 import AdjUrbanQTotal_1
 from RurAreaTotal import RurAreaTotal
@@ -61,10 +61,10 @@ from AgRunoff import AgRunoff
 from AdjQTotal import AdjQTotal
 from TileDrainRO import TileDrainRO
 from Runoff import Runoff
-from AEU import AEU
-from TotAEU import TotAEU
+from AEU import AEU_2
+from TotAEU import TotAEU_2
 from AEU import TotLAEU
-from TotPAEU import TotPAEU
+from TotPAEU import TotPAEU_2
 from PcntUrbanArea import PcntUrbanArea
 from AvCNUrb import AvCNUrb
 from AvCNRur import AvCNRur
@@ -133,32 +133,7 @@ def run(z):
     # MODEL CALCULATIONS FOR EACH YEAR OF ANALYSIS - WATER BALANCE,
     # NUTRIENTS AND SEDIMENT LOADS
 
-    z.Retention = Retention_2(z.NYrs, z.DaysMonth, z.Temp, z.Prec, z.InitSnow_0, z.AntMoist_0, z.NRur, z.NUrb, z.CN,
-                            z.Grow_0)
-
-    z.QrunP = QrunP(z.NYrs, z.DaysMonth, z.NRur, z.NUrb, z.Temp, z.InitSnow_0, z.Prec, z.CNP_0, z.AntMoist_0, z.Grow_0)
-
-    z.QrunI = QrunI(z.NYrs, z.DaysMonth, z.NRur, z.NUrb, z.Temp, z.InitSnow_0, z.Prec, z.CNI_0, z.AntMoist_0, z.Grow_0)
-
-    z.Qrun = Qrun(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.CN, z.AntMoist_0, z.Grow_0)
-
-    z.UrbAreaTotal = UrbAreaTotal(z.NRur, z.NUrb, z.Area)
-
-    z.AreaTotal = AreaTotal(z.NRur, z.NUrb, z.Area)
-
-    z.UrbanQTotal = UrbanQTotal(z.NYrs, z.DaysMonth, z.NRur, z.NUrb, z.Temp, z.InitSnow_0, z.Prec, z.Area, z.CNI_0,
-                                z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA)
-
-    z.UrbanQTotal_1 = UrbanQTotal_1(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
-                                    z.AntMoist_0, z.Grow_0,
-                                    z.CNP_0, z.Imper, z.ISRR, z.ISRA)
-
-    z.AEU = AEU(z.NumAnimals, z.AvgAnimalWt, z.NRur, z.NUrb, z.Area)
-
-    z.TotAEU = TotAEU(z.NumAnimals, z.AvgAnimalWt)
-    z.TotLAEU = TotLAEU(z.NumAnimals, z.AvgAnimalWt)
-
-    z.TotPAEU = TotPAEU(z.NumAnimals, z.AvgAnimalWt)
+    z.TotPAEU = TotPAEU_2(z.NumAnimals, z.AvgAnimalWt)
 
     z.PcntUrbanArea = PcntUrbanArea(z.NRur, z.NUrb, z.Area)
 

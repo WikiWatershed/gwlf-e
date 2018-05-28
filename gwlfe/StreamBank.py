@@ -8,6 +8,7 @@ Imported from StreamBank.bas
 """
 
 import logging
+from AreaTotal import AreaTotal_2
 
 
 log = logging.getLogger(__name__)
@@ -114,8 +115,8 @@ def CalculateStreamBankEros(z, Y):
         z.CHNGN5 = z.n28 / 100
         z.CHNGNTOT = z.CHNGN1 + z.CHNGN2 + z.CHNGN3 + z.CHNGN4 + z.CHNGN5
 
-        if z.AreaTotal > 0 and z.n23 > 0 and z.n42 > 0 and z.n42b > 0:
-            z.PCTAG = (z.n23 + z.n24) / z.AreaTotal
+        if AreaTotal_2(z.Area) > 0 and z.n23 > 0 and z.n42 > 0 and z.n42b > 0:
+            z.PCTAG = (z.n23 + z.n24) / AreaTotal_2(z.Area)
             z.GroundNitr[Y][i] -= z.GroundNitr[Y][i] * ((z.n28b / 100) * z.n23) / z.n23 * z.PCTAG * z.n70
             z.GroundNitr[Y][i] -= z.GroundNitr[Y][i] * (z.n43 / z.n42) * (z.n42 / z.n42b) * z.PCTAG * z.n64
             z.GroundNitr[Y][i] -= (z.GroundNitr[Y][i] * ((((z.n29 / 100) * z.n23) + ((z.n37 / 100) * z.n24)) / (z.n23 + z.n24))) * z.PCTAG * z.n68
@@ -124,8 +125,8 @@ def CalculateStreamBankEros(z, Y):
         z.RCNMAC = (z.n28b / 100) * z.n23
         z.HPNMAC = (z.n35b / 100) * z.n24
 
-        if z.AreaTotal > 0:
-            z.GroundPhos[Y][i] -= (((z.RCNMAC + z.HPNMAC) / z.AreaTotal) *
+        if AreaTotal_2(z.Area) > 0:
+            z.GroundPhos[Y][i] -= (((z.RCNMAC + z.HPNMAC) / AreaTotal_2(z.Area)) *
                                    z.GroundPhos[Y][i] * z.n78)
 
         z.GroundNitrSum[Y] += z.GroundNitr[Y][i]

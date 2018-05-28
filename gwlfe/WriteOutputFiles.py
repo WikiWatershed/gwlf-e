@@ -10,6 +10,10 @@ import numpy as np
 from . import LoadReductions
 from .enums import YesOrNo, LandUse
 from AvEvapoTrans import AvEvapoTrans
+from AreaTotal import AreaTotal_2
+from TotAEU import TotAEU_2
+from TotLAEU import TotLAEU
+
 
 log = logging.getLogger(__name__)
 
@@ -177,9 +181,9 @@ def WriteOutput(z):
     # InitialAnimalP = z.n14b
 
     # Get the AEUs
-    z.n41j = round(z.TotLAEU)
+    z.n41j = round(TotLAEU(z.NumAnimals, z.AvgAnimalWt))
     z.n41k = round(z.TotPAEU)
-    z.n41l = round(z.TotAEU)
+    z.n41l = round(TotAEU_2(z.NumAnimals, z.AvgAnimalWt))
 
     # CONVERT AVERAGE STREAM BANK ERIOSION, N AND P TO ENGLISH UNITS
     z.n4 = round(z.AvStreamBankErosSum * z.RetentFactorSed * (1 - z.AttenTSS) * SedConvert)
@@ -358,7 +362,7 @@ def WriteOutput(z):
     # TotalAreaAc = 0
 
     # FORMAT VALUES FOR PREDICT SCENARIO FILE
-    z.n22 = round(z.AreaTotal, 0)
+    z.n22 = round(AreaTotal_2(z.Area), 0)
 
     # COMPLETE CALCULATING THE TOTAL SOURCE LOADS FOR SEDIMENT, N AND P
     AvTotalSed = (AvTotalSed + (((z.AvStreamBankErosSum / 1000) +
