@@ -12,7 +12,7 @@ class TestQrun(unittest.TestCase):
         self.z = Parser.GmsReader(input_file).read()
 
 
-    # @skip("not ready")
+    @skip("not ready")
     def test_Qrun(self):
         z = self.z
         np.testing.assert_array_almost_equal(

@@ -114,8 +114,11 @@ from SedYield_2 import SedYield_2
 from Erosion_2 import Erosion_2
 from UncontrolledQ import UncontrolledQ
 from RetentionEff import RetentionEff
-from Timer import time_function
-
+from WashPerv import WashPerv
+from WashImperv import WashImperv
+from RurQRunoff import RurQRunoff
+from ErosWashoff import ErosWashoff
+from UrbQRunoff import UrbQRunoff
 
 log = logging.getLogger(__name__)
 
@@ -354,6 +357,16 @@ def run(z):
     z.RetentionEff = RetentionEff(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.Qretention, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0,
                  z.Imper, z.ISRR, z.ISRA, z.PctAreaInfil)
 
+    z.WashPerv = WashPerv(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.CNP_0, z.AntMoist_0, z.Grow, z.NRur, z.NUrb)
+
+    z.WashImperv = WashImperv(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.CNI_0, z.AntMoist_0, z.Grow, z.NRur, z.NUrb)
+
+    z.RurQRunoff = RurQRunoff(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.NRur, z.NUrb, z.CN, z.Grow)
+
+    z.ErosWashoff = ErosWashoff(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.NRur, z.NUrb, z.Acoef, z.KF, z.LS, z.C, z.P, z.Area)
+
+    z.UrbQRunoff = UrbQRunoff(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.NRur, z.NUrb, z.CNI_0, z.CNP_0, z.AntMoist_0, z.Grow, z.Imper, z.ISRR, z.ISRA)
+
 
     # --------- run the remaining parts of the model ---------------------
 
@@ -387,9 +400,9 @@ def run(z):
             for l in range(z.NLU):
                 z.QRunoff[l, i] = 0
                 z.AgQRunoff[l, i] = 0
-                z.ErosWashoff[l, i] = 0
-                z.RurQRunoff[l, i] = 0
-                z.UrbQRunoff[l, i] = 0
+                # z.ErosWashoff[l, i] = 0
+                # z.RurQRunoff[l, i] = 0
+                # z.UrbQRunoff[l, i] = 0
                 z.LuErosion[Y, l] = 0
 
             # DAILY CALCULATIONS
@@ -399,11 +412,13 @@ def run(z):
                 # Question: Are these values supposed to accumulate for each
                 # day, each month, and each year? Or should these be
                 # re-initialized to a default value at some point?
-                for l in range(z.NLU):
-                    z.ImpervAccum[l] = (z.ImpervAccum[l] * np.exp(-0.12) +
-                                        (1 / 0.12) * (1 - np.exp(-0.12)))
-                    z.PervAccum[l] = (z.PervAccum[l] * np.exp(-0.12) +
-                                      (1 / 0.12) * (1 - np.exp(-0.12)))
+                # for l in range(z.NLU):
+                #     z.ImpervAccum[l] = (z.ImpervAccum[l] * np.exp(-0.12) +
+                #                         (1 / 0.12) * (1 - np.exp(-0.12)))
+                #     # print("PervAccum old b4 = ", z.PervAccum[l], "PervAccum new b4 = ", z.WashPerv_temp[l])
+                #     z.PervAccum[l] = (z.PervAccum[l] * np.exp(-0.12) +
+                #                       (1 / 0.12) * (1 - np.exp(-0.12)))
+                    # print("PervAccum old after = ", z.PervAccum[l], "PervAccum new after = ", z.WashPerv_temp[l])
 
                 # TODO: If Water is <= 0.01, then CalcCNErosRunoffSed
                 # never executes, and CNum will remain undefined.

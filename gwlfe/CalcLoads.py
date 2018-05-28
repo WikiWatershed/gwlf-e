@@ -57,15 +57,17 @@ def CalculateLoads(z, Y):
     # ANNUAL WATER BALANCE CALCULATIONS
     for i in range(12):
         # Calculate landuse runoff for rural areas
-        # for l in range(z.NRur):
-        #     z.LuRunoff[Y][l] += z.RurQRunoff[l][i]
-        #
-        # # Calculate landuse runoff for urban areas
-        # for l in range(z.NRur, z.NLU):
-        #     z.LuRunoff[Y][l] += z.UrbQRunoff[l][i]
+        for l in range(z.NRur):
+            z.LuRunoff[Y][l] += z.RurQRunoff[Y][l][i]
+            # print("RurQRunoff old = ", z.RurQRunoff[l][i], "RurQRunoff new = ", z.RurQRunoff_temp[Y][l][i])
+            # print(z.RurQRunoff[l][i] == z.RurQRunoff_temp[Y][l][i])
 
-        # PrecipitationTotal += z.Precipitation[Y][i]
-        # RunoffTotal += z.Runoff[Y][i]
+        # Calculate landuse runoff for urban areas
+        for l in range(z.NRur, z.NLU):
+            z.LuRunoff[Y][l] += z.UrbQRunoff[Y][l][i]
+
+        #PrecipitationTotal += z.Precipitation[Y][i]
+        #RunoffTotal += z.Runoff[Y][i]
         GroundWatLETotal += z.GroundWatLE_2[Y][i]
         # EvapotransTotal += z.Evapotrans[Y][i]
         # PtSrcFlowTotal += z.PtSrcFlow[Y][i]
@@ -99,8 +101,10 @@ def CalculateLoads(z, Y):
 
         # CALCULATION OF THE LANDUSE EROSION AND SEDIMENT YIELDS
         for l in range(z.NRur):
-            z.LuErosion[Y][l] += z.ErosWashoff[l][i]
+            z.LuErosion[Y][l] += z.ErosWashoff[Y][l][i]
             z.LuSedYield[Y][l] = z.LuErosion[Y][l] * z.SedDelivRatio
+            # print("ErosWashoff old = ", z.ErosWashoff[l][i], "ErosWashoff new = ", z.ErosWashoff_temp[Y][l][i])
+            # print(z.ErosWashoff[l][i] == z.ErosWashoff_temp[Y][l][i])
 
         # Add in the urban calucation for sediment
         for l in range(z.NRur, z.NLU):
@@ -123,8 +127,8 @@ def CalculateLoads(z, Y):
                 z.NConc = z.ManNitr[l]
                 z.PConc = z.ManPhos[l]
 
-            nRunoff = 0.1 * z.NConc * z.RurQRunoff[l][i] * z.Area[l]
-            pRunoff = 0.1 * z.PConc * z.RurQRunoff[l][i] * z.Area[l]
+            nRunoff = 0.1 * z.NConc * z.RurQRunoff[Y][l][i] * z.Area[l]
+            pRunoff = 0.1 * z.PConc * z.RurQRunoff[Y][l][i] * z.Area[l]
 
             z.DisNitr[Y][i] += nRunoff
             z.DisPhos[Y][i] += pRunoff
@@ -134,8 +138,8 @@ def CalculateLoads(z, Y):
             z.LuDisPhos[Y][l] += pRunoff
 
             # ADD SOLID RURAL NUTRIENTS
-            z.LuTotNitr[Y][l] += 0.001 * z.SedDelivRatio * z.ErosWashoff[l][i] * z.SedNitr
-            z.LuTotPhos[Y][l] += 0.001 * z.SedDelivRatio * z.ErosWashoff[l][i] * z.SedPhos
+            z.LuTotNitr[Y][l] += 0.001 * z.SedDelivRatio * z.ErosWashoff[Y][l][i] * z.SedNitr
+            z.LuTotPhos[Y][l] += 0.001 * z.SedDelivRatio * z.ErosWashoff[Y][l][i] * z.SedPhos
 
         z.TotNitr[Y][i] = z.DisNitr[Y][i] + 0.001 * z.SedNitr * z.SedYield[Y][i]
         z.TotPhos[Y][i] = z.DisPhos[Y][i] + 0.001 * z.SedPhos * z.SedYield[Y][i]
