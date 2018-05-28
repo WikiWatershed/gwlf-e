@@ -13,6 +13,7 @@ from AvEvapoTrans import AvEvapoTrans
 from AreaTotal import AreaTotal_2
 from TotAEU import TotAEU_2
 from TotLAEU import TotLAEU
+from TotPAEU import TotPAEU_2
 
 
 log = logging.getLogger(__name__)
@@ -182,7 +183,7 @@ def WriteOutput(z):
 
     # Get the AEUs
     z.n41j = round(TotLAEU(z.NumAnimals, z.AvgAnimalWt))
-    z.n41k = round(z.TotPAEU)
+    z.n41k = round(TotPAEU_2(z.NumAnimals, z.AvgAnimalWt))
     z.n41l = round(TotAEU_2(z.NumAnimals, z.AvgAnimalWt))
 
     # CONVERT AVERAGE STREAM BANK ERIOSION, N AND P TO ENGLISH UNITS

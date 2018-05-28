@@ -133,8 +133,6 @@ def run(z):
     # MODEL CALCULATIONS FOR EACH YEAR OF ANALYSIS - WATER BALANCE,
     # NUTRIENTS AND SEDIMENT LOADS
 
-    z.TotPAEU = TotPAEU_2(z.NumAnimals, z.AvgAnimalWt)
-
     z.PcntUrbanArea = PcntUrbanArea(z.NRur, z.NUrb, z.Area)
 
     z.AvCNUrb = AvCNUrb(z.NRur, z.NUrb, z.CNI_0, z.CNP_0, z.Imper, z.Area)
