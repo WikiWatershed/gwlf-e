@@ -48,7 +48,7 @@ from AreaTotal import AreaTotal_2
 from UrbanQTotal_1 import UrbanQTotal_1_2
 from AdjUrbanQTotal import AdjUrbanQTotal
 from AdjUrbanQTotal_1 import AdjUrbanQTotal_1
-from RurAreaTotal import RurAreaTotal
+from RurAreaTotal import RurAreaTotal_2
 from RuralQTotal import RuralQTotal
 from CNum import CNum
 from Melt import Melt
@@ -65,12 +65,12 @@ from AEU import AEU_2
 from TotAEU import TotAEU_2
 from AEU import TotLAEU
 from TotPAEU import TotPAEU_2
-from PcntUrbanArea import PcntUrbanArea
-from AvCNUrb import AvCNUrb
-from AvCNRur import AvCNRur
+from PcntUrbanArea import PcntUrbanArea_2
+from AvCNUrb import AvCNUrb_2
+from AvCNRur import AvCNRur_2
 from AvCN import AvCN
 from SedAFactor import SedAFactor
-from QTotal import QTotal
+from QTotal import QTotal_2
 from AdjUrbanQTotal_1 import AdjUrbanQTotal_1
 from AdjQTotal import AdjQTotal
 from RuralQTotal import RuralQTotal
@@ -119,8 +119,11 @@ from WashImperv import WashImperv
 from RurQRunoff import RurQRunoff
 from ErosWashoff import ErosWashoff
 from UrbQRunoff import UrbQRunoff
+from DayRunoff import DayRunoff
+from DailyFlow import DailyFlow
 
 log = logging.getLogger(__name__)
+
 
 # @time_function
 def run(z):
@@ -132,23 +135,6 @@ def run(z):
 
     # MODEL CALCULATIONS FOR EACH YEAR OF ANALYSIS - WATER BALANCE,
     # NUTRIENTS AND SEDIMENT LOADS
-
-    z.PcntUrbanArea = PcntUrbanArea(z.NRur, z.NUrb, z.Area)
-
-    z.AvCNUrb = AvCNUrb(z.NRur, z.NUrb, z.CNI_0, z.CNP_0, z.Imper, z.Area)
-
-    z.RurAreaTotal = RurAreaTotal(z.NRur, z.Area)
-
-    z.AvCNRur = AvCNRur(z.NRur, z.Area, z.CN)
-
-    z.AvCN = AvCN(z.NRur, z.NUrb, z.CNI_0, z.CNP_0, z.CN, z.Imper, z.Area)
-
-    z.SedAFactor = SedAFactor(z.NumAnimals, z.AvgAnimalWt, z.NRur, z.NUrb, z.CNI_0, z.CNP_0, z.CN, z.Imper, z.Area
-                              , z.SedAFactor_0, z.AvKF, z.AvSlope, z.SedAAdjust)
-
-    z.QTotal = QTotal(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0,
-                      z.Grow_0, z.CNP_0, z.Imper,
-                      z.ISRR, z.ISRA, z.CN)
 
     z.AdjUrbanQTotal_1 = AdjUrbanQTotal_1(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area,
                                           z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0,
@@ -170,17 +156,21 @@ def run(z):
                       z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.Qretention, z.PctAreaInfil, z.n25b, z.CN, z.Landuse,
                       z.TileDrainDensity)
 
-    z.Infiltration = Infiltration(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
+    z.Infiltration = Infiltration(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
+                                  z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
                                   z.ISRR, z.ISRA, z.CN)
 
-    z.UnsatStor = UnsatStor(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
-              z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap)
+    z.UnsatStor = UnsatStor(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
+                            z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
+                            z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap)
 
-    z.Percolation = Percolation(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
-           z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap)
+    z.Percolation = Percolation(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
+                                z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
+                                z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap)
 
-    z.ET_2 = ET_2_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
-         z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap)
+    z.ET_2 = ET_2_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0,
+                    z.Grow_0, z.CNP_0, z.Imper,
+                    z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap)
 
     # z.SatStor = SatStor(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
     #         z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0, z.RecessionCoef, z.SeepCoef)
@@ -193,94 +183,141 @@ def run(z):
                       z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0,
                       z.RecessionCoef, z.SeepCoef)
 
-    z.Flow = Flow(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
-         z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0, z.RecessionCoef, z.SeepCoef)
+    z.Flow = Flow(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0,
+                  z.Grow_0, z.CNP_0, z.Imper,
+                  z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0,
+                  z.RecessionCoef, z.SeepCoef)
 
-    z.GroundWatLE = GroundWatLE(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
-           z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0, z.RecessionCoef, z.SeepCoef)
+    z.GroundWatLE = GroundWatLE(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
+                                z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
+                                z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap,
+                                z.SatStor_0, z.RecessionCoef, z.SeepCoef)
 
-    z.GwAgLE = GwAgLE(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
-           z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0, z.RecessionCoef, z.SeepCoef, z.Landuse)
+    z.GwAgLE = GwAgLE(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0,
+                      z.Grow_0, z.CNP_0, z.Imper,
+                      z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0,
+                      z.RecessionCoef, z.SeepCoef, z.Landuse)
 
-    z.TileDrainGW = TileDrainGW(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
-                z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0, z.RecessionCoef, z.SeepCoef,
-                z.Landuse, z.TileDrainDensity)
+    z.TileDrainGW = TileDrainGW(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
+                                z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
+                                z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap,
+                                z.SatStor_0, z.RecessionCoef, z.SeepCoef,
+                                z.Landuse, z.TileDrainDensity)
 
-    z.GroundWatLE_2 = GroundWatLE_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
-                  z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0, z.RecessionCoef, z.SeepCoef,
-                  z.Landuse, z.TileDrainDensity)
+    z.GroundWatLE_2 = GroundWatLE_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
+                                    z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
+                                    z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap,
+                                    z.SatStor_0, z.RecessionCoef, z.SeepCoef,
+                                    z.Landuse, z.TileDrainDensity)
 
-    z.TileDrain = TileDrain(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
-              z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0, z.RecessionCoef, z.SeepCoef, z.Landuse,
-              z.TileDrainDensity)
+    z.TileDrain = TileDrain(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
+                            z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
+                            z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0,
+                            z.RecessionCoef, z.SeepCoef, z.Landuse,
+                            z.TileDrainDensity)
 
     z.Withdrawal = Withdrawal(z.NYrs, z.StreamWithdrawal, z.GroundWithdrawal)
 
-    z.StreamFlow = StreamFlow(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
-               z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0, z.RecessionCoef, z.SeepCoef
-               , z.Qretention, z.PctAreaInfil, z.n25b, z.Landuse, z.TileDrainDensity, z.PointFlow, z.StreamWithdrawal,
-               z.GroundWithdrawal)
+    z.StreamFlow = StreamFlow(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
+                              z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
+                              z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0,
+                              z.RecessionCoef, z.SeepCoef
+                              , z.Qretention, z.PctAreaInfil, z.n25b, z.Landuse, z.TileDrainDensity, z.PointFlow,
+                              z.StreamWithdrawal,
+                              z.GroundWithdrawal)
 
-    z.StreamFlowLE = StreamFlowLE(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
-               z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0, z.RecessionCoef, z.SeepCoef
-               , z.Qretention, z.PctAreaInfil, z.n25b, z.Landuse, z.TileDrainDensity, z.PointFlow, z.StreamWithdrawal,
-               z.GroundWithdrawal)
+    z.StreamFlowLE = StreamFlowLE(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
+                                  z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
+                                  z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap,
+                                  z.SatStor_0, z.RecessionCoef, z.SeepCoef
+                                  , z.Qretention, z.PctAreaInfil, z.n25b, z.Landuse, z.TileDrainDensity, z.PointFlow,
+                                  z.StreamWithdrawal,
+                                  z.GroundWithdrawal)
 
     z.TotAreaMeters = TotAreaMeters(z.NRur, z.NUrb, z.Area)
 
-    z.StreamFlowVol = StreamFlowVol(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
-                  z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0, z.RecessionCoef, z.SeepCoef
-                  , z.Qretention, z.PctAreaInfil, z.n25b, z.Landuse, z.TileDrainDensity, z.PointFlow, z.StreamWithdrawal,
-                  z.GroundWithdrawal)
+    z.StreamFlowVol = StreamFlowVol(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
+                                    z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
+                                    z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap,
+                                    z.SatStor_0, z.RecessionCoef, z.SeepCoef
+                                    , z.Qretention, z.PctAreaInfil, z.n25b, z.Landuse, z.TileDrainDensity, z.PointFlow,
+                                    z.StreamWithdrawal,
+                                    z.GroundWithdrawal)
 
-    z.LE = LE(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
-       z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0, z.RecessionCoef, z.SeepCoef
-       , z.Qretention, z.PctAreaInfil, z.n25b, z.Landuse, z.TileDrainDensity, z.PointFlow, z.StreamWithdrawal, z.GroundWithdrawal
-       , z.NumAnimals, z.AvgAnimalWt, z.StreamFlowVolAdj, z.SedAFactor_0, z.AvKF, z.AvSlope, z.SedAAdjust)
+    z.LE = LE(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0,
+              z.Grow_0, z.CNP_0, z.Imper,
+              z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0,
+              z.RecessionCoef, z.SeepCoef
+              , z.Qretention, z.PctAreaInfil, z.n25b, z.Landuse, z.TileDrainDensity, z.PointFlow, z.StreamWithdrawal,
+              z.GroundWithdrawal
+              , z.NumAnimals, z.AvgAnimalWt, z.StreamFlowVolAdj, z.SedAFactor_0, z.AvKF, z.AvSlope, z.SedAAdjust)
 
-    z.StreamBankEros = StreamBankEros(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
-                   z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0, z.RecessionCoef, z.SeepCoef
-                   , z.Qretention, z.PctAreaInfil, z.n25b, z.Landuse, z.TileDrainDensity, z.PointFlow, z.StreamWithdrawal,
-                   z.GroundWithdrawal
-                   , z.NumAnimals, z.AvgAnimalWt, z.StreamFlowVolAdj, z.SedAFactor_0, z.AvKF, z.AvSlope, z.SedAAdjust, z.StreamLength)
+    z.StreamBankEros = StreamBankEros(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area,
+                                      z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
+                                      z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap,
+                                      z.SatStor_0, z.RecessionCoef, z.SeepCoef
+                                      , z.Qretention, z.PctAreaInfil, z.n25b, z.Landuse, z.TileDrainDensity,
+                                      z.PointFlow, z.StreamWithdrawal,
+                                      z.GroundWithdrawal
+                                      , z.NumAnimals, z.AvgAnimalWt, z.StreamFlowVolAdj, z.SedAFactor_0, z.AvKF,
+                                      z.AvSlope, z.SedAAdjust, z.StreamLength)
 
-    z.SURBBANK = SURBBANK(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
-                   z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0, z.RecessionCoef, z.SeepCoef
-                   , z.Qretention, z.PctAreaInfil, z.n25b, z.Landuse, z.TileDrainDensity, z.PointFlow, z.StreamWithdrawal,
-                   z.GroundWithdrawal
-                   , z.NumAnimals, z.AvgAnimalWt, z.StreamFlowVolAdj, z.SedAFactor_0, z.AvKF, z.AvSlope, z.SedAAdjust, z.StreamLength
-                   , z.UrbBankStab, z.n42b, z.n85d)
+    z.SURBBANK = SURBBANK(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
+                          z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
+                          z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0,
+                          z.RecessionCoef, z.SeepCoef
+                          , z.Qretention, z.PctAreaInfil, z.n25b, z.Landuse, z.TileDrainDensity, z.PointFlow,
+                          z.StreamWithdrawal,
+                          z.GroundWithdrawal
+                          , z.NumAnimals, z.AvgAnimalWt, z.StreamFlowVolAdj, z.SedAFactor_0, z.AvKF, z.AvSlope,
+                          z.SedAAdjust, z.StreamLength
+                          , z.UrbBankStab, z.n42b, z.n85d)
 
-    z.SEDSTAB = SEDSTAB(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
-                   z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0, z.RecessionCoef, z.SeepCoef
-                   , z.Qretention, z.PctAreaInfil, z.n25b, z.Landuse, z.TileDrainDensity, z.PointFlow, z.StreamWithdrawal,
-                   z.GroundWithdrawal
-                   , z.NumAnimals, z.AvgAnimalWt, z.StreamFlowVolAdj, z.SedAFactor_0, z.AvKF, z.AvSlope, z.SedAAdjust, z.StreamLength
-                               , z.n42b, z.n46c, z.n85d)
+    z.SEDSTAB = SEDSTAB(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
+                        z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
+                        z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0,
+                        z.RecessionCoef, z.SeepCoef
+                        , z.Qretention, z.PctAreaInfil, z.n25b, z.Landuse, z.TileDrainDensity, z.PointFlow,
+                        z.StreamWithdrawal,
+                        z.GroundWithdrawal
+                        , z.NumAnimals, z.AvgAnimalWt, z.StreamFlowVolAdj, z.SedAFactor_0, z.AvKF, z.AvSlope,
+                        z.SedAAdjust, z.StreamLength
+                        , z.n42b, z.n46c, z.n85d)
 
     z.AGSTRM = AGSTRM(z.AgLength, z.StreamLength)
 
-    z.SEDFEN = SEDFEN(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
-                   z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0, z.RecessionCoef, z.SeepCoef
-                   , z.Qretention, z.PctAreaInfil, z.n25b, z.Landuse, z.TileDrainDensity, z.PointFlow, z.StreamWithdrawal,
-                   z.GroundWithdrawal
-                   , z.NumAnimals, z.AvgAnimalWt, z.StreamFlowVolAdj, z.SedAFactor_0, z.AvKF, z.AvSlope, z.SedAAdjust, z.StreamLength
+    z.SEDFEN = SEDFEN(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0,
+                      z.Grow_0, z.CNP_0, z.Imper,
+                      z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0,
+                      z.RecessionCoef, z.SeepCoef
+                      , z.Qretention, z.PctAreaInfil, z.n25b, z.Landuse, z.TileDrainDensity, z.PointFlow,
+                      z.StreamWithdrawal,
+                      z.GroundWithdrawal
+                      , z.NumAnimals, z.AvgAnimalWt, z.StreamFlowVolAdj, z.SedAFactor_0, z.AvKF, z.AvSlope,
+                      z.SedAAdjust, z.StreamLength
                       , z.AgLength, z.n42, z.n45, z.n85)
 
-    z.StreamBankEros_2 = StreamBankEros_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
-                   z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0, z.RecessionCoef, z.SeepCoef
-                   , z.Qretention, z.PctAreaInfil, z.n25b, z.Landuse, z.TileDrainDensity, z.PointFlow, z.StreamWithdrawal,
-                   z.GroundWithdrawal
-                   , z.NumAnimals, z.AvgAnimalWt, z.StreamFlowVolAdj, z.SedAFactor_0, z.AvKF, z.AvSlope, z.SedAAdjust, z.StreamLength
-                     , z.n42b, z.n46c, z.n85d, z.AgLength, z.n42, z.n45, z.n85, z.UrbBankStab)
+    z.StreamBankEros_2 = StreamBankEros_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area,
+                                          z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
+                                          z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap,
+                                          z.SatStor_0, z.RecessionCoef, z.SeepCoef
+                                          , z.Qretention, z.PctAreaInfil, z.n25b, z.Landuse, z.TileDrainDensity,
+                                          z.PointFlow, z.StreamWithdrawal,
+                                          z.GroundWithdrawal
+                                          , z.NumAnimals, z.AvgAnimalWt, z.StreamFlowVolAdj, z.SedAFactor_0, z.AvKF,
+                                          z.AvSlope, z.SedAAdjust, z.StreamLength
+                                          , z.n42b, z.n46c, z.n85d, z.AgLength, z.n42, z.n45, z.n85, z.UrbBankStab)
 
-    z.SedTrans = SedTrans(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
-             z.ISRR, z.ISRA, z.Qretention, z.PctAreaInfil, z.n25b, z.CN)
+    z.SedTrans = SedTrans(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
+                          z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
+                          z.ISRR, z.ISRA, z.Qretention, z.PctAreaInfil, z.n25b, z.CN)
 
-    z.RurEros = RurEros(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.Acoef, z.NRur, z.KF, z.LS, z.C, z.P, z.Area)
+    z.RurEros = RurEros(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.Acoef, z.NRur, z.KF, z.LS, z.C, z.P,
+                        z.Area)
 
-    z.BSed = BSed(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
-         z.ISRR, z.ISRA, z.Qretention, z.PctAreaInfil, z.n25b, z.CN)
+    z.BSed = BSed(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0,
+                  z.Grow_0, z.CNP_0, z.Imper,
+                  z.ISRR, z.ISRA, z.Qretention, z.PctAreaInfil, z.n25b, z.CN)
 
     z.SedDelivRatio = SedDelivRatio(z.SedDelivRatio_0)
 
@@ -324,22 +361,28 @@ def run(z):
                             z.n45, z.n85, z.UrbBankStab,
                             z.SedDelivRatio_0, z.Acoef, z.KF, z.LS, z.C, z.P)
 
-    z.UncontrolledQ = UncontrolledQ(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.CNP_0, z.AntMoist_0, z.Grow_0, z.Imper,
-                  z.ISRR, z.ISRA)
+    z.UncontrolledQ = UncontrolledQ(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
+                                    z.CNP_0, z.AntMoist_0, z.Grow_0, z.Imper,
+                                    z.ISRR, z.ISRA)
 
-    z.RetentionEff = RetentionEff(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.Qretention, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0,
-                 z.Imper, z.ISRR, z.ISRA, z.PctAreaInfil)
+    z.RetentionEff = RetentionEff(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.Qretention, z.NRur, z.NUrb,
+                                  z.Area, z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0,
+                                  z.Imper, z.ISRR, z.ISRA, z.PctAreaInfil)
 
-    z.WashPerv = WashPerv(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.CNP_0, z.AntMoist_0, z.Grow_0, z.NRur, z.NUrb)
+    z.WashPerv = WashPerv(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.CNP_0, z.AntMoist_0, z.Grow_0, z.NRur,
+                          z.NUrb)
 
-    z.WashImperv = WashImperv(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.CNI_0, z.AntMoist_0, z.Grow_0, z.NRur, z.NUrb)
+    z.WashImperv = WashImperv(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.CNI_0, z.AntMoist_0, z.Grow_0,
+                              z.NRur, z.NUrb)
 
-    z.RurQRunoff = RurQRunoff(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.NRur, z.NUrb, z.CN, z.Grow_0)
+    z.RurQRunoff = RurQRunoff(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.NRur, z.NUrb, z.CN,
+                              z.Grow_0)
 
-    z.ErosWashoff = ErosWashoff(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.NRur, z.NUrb, z.Acoef, z.KF, z.LS, z.C, z.P, z.Area)
+    z.ErosWashoff = ErosWashoff(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.NRur, z.NUrb, z.Acoef, z.KF, z.LS,
+                                z.C, z.P, z.Area)
 
-    z.UrbQRunoff = UrbQRunoff(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.NRur, z.NUrb, z.CNI_0, z.CNP_0, z.AntMoist_0, z.Grow_0, z.Imper, z.ISRR, z.ISRA)
-
+    z.UrbQRunoff = UrbQRunoff(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.NRur, z.NUrb, z.CNI_0, z.CNP_0,
+                              z.AntMoist_0, z.Grow_0, z.Imper, z.ISRR, z.ISRA)
 
     # --------- run the remaining parts of the model ---------------------
 
@@ -391,7 +434,7 @@ def run(z):
                 #     # print("PervAccum old b4 = ", z.PervAccum[l], "PervAccum new b4 = ", z.WashPerv_temp[l])
                 #     z.PervAccum[l] = (z.PervAccum[l] * np.exp(-0.12) +
                 #                       (1 / 0.12) * (1 - np.exp(-0.12)))
-                    # print("PervAccum old after = ", z.PervAccum[l], "PervAccum new after = ", z.WashPerv_temp[l])
+                # print("PervAccum old after = ", z.PervAccum[l], "PervAccum new after = ", z.WashPerv_temp[l])
 
                 # TODO: If Water is <= 0.01, then CalcCNErosRunoffSed
                 # never executes, and CNum will remain undefined.
@@ -410,13 +453,21 @@ def run(z):
 
                 z.PercCm[Y][i][j] = z.Percolation[Y][i][j] / 100
 
-                z.DailyFlow[Y][i][j] = z.DayRunoff[Y][i][j] + z.GrFlow[Y][i][j]
+                # z.DailyFlow[Y][i][j] = \
+                #     DayRunoff(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
+                #               z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.Qretention, z.PctAreaInfil,
+                #               z.n25b, z.CN)[Y][i][j] + z.GrFlow[Y][i][j]
 
                 z.DailyFlowGPM[Y][i][j] = z.Flow[Y][i][j] * 0.00183528 * z.TotAreaMeters
                 z.DailyGrFlow[Y][i][j] = z.GrFlow[Y][i][j]  # (for daily load calculations)
 
                 # MONTHLY FLOW
-                z.MonthFlow[Y][i] = z.MonthFlow[Y][i] + z.DailyFlow[Y][i][j]
+                # z.MonthFlow[Y][i] = z.MonthFlow[Y][i] + \
+                #                     DailyFlow(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area,
+                #                               z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
+                #                               z.ISRR, z.ISRA, z.CN, z.Qretention, z.PctAreaInfil, z.n25b, z.UnsatStor_0,
+                #                               z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0, z.RecessionCoef,
+                #                               z.SeepCoef)[Y][i][j]
 
                 # CALCULATE TOTALS
                 # z.Evapotrans[Y][i] = z.Evapotrans[Y][i] + z.ET_2[Y][i][j]
@@ -428,7 +479,7 @@ def run(z):
                                   (z.PhosSepticLoad - z.PhosPlantUptake * GrowFactor_2(z.Grow_0)[i]))
 
                 # UPDATE MASS BALANCE ON PONDED EFFLUENT
-                if z.Temp[Y][i][j] <= 0 or InitSnow_2(z.NYrs,z.DaysMonth,z.InitSnow_0,z.Temp,z.Prec)[Y][i][j] > 0:
+                if z.Temp[Y][i][j] <= 0 or InitSnow_2(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec)[Y][i][j] > 0:
 
                     # ALL INPUTS GO TO FROZEN STORAGE
                     z.FrozenPondNitr = z.FrozenPondNitr + z.PondNitrLoad

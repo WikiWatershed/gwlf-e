@@ -3,17 +3,18 @@ from unittest import skip
 from mock import patch
 import numpy as np
 from gwlfe import Parser
-from gwlfe import AEU
+from gwlfe import DailyFlow
 
 
-class TestAEU(unittest.TestCase):
+class TestDailyFlow(unittest.TestCase):
     def setUp(self):
         input_file = open('unittests/input_4.gms', 'r')
         self.z = Parser.GmsReader(input_file).read()
 
 
-    def test_AEU(self):
+    @skip("not ready")
+    def test_DailyFlow(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            AEU.AEU_2(z.NumAnimals, z.AvgAnimalWt, z.Area),
-            AEU.AEU(z.NumAnimals, z.AvgAnimalWt, z.NRur, z.NUrb, z.Area), decimal=7)
+            DailyFlow.DailyFlow_2(),
+            DailyFlow.DailyFlow(), decimal=7)
