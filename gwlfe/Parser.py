@@ -211,7 +211,7 @@ class GmsReader(object):
 
         z.q = 0
         z.k = 0
-        z.FilterEff = 0
+        # z.FilterEff = 0
         z.OutFiltWidth = 0
         z.Clean = 0
         z.CleanSwitch = 0
