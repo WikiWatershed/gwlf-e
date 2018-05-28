@@ -11,7 +11,6 @@ import json
 import numpy as np
 from unittest import skip
 from mock import patch
-from ddt import ddt, data
 # from gwlfe.Memoization import memoize_with_args
 # patch('gwlfe.Memoization.memoize.memodict.__call__', lambda x:x).start()
 from gwlfe import gwlfe,Parser

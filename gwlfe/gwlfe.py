@@ -27,7 +27,7 @@ from . import WriteOutputFiles
 import Precipitation
 import ET
 import PtSrcFlow
-from InitSnow import InitSnow
+from InitSnow import InitSnow_2
 from Water import Water
 from Water import Water_2
 from Erosiv import Erosiv
@@ -36,7 +36,7 @@ from CNI import CNI
 from CNP import CNP
 from LU import LU
 from LU_1 import LU_1
-from GrowFactor import GrowFactor
+from GrowFactor import GrowFactor_2
 from Retention import Retention
 from Retention import Retention_2
 from QrunP import QrunP
@@ -129,16 +129,6 @@ def run(z):
 
     # MODEL CALCULATIONS FOR EACH YEAR OF ANALYSIS - WATER BALANCE,
     # NUTRIENTS AND SEDIMENT LOADS
-
-    z.InitSnow = InitSnow(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec)
-
-    z.Water = Water_2(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec)
-
-    z.lu = LU(z.NRur, z.NUrb)
-
-    z.lu_1 = LU_1(z.NRur, z.NUrb)
-
-    z.GrowFactor = GrowFactor(z.Grow_0)
 
     z.Retention = Retention_2(z.NYrs, z.DaysMonth, z.Temp, z.Prec, z.InitSnow_0, z.AntMoist_0, z.NRur, z.NUrb, z.CN,
                             z.Grow_0)
@@ -421,7 +411,7 @@ def run(z):
 
                 # IF WATER AVAILABLE, THEN CALL SUB TO COMPUTE CN, RUNOFF,
                 # EROSION AND SEDIMENT
-                if z.Temp[Y][i][j] > 0 and z.Water[Y][i][j] > 0.01:
+                if z.Temp[Y][i][j] > 0 and Water_2(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec)[Y][i][j] > 0.01:
                     CalcCnErosRunoffSed.CalcCN(z, i, Y, j)
                 else:
                     pass
@@ -445,12 +435,12 @@ def run(z):
 
                 # CALCULATE DAILY NUTRIENT LOAD FROM PONDING SYSTEMS
                 z.PondNitrLoad = (z.NumPondSys[i] *
-                                  (z.NitrSepticLoad - z.NitrPlantUptake * z.GrowFactor[i]))
+                                  (z.NitrSepticLoad - z.NitrPlantUptake * GrowFactor_2(z.Grow_0)[i]))
                 z.PondPhosLoad = (z.NumPondSys[i] *
-                                  (z.PhosSepticLoad - z.PhosPlantUptake * z.GrowFactor[i]))
+                                  (z.PhosSepticLoad - z.PhosPlantUptake * GrowFactor_2(z.Grow_0)[i]))
 
                 # UPDATE MASS BALANCE ON PONDED EFFLUENT
-                if z.Temp[Y][i][j] <= 0 or z.InitSnow[Y][i][j] > 0:
+                if z.Temp[Y][i][j] <= 0 or InitSnow_2(z.NYrs,z.DaysMonth,z.InitSnow_0,z.Temp,z.Prec)[Y][i][j] > 0:
 
                     # ALL INPUTS GO TO FROZEN STORAGE
                     z.FrozenPondNitr = z.FrozenPondNitr + z.PondNitrLoad

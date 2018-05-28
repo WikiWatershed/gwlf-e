@@ -14,8 +14,8 @@ def LU(NRur, NUrb):
 
 # @time_function
 #lu is faster than lu_2
-def lu_2(NRur, NUrb):
-    nlu = NLU(NRur, NUrb)
-    result = np.zeros((nlu,)).astype("int")
-    result[NRur:nlu] = np.asarray(range(NRur, nlu)) - NRur
-    return result
+# def lu_2(NRur, NUrb):
+#     nlu = NLU(NRur, NUrb)
+#     result = np.zeros((nlu,)).astype("int")
+#     result[NRur:nlu] = np.asarray(range(NRur, nlu)) - NRur
+#     return result

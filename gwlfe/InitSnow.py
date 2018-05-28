@@ -28,6 +28,7 @@ def InitSnow(NYrs, DaysMonth, InitSnow_0, Temp, Prec):
 
 # @time_function
 # @jit(cache=True, nopython = True)
+@memoize
 @compiled
 @cc.export('InitSnow_2', '(int64, int32[:,::1], int64, float64[:,:,::1], float64[:,:,::1])')
 def InitSnow_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec):

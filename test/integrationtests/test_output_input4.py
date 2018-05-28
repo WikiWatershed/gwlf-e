@@ -11,7 +11,6 @@ import json
 import numpy as np
 from unittest import skip
 from mock import patch
-from ddt import ddt, data
 from test_output import TestOutput
 # from mock import patch
 # from gwlfe.Memoization import memoize_with_args

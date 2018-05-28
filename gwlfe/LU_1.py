@@ -13,5 +13,5 @@ def LU_1(NRur, NUrb):
     return result
 
 #Tried, it was slower. LU_1 is faster
-def LU_1_2():
-    pass
+# def LU_1_2():
+#     pass

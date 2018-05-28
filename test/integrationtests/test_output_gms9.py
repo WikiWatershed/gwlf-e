@@ -9,7 +9,6 @@ import unittest
 import json
 import numpy as np
 from unittest import skip
-from ddt import ddt, data
 from mock import patch
 import threading
 from test_output import TestOutput

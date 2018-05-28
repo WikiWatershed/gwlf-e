@@ -11,6 +11,9 @@ import math
 import logging
 import numpy as np
 from DailyArrayConverter import get_value_for_yesterday
+from Water import Water_2
+from LU import LU
+from LU_1 import LU_1
 
 from .enums import GrowFlag, LandUse
 
@@ -28,7 +31,7 @@ def CalcCN(z, i, Y, j):
     for l in range(z.NRur):
 
         if z.CN[l] > 0:
-            if z.Water[Y][i][j] >= 0.2 * z.Retention[Y][i][j][l]:
+            if Water_2(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec)[Y][i][j] >= 0.2 * z.Retention[Y][i][j][l]:
                 z.RurQRunoff[l][i] += z.Qrun[Y][i][j][l]
 
         z.ErosWashoff[l][i] = z.ErosWashoff[l][i] + z.RurEros[Y][i][j][l]
@@ -43,7 +46,7 @@ def CalcCN(z, i, Y, j):
     for q in range(z.Nqual):
         z.NetSolidLoad[q] = 0
         z.NetDisLoad[q] = 0
-    if z.Water[Y][i][j] < 0.05:
+    if Water_2(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec)[Y][i][j] < 0.05:
         pass
     else:
         for l in range(z.NRur, z.NLU):
@@ -52,10 +55,10 @@ def CalcCN(z, i, Y, j):
 
             z.WashPerv[l] = (1 - math.exp(-1.81 * z.QrunP[Y][i][j][l])) * z.PervAccum[l]
             z.PervAccum[l] -= z.WashPerv[l]
-
-            z.UrbQRunoff[l][i] += (z.QrunI[Y][i][j][l] * (z.Imper[l] * (1 - z.ISRR[z.lu[l]]) * (1 - z.ISRA[z.lu[l]]))
+            lu = LU(z.NRur, z.NUrb)
+            z.UrbQRunoff[l][i] += (z.QrunI[Y][i][j][l] * (z.Imper[l] * (1 - z.ISRR[lu[l]]) * (1 - z.ISRA[lu[l]]))
                                    + z.QrunP[Y][i][j][l] * (
-                                           1 - (z.Imper[l] * (1 - z.ISRR[z.lu[l]]) * (1 - z.ISRA[z.lu[l]]))))
+                                           1 - (z.Imper[l] * (1 - z.ISRR[lu[l]]) * (1 - z.ISRA[lu[l]]))))
 
     BasinWater(z, i, Y, j)
 
@@ -78,20 +81,20 @@ def BasinWater(z, i, Y, j):
                 else:
                     z.UrbLoadRed = 0
 
-                if z.Water[Y][i][j] > z.Storm:
+                if Water_2(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec)[Y][i][j] > z.Storm:
                     z.UrbLoadRed = z.UrbBMPRed[l][q]
 
                 # TODO: Should 11 be NRur + 1?
                 # What is this trying to do?
-                # lu_1 = l - 11
+                lu_1 = LU_1(z.NRur, z.NUrb)
 
                 if z.Area[l] > 0:
                     z.SurfaceLoad = (((z.LoadRateImp[l][q] * z.WashImperv[l] * (
-                            (z.Imper[l] * (1 - z.ISRR[z.lu_1[l]]) * (1 - z.ISRA[z.lu_1[l]]))
+                            (z.Imper[l] * (1 - z.ISRR[lu_1[l]]) * (1 - z.ISRA[lu_1[l]]))
                             * (z.SweepFrac[i] + (
                             (1 - z.SweepFrac[i]) * ((1 - z.UrbSweepFrac) * z.Area[l]) / z.Area[l])))
                                        + z.LoadRatePerv[l][q] * z.WashPerv[l] * (
-                                               1 - (z.Imper[l] * (1 - z.ISRR[z.lu_1[l]]) * (1 - z.ISRA[z.lu_1[l]]))))
+                                               1 - (z.Imper[l] * (1 - z.ISRR[lu_1[l]]) * (1 - z.ISRA[lu_1[l]]))))
                                       * z.Area[l]) - z.UrbLoadRed)
                 else:
                     z.SurfaceLoad = 0

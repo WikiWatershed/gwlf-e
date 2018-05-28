@@ -10,7 +10,6 @@ import unittest
 import json
 import numpy as np
 from unittest import skip
-from ddt import ddt, data
 from types import ModuleType
 from mock import patch
 from test_output import TestOutput
