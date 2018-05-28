@@ -121,6 +121,7 @@ from FilterEff import FilterEff
 from UrbanRunoff import UrbanRunoff
 from UrbRunoffLiter import UrbRunoffLiter
 from RuralRunoff import RuralRunoff
+from DayRunoff import DayRunoff
 
 log = logging.getLogger(__name__)
 
@@ -414,6 +415,9 @@ def run(z):
                      z.ISRR, z.ISRA)
 
     z.RuralRunoff = RuralRunoff(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.NRur, z.CN, z.NUrb, z.AntMoist_0, z.Grow, z.Area)
+
+    z.DayRunoff = DayRunoff(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow, z.CNP_0, z.Imper,
+              z.ISRR, z.ISRA, z.Qretention, z.PctAreaInfil, z.n25b, z.CN)
 
     # --------- run the remaining parts of the model ---------------------
 

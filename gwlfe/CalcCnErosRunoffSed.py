@@ -441,9 +441,10 @@ def BasinWater(z, i, Y, j):
     # z.UrbRunoffLiter[Y][i] = (z.UrbanRunoff[Y][i] / 100) * z.UrbAreaTotal * 10000 * 1000
 
     # Calculate Daily runoff (used in output for daily flow file)
-    if z.AdjQTotal[Y][i][j] > 0:
-        z.DayRunoff[Y][i][j] = z.AdjQTotal[Y][i][j]
-    elif z.QTotal[Y][i][j] > 0:
-        z.DayRunoff[Y][i][j] = z.QTotal[Y][i][j]
-    else:
-        z.DayRunoff[Y][i][j] = 0
+    # if z.AdjQTotal[Y][i][j] > 0:
+    #     z.DayRunoff[Y][i][j] = z.AdjQTotal[Y][i][j]
+    # elif z.QTotal[Y][i][j] > 0:
+    #     z.DayRunoff[Y][i][j] = z.QTotal[Y][i][j]
+    # else:
+    #     z.DayRunoff[Y][i][j] = 0
+

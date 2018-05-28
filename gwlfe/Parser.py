@@ -335,7 +335,7 @@ class GmsReader(object):
         z.DayLuErosion = np.zeros((16, z.DimYrs, 12, 31))
         z.DaySed = np.zeros((z.DimYrs, 12, 31))
         z.DayLuSed = np.zeros((16, z.DimYrs, 12, 31))
-        z.DayRunoff = np.zeros((z.DimYrs, 12, 31))
+        # z.DayRunoff = np.zeros((z.DimYrs, 12, 31))
         z.DayLuRunoff = np.zeros((16, z.DimYrs, 12, 31))
         # z.MeltPest = np.zeros((z.DimYrs, 12, 31))
         z.PrecPest = np.zeros((z.DimYrs, 12, 31))
