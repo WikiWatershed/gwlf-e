@@ -16,7 +16,6 @@ log = logging.getLogger(__name__)
 from Memoization import memoize
 
 
-@memoize
 def CalculateLoads(z, Y):
     # PrecipitationTotal = 0
     # RunoffTotal = 0

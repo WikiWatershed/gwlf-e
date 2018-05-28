@@ -34,7 +34,7 @@ def Qrun_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, CN, AntMoist_0, 
     cnrur = np.tile(CN[None, None, None, :], (NYrs, 12, 31, 1))
     retention = Retention_2(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, NRur, NUrb, CN, Grow)
     retention02 = 0.2 * retention
-    val = np.zeros((NYrs, 12, 31, nlu))
-    val = (water - retention02) ** 2 / (water + 0.8 * retention)
-    result[np.where((TempE>0 ) & (water > 0.01) &(water >= retention02) & (cnrur>0))] = val[np.where((TempE>0 ) & (water > 0.01)& (water >= retention02) & (cnrur>0))]
+    # val = np.zeros((NYrs, 12, 31, nlu))
+    nonzero = np.where((TempE>0 ) & (water > 0.01) &(water >= retention02) & (cnrur>0))
+    result[nonzero] = (water[nonzero] - retention02[nonzero]) ** 2 / (water[nonzero] + 0.8 * retention[nonzero])
     return result

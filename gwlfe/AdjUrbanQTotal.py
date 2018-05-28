@@ -10,10 +10,11 @@ from UrbanQTotal import UrbanQTotal_2
 from UrbAreaTotal import UrbAreaTotal_2
 from AreaTotal import AreaTotal_2
 from numba import jit
-# from numba.pycc import CC
-import  DailyArrayConverter as DAC
+from numba.pycc import CC
+from CompiledFunction import compiled
 
-# cc = CC('gwlfe_compiled')
+
+cc = CC('gwlfe_compiled')
 
 # @time_function
 @memoize
@@ -82,8 +83,9 @@ def AdjUrbanQTotal(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CN
 
 
 
-@jit(cache = True, nopython = True)
-# @cc.export('AdjUrbanQTotal_2_inner', '(int64, int64[:,::1], float64[:,:,::1], float64, float64, float64[:,:,::1], float64[:,:,::1], float64, float64)')
+# @jit(cache = True, nopython = True)
+@compiled
+@cc.export('AdjUrbanQTotal_2_inner', '(int64, int64[:,::1], float64[:,:,::1], float64, float64, float64[:,:,::1], float64[:,:,::1], float64, float64)')
 def AdjUrbanQTotal_2_inner(NYrs, DaysMonth, Temp, Qretention, PctAreaInfil,water,urban_q_total,urb_area_total,area_total):
     result = np.zeros((NYrs, 12, 31))
     adj_urban_q_total = 0

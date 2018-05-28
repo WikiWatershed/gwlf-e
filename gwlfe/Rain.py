@@ -4,7 +4,6 @@ from numba import jit
 
 from Memoization import memoize
 
-@jit
 def Rain_inner(NYrs, DaysMonth, Temp, Prec):
     result = np.zeros((NYrs, 12, 31))
     for Y in range(NYrs):

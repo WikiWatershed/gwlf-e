@@ -2,6 +2,11 @@ import numpy as np
 from Timer import time_function
 from numba import jit
 from Memoization import memoize
+from numba.pycc import CC
+from CompiledFunction import compiled
+
+cc = CC('gwlfe_compiled')
+
 
 # @memoize
 def InitSnow(NYrs, DaysMonth, InitSnow_0, Temp, Prec):
@@ -21,8 +26,10 @@ def InitSnow(NYrs, DaysMonth, InitSnow_0, Temp, Prec):
     return result
 
 
-@time_function
-@jit(cache=True, nopython = True)
+# @time_function
+# @jit(cache=True, nopython = True)
+@compiled
+@cc.export('InitSnow_2', '(int64, int32[:,::1], int64, float64[:,:,::1], float64[:,:,::1])')
 def InitSnow_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec):
     result = np.zeros((NYrs, 12, 31))
     yesterday = InitSnow_0

@@ -1,9 +1,14 @@
 import numpy as np
 from Timer import time_function
 from numba import jit
+from numba.pycc import CC
+from CompiledFunction import compiled
 
+cc = CC('gwlfe_compiled')
 
-@jit(cache=True)
+# @jit(cache=True)
+@compiled
+@cc.export('InitSnowYesterday', '(int64, int32[:,::1], int64, float64[:,:,::1], float64[:,:,::1])')
 def InitSnowYesterday(NYrs, DaysMonth, InitSnow_0, Temp, Prec):
     # result = np.zeros((NYrs, 12, 31))
     result_yesterday = np.zeros((NYrs, 12, 31))

@@ -6,6 +6,7 @@ from os import path
 # Added to fix error.
 # See http://stackoverflow.com/questions/9352656/python-assertionerror-when-running-nose-tests-with-coverage  # NOQA
 from multiprocessing import util  # NOQA
+from gwlfe import cc
 
 # Get the long description from DESCRIPTION.rst
 with open(path.join(path.abspath(path.dirname(__file__)),
@@ -36,13 +37,14 @@ setup(
     ],
     keywords='gwlf-e watershed hydrology',
     packages=find_packages(exclude=['tests']),
-    install_requires=[
-        'numpy == 1.11.0'
-    ],
+    # install_requires=[
+    #     'numpy == 1.14.2'
+    # ],
     extras_require={
         'dev': [],
         'test': tests_require,
     },
     test_suite='nose.collector',
     tests_require=tests_require,
+    ext_modules=[cc.distutils_extension()]
 )

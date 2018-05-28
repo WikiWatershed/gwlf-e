@@ -4,9 +4,11 @@ from Timer import time_function
 from Percolation import Percolation
 from Percolation import Percolation_2
 from Memoization import memoize
-# from numba.pycc import CC
+from numba.pycc import CC
+from CompiledFunction import compiled
 
-# cc = CC('gwlfe_compiled')
+
+cc = CC('gwlfe_compiled')
 
 @memoize
 def DeepSeep(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0, Imper,
@@ -46,8 +48,9 @@ def DeepSeep(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, A
     #   deepseep = $0.7  :: array(float64, 3d, C)
 
 # @memoize
-@jit(cache=True, nopython=True)
-# @cc.export('DeepSeep_inner', '(int64, float64, int64[:,::1], float64, float64, float64[:,:,::1])')
+# @jit(cache=True, nopython=True)
+@compiled
+@cc.export('DeepSeep_inner', '(int64, float64, int64[:,::1], float64, float64, float64[:,:,::1])')
 def DeepSeep_inner(NYrs, SatStor_0, DaysMonth, RecessionCoef, SeepCoef, percolation):
     deepseep = np.zeros((NYrs, 12, 31))
     grflow = np.zeros((NYrs, 12, 31))

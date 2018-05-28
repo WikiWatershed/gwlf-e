@@ -34,7 +34,7 @@ else:
                     "\n\n"
                     "class Test{variable}(unittest.TestCase):\n"
                     "    def setUp(self):\n"
-                    "        input_file = open('input_4.gms', 'r')\n"
+                    "        input_file = open('unittests/input_4.gms', 'r')\n"
                     "        self.z = Parser.GmsReader(input_file).read()\n"
                     "\n\n"
                     "    @skip('Not Ready Yet.')\n"

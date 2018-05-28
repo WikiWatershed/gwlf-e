@@ -5,10 +5,11 @@ from Infiltration import Infiltration
 from Infiltration import Infiltration_2
 from ET import DailyET_2
 from Memoization import memoize
-# from numba.pycc import CC
-# from gwlfe_compiled import
+from numba.pycc import CC
+from CompiledFunction import compiled
 
-# cc = CC('gwlfe_compiled')
+
+cc = CC('gwlfe_compiled')
 
 @memoize
 def Percolation(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0, Imper,
@@ -46,8 +47,9 @@ def Percolation(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0
     #   $0.1 = global(np: <module 'numpy' from 'C:\Users\A
 
 
-@jit(cache=True, nopython=True)
-# @cc.export('Percolation_inner', '(int64, float64, int32[::1], float64, float64[:,::1], float64[:,::1])')
+# @jit(cache=True, nopython=True)
+@compiled
+@cc.export('Percolation_inner', '(int64, float64, int32[::1], float64, float64[:,::1], float64[:,::1])')
 def Percolation_inner(NYrs, UnsatStor_0, DaysMonth, MaxWaterCap, infiltration, et):
     result = np.zeros((NYrs, 12, 31))
     percolation = np.zeros((NYrs, 12, 31))
@@ -78,10 +80,7 @@ def Percolation_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI
                                   CNP_0, Imper, ISRR, ISRA, CN)
 
     et = DailyET_2(Temp, KV, PcntET, DayHrs)
-    result = Percolation_inner(NYrs, UnsatStor_0, DaysMonth, MaxWaterCap, infiltration, et)
-    print(Percolation_inner.inspect_types())
-
-    return result
+    return Percolation_inner(NYrs, UnsatStor_0, DaysMonth, MaxWaterCap, infiltration, et)
 
 
     #   NYrs = arg(0, name=NYrs)  :: int64

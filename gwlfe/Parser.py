@@ -486,7 +486,7 @@ class GmsReader(object):
         z.Month = np.zeros(12, dtype=object)
         z.KV = np.zeros(12)
         z.DayHrs = np.zeros(12)
-        z.Grow = np.zeros(12, dtype=object)
+        z.Grow_0 = np.zeros(12, dtype=object)
         z.Acoef = np.zeros(12)
         z.StreamWithdrawal = np.zeros(12)
         z.GroundWithdrawal = np.zeros(12)
@@ -496,7 +496,7 @@ class GmsReader(object):
             z.Month[i] = self.next(str)  # Month (Jan - Dec)
             z.KV[i] = self.next(float)  # KET (Flow Factor)
             z.DayHrs[i] = self.next(float)  # Day Length (hours)
-            z.Grow[i] = self.next(GrowFlag.parse)  # Growing season flag
+            z.Grow_0[i] = self.next(GrowFlag.parse)  # Growing season flag
             z.Acoef[i] = self.next(float)  # Erosion Coefficient
             z.StreamWithdrawal[i] = self.next(float)  # Surface Water Withdrawal/Extraction
             z.GroundWithdrawal[i] = self.next(float)  # Groundwater Withdrawal/Extraction
@@ -1411,7 +1411,7 @@ class GmsWriter(object):
                 z.Month[i],
                 z.KV[i],
                 z.DayHrs[i],
-                z.Grow[i],
+                z.Grow_0[i],
                 z.Acoef[i],
                 z.StreamWithdrawal[i],
                 z.GroundWithdrawal[i],

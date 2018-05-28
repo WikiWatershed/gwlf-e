@@ -10,9 +10,12 @@ from GrowFactor import GrowFactor
 from AMC5 import AMC5, AMC5_yesterday
 from numba import jit
 from Memoization import memoize
-# from numba.pycc import CC
+from numba.pycc import CC
+from CompiledFunction import compiled
 
-# cc = CC('gwlfe_compiled')
+cc = CC('gwlfe_compiled')
+
+
 @memoize
 def CNumImperv(NYrs, NRur, NUrb, DaysMonth, InitSnow_0, Temp, Prec, CNI_0, Grow, AntMoist_0):
     nlu = NLU(NRur, NUrb)
@@ -63,11 +66,14 @@ def CNumImperv(NYrs, NRur, NUrb, DaysMonth, InitSnow_0, Temp, Prec, CNI_0, Grow,
                                     result[Y][i][j][l] = cni[2][l]
     return result
 
+
 # @time_function
 
 
-@jit(cache = True, nopython = True)
-# @cc.export('CNumImperv_2_inner', '(int64, int64, int64[:,::1], float64[:,:,::1], int64, float64[:,::1], float64[:,:,::1], float64[:,:,::1], float64[::1], float64[:,:,::1])')
+# @jit(cache = True, nopython = True)
+@compiled
+@cc.export('CNumImperv_2_inner',
+           '(int64, int64, int64[:,::1], float64[:,:,::1], int64, float64[:,::1], float64[:,:,::1], float64[:,:,::1], float64[::1], float64[:,:,::1])')
 def CNumImperv_2_inner(NYrs, NRur, DaysMonth, Temp, nlu, cni, water, melt, grow_factor, amc5):
     result = np.zeros((NYrs, 12, 31, nlu))
     for Y in range(NYrs):
@@ -103,7 +109,6 @@ def CNumImperv_2_inner(NYrs, NRur, DaysMonth, Temp, nlu, cni, water, melt, grow_
                                 else:
                                     result[Y][i][j][l] = cni[2][l]
     return result
-
 
 
 @time_function
