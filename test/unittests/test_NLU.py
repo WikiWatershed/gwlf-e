@@ -11,10 +11,9 @@ class TestNLU(unittest.TestCase):
         input_file = open('unittests/input_4.gms', 'r')
         self.z = Parser.GmsReader(input_file).read()
 
-
-    @skip("not ready")
-    def test_NLU(self):
-        z = self.z
-        np.testing.assert_array_almost_equal(
-            NLU.NLU_2(),
-            NLU.NLU(), decimal=7)
+    # @skip("not ready")
+    # def test_NLU(self):
+    #     z = self.z
+    #     np.testing.assert_array_almost_equal(
+    #         NLU.NLU_2(),
+    #         NLU.NLU(), decimal=7)

@@ -11,10 +11,10 @@ from Memoization import memoize
 
 # @jit(cache=True, nopython = True)
 @memoize
-def GrowFactor(Grow):
+def GrowFactor(Grow_0):
     result = np.zeros((12,))
     for i in range(12):
-        result[i] = Grow[i]==GROWING_SEASON  # TODO: seems like there is some inefficency left in Grow
+        result[i] = Grow_0[i]==GROWING_SEASON  # TODO: seems like there is some inefficency left in Grow
     return result
 #GrowFactor function is more effiecient than GrowFactor_2
 # @time_function

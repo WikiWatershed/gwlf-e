@@ -19,11 +19,3 @@ class TestCNumPerv(unittest.TestCase):
                                 z.AntMoist_0),
             CNumPerv.CNumPerv(z.NYrs, z.DaysMonth, z.Temp, z.NRur, z.NUrb, z.CNP_0, z.InitSnow_0, z.Prec, z.Grow_0,
                               z.AntMoist_0), decimal=7)
-
-    def test_CNumPerv2(self):
-        z = self.z
-        np.testing.assert_array_almost_equal(
-            CNumPerv.CNumPerv_3(z.NYrs, z.DaysMonth, z.Temp, z.NRur, z.NUrb, z.CNP_0, z.InitSnow_0, z.Prec, z.Grow_0,
-                                z.AntMoist_0),
-            CNumPerv.CNumPerv(z.NYrs, z.DaysMonth, z.Temp, z.NRur, z.NUrb, z.CNP_0, z.InitSnow_0, z.Prec, z.Grow_0,
-                              z.AntMoist_0), decimal=7)

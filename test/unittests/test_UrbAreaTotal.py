@@ -11,10 +11,8 @@ class TestUrbAreaTotal(unittest.TestCase):
         input_file = open('unittests/input_4.gms', 'r')
         self.z = Parser.GmsReader(input_file).read()
 
-
-    @skip("not ready")
     def test_UrbAreaTotal(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            UrbAreaTotal.UrbAreaTotal_2(z.NRur,z.NUrb,z.Area),
-            UrbAreaTotal.UrbAreaTotal(z.NRur,z.NUrb,z.Area), decimal=7)
+            UrbAreaTotal.UrbAreaTotal_2(z.NRur, z.NUrb, z.Area),
+            UrbAreaTotal.UrbAreaTotal(z.NRur, z.NUrb, z.Area), decimal=7)

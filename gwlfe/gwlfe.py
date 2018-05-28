@@ -357,15 +357,15 @@ def run(z):
     z.RetentionEff = RetentionEff(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.Qretention, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0,
                  z.Imper, z.ISRR, z.ISRA, z.PctAreaInfil)
 
-    z.WashPerv = WashPerv(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.CNP_0, z.AntMoist_0, z.Grow, z.NRur, z.NUrb)
+    z.WashPerv = WashPerv(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.CNP_0, z.AntMoist_0, z.Grow_0, z.NRur, z.NUrb)
 
-    z.WashImperv = WashImperv(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.CNI_0, z.AntMoist_0, z.Grow, z.NRur, z.NUrb)
+    z.WashImperv = WashImperv(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.CNI_0, z.AntMoist_0, z.Grow_0, z.NRur, z.NUrb)
 
-    z.RurQRunoff = RurQRunoff(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.NRur, z.NUrb, z.CN, z.Grow)
+    z.RurQRunoff = RurQRunoff(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.NRur, z.NUrb, z.CN, z.Grow_0)
 
     z.ErosWashoff = ErosWashoff(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.NRur, z.NUrb, z.Acoef, z.KF, z.LS, z.C, z.P, z.Area)
 
-    z.UrbQRunoff = UrbQRunoff(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.NRur, z.NUrb, z.CNI_0, z.CNP_0, z.AntMoist_0, z.Grow, z.Imper, z.ISRR, z.ISRA)
+    z.UrbQRunoff = UrbQRunoff(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.NRur, z.NUrb, z.CNI_0, z.CNP_0, z.AntMoist_0, z.Grow_0, z.Imper, z.ISRR, z.ISRA)
 
 
     # --------- run the remaining parts of the model ---------------------
@@ -478,14 +478,14 @@ def run(z):
 
                 # Obtain the monthly Normal Nitrogen
                 z.MonthNormNitr[i] = (z.MonthNormNitr[i] + z.NitrSepticLoad -
-                                      z.NitrPlantUptake * z.GrowFactor[i])
+                                      z.NitrPlantUptake * GrowFactor_2(z.Grow_0)[i])
 
                 # 0.56 IS ATTENUATION FACTOR FOR SOIL LOSS
                 # 0.66 IS ATTENUATION FACTOR FOR SUBSURFACE FLOW LOSS
                 z.MonthShortNitr[i] = (z.MonthShortNitr[i] + z.NitrSepticLoad -
-                                       z.NitrPlantUptake * z.GrowFactor[i])
+                                       z.NitrPlantUptake * GrowFactor_2(z.Grow_0)[i])
                 z.MonthShortPhos[i] = (z.MonthShortPhos[i] + z.PhosSepticLoad -
-                                       z.PhosPlantUptake * z.GrowFactor[i])
+                                       z.PhosPlantUptake * GrowFactor_2(z.Grow_0)[i])
                 z.MonthDischargeNitr[i] = z.MonthDischargeNitr[i] + z.NitrSepticLoad
                 z.MonthDischargePhos[i] = z.MonthDischargePhos[i] + z.PhosSepticLoad
 

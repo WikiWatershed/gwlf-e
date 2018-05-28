@@ -11,8 +11,6 @@ class TestMelt(unittest.TestCase):
         input_file = open('unittests/input_4.gms', 'r')
         self.z = Parser.GmsReader(input_file).read()
 
-
-    @skip("not ready")
     def test_Melt(self):
         z = self.z
         test = Melt.Melt(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec)

@@ -41,7 +41,6 @@ def QrunI_2(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, CNI_0, AntMoist
     cni_1 = np.tile(cni[1][None, None, None, :], (NYrs, 12, 31, 1))
     c_num_imperv_reten = CNumImpervReten_2(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, NRur, NUrb, CNI_0, Grow)
     c_num_imperv_reten02 = 0.2*c_num_imperv_reten
-    val = (water - c_num_imperv_reten02) ** 2 / (water + 0.8 * c_num_imperv_reten)
-    result[np.where((TempE > 0) & (water >= 0.05) & (cni_1 > 0) & (water >= c_num_imperv_reten02))] = val[
-        np.where((TempE > 0) & (water >= 0.05) & (cni_1 > 0) & (water >= c_num_imperv_reten02))]
+    nonzero = np.where((TempE > 0) & (water >= 0.05) & (cni_1 > 0) & (water >= c_num_imperv_reten02))
+    result[nonzero] = (water[nonzero] - c_num_imperv_reten02[nonzero]) ** 2 / (water[nonzero] + 0.8 * c_num_imperv_reten[nonzero])
     return result

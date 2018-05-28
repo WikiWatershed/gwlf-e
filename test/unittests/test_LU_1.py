@@ -12,9 +12,9 @@ class TestLU_1(unittest.TestCase):
         self.z = Parser.GmsReader(input_file).read()
 
 
-    @skip("not ready")
-    def test_LU_1(self):
-        z = self.z
-        np.testing.assert_array_almost_equal(
-            LU_1.LU_1_2(),
-            LU_1.LU_1(), decimal=7)
+    # @skip("not ready")
+    # def test_LU_1(self):
+    #     z = self.z
+    #     np.testing.assert_array_almost_equal(
+    #         LU_1.LU_1_2(),
+    #         LU_1.LU_1(), decimal=7)

@@ -111,7 +111,6 @@ def CNumImperv_2_inner(NYrs, NRur, DaysMonth, Temp, nlu, cni, water, melt, grow_
     return result
 
 
-@time_function
 def CNumImperv_2(NYrs, NRur, NUrb, DaysMonth, InitSnow_0, Temp, Prec, CNI_0, Grow, AntMoist_0):
     # cc.compile()
     nlu = NLU(NRur, NUrb)
