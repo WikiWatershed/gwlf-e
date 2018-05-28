@@ -3,6 +3,8 @@ from __future__ import print_function
 from __future__ import unicode_literals
 from __future__ import division
 from Precipitation import Precipitation
+from StreamFlow import StreamFlow_2
+from TotAreaMeters import TotAreaMeters
 
 """
 Imported from AFOS.bas
@@ -173,7 +175,7 @@ def AnimalOperations(z, Y):
         z.ForestAreaTotalSqMi = 0
         z.ForestAreaTotalSqMi = (z.ForestAreaTotal * 0.01) / 2.59
 
-        z.PtFlowLiters = (z.PointFlow[i] / 100) * z.TotAreaMeters * 1000
+        z.PtFlowLiters = (z.PointFlow[i] / 100) * TotAreaMeters(z.NRur, z.NUrb, z.Area) * 1000
 
         # Get the wildlife orgs
         z.WWOrgs[Y][i] = z.PtFlowLiters * (z.WWTPConc * 10) * (1 - z.InstreamDieoff)
@@ -211,7 +213,13 @@ def AnimalOperations(z, Y):
                              + z.WildOrgs[Y][i]
                              + z.AnimalFC[Y][i])
 
-        z.CMStream[Y][i] = (z.StreamFlow[Y][i] / 100) * z.TotAreaMeters
+        z.CMStream[Y][i] = (StreamFlow_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
+                              z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
+                              z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0,
+                              z.RecessionCoef, z.SeepCoef
+                              , z.Qretention, z.PctAreaInfil, z.n25b, z.Landuse, z.TileDrainDensity, z.PointFlow,
+                              z.StreamWithdrawal,
+                              z.GroundWithdrawal)[Y][i] / 100) * TotAreaMeters(z.NRur, z.NUrb, z.Area)
 
         if z.CMStream[Y][i] > 0:
             z.OrgConc[Y][i] = (z.TotalOrgs[Y][i] / (z.CMStream[Y][i] * 1000)) / 10

@@ -58,7 +58,7 @@ def RetentionEff_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, Qretention, NRur, NU
                                 CNP_0,
                                 Imper, ISRR, ISRA)
     try:
-        test = urbanqtotal[np.where((Temp > 0) & (water > 0.05) & (Qretention > 0) & (urbanqtotal > 0))][::-1]
+        test = urbanqtotal[np.where((Temp > 0) & (water > 0.05) & (Qretention > 0) & (urbanqtotal > 0))][::-1][0]
         if test <= Qretention * PctAreaInfil:
             return 1
         else:

@@ -15,6 +15,14 @@ log = logging.getLogger(__name__)
 
 from Memoization import memoize
 from AreaTotal import AreaTotal_2
+from GroundWatLE_2 import GroundWatLE_2
+from TileDrain import TileDrain_2
+from TotAreaMeters import TotAreaMeters
+from SedDelivRatio import SedDelivRatio
+from Erosion import Erosion_2
+from SedYield import SedYield_2
+from RurQRunoff import RurQRunoff
+from ErosWashoff import ErosWashoff
 
 
 def CalculateLoads(z, Y):
@@ -59,7 +67,8 @@ def CalculateLoads(z, Y):
     for i in range(12):
         # Calculate landuse runoff for rural areas
         for l in range(z.NRur):
-            z.LuRunoff[Y][l] += z.RurQRunoff[Y][l][i]
+            z.LuRunoff[Y][l] += RurQRunoff(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.NRur, z.NUrb, z.CN,
+                              z.Grow_0)[Y][l][i]
             # print("RurQRunoff old = ", z.RurQRunoff[l][i], "RurQRunoff new = ", z.RurQRunoff_temp[Y][l][i])
             # print(z.RurQRunoff[l][i] == z.RurQRunoff_temp[Y][l][i])
 
@@ -67,9 +76,14 @@ def CalculateLoads(z, Y):
         for l in range(z.NRur, z.NLU):
             z.LuRunoff[Y][l] += z.UrbQRunoff[Y][l][i]
 
-        #PrecipitationTotal += z.Precipitation[Y][i]
-        #RunoffTotal += z.Runoff[Y][i]
-        GroundWatLETotal += z.GroundWatLE_2[Y][i]
+        # PrecipitationTotal += z.Precipitation[Y][i]
+        # RunoffTotal += z.Runoff[Y][i]
+        GroundWatLETotal += \
+            GroundWatLE_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
+                          z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
+                          z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap,
+                          z.SatStor_0, z.RecessionCoef, z.SeepCoef,
+                          z.Landuse, z.TileDrainDensity)[Y][i]
         # EvapotransTotal += z.Evapotrans[Y][i]
         # PtSrcFlowTotal += z.PtSrcFlow[Y][i]
         # WithdrawalTotal += z.Withdrawal[Y][i]
@@ -97,13 +111,19 @@ def CalculateLoads(z, Y):
         #
         # z.SedYield[Y][i] = z.SedDelivRatio * z.SedTrans[Y][i] * z.SedYield[Y][i]
 
-        SedYieldTotal += z.SedYield[Y][i]
-        ErosionTotal += z.Erosion[Y][i]
+        SedYieldTotal += \
+            SedYield_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.Acoef, z.NRur, z.KF, z.LS, z.C, z.P,
+                       z.Area, z.NUrb, z.CNI_0, z.AntMoist_0, z.Grow_0, z.ISRR, z.ISRA, z.Qretention, z.PctAreaInfil,
+                       z.n25b, z.CN, z.CNP_0, z.Imper, z.SedDelivRatio_0)[Y][i]
+        ErosionTotal += \
+            Erosion_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.Acoef, z.NRur, z.KF, z.LS, z.C, z.P,
+                      z.Area)[Y][i]
 
         # CALCULATION OF THE LANDUSE EROSION AND SEDIMENT YIELDS
         for l in range(z.NRur):
-            z.LuErosion[Y][l] += z.ErosWashoff[Y][l][i]
-            z.LuSedYield[Y][l] = z.LuErosion[Y][l] * z.SedDelivRatio
+            z.LuErosion[Y][l] += ErosWashoff(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.NRur, z.NUrb, z.Acoef, z.KF, z.LS,
+                                z.C, z.P, z.Area)[Y][l][i]
+            z.LuSedYield[Y][l] = z.LuErosion[Y][l] * SedDelivRatio(z.SedDelivRatio_0)
             # print("ErosWashoff old = ", z.ErosWashoff[l][i], "ErosWashoff new = ", z.ErosWashoff_temp[Y][l][i])
             # print(z.ErosWashoff[l][i] == z.ErosWashoff_temp[Y][l][i])
 
@@ -128,8 +148,10 @@ def CalculateLoads(z, Y):
                 z.NConc = z.ManNitr[l]
                 z.PConc = z.ManPhos[l]
 
-            nRunoff = 0.1 * z.NConc * z.RurQRunoff[Y][l][i] * z.Area[l]
-            pRunoff = 0.1 * z.PConc * z.RurQRunoff[Y][l][i] * z.Area[l]
+            nRunoff = 0.1 * z.NConc * RurQRunoff(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.NRur, z.NUrb, z.CN,
+                              z.Grow_0)[Y][l][i] * z.Area[l]
+            pRunoff = 0.1 * z.PConc * RurQRunoff(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.NRur, z.NUrb, z.CN,
+                              z.Grow_0)[Y][l][i] * z.Area[l]
 
             z.DisNitr[Y][i] += nRunoff
             z.DisPhos[Y][i] += pRunoff
@@ -139,16 +161,43 @@ def CalculateLoads(z, Y):
             z.LuDisPhos[Y][l] += pRunoff
 
             # ADD SOLID RURAL NUTRIENTS
-            z.LuTotNitr[Y][l] += 0.001 * z.SedDelivRatio * z.ErosWashoff[Y][l][i] * z.SedNitr
-            z.LuTotPhos[Y][l] += 0.001 * z.SedDelivRatio * z.ErosWashoff[Y][l][i] * z.SedPhos
+            z.LuTotNitr[Y][l] += 0.001 * SedDelivRatio(z.SedDelivRatio_0) * ErosWashoff(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.NRur, z.NUrb, z.Acoef, z.KF, z.LS,
+                                z.C, z.P, z.Area)[Y][l][i] * z.SedNitr
+            z.LuTotPhos[Y][l] += 0.001 * SedDelivRatio(z.SedDelivRatio_0) * ErosWashoff(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.NRur, z.NUrb, z.Acoef, z.KF, z.LS,
+                                z.C, z.P, z.Area)[Y][l][i] * z.SedPhos
 
-        z.TotNitr[Y][i] = z.DisNitr[Y][i] + 0.001 * z.SedNitr * z.SedYield[Y][i]
-        z.TotPhos[Y][i] = z.DisPhos[Y][i] + 0.001 * z.SedPhos * z.SedYield[Y][i]
+        z.TotNitr[Y][i] = z.DisNitr[Y][i] + 0.001 * z.SedNitr * SedYield_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.Acoef, z.NRur, z.KF, z.LS, z.C, z.P,
+                       z.Area, z.NUrb, z.CNI_0, z.AntMoist_0, z.Grow_0, z.ISRR, z.ISRA, z.Qretention, z.PctAreaInfil,
+                       z.n25b, z.CN, z.CNP_0, z.Imper, z.SedDelivRatio_0)[Y][i]
+        z.TotPhos[Y][i] = z.DisPhos[Y][i] + 0.001 * z.SedPhos * SedYield_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.Acoef, z.NRur, z.KF, z.LS, z.C, z.P,
+                       z.Area, z.NUrb, z.CNI_0, z.AntMoist_0, z.Grow_0, z.ISRR, z.ISRA, z.Qretention, z.PctAreaInfil,
+                       z.n25b, z.CN, z.CNP_0, z.Imper, z.SedDelivRatio_0)[Y][i]
 
         # SUM TILE DRAIN N, P, AND SEDIMENT
-        z.TileDrainN[Y][i] += ((((z.TileDrain[Y][i] / 100) * z.TotAreaMeters) * 1000) * z.TileNconc) / 1000000
-        z.TileDrainP[Y][i] += ((((z.TileDrain[Y][i] / 100) * z.TotAreaMeters) * 1000) * z.TilePConc) / 1000000
-        z.TileDrainSed[Y][i] += ((((z.TileDrain[Y][i] / 100) * z.TotAreaMeters) * 1000) * z.TileSedConc) / 1000000
+        z.TileDrainN[Y][i] += ((((TileDrain_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area,
+                                              z.CNI_0,
+                                              z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
+                                              z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs,
+                                              z.MaxWaterCap, z.SatStor_0,
+                                              z.RecessionCoef, z.SeepCoef, z.Landuse,
+                                              z.TileDrainDensity)[Y][i] / 100) * TotAreaMeters(z.NRur, z.NUrb,
+                                                                                               z.Area)) * 1000) * z.TileNconc) / 1000000
+        z.TileDrainP[Y][i] += ((((TileDrain_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area,
+                                              z.CNI_0,
+                                              z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
+                                              z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs,
+                                              z.MaxWaterCap, z.SatStor_0,
+                                              z.RecessionCoef, z.SeepCoef, z.Landuse,
+                                              z.TileDrainDensity)[Y][i] / 100) * TotAreaMeters(z.NRur, z.NUrb,
+                                                                                               z.Area)) * 1000) * z.TilePConc) / 1000000
+        z.TileDrainSed[Y][i] += ((((TileDrain_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb,
+                                                z.Area, z.CNI_0,
+                                                z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
+                                                z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs,
+                                                z.MaxWaterCap, z.SatStor_0,
+                                                z.RecessionCoef, z.SeepCoef, z.Landuse,
+                                                z.TileDrainDensity)[Y][i] / 100) * TotAreaMeters(z.NRur, z.NUrb,
+                                                                                                 z.Area)) * 1000) * z.TileSedConc) / 1000000
 
         # ADD URBAN NUTRIENTS
         for l in range(z.NRur, z.NLU):
@@ -168,8 +217,20 @@ def CalculateLoads(z, Y):
         z.UplandP[Y][i] = z.TotPhos[Y][i]
 
         # ADD GROUNDWATER, POINT SOURCES,
-        z.GroundNitr[Y][i] = 0.1 * z.GrNitrConc * z.GroundWatLE_2[Y][i] * AreaTotal_2(z.Area)
-        z.GroundPhos[Y][i] = 0.1 * z.GrPhosConc * z.GroundWatLE_2[Y][i] * AreaTotal_2(z.Area)
+        z.GroundNitr[Y][i] = 0.1 * z.GrNitrConc * \
+                             GroundWatLE_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area,
+                                           z.CNI_0,
+                                           z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
+                                           z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap,
+                                           z.SatStor_0, z.RecessionCoef, z.SeepCoef,
+                                           z.Landuse, z.TileDrainDensity)[Y][i] * AreaTotal_2(z.Area)
+        z.GroundPhos[Y][i] = 0.1 * z.GrPhosConc * \
+                             GroundWatLE_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area,
+                                           z.CNI_0,
+                                           z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
+                                           z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap,
+                                           z.SatStor_0, z.RecessionCoef, z.SeepCoef,
+                                           z.Landuse, z.TileDrainDensity)[Y][i] * AreaTotal_2(z.Area)
         z.DisNitr[Y][i] += z.GroundNitr[Y][i] + z.PointNitr[i]
         z.DisPhos[Y][i] += z.GroundPhos[Y][i] + z.PointPhos[i]
         z.TotNitr[Y][i] += z.GroundNitr[Y][i] + z.PointNitr[i]
@@ -179,7 +240,13 @@ def CalculateLoads(z, Y):
         if GroundWatLETotal[Y] <= 0:
             GroundWatLETotal[Y] = 0.0001
 
-        z.MonthNormNitr[i] = AnNormNitr * z.GroundWatLE_2[Y][i] / GroundWatLETotal[Y]
+        z.MonthNormNitr[i] = AnNormNitr * \
+                             GroundWatLE_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area,
+                                           z.CNI_0,
+                                           z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
+                                           z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap,
+                                           z.SatStor_0, z.RecessionCoef, z.SeepCoef,
+                                           z.Landuse, z.TileDrainDensity)[Y][i] / GroundWatLETotal[Y]
 
         z.DisSeptNitr = (z.MonthNormNitr[i]
                          + z.MonthPondNitr[i]

@@ -296,7 +296,7 @@ class GmsReader(object):
         z.UrbRunoffLiter = np.zeros((z.DimYrs, 12))
         # z.DailyFlow = np.zeros((z.DimYrs, 12, 31))
         z.DailyFlowMGD = np.zeros((z.DimYrs, 12, 31))
-        z.DailyFlowGPM = np.zeros((z.DimYrs, 12, 31))
+        # z.DailyFlowGPM = np.zeros((z.DimYrs, 12, 31))
         z.DailyPtSrcFlow = np.zeros((z.DimYrs, 12, 31))
 
         # Declare the daily values as ReDimensional arrays in
@@ -339,10 +339,10 @@ class GmsReader(object):
         z.DayLuRunoff = np.zeros((16, z.DimYrs, 12, 31))
         # z.MeltPest = np.zeros((z.DimYrs, 12, 31))
         z.PrecPest = np.zeros((z.DimYrs, 12, 31))
-        z.DailyGrFlow = np.zeros((z.DimYrs, 12, 31))
+        # z.DailyGrFlow = np.zeros((z.DimYrs, 12, 31))
         z.DailyETCm = np.zeros((z.DimYrs, 12, 31))
         z.DailyETShal = np.zeros((z.DimYrs, 12, 31))
-        z.PercCm = np.zeros((z.DimYrs, 12, 31))
+        # z.PercCm = np.zeros((z.DimYrs, 12, 31))
         z.PercShal = np.zeros((z.DimYrs, 12, 31))
         z.DailyUnsatStorCm = np.zeros((z.DimYrs, 12, 31))
         z.DailyUnsatStorShal = np.zeros((z.DimYrs, 12, 31))

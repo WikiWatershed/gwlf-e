@@ -9,7 +9,9 @@ Imported from StreamBank.bas
 
 import logging
 from AreaTotal import AreaTotal_2
-
+from TileDrain import TileDrain_2
+from StreamBankEros_2 import StreamBankEros_2
+from AGSTRM import AGSTRM_2
 
 log = logging.getLogger(__name__)
 
@@ -26,8 +28,24 @@ def CalculateStreamBankEros(z, Y):
         # print(z.StreamBankEros[Y][i] == z.StreamBankEros_temp[Y][i])
 
         # CALCULATE STREAM ABANK N AND P
-        z.StreamBankN[Y][i] = z.StreamBankEros[Y][i] * (z.SedNitr / 1000000) * z.BankNFrac
-        z.StreamBankP[Y][i] = z.StreamBankEros[Y][i] * (z.SedPhos / 1000000) * z.BankPFrac
+        z.StreamBankN[Y][i] = \
+            StreamBankEros_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area,
+                             z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN,
+                             z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0,
+                             z.RecessionCoef, z.SeepCoef, z.Qretention, z.PctAreaInfil, z.n25b, z.Landuse,
+                             z.TileDrainDensity, z.PointFlow, z.StreamWithdrawal, z.GroundWithdrawal,
+                             z.NumAnimals, z.AvgAnimalWt, z.StreamFlowVolAdj, z.SedAFactor_0, z.AvKF,
+                             z.AvSlope, z.SedAAdjust, z.StreamLength, z.n42b, z.n46c, z.n85d, z.AgLength,
+                             z.n42, z.n54, z.n85, z.UrbBankStab)[Y][i] * (z.SedNitr / 1000000) * z.BankNFrac
+        z.StreamBankP[Y][i] = \
+            StreamBankEros_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area,
+                             z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN,
+                             z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0,
+                             z.RecessionCoef, z.SeepCoef, z.Qretention, z.PctAreaInfil, z.n25b, z.Landuse,
+                             z.TileDrainDensity, z.PointFlow, z.StreamWithdrawal, z.GroundWithdrawal,
+                             z.NumAnimals, z.AvgAnimalWt, z.StreamFlowVolAdj, z.SedAFactor_0, z.AvKF,
+                             z.AvSlope, z.SedAAdjust, z.StreamLength, z.n42b, z.n46c, z.n85d, z.AgLength,
+                             z.n42, z.n54, z.n85, z.UrbBankStab)[Y][i] * (z.SedPhos / 1000000) * z.BankPFrac
 
         # CALCULATIONS FOR STREAM BANK STABILIZATION AND FENCING
         # z.SURBBANK = 0
@@ -64,7 +82,7 @@ def CalculateStreamBankEros(z, Y):
 
         z.NFEN = 0
         if z.n42 > 0:
-            z.NFEN = (z.n45 / z.n42) * z.StreamBankN[Y][i] * z.AGSTRM * z.n69
+            z.NFEN = (z.n45 / z.n42) * z.StreamBankN[Y][i] * AGSTRM_2(z.AgLength, z.StreamLength) * z.n69
 
         z.StreamBankN[Y][i] = z.StreamBankN[Y][i] - (z.NSTAB + z.NFEN + z.NURBBANK)
         if z.StreamBankN[Y][i] < 0:
@@ -78,7 +96,7 @@ def CalculateStreamBankEros(z, Y):
 
         z.PFEN = 0
         if z.n42 > 0:
-            z.PFEN = (z.n45 / z.n42) * z.StreamBankP[Y][i] * z.AGSTRM * z.n77
+            z.PFEN = (z.n45 / z.n42) * z.StreamBankP[Y][i] * AGSTRM_2(z.AgLength, z.StreamLength) * z.n77
 
         z.StreamBankP[Y][i] = z.StreamBankP[Y][i] - (z.PSTAB + z.PFEN + z.PURBBANK)
         if z.StreamBankP[Y][i] < 0:
@@ -87,7 +105,14 @@ def CalculateStreamBankEros(z, Y):
         # CALCULATE ANNUAL STREAMBANK N AND P AND SEDIMENT
         z.StreamBankNSum[Y] += z.StreamBankN[Y][i]
         z.StreamBankPSum[Y] += z.StreamBankP[Y][i]
-        z.StreamBankErosSum[Y] += z.StreamBankEros_2[Y][i]
+        z.StreamBankErosSum[Y] += \
+            StreamBankEros_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area,
+                             z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN, z.UnsatStor_0,
+                             z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0, z.RecessionCoef, z.SeepCoef
+                             , z.Qretention, z.PctAreaInfil, z.n25b, z.Landuse, z.TileDrainDensity, z.PointFlow,
+                             z.StreamWithdrawal, z.GroundWithdrawal, z.NumAnimals, z.AvgAnimalWt, z.StreamFlowVolAdj,
+                             z.SedAFactor_0, z.AvKF, z.AvSlope, z.SedAAdjust, z.StreamLength, z.n42b, z.n46c, z.n85d,
+                             z.AgLength, z.n42, z.n45, z.n85, z.UrbBankStab)[Y][i]
 
         # GROUNDWATER N LOADS ARE REDUCED BASED ON SPECIFIC BMPS
         z.GWNRF = 0
@@ -119,7 +144,8 @@ def CalculateStreamBankEros(z, Y):
             z.PCTAG = (z.n23 + z.n24) / AreaTotal_2(z.Area)
             z.GroundNitr[Y][i] -= z.GroundNitr[Y][i] * ((z.n28b / 100) * z.n23) / z.n23 * z.PCTAG * z.n70
             z.GroundNitr[Y][i] -= z.GroundNitr[Y][i] * (z.n43 / z.n42) * (z.n42 / z.n42b) * z.PCTAG * z.n64
-            z.GroundNitr[Y][i] -= (z.GroundNitr[Y][i] * ((((z.n29 / 100) * z.n23) + ((z.n37 / 100) * z.n24)) / (z.n23 + z.n24))) * z.PCTAG * z.n68
+            z.GroundNitr[Y][i] -= (z.GroundNitr[Y][i] * (
+                    (((z.n29 / 100) * z.n23) + ((z.n37 / 100) * z.n24)) / (z.n23 + z.n24))) * z.PCTAG * z.n68
 
         # Groundwater P loads are reduced based on extent of nutrient management BMP
         z.RCNMAC = (z.n28b / 100) * z.n23
@@ -132,7 +158,12 @@ def CalculateStreamBankEros(z, Y):
         z.GroundNitrSum[Y] += z.GroundNitr[Y][i]
         z.GroundPhosSum[Y] += z.GroundPhos[Y][i]
 
-        z.TileDrainSum[Y] += z.TileDrain[Y][i]
+        z.TileDrainSum[Y] += \
+            TileDrain_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
+                        z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
+                        z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0,
+                        z.RecessionCoef, z.SeepCoef, z.Landuse,
+                        z.TileDrainDensity)[Y][i]
         z.TileDrainNSum[Y] += z.TileDrainN[Y][i]
         z.TileDrainPSum[Y] += z.TileDrainP[Y][i]
         z.TileDrainSedSum[Y] += z.TileDrainSed[Y][i]

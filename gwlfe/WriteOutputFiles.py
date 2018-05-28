@@ -14,6 +14,7 @@ from AreaTotal import AreaTotal_2
 from TotAEU import TotAEU_2
 from TotLAEU import TotLAEU
 from TotPAEU import TotPAEU_2
+from SedDelivRatio import SedDelivRatio
 
 
 log = logging.getLogger(__name__)
@@ -795,7 +796,7 @@ def WriteOutput(z):
         'NRur': z.NRur,
         'NUrb': z.NUrb,
         'NLU': z.NLU,
-        'SedDelivRatio': z.SedDelivRatio,
+        'SedDelivRatio': SedDelivRatio(z.SedDelivRatio_0),
         'WxYrBeg': z.WxYrBeg,
         'WxYrEnd': z.WxYrEnd,
     }
