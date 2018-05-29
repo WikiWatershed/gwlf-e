@@ -59,7 +59,7 @@ class GmsReader(object):
         z.AvGRStreamFC = 0
         z.AvGRStreamN = 0
         z.AvGRStreamP = 0
-        z.AvTileDrain = np.zeros(12)
+        # z.AvTileDrain = np.zeros(12)
         # z.RurAreaTotal = 0
         # z.UrbAreaTotal = 0
         z.d = np.zeros(12)
@@ -151,7 +151,7 @@ class GmsReader(object):
         z.PestSoilAwcCm = np.zeros(12)
 
         # Tile Drainage and Flow Variables
-        z.AvTileDrain = np.zeros(12)
+        # z.AvTileDrain = np.zeros(12)
         z.AvWithdrawal = np.zeros(12)
         z.AvTileDrainN = np.zeros(12)
         z.AvTileDrainP = np.zeros(12)

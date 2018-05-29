@@ -17,6 +17,7 @@ from TotPAEU import TotPAEU_2
 from SedDelivRatio import SedDelivRatio
 from StreamBankNSum import StreamBankNSum
 from AvStreamBankNSum import AvStreamBankNSum
+from AvTileDrain import AvTileDrain
 
 
 log = logging.getLogger(__name__)
@@ -823,6 +824,11 @@ def WriteOutput(z):
     av_evapo_trans = AvEvapoTrans(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
                                   z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV,
                                   z.PcntET, z.DayHrs, z.MaxWaterCap)#TODO: once all of the monthly variables have been extracted, rewrite how this works
+    av_tile_drain = AvTileDrain(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area,
+                                         z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
+                                         z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap,
+                                         z.SatStor_0, z.RecessionCoef, z.SeepCoef,
+                                         z.Landuse, z.TileDrainDensity)
     output['monthly'] = []
     for i in range(0, 12):
         output['monthly'].append({
@@ -832,7 +838,7 @@ def WriteOutput(z):
             'AvRunoff': z.AvRunoff[i],
             'AvStreamFlow': z.AvStreamFlow[i],
             'AvPtSrcFlow': z.AvPtSrcFlow[i],
-            'AvTileDrain': z.AvTileDrain[i],
+            'AvTileDrain': av_tile_drain[i],
             'AvWithdrawal': z.AvWithdrawal[i],
         })
 

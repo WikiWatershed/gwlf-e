@@ -29,6 +29,7 @@ from Water import Water_2
 from GrowFactor import GrowFactor_2
 from TotAreaMeters import TotAreaMeters
 from UrbQRunoff import UrbQRunoff
+from AvTileDrain import AvTileDrain
 
 log = logging.getLogger(__name__)
 
@@ -144,7 +145,12 @@ def run(z):
 
     for i in range(12):
         z.AvStreamFlow[i] = (z.AvRunoff[i] + z.AvGroundWater[i] +
-                             z.AvPtSrcFlow[i] + z.AvTileDrain[i] -
+                             z.AvPtSrcFlow[i] +
+                             AvTileDrain(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area,
+                                         z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
+                                         z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap,
+                                         z.SatStor_0, z.RecessionCoef, z.SeepCoef,
+                                         z.Landuse, z.TileDrainDensity)[i] -
                              z.AvWithdrawal[i])
 
         z.AvCMStream[i] = (z.AvStreamFlow[i] / 100) * TotAreaMeters(z.NRur, z.NUrb, z.Area)
