@@ -145,7 +145,7 @@ class GmsReader(object):
         z.PestDecay2 = np.zeros(16)
         z.PestHalfLife2 = np.zeros(16)
         # z.AvStreamBankEros = np.zeros(12)
-        z.AvStreamBankN = np.zeros(12)
+        # z.AvStreamBankN = np.zeros(12)
         z.AvStreamBankP = np.zeros(12)
         z.CropPercent = np.zeros(12)
         z.PestSoilAwcCm = np.zeros(12)

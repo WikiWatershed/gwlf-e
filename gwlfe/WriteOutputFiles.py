@@ -16,6 +16,7 @@ from TotLAEU import TotLAEU
 from TotPAEU import TotPAEU_2
 from SedDelivRatio import SedDelivRatio
 from StreamBankNSum import StreamBankNSum
+from AvStreamBankNSum import AvStreamBankNSum
 
 
 log = logging.getLogger(__name__)
@@ -190,7 +191,12 @@ def WriteOutput(z):
 
     # CONVERT AVERAGE STREAM BANK ERIOSION, N AND P TO ENGLISH UNITS
     z.n4 = round(z.AvStreamBankErosSum * z.RetentFactorSed * (1 - z.AttenTSS) * SedConvert)
-    z.n8 = round(z.AvStreamBankNSum * NPConvert * z.RetentFactorN * (1 - z.AttenN))
+    z.n8 = round(AvStreamBankNSum(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
+                     z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0, z.RecessionCoef, z.SeepCoef,
+                     z.Qretention, z.PctAreaInfil, z.n25b, z.Landuse, z.TileDrainDensity, z.PointFlow, z.StreamWithdrawal,
+                     z.GroundWithdrawal, z.NumAnimals, z.AvgAnimalWt, z.StreamFlowVolAdj, z.SedAFactor_0, z.AvKF, z.AvSlope,
+                     z.SedAAdjust, z.StreamLength, z.n42b, z.n46c, z.n85d, z.AgLength, z.n42, z.n54, z.n85, z.UrbBankStab, z.SedNitr,
+                     z.BankNFrac, z.n69c, z.n45, z.n69) * NPConvert * z.RetentFactorN * (1 - z.AttenN))
     z.n15 = round(z.AvStreamBankPSum * NPConvert * z.RetentFactorP * (1 - z.AttenP))
 
     # PERFORM LOAD REDUCTIONS BASED ON BMPS IN SCENARIO FILE

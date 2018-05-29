@@ -42,16 +42,16 @@ def CalculateAnnualMeanLoads(z, Y):
     # z.AvPtSrcFlow = AvPtSrcFlow(z.NYrs,z.PtSrcFlow)
     z.AvPtSrcFlow = AvPtSrcFlow_2(z.PointFlow)
     for i in range(12):
-        z.AvStreamBankN[i] += StreamBankN_1(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area,
-                                            z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN,
-                                            z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0,
-                                            z.RecessionCoef, z.SeepCoef, z.Qretention, z.PctAreaInfil, z.n25b,
-                                            z.Landuse,
-                                            z.TileDrainDensity, z.PointFlow, z.StreamWithdrawal, z.GroundWithdrawal,
-                                            z.NumAnimals, z.AvgAnimalWt, z.StreamFlowVolAdj, z.SedAFactor_0, z.AvKF,
-                                            z.AvSlope, z.SedAAdjust, z.StreamLength, z.n42b, z.n46c, z.n85d, z.AgLength,
-                                            z.n42, z.n54, z.n85, z.UrbBankStab, z.SedNitr, z.BankNFrac, z.n69c, z.n45,
-                                            z.n69)[Y][i] / z.NYrs
+        # z.AvStreamBankN[i] += StreamBankN_1(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area,
+        #                                     z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN,
+        #                                     z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0,
+        #                                     z.RecessionCoef, z.SeepCoef, z.Qretention, z.PctAreaInfil, z.n25b,
+        #                                     z.Landuse,
+        #                                     z.TileDrainDensity, z.PointFlow, z.StreamWithdrawal, z.GroundWithdrawal,
+        #                                     z.NumAnimals, z.AvgAnimalWt, z.StreamFlowVolAdj, z.SedAFactor_0, z.AvKF,
+        #                                     z.AvSlope, z.SedAAdjust, z.StreamLength, z.n42b, z.n46c, z.n85d, z.AgLength,
+        #                                     z.n42, z.n54, z.n85, z.UrbBankStab, z.SedNitr, z.BankNFrac, z.n69c, z.n45,
+        #                                     z.n69)[Y][i] / z.NYrs
         z.AvStreamBankP[i] += z.StreamBankP[Y][i] / z.NYrs
 
         # If the Monthly Erosion is < the Sediment Yield
@@ -72,21 +72,21 @@ def CalculateAnnualMeanLoads(z, Y):
         z.AvTileDrainSed[i] += z.TileDrainSed[Y][i] / z.NYrs
 
     # Recalculate the total annual erosion
-    z.ErosSum = 0
-    for i in range(12):
-        z.ErosSum += Erosion_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
-                               z.AntMoist_0,
-                               z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET,
-                               z.DayHrs,
-                               z.MaxWaterCap, z.SatStor_0,
-                               z.RecessionCoef, z.SeepCoef, z.Qretention, z.PctAreaInfil, z.n25b, z.Landuse,
-                               z.TileDrainDensity, z.PointFlow,
-                               z.StreamWithdrawal, z.GroundWithdrawal, z.NumAnimals, z.AvgAnimalWt, z.StreamFlowVolAdj,
-                               z.SedAFactor_0,
-                               z.AvKF, z.AvSlope, z.SedAAdjust, z.StreamLength, z.n42b, z.n46c, z.n85d, z.AgLength,
-                               z.n42,
-                               z.n45, z.n85, z.UrbBankStab,
-                               z.SedDelivRatio_0, z.Acoef, z.KF, z.LS, z.C, z.P)[Y][i]
+    # z.ErosSum = 0
+    # for i in range(12):
+    #     z.ErosSum += Erosion_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
+    #                            z.AntMoist_0,
+    #                            z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET,
+    #                            z.DayHrs,
+    #                            z.MaxWaterCap, z.SatStor_0,
+    #                            z.RecessionCoef, z.SeepCoef, z.Qretention, z.PctAreaInfil, z.n25b, z.Landuse,
+    #                            z.TileDrainDensity, z.PointFlow,
+    #                            z.StreamWithdrawal, z.GroundWithdrawal, z.NumAnimals, z.AvgAnimalWt, z.StreamFlowVolAdj,
+    #                            z.SedAFactor_0,
+    #                            z.AvKF, z.AvSlope, z.SedAAdjust, z.StreamLength, z.n42b, z.n46c, z.n85d, z.AgLength,
+    #                            z.n42,
+    #                            z.n45, z.n85, z.UrbBankStab,
+    #                            z.SedDelivRatio_0, z.Acoef, z.KF, z.LS, z.C, z.P)[Y][i]
 
     # COMPUTE ANNUAL MEANS
     # z.AvPrecipitation = AvPrecipitation(z.NYrs,z.Precipitation)
@@ -185,7 +185,7 @@ def CalculateAnnualMeanLoads(z, Y):
                            z.GroundWithdrawal, z.NumAnimals, z.AvgAnimalWt, z.StreamFlowVolAdj, z.SedAFactor_0, z.AvKF,
                            z.AvSlope, z.SedAAdjust, z.StreamLength, z.n42b, z.n46c, z.n85d, z.AgLength, z.n42, z.n45,
                            z.n85, z.UrbBankStab))
-    z.AvStreamBankNSum = sum(z.AvStreamBankN)
+    # z.AvStreamBankNSum = sum(z.AvStreamBankN)
     z.AvStreamBankPSum = sum(z.AvStreamBankP)
     z.AvPtSrcFlowSum = sum(z.AvPtSrcFlow)
     z.AvTileDrainSum = sum(z.AvTileDrain)
