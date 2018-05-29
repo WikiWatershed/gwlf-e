@@ -54,7 +54,7 @@ class GmsReader(object):
         # z.QrunI = np.zeros(16)
         # z.QrunP = np.zeros(16)
         # z.WashPerv = np.zeros(16)
-        z.NetDisLoad = np.zeros(3)
+        # z.NetDisLoad = np.zeros(3)
 
         z.AvGRStreamFC = 0
         z.AvGRStreamN = 0
@@ -115,7 +115,7 @@ class GmsReader(object):
         z.DayNormNitr = np.zeros((12, 31))
         z.DayNormPhos = np.zeros((12, 31))
         # z.WashImperv = np.zeros(16)
-        z.NetSolidLoad = np.zeros(3)
+        # z.NetSolidLoad = np.zeros(3)
         z.DayShortNitr = np.zeros((12, 31))
         z.DayShortPhos = np.zeros((12, 31))
         z.DayDischargeNitr = np.zeros((12, 31))

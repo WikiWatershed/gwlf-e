@@ -115,9 +115,9 @@ def CalcCN(z, i, Y, j):
         # z.WashImperv[l] = 0
         # z.WashPerv[l] = 0
 
-    for q in range(z.Nqual):
-        z.NetSolidLoad[q] = 0
-        z.NetDisLoad[q] = 0
+    # for q in range(z.Nqual):
+        # z.NetSolidLoad[q] = 0
+        # z.NetDisLoad[q] = 0
     # if z.Water[Y][i][j] < 0.05:
         # z.AdjUrbanQTotal = get_value_for_yesterday(z.AdjUrbanQTotal_1,0,Y,i,j,z.NYrs,z.DaysMonth)
         # pass
@@ -319,13 +319,13 @@ def BasinWater(z, i, Y, j):
 
     # BELOW ARE CALCULATIONS FOR URBAN LOADS
     # MAYBE THEY SHOULD BE IN "CALCULATE LOADS" SUBROUTINE???
-    z.DissolvedLoad = 0
-    z.SolidLoad = 0
+    # z.DissolvedLoad = 0
+    # z.SolidLoad = 0
     # z.UrbLoadRed = 0
 
-    if z.AdjUrbanQTotal_1[Y][i][j] > 0.001:
-        for l in range(z.NRur, z.NLU):
-            for q in range(z.Nqual):
+    # if z.AdjUrbanQTotal_1[Y][i][j] > 0.001:
+    #     for l in range(z.NRur, z.NLU):
+    #         for q in range(z.Nqual):
                 # z.SolidBasinMass[q] = 0
                 # z.DisBasinMass[q] = 0
 
@@ -368,7 +368,7 @@ def BasinWater(z, i, Y, j):
                 # z.DisSurfLoad *= (1 - z.RetentionEff) * (1 - (z.FilterEff * z.PctStrmBuf))
 
                 # Apply sediment detention basin BMP
-                if z.BasinArea > 0 and z.Area[l] > 0:
+                # if z.BasinArea > 0 and z.Area[l] > 0:
                     # z.SolidBasinMass[q] += z.SurfaceLoad - z.DisSurfLoad
                     # z.DisBasinMass[q] += z.DisSurfLoad
                     #
@@ -386,17 +386,17 @@ def BasinWater(z, i, Y, j):
                     #
                     # z.NetDisLoad[q] += z.DissolvedLoad
                     # z.NetSolidLoad[q] += z.SolidLoad
-                    pass
-                else:
+                #     pass
+                # else:
                     # z.LuLoad[Y][l][q] += z.SurfaceLoad_1[Y][i][j][l][q]
                     # z.LuDisLoad[Y][l][q] += z.DisSurfLoad[Y][i][j][l][q]
 
-                    z.NetDisLoad[q] += z.DisSurfLoad[Y][i][j][l][q]
-                    z.NetSolidLoad[q] += z.SurfaceLoad_1[Y][i][j][l][q] - z.DisSurfLoad[Y][i][j][l][q]
+                    # z.NetDisLoad[q] += z.DisSurfLoad[Y][i][j][l][q]
+                    # z.NetSolidLoad[q] += z.SurfaceLoad_1[Y][i][j][l][q] - z.DisSurfLoad[Y][i][j][l][q]
 
     for q in range(z.Nqual):
-        z.Load[Y][i][q] += z.NetDisLoad[q] + z.NetSolidLoad[q]
-        z.DisLoad[Y][i][q] += z.NetDisLoad[q]
+        z.Load[Y][i][q] += z.NetDisLoad[Y][i][j][q] + z.NetSolidLoad[Y][i][j][q]
+        z.DisLoad[Y][i][q] += z.NetDisLoad[Y][i][j][q]
 
         if z.Load[Y][i][q] < 0:
             z.Load[Y][i][q] = 0
