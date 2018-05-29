@@ -358,7 +358,7 @@ class GmsReader(object):
         # z.LE = np.zeros((z.DimYrs, 12))
         # z.StreamBankEros = np.zeros((z.DimYrs, 12))
         # z.StreamBankN = np.zeros((z.DimYrs, 12))
-        z.StreamBankN_1 = np.zeros((z.DimYrs, 12))
+        # z.StreamBankN_1 = np.zeros((z.DimYrs, 12))
         z.StreamBankP = np.zeros((z.DimYrs, 12))
         # z.DailyAMC5 = np.zeros((z.DimYrs, 12, 31))
         # z.MonthFlow = np.zeros((z.DimYrs, 12))

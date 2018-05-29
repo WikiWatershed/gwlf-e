@@ -7,6 +7,7 @@ from __future__ import division
 import sys
 import json
 import logging
+import time
 
 from gwlfe import gwlfe, Parser
 
@@ -21,7 +22,9 @@ def main():
 
     fp = open(gms_filename, 'r')
     z = Parser.GmsReader(fp).read()
+    start = time.time()
     result = gwlfe.run(z)
+    print(time.time()-start)
     print(json.dumps(result, indent=4))
 
 
