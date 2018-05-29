@@ -341,51 +341,58 @@ def BasinWater(z, i, Y, j):
                 # What is this trying to do?
                 # lu_1 = l - 11
 
-                if z.Area[l] > 0:
-                    z.SurfaceLoad = (((z.LoadRateImp[l][q] * z.WashImperv[Y][i][j][l] * (
-                            (z.Imper[l] * (1 - z.ISRR[z.lu_1[l]]) * (1 - z.ISRA[z.lu_1[l]]))
-                            * (z.SweepFrac[i] + (
-                            (1 - z.SweepFrac[i]) * ((1 - z.UrbSweepFrac) * z.Area[l]) / z.Area[l])))
-                                       + z.LoadRatePerv[l][q] * z.WashPerv[Y][i][j][l] * (
-                                               1 - (z.Imper[l] * (1 - z.ISRR[z.lu_1[l]]) * (1 - z.ISRA[z.lu_1[l]]))))
-                                      * z.Area[l]) - z.UrbLoadRed)
-                else:
-                    z.SurfaceLoad = 0
+                # if z.Area[l] > 0:
+                #     z.SurfaceLoad = (((z.LoadRateImp[l][q] * z.WashImperv[Y][i][j][l] * (
+                #             (z.Imper[l] * (1 - z.ISRR[z.lu_1[l]]) * (1 - z.ISRA[z.lu_1[l]]))
+                #             * (z.SweepFrac[i] + (
+                #             (1 - z.SweepFrac[i]) * ((1 - z.UrbSweepFrac) * z.Area[l]) / z.Area[l])))
+                #                        + z.LoadRatePerv[l][q] * z.WashPerv[Y][i][j][l] * (
+                #                                1 - (z.Imper[l] * (1 - z.ISRR[z.lu_1[l]]) * (1 - z.ISRA[z.lu_1[l]]))))
+                #                       * z.Area[l]) - z.UrbLoadRed[Y][i][j][l][q])
+                # else:
+                #     z.SurfaceLoad = 0
+                #
+                # if z.SurfaceLoad < 0:
+                #     z.SurfaceLoad = 0
 
-                if z.SurfaceLoad < 0:
-                    z.SurfaceLoad = 0
+                # print("SurfaceLoad orig = ", z.SurfaceLoad, "SurfaceLoad new = ", z.SurfaceLoad_1[Y][i][j][l][q])
+                # print(z.SurfaceLoad == z.SurfaceLoad_1[Y][i][j][l][q])
+                # print("Year = ", Y, "Month = ", i, "Day = ", j, "LU = ", l, "Nqual = ", q)
+                # print("Area = ", z.Area[l])
+                # print("SweepFrac = ", z.SweepFrac[i], "UrbSweepFrac = ", z.UrbSweepFrac)
 
-                z.DisSurfLoad = z.DisFract[l][q] * z.SurfaceLoad
+                # z.DisSurfLoad = z.DisFract[l][q] * z.SurfaceLoad[Y][i][j][l][q]
 
                 # Apply Bioretention and/or Stream Buffer BMP
-                z.SurfaceLoad *= (1 - z.RetentionEff) * (1 - (z.FilterEff * z.PctStrmBuf))
-                z.DisSurfLoad *= (1 - z.RetentionEff) * (1 - (z.FilterEff * z.PctStrmBuf))
+                # z.SurfaceLoad[Y][i][j][l][q] *= (1 - z.RetentionEff) * (1 - (z.FilterEff * z.PctStrmBuf))
+                # z.DisSurfLoad *= (1 - z.RetentionEff) * (1 - (z.FilterEff * z.PctStrmBuf))
 
                 # Apply sediment detention basin BMP
                 if z.BasinArea > 0 and z.Area[l] > 0:
-                    z.SolidBasinMass[q] += z.SurfaceLoad - z.DisSurfLoad
-                    z.DisBasinMass[q] += z.DisSurfLoad
-
-                    z.DissolvedLoad = z.OutflowFract * z.DisBasinMass[q]
-                    z.SolidLoad = z.Mixing * z.OutflowFract * z.SolidBasinMass[q]
-
-                    z.SolidBasinMass[q] -= z.SolidLoad
-                    z.DisBasinMass[q] -= z.DissolvedLoad
-
-                    z.SurfaceLoad -= z.DissolvedLoad + z.SolidLoad
-                    z.DisSurfLoad -= z.DissolvedLoad
-
-                    z.LuLoad[Y][l][q] += z.DissolvedLoad + z.SolidLoad
-                    z.LuDisLoad[Y][l][q] += z.DissolvedLoad
-
-                    z.NetDisLoad[q] += z.DissolvedLoad
-                    z.NetSolidLoad[q] += z.SolidLoad
+                    # z.SolidBasinMass[q] += z.SurfaceLoad - z.DisSurfLoad
+                    # z.DisBasinMass[q] += z.DisSurfLoad
+                    #
+                    # z.DissolvedLoad = z.OutflowFract * z.DisBasinMass[q]
+                    # z.SolidLoad = z.Mixing * z.OutflowFract * z.SolidBasinMass[q]
+                    #
+                    # z.SolidBasinMass[q] -= z.SolidLoad
+                    # z.DisBasinMass[q] -= z.DissolvedLoad
+                    #
+                    # z.SurfaceLoad -= z.DissolvedLoad + z.SolidLoad
+                    # z.DisSurfLoad -= z.DissolvedLoad
+                    #
+                    # z.LuLoad[Y][l][q] += z.DissolvedLoad + z.SolidLoad
+                    # z.LuDisLoad[Y][l][q] += z.DissolvedLoad
+                    #
+                    # z.NetDisLoad[q] += z.DissolvedLoad
+                    # z.NetSolidLoad[q] += z.SolidLoad
+                    pass
                 else:
-                    z.LuLoad[Y][l][q] += z.SurfaceLoad
-                    z.LuDisLoad[Y][l][q] += z.DisSurfLoad
+                    z.LuLoad[Y][l][q] += z.SurfaceLoad_1[Y][i][j][l][q]
+                    z.LuDisLoad[Y][l][q] += z.DisSurfLoad[Y][i][j][l][q]
 
-                    z.NetDisLoad[q] += z.DisSurfLoad
-                    z.NetSolidLoad[q] += z.SurfaceLoad - z.DisSurfLoad
+                    z.NetDisLoad[q] += z.DisSurfLoad[Y][i][j][l][q]
+                    z.NetSolidLoad[q] += z.SurfaceLoad_1[Y][i][j][l][q] - z.DisSurfLoad[Y][i][j][l][q]
 
     for q in range(z.Nqual):
         z.Load[Y][i][q] += z.NetDisLoad[q] + z.NetSolidLoad[q]

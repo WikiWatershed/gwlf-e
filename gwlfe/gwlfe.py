@@ -122,6 +122,9 @@ from UrbanRunoff import UrbanRunoff
 from UrbRunoffLiter import UrbRunoffLiter
 from RuralRunoff import RuralRunoff
 from DayRunoff import DayRunoff
+from SurfaceLoad import SurfaceLoad
+from DisSurfLoad import DisSurfLoad
+from SurfaceLoad_1 import SurfaceLoad_1
 
 log = logging.getLogger(__name__)
 
@@ -418,6 +421,18 @@ def run(z):
 
     z.DayRunoff = DayRunoff(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow, z.CNP_0, z.Imper,
               z.ISRR, z.ISRA, z.Qretention, z.PctAreaInfil, z.n25b, z.CN)
+
+    z.SurfaceLoad = SurfaceLoad(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow, z.CNP_0,
+                z.Imper, z.ISRR, z.ISRA, z.Qretention, z.PctAreaInfil, z.Nqual, z.LoadRateImp, z.SweepFrac, z.UrbSweepFrac, z.LoadRatePerv,
+                z.Storm, z.UrbBMPRed)
+
+    z.DisSurfLoad = DisSurfLoad(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.Nqual, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow, z.CNP_0,
+                z.Imper, z.ISRR, z.ISRA, z.Qretention, z.PctAreaInfil, z.LoadRateImp, z.SweepFrac, z.UrbSweepFrac, z.LoadRatePerv, z.Storm,
+                z.UrbBMPRed, z.DisFract, z.FilterWidth, z.PctStrmBuf)
+
+    z.SurfaceLoad_1 = SurfaceLoad_1(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow, z.CNP_0,
+                  z.Imper, z.ISRR, z.ISRA, z.Qretention, z.PctAreaInfil, z.Nqual, z.LoadRateImp, z.SweepFrac, z.UrbSweepFrac,
+                  z.LoadRatePerv, z.Storm, z.UrbBMPRed, z.FilterWidth, z.PctStrmBuf)
 
     # --------- run the remaining parts of the model ---------------------
 
