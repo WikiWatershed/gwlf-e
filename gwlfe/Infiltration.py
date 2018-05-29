@@ -7,7 +7,7 @@ from QTotal import QTotal_2
 from Water import Water_2
 
 
-# @memoize
+@memoize
 def Infiltration(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0, Imper,
                  ISRR, ISRA, CN):
     result = np.zeros((NYrs, 12, 31))

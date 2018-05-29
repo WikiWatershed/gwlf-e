@@ -23,6 +23,7 @@ def Erosion(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef, NRur, KF, LS, C, P, 
     return result
 
 
+@memoize
 def Erosion_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef, NRur, KF, LS, C, P, Area):
     water = Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     rureros = RurEros_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef, NRur, KF, LS, C, P, Area)

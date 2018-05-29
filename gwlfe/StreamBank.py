@@ -10,7 +10,7 @@ Imported from StreamBank.bas
 import logging
 from AreaTotal import AreaTotal_2
 from TileDrain import TileDrain_2
-from StreamBankEros_2 import StreamBankEros_2
+from StreamBankEros_1 import StreamBankEros_1_2
 from AGSTRM import AGSTRM_2
 from StreamBankN_1 import StreamBankN_1
 from StreamBankNSum import StreamBankNSum
@@ -40,7 +40,7 @@ def CalculateStreamBankEros(z, Y):
         #                      z.AvSlope, z.SedAAdjust, z.StreamLength, z.n42b, z.n46c, z.n85d, z.AgLength,
         #                      z.n42, z.n54, z.n85, z.UrbBankStab)[Y][i] * (z.SedNitr / 1000000) * z.BankNFrac
         z.StreamBankP[Y][i] = \
-            StreamBankEros_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area,
+            StreamBankEros_1_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area,
                              z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN,
                              z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0,
                              z.RecessionCoef, z.SeepCoef, z.Qretention, z.PctAreaInfil, z.n25b, z.Landuse,
@@ -136,7 +136,7 @@ def CalculateStreamBankEros(z, Y):
         # z.StreamBankNSum[Y] += z.StreamBankN_1[Y][i]
         z.StreamBankPSum[Y] += z.StreamBankP[Y][i]
         z.StreamBankErosSum[Y] += \
-            StreamBankEros_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area,
+            StreamBankEros_1_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area,
                              z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN, z.UnsatStor_0,
                              z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0, z.RecessionCoef, z.SeepCoef
                              , z.Qretention, z.PctAreaInfil, z.n25b, z.Landuse, z.TileDrainDensity, z.PointFlow,

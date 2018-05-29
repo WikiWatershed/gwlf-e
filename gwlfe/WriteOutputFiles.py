@@ -18,7 +18,12 @@ from SedDelivRatio import SedDelivRatio
 from StreamBankNSum import StreamBankNSum
 from AvStreamBankNSum import AvStreamBankNSum
 from AvTileDrain import AvTileDrain
-
+from AvWithdrawal import AvWithdrawal_2
+from AvGroundWater import AvGroundWater_2
+from AvErosion import AvErosion_2
+from AvSedYield import AvSedYield_2
+from AvSedYield import AvSedYield
+from AvRunoff import AvRunoff_2
 
 log = logging.getLogger(__name__)
 
@@ -192,12 +197,17 @@ def WriteOutput(z):
 
     # CONVERT AVERAGE STREAM BANK ERIOSION, N AND P TO ENGLISH UNITS
     z.n4 = round(z.AvStreamBankErosSum * z.RetentFactorSed * (1 - z.AttenTSS) * SedConvert)
-    z.n8 = round(AvStreamBankNSum(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
-                     z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0, z.RecessionCoef, z.SeepCoef,
-                     z.Qretention, z.PctAreaInfil, z.n25b, z.Landuse, z.TileDrainDensity, z.PointFlow, z.StreamWithdrawal,
-                     z.GroundWithdrawal, z.NumAnimals, z.AvgAnimalWt, z.StreamFlowVolAdj, z.SedAFactor_0, z.AvKF, z.AvSlope,
-                     z.SedAAdjust, z.StreamLength, z.n42b, z.n46c, z.n85d, z.AgLength, z.n42, z.n54, z.n85, z.UrbBankStab, z.SedNitr,
-                     z.BankNFrac, z.n69c, z.n45, z.n69) * NPConvert * z.RetentFactorN * (1 - z.AttenN))
+    z.n8 = round(AvStreamBankNSum(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
+                                  z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
+                                  z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap,
+                                  z.SatStor_0, z.RecessionCoef, z.SeepCoef,
+                                  z.Qretention, z.PctAreaInfil, z.n25b, z.Landuse, z.TileDrainDensity, z.PointFlow,
+                                  z.StreamWithdrawal,
+                                  z.GroundWithdrawal, z.NumAnimals, z.AvgAnimalWt, z.StreamFlowVolAdj, z.SedAFactor_0,
+                                  z.AvKF, z.AvSlope,
+                                  z.SedAAdjust, z.StreamLength, z.n42b, z.n46c, z.n85d, z.AgLength, z.n42, z.n54, z.n85,
+                                  z.UrbBankStab, z.SedNitr,
+                                  z.BankNFrac, z.n69c, z.n45, z.n69) * NPConvert * z.RetentFactorN * (1 - z.AttenN))
     z.n15 = round(z.AvStreamBankPSum * NPConvert * z.RetentFactorP * (1 - z.AttenP))
 
     # PERFORM LOAD REDUCTIONS BASED ON BMPS IN SCENARIO FILE
@@ -396,8 +406,18 @@ def WriteOutput(z):
     AvMonEros = 0
 
     for i in range(12):
-        AvMonEros = AvMonEros + z.AvErosion[i]
-        AvMonSed = AvMonSed + (z.AvSedYield[i] * z.RetentFactorSed * (1 - z.AttenTSS))
+        AvMonEros = AvMonEros + \
+                    AvErosion_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.Acoef, z.NRur, z.KF, z.LS, z.C,
+                                z.P, z.Area)[i]
+        AvMonSed = AvMonSed + (
+                    AvSedYield_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
+                                 z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV,
+                                 z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0, z.RecessionCoef, z.SeepCoef,
+                                 z.Qretention, z.PctAreaInfil, z.n25b, z.Landuse, z.TileDrainDensity, z.PointFlow,
+                                 z.StreamWithdrawal, z.GroundWithdrawal, z.NumAnimals, z.AvgAnimalWt,
+                                 z.StreamFlowVolAdj, z.SedAFactor_0, z.AvKF, z.AvSlope, z.SedAAdjust, z.StreamLength,
+                                 z.n42b, z.n46c, z.n85d, z.AgLength, z.n42, z.n45, z.n85, z.UrbBankStab, z.Acoef, z.KF,
+                                 z.LS, z.C, z.P, z.SedDelivRatio_0) * z.RetentFactorSed * (1 - z.AttenTSS))
         AvMonDisN = AvMonDisN + (z.AvDisNitr[i] * z.RetentFactorN * (1 - z.AttenN))
         AvMonTotN = AvMonTotN + (z.AvTotNitr[i] * z.RetentFactorN * (1 - z.AttenN))
         AvMonDisP = AvMonDisP + (z.AvDisPhos[i] * z.RetentFactorP * (1 - z.AttenP))
@@ -586,13 +606,14 @@ def WriteOutput(z):
         # CONVERT AVERAGE STREAM BANK ERIOSION, N AND P TO ENGLISH UNITS
         z.n4 = round((z.StreamBankErosSum[y] * z.RetentFactorSed * (1 - z.AttenTSS) * SedConvert))
         z.n8 = round((StreamBankNSum(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area,
-                   z.CNI_0,z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN,
-                   z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0,
-                   z.RecessionCoef, z.SeepCoef, z.Qretention, z.PctAreaInfil, z.n25b, z.Landuse,
-                   z.TileDrainDensity, z.PointFlow, z.StreamWithdrawal, z.GroundWithdrawal,
-                   z.NumAnimals, z.AvgAnimalWt, z.StreamFlowVolAdj, z.SedAFactor_0, z.AvKF,
-                   z.AvSlope, z.SedAAdjust, z.StreamLength, z.n42b, z.n46c, z.n85d, z.AgLength,
-                   z.n42, z.n54, z.n85, z.UrbBankStab, z.SedNitr, z.BankNFrac, z.n69c,z.n45, z.n69)[y] * NPConvert * z.RetentFactorN * (1 - z.AttenN)))
+                                     z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN,
+                                     z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0,
+                                     z.RecessionCoef, z.SeepCoef, z.Qretention, z.PctAreaInfil, z.n25b, z.Landuse,
+                                     z.TileDrainDensity, z.PointFlow, z.StreamWithdrawal, z.GroundWithdrawal,
+                                     z.NumAnimals, z.AvgAnimalWt, z.StreamFlowVolAdj, z.SedAFactor_0, z.AvKF,
+                                     z.AvSlope, z.SedAAdjust, z.StreamLength, z.n42b, z.n46c, z.n85d, z.AgLength,
+                                     z.n42, z.n54, z.n85, z.UrbBankStab, z.SedNitr, z.BankNFrac, z.n69c, z.n45, z.n69)[
+                          y] * NPConvert * z.RetentFactorN * (1 - z.AttenN)))
         z.n15 = round((z.StreamBankPSum[y] * NPConvert * z.RetentFactorP * (1 - z.AttenP)))
 
         # PERFORM LOAD REDUCTIONS BASED ON BMPS IN SCENARIO FILE
@@ -792,8 +813,15 @@ def WriteOutput(z):
 
     # mg/l
     if MeanLowFlow > 0:
-        LFConcSed = ((z.AvSedYield[LowFlowMonth] * TONNE_TO_KG * KG_TO_MG) /
-                     (MeanLowFlow * M3_TO_L))
+        LFConcSed = ((AvSedYield(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
+                                 z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV,
+                                 z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0, z.RecessionCoef, z.SeepCoef,
+                                 z.Qretention, z.PctAreaInfil, z.n25b, z.Landuse, z.TileDrainDensity, z.PointFlow,
+                                 z.StreamWithdrawal, z.GroundWithdrawal, z.NumAnimals, z.AvgAnimalWt,
+                                 z.StreamFlowVolAdj, z.SedAFactor_0, z.AvKF, z.AvSlope, z.SedAAdjust, z.StreamLength,
+                                 z.n42b, z.n46c, z.n85d, z.AgLength, z.n42, z.n45, z.n85, z.UrbBankStab, z.Acoef, z.KF,
+                                 z.LS, z.C, z.P, z.SedDelivRatio_0)[LowFlowMonth] * TONNE_TO_KG * KG_TO_MG) / (
+                                 MeanLowFlow * M3_TO_L))
         LFConcN = ((z.AvTotNitr[LowFlowMonth] * KG_TO_MG) /
                    (MeanLowFlow * M3_TO_L))
         LFConcP = ((z.AvTotPhos[LowFlowMonth] * KG_TO_MG) /
@@ -823,23 +851,33 @@ def WriteOutput(z):
     # Equivalent to lines 965 - 988 of source
     av_evapo_trans = AvEvapoTrans(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
                                   z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV,
-                                  z.PcntET, z.DayHrs, z.MaxWaterCap)#TODO: once all of the monthly variables have been extracted, rewrite how this works
+                                  z.PcntET, z.DayHrs,
+                                  z.MaxWaterCap)  # TODO: once all of the monthly variables have been extracted, rewrite how this works
     av_tile_drain = AvTileDrain(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area,
-                                         z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
-                                         z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap,
-                                         z.SatStor_0, z.RecessionCoef, z.SeepCoef,
-                                         z.Landuse, z.TileDrainDensity)
+                                z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
+                                z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap,
+                                z.SatStor_0, z.RecessionCoef, z.SeepCoef,
+                                z.Landuse, z.TileDrainDensity)
+    av_withdrawal = AvWithdrawal_2(z.NYrs, z.StreamWithdrawal, z.GroundWithdrawal)
+    av_ground_water = AvGroundWater_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area,
+                                      z.CNI_0,
+                                      z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN, z.UnsatStor_0,
+                                      z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap,
+                                      z.SatStor_0, z.RecessionCoef, z.SeepCoef, z.Landuse, z.TileDrainDensity)
+    av_runoff = AvRunoff_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
+                           z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.Qretention, z.PctAreaInfil,
+                           z.n25b, z.CN, z.Landuse, z.TileDrainDensity)
     output['monthly'] = []
     for i in range(0, 12):
         output['monthly'].append({
             'AvPrecipitation': z.AvPrecipitation[i],
             'AvEvapoTrans': av_evapo_trans[i],
-            'AvGroundWater': z.AvGroundWater[i],
-            'AvRunoff': z.AvRunoff[i],
+            'AvGroundWater': av_ground_water[i],
+            'AvRunoff': av_runoff[i],
             'AvStreamFlow': z.AvStreamFlow[i],
             'AvPtSrcFlow': z.AvPtSrcFlow[i],
             'AvTileDrain': av_tile_drain[i],
-            'AvWithdrawal': z.AvWithdrawal[i],
+            'AvWithdrawal': av_withdrawal[i],
         })
 
     output['Loads'] = []

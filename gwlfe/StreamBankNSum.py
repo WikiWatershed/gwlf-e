@@ -16,7 +16,7 @@ def StreamBankNSum(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area,
                    NumAnimals, AvgAnimalWt, StreamFlowVolAdj, SedAFactor_0, AvKF,
                    AvSlope, SedAAdjust, StreamLength, n42b, n46c, n85d, AgLength,
                    n42, n54, n85, UrbBankStab, SedNitr, BankNFrac, n69c, n45, n69):
-    result = np.zeros((15,))
+    result = np.zeros((NYrs,))
     streambank_n_1 = StreamBankN_1(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area,
                                    CNI_0, AntMoist_0, Grow_0, CNP_0, Imper, ISRR, ISRA, CN,
                                    UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0,

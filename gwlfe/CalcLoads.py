@@ -19,7 +19,7 @@ from GroundWatLE_2 import GroundWatLE_2
 from TileDrain import TileDrain_2
 from TotAreaMeters import TotAreaMeters
 from SedDelivRatio import SedDelivRatio
-from Erosion import Erosion_2
+from Erosion_1 import Erosion_1_2
 from SedYield import SedYield_2
 from RurQRunoff import RurQRunoff
 from ErosWashoff import ErosWashoff
@@ -118,8 +118,12 @@ def CalculateLoads(z, Y):
                        z.Area, z.NUrb, z.CNI_0, z.AntMoist_0, z.Grow_0, z.ISRR, z.ISRA, z.Qretention, z.PctAreaInfil,
                        z.n25b, z.CN, z.CNP_0, z.Imper, z.SedDelivRatio_0)[Y][i]
         ErosionTotal += \
-            Erosion_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.Acoef, z.NRur, z.KF, z.LS, z.C, z.P,
-                      z.Area)[Y][i]
+            Erosion_1_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0,
+              z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0,
+              z.RecessionCoef, z.SeepCoef, z.Qretention, z.PctAreaInfil, z.n25b, z.Landuse, z.TileDrainDensity, z.PointFlow,
+              z.StreamWithdrawal, z.GroundWithdrawal, z.NumAnimals, z.AvgAnimalWt, z.StreamFlowVolAdj, z.SedAFactor_0,
+              z.AvKF, z.AvSlope, z.SedAAdjust, z.StreamLength, z.n42b, z.n46c, z.n85d, z.AgLength, z.n42, z.n45, z.n85, z.UrbBankStab,
+              z.SedDelivRatio_0, z.Acoef, z.KF, z.LS, z.C, z.P)[Y][i]
 
         # CALCULATION OF THE LANDUSE EROSION AND SEDIMENT YIELDS
         for l in range(z.NRur):

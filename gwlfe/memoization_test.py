@@ -1,6 +1,6 @@
 from Memoization import memoize
 from Memoization import memoize_with_args
-from Memoization import memodict
+from Memoization import memoize2
 from Timer import time_function
 from time import sleep
 import numpy as np
@@ -37,7 +37,7 @@ def test_function3():
                               test, test, test, test, test, )
 
 
-@memodict
+@memoize
 def memoizied_function3(*arg):
     sleep(0.3)
     return np.random.random((1000, 1000))

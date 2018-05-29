@@ -13,6 +13,6 @@ def AvWithdrawal(NYrs, StreamWithdrawal, GroundWithdrawal):
             result[i] += withdrawal[Y][i] / NYrs
     return result
 
-
+@memoize
 def AvWithdrawal_2(NYrs, StreamWithdrawal, GroundWithdrawal):
     return np.sum(Withdrawal_2(NYrs, StreamWithdrawal, GroundWithdrawal), axis=0) / NYrs

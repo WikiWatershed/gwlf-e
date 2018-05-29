@@ -7,7 +7,7 @@ from AreaTotal import AreaTotal_2
 from AgAreaTotal import AgAreaTotal
 from Memoization import memoize
 
-
+@memoize
 def GwAgLE(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
            ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0, RecessionCoef, SeepCoef, Landuse):
     result = np.zeros((NYrs, 12))

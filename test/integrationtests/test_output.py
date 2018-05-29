@@ -27,18 +27,7 @@ class TestOutput(unittest.TestCase):
     static output.
     """
     __test__ = False
-
     def setUp(self, input_file_name, output_file_name):
-        # for m in sys.modules.keys():
-        #     if m.find("gwlfe.") != -1 and m != 'gwlfe.enums' and m != 'gwlfe.Timer':
-        #         if (isinstance(sys.modules[m],ModuleType)):
-        #             del sys.modules[m]
-        # # del sys.modules['gwlfe']
-        # gwlfe = __import__("gwlfe", globals(), locals(), [str("gwlfe")], -1)
-        #
-        # print(locals())
-
-
         input_file = open('integrationtests/'+input_file_name, 'r')
         self.z = Parser.GmsReader(input_file).read()
         self.generated_output = gwlfe.run(self.z)
@@ -94,8 +83,8 @@ class TestOutput(unittest.TestCase):
                     else:
                         self.assertEqual(self.generated_output["SummaryLoads"][i][key],
                                          self.static_output["SummaryLoads"][i][key])
-                except AssertionError as e:
-                    print("AssertionError on %s (month %i)" % (key, i))
+                except Exception as e:
+                    print("AssertionError on %s (%s)" % (key, self.generated_output["SummaryLoads"][i]["Source"]))
                     raise e
 
     def test_loads(self):
@@ -112,7 +101,7 @@ class TestOutput(unittest.TestCase):
                     else:
                         self.assertEqual(self.generated_output["Loads"][i][key], self.static_output["Loads"][i][key])
                 except AssertionError as e:
-                    print("AssertionError on %s (month %i)" % (key, i))
+                    print("AssertionError on %s (%s)" % (key, self.static_output["Loads"][i]["Source"]))
                     raise e
 
     # def test_generated_output_matches_static_output(self):
