@@ -288,8 +288,8 @@ class GmsReader(object):
 
         z.Load = np.zeros((z.DimYrs, 12, 3))
         z.DisLoad = np.zeros((z.DimYrs, 12, 3))
-        z.LuLoad = np.zeros((z.DimYrs, 16, 3))
-        z.LuDisLoad = np.zeros((z.DimYrs, 16, 3))
+        # z.LuLoad = np.zeros((z.DimYrs, 16, 3))
+        # z.LuDisLoad = np.zeros((z.DimYrs, 16, 3))
         z.UplandN = np.zeros((z.DimYrs, 12))
         z.UplandP = np.zeros((z.DimYrs, 12))
         z.UrbRunoffCm = np.zeros((z.DimYrs, 12))

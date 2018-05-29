@@ -326,8 +326,8 @@ def BasinWater(z, i, Y, j):
     if z.AdjUrbanQTotal_1[Y][i][j] > 0.001:
         for l in range(z.NRur, z.NLU):
             for q in range(z.Nqual):
-                z.SolidBasinMass[q] = 0
-                z.DisBasinMass[q] = 0
+                # z.SolidBasinMass[q] = 0
+                # z.DisBasinMass[q] = 0
 
                 # if z.Storm > 0:
                 #     z.UrbLoadRed = (z.Water[Y][i][j] / z.Storm) * z.UrbBMPRed[l][q]
@@ -388,8 +388,8 @@ def BasinWater(z, i, Y, j):
                     # z.NetSolidLoad[q] += z.SolidLoad
                     pass
                 else:
-                    z.LuLoad[Y][l][q] += z.SurfaceLoad_1[Y][i][j][l][q]
-                    z.LuDisLoad[Y][l][q] += z.DisSurfLoad[Y][i][j][l][q]
+                    # z.LuLoad[Y][l][q] += z.SurfaceLoad_1[Y][i][j][l][q]
+                    # z.LuDisLoad[Y][l][q] += z.DisSurfLoad[Y][i][j][l][q]
 
                     z.NetDisLoad[q] += z.DisSurfLoad[Y][i][j][l][q]
                     z.NetSolidLoad[q] += z.SurfaceLoad_1[Y][i][j][l][q] - z.DisSurfLoad[Y][i][j][l][q]
