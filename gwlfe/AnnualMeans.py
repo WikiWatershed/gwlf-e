@@ -21,6 +21,7 @@ from Withdrawal import Withdrawal_2
 from StreamBankEros_2 import StreamBankEros_2
 from SedYield_2 import SedYield_2
 from Erosion_2 import Erosion_2
+from AvStreamBankEros import AvStreamBankEros_2
 
 log = logging.getLogger(__name__)
 
@@ -40,15 +41,7 @@ def CalculateAnnualMeanLoads(z, Y):
     # z.AvPtSrcFlow = AvPtSrcFlow(z.NYrs,z.PtSrcFlow)
     z.AvPtSrcFlow = AvPtSrcFlow_2(z.PointFlow)
     for i in range(12):
-        z.AvStreamBankEros[i] += \
-            StreamBankEros_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area,
-                             z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN, z.UnsatStor_0,
-                             z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0, z.RecessionCoef, z.SeepCoef
-                             , z.Qretention, z.PctAreaInfil, z.n25b, z.Landuse, z.TileDrainDensity, z.PointFlow,
-                             z.StreamWithdrawal, z.GroundWithdrawal, z.NumAnimals, z.AvgAnimalWt, z.StreamFlowVolAdj,
-                             z.SedAFactor_0, z.AvKF, z.AvSlope, z.SedAAdjust, z.StreamLength, z.n42b, z.n46c, z.n85d,
-                             z.AgLength, z.n42, z.n45, z.n85, z.UrbBankStab)[Y][i] / z.NYrs
-        z.AvStreamBankN[i] += z.StreamBankN[Y][i] / z.NYrs
+        z.AvStreamBankN[i] += z.StreamBankN_1[Y][i] / z.NYrs
         z.AvStreamBankP[i] += z.StreamBankP[Y][i] / z.NYrs
 
         # If the Monthly Erosion is < the Sediment Yield
@@ -173,7 +166,14 @@ def CalculateAnnualMeanLoads(z, Y):
         z.AvLuDisPhos[l] += z.LuDisPhos[Y][l] / z.NYrs
         z.AvLuSedYield[l] += z.LuSedYield[Y][l] / z.NYrs
 
-    z.AvStreamBankErosSum = sum(z.AvStreamBankEros)
+    z.AvStreamBankErosSum = sum(
+        AvStreamBankEros_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
+                         z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET,
+                         z.DayHrs, z.MaxWaterCap, z.SatStor_0, z.RecessionCoef, z.SeepCoef, z.Qretention,
+                         z.PctAreaInfil, z.n25b, z.Landuse, z.TileDrainDensity, z.PointFlow, z.StreamWithdrawal,
+                         z.GroundWithdrawal, z.NumAnimals, z.AvgAnimalWt, z.StreamFlowVolAdj, z.SedAFactor_0, z.AvKF,
+                         z.AvSlope, z.SedAAdjust, z.StreamLength, z.n42b, z.n46c, z.n85d, z.AgLength, z.n42, z.n45,
+                         z.n85, z.UrbBankStab))
     z.AvStreamBankNSum = sum(z.AvStreamBankN)
     z.AvStreamBankPSum = sum(z.AvStreamBankP)
     z.AvPtSrcFlowSum = sum(z.AvPtSrcFlow)

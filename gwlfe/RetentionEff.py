@@ -50,7 +50,7 @@ def RetentionEff_3(NYrs, DaysMonth, InitSnow_0, Temp, Prec, Qretention, NRur, NU
     np.nonzero(result)
     return
 
-
+@memoize
 def RetentionEff_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, Qretention, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow,
                    CNP_0, Imper, ISRR, ISRA, PctAreaInfil):
     water = Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
