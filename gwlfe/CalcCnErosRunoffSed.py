@@ -14,16 +14,16 @@ from DailyArrayConverter import get_value_for_yesterday
 
 from .enums import GrowFlag, LandUse
 
-log = logging.getLogger(__name__)
+# log = logging.getLogger(__name__)
 
 
-def CalcCN(z, i, Y, j):
-    """
-    z - data model (public variables)
-    i - month
-    Y - year
-    j - number of days in month
-    """
+# def CalcCN(z, i, Y, j):
+#     """
+#     z - data model (public variables)
+#     i - month
+#     Y - year
+#     j - number of days in month
+#     """
     # z.UrbanQTotal = 0
     # z.UncontrolledQ = 0
     # z.RetentionEff = 0
@@ -255,7 +255,7 @@ def CalcCN(z, i, Y, j):
 
     # z.AdjUrbanQTotal_1 = z.AdjUrbanQTotal[Y][i][j] * z.AreaTotal / z.UrbAreaTotal  # TODO: is there a better way?
 
-    BasinWater(z, i, Y, j)
+    # BasinWater(z, i, Y, j)
 
     # if z.UrbAreaTotal > 0:
     #     z.AdjUrbanQTotal = z.AdjUrbanQTotal * z.UrbAreaTotal / z.AreaTotal
@@ -266,7 +266,7 @@ def CalcCN(z, i, Y, j):
     # z.AdjUrbanQTotal_2[Y][i][j] = z.AdjUrbanQTotal_1
 
 
-def BasinWater(z, i, Y, j):
+# def BasinWater(z, i, Y, j):
     # Detention basin water balance (this part of the code is not used
     # if z.BasinArea > 0:
     #     z.BasinInflow = z.UrbAreaTotal * 10000 * (z.AdjUrbanQTotal / 100)
@@ -394,15 +394,15 @@ def BasinWater(z, i, Y, j):
                     # z.NetDisLoad[q] += z.DisSurfLoad[Y][i][j][l][q]
                     # z.NetSolidLoad[q] += z.SurfaceLoad_1[Y][i][j][l][q] - z.DisSurfLoad[Y][i][j][l][q]
 
-    for q in range(z.Nqual):
-        z.Load[Y][i][q] += z.NetDisLoad[Y][i][j][q] + z.NetSolidLoad[Y][i][j][q]
-        z.DisLoad[Y][i][q] += z.NetDisLoad[Y][i][j][q]
+    # for q in range(z.Nqual):
+        # z.Load[Y][i][q] += z.NetDisLoad[Y][i][j][q] + z.NetSolidLoad[Y][i][j][q]
+        # z.DisLoad[Y][i][q] += z.NetDisLoad[Y][i][j][q]
 
-        if z.Load[Y][i][q] < 0:
-            z.Load[Y][i][q] = 0
+        # if z.Load[Y][i][q] < 0:
+        #     z.Load[Y][i][q] = 0
 
-        if z.DisLoad[Y][i][q] < 0:
-            z.DisLoad[Y][i][q] = 0
+        # if z.DisLoad[Y][i][q] < 0:
+        #     z.DisLoad[Y][i][q] = 0
 
     # WATERSHED TOTALS
 

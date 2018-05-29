@@ -129,6 +129,8 @@ from LuLoad import LuLoad
 from LuDisLoad import LuDisLoad
 from NetDisLoad import NetDisLoad
 from NetSolidLoad import NetSolidLoad
+from Load import Load
+from DisLoad import DisLoad
 
 log = logging.getLogger(__name__)
 
@@ -454,6 +456,15 @@ def run(z):
               z.Grow, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.Qretention, z.PctAreaInfil, z.Nqual, z.LoadRateImp,
               z.SweepFrac, z.UrbSweepFrac, z.LoadRatePerv, z.Storm, z.UrbBMPRed, z.DisFract, z.FilterWidth, z.PctStrmBuf)
 
+    z.Load = Load(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0,
+              z.Grow, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.Qretention, z.PctAreaInfil, z.Nqual, z.LoadRateImp,
+              z.SweepFrac, z.UrbSweepFrac, z.LoadRatePerv, z.Storm, z.UrbBMPRed, z.DisFract, z.FilterWidth, z.PctStrmBuf)
+
+    z.DisLoad = DisLoad(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0,
+                  z.Grow, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.Qretention, z.PctAreaInfil, z.Nqual, z.LoadRateImp,
+                  z.SweepFrac, z.UrbSweepFrac, z.LoadRatePerv, z.Storm, z.UrbBMPRed, z.DisFract, z.FilterWidth,
+                  z.PctStrmBuf)
+
     # --------- run the remaining parts of the model ---------------------
 
     ReadGwlfDataFile.ReadAllData(z)
@@ -584,10 +595,10 @@ def run(z):
 
                 # IF WATER AVAILABLE, THEN CALL SUB TO COMPUTE CN, RUNOFF,
                 # EROSION AND SEDIMENT
-                if z.Temp[Y][i][j] > 0 and z.Water[Y][i][j] > 0.01:
-                    CalcCnErosRunoffSed.CalcCN(z, i, Y, j)
-                else:
-                    pass
+                # if z.Temp[Y][i][j] > 0 and z.Water[Y][i][j] > 0.01:
+                #     CalcCnErosRunoffSed.CalcCN(z, i, Y, j)
+                # else:
+                #     pass
                 # print("n-1 init snow (",Y,i,j,")",z.InitSnow)
 
                 # DAILY CN
