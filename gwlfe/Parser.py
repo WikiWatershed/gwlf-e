@@ -152,7 +152,7 @@ class GmsReader(object):
 
         # Tile Drainage and Flow Variables
         # z.AvTileDrain = np.zeros(12)
-        z.AvWithdrawal = np.zeros(12)
+        # z.AvWithdrawal = np.zeros(12)
         z.AvTileDrainN = np.zeros(12)
         z.AvTileDrainP = np.zeros(12)
         z.AvTileDrainSed = np.zeros(12)

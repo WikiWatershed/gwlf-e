@@ -44,20 +44,7 @@ def CalculateAnnualMeanLoads(z, Y):
     z.AvPtSrcFlow = AvPtSrcFlow_2(z.PointFlow)
     for i in range(12):
         z.AvStreamBankP[i] += z.StreamBankP[Y][i] / z.NYrs
-
-        # If the Monthly Erosion is < the Sediment Yield
-        # recalculate using Sediment Delivery Ratio
-        # if z.SedDelivRatio > 0 and z.Erosion[Y][i] < z.SedYield[Y][i]:
-        #     z.Erosion[Y][i] = z.SedYield[Y][i] / z.SedDelivRatio
-
-        # z.AvPtSrcFlow[i] += z.PtSrcFlow[Y][i] / z.NYrs
-        # z.AvTileDrain[i] += \
-        #     TileDrain_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
-        #                 z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
-        #                 z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0,
-        #                 z.RecessionCoef, z.SeepCoef, z.Landuse,
-        #                 z.TileDrainDensity)[Y][i] / z.NYrs
-        z.AvWithdrawal[i] += Withdrawal_2(z.NYrs, z.StreamWithdrawal, z.GroundWithdrawal)[Y][i] / z.NYrs
+        # z.AvWithdrawal[i] += Withdrawal_2(z.NYrs, z.StreamWithdrawal, z.GroundWithdrawal)[Y][i] / z.NYrs
         z.AvTileDrainN[i] += z.TileDrainN[Y][i] / z.NYrs
         z.AvTileDrainP[i] += z.TileDrainP[Y][i] / z.NYrs
         z.AvTileDrainSed[i] += z.TileDrainSed[Y][i] / z.NYrs

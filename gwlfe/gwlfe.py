@@ -30,6 +30,7 @@ from GrowFactor import GrowFactor_2
 from TotAreaMeters import TotAreaMeters
 from UrbQRunoff import UrbQRunoff
 from AvTileDrain import AvTileDrain
+from AvWithdrawal import AvWithdrawal
 
 log = logging.getLogger(__name__)
 
@@ -151,7 +152,7 @@ def run(z):
                                          z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap,
                                          z.SatStor_0, z.RecessionCoef, z.SeepCoef,
                                          z.Landuse, z.TileDrainDensity)[i] -
-                             z.AvWithdrawal[i])
+                             AvWithdrawal(z.NYrs, z.StreamWithdrawal, z.GroundWithdrawal)[i])
 
         z.AvCMStream[i] = (z.AvStreamFlow[i] / 100) * TotAreaMeters(z.NRur, z.NUrb, z.Area)
         if z.AvCMStream[i] > 0:
