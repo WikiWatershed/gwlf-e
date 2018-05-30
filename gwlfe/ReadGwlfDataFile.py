@@ -11,9 +11,8 @@ Imported from ReadAllDataFiles.bas
 
 import logging
 
-from .enums import SweepType, YesOrNo
-from . import PrelimQualCalculations
-
+from enums import SweepType, YesOrNo
+import PrelimQualCalculations
 
 log = logging.getLogger(__name__)
 
@@ -31,7 +30,7 @@ def ReadAllData(z):
 
     # for l in range(z.NRur, z.NLU):
     #     z.AreaTotal += z.Area[l]
-        # z.UrbAreaTotal += z.Area[l]
+    # z.UrbAreaTotal += z.Area[l]
 
     # z.TotAreaMeters = z.AreaTotal * 10000
 

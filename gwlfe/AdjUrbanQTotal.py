@@ -10,14 +10,17 @@ from UrbanQTotal import UrbanQTotal_2
 from UrbAreaTotal import UrbAreaTotal_2
 from AreaTotal import AreaTotal_2
 from numba import jit
-from numba.pycc import CC
-from CompiledFunction import compiled
 
+try:
+    from AdjUrbanQTotal_2_inner_compiled import AdjUrbanQTotal_2_inner
+except ImportError:
+    print("Unable to import compiled AdjUrbanQTotal_2_inner, using slower version")
+    from AdjUrbanQTotal_2_inner import AdjUrbanQTotal_2_inner
 
-cc = CC('gwlfe_compiled')
 
 # @time_function
 @memoize
+# @time_function
 def AdjUrbanQTotal(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0, Imper,
                    ISRR, ISRA, Qretention, PctAreaInfil):
     result = np.zeros((NYrs, 12, 31))
@@ -52,6 +55,17 @@ def AdjUrbanQTotal(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CN
     return result
 
 
+@memoize
+# @time_function
+def AdjUrbanQTotal_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0, Imper,
+                     ISRR, ISRA, Qretention, PctAreaInfil):
+    water = Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
+    urban_q_total = UrbanQTotal_2(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, Area, CNI_0, AntMoist_0, Grow,
+                                  CNP_0, Imper, ISRR, ISRA)
+    urb_area_total = UrbAreaTotal_2(NRur, NUrb, Area)
+    area_total = AreaTotal_2(Area)
+    return AdjUrbanQTotal_2_inner(NYrs, DaysMonth, Temp, Qretention, PctAreaInfil, water, urban_q_total, urb_area_total,
+                                  area_total)
 
 # @jit
 # def AdjUrbanQTotal_2_inner(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0, Imper,
@@ -80,48 +94,3 @@ def AdjUrbanQTotal(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CN
 #             pass
 #         result[j] = adj_urban_q_total
 #     return DAC.daily_to_ymd(result,NYrs, DaysMonth)
-
-
-
-# @jit(cache = True, nopython = True)
-@compiled
-@cc.export('AdjUrbanQTotal_2_inner', '(int64, int64[:,::1], float64[:,:,::1], float64, float64, float64[:,:,::1], float64[:,:,::1], float64, float64)')
-def AdjUrbanQTotal_2_inner(NYrs, DaysMonth, Temp, Qretention, PctAreaInfil,water,urban_q_total,urb_area_total,area_total):
-    result = np.zeros((NYrs, 12, 31))
-    adj_urban_q_total = 0
-    for Y in range(NYrs):
-        for i in range(12):
-            for j in range(DaysMonth[Y][i]):
-                if Temp[Y][i][j] > 0 and water[Y][i][j] > 0.01:
-                    if water[Y][i][j] < 0.05:
-                        # z.adj_urban_q_total = get_value_for_yesterday(z.adj_urban_q_total_1,0,Y,i,j,z.NYrs,z.DaysMonth)
-                        pass
-                    else:
-                        adj_urban_q_total = urban_q_total[Y][i][j]
-                        if Qretention > 0 and urban_q_total[Y][i][j] > 0:
-                            if urban_q_total[Y][i][j] <= Qretention * PctAreaInfil:
-                                adj_urban_q_total = 0
-                            else:
-                                adj_urban_q_total = urban_q_total[Y][i][j] - Qretention * PctAreaInfil
-                    if urb_area_total > 0:
-                        adj_urban_q_total = adj_urban_q_total * urb_area_total / area_total
-                    else:
-                        adj_urban_q_total = 0
-                else:
-                    pass
-                result[Y][i][j] = adj_urban_q_total
-    return result
-
-
-# @time_function
-@memoize
-def AdjUrbanQTotal_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0, Imper,
-                   ISRR, ISRA, Qretention, PctAreaInfil):
-    #cc.compile()
-    water = Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
-    urban_q_total = UrbanQTotal_2(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, Area, CNI_0, AntMoist_0, Grow,
-                                CNP_0, Imper, ISRR, ISRA)
-    urb_area_total = UrbAreaTotal_2(NRur, NUrb, Area)
-    area_total = AreaTotal_2(Area)
-    #print(AdjUrbanQTotal_2_inner.inspect_types())
-    return AdjUrbanQTotal_2_inner(NYrs, DaysMonth, Temp, Qretention, PctAreaInfil,water,urban_q_total,urb_area_total,area_total)

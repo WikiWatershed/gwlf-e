@@ -10,12 +10,12 @@ from Memoization import memoize
 
 
 @memoize
-def QrunP(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, CNP_0, AntMoist_0, Grow):
+def QrunP(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, CNP_0, AntMoist_0, Grow_0):
     result = np.zeros((NYrs, 12, 31, 16))  # TODO: should this be nlu?
     nlu = NLU(NRur, NUrb)
     water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     cnp = CNP(NRur, NUrb, CNP_0)
-    c_num_perv_reten = CNumPervReten(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, NRur, NUrb, CNP_0, Grow)
+    c_num_perv_reten = CNumPervReten(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, NRur, NUrb, CNP_0, Grow_0)
     for Y in range(NYrs):
         for i in range(12):
             for j in range(DaysMonth[Y][i]):
@@ -32,17 +32,19 @@ def QrunP(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, CNP_0, AntMoist_0
                                             water[Y][i][j] + 0.8 * c_num_perv_reten[Y][i][j][l])
     return result
 
+
 # @time_function
 @memoize
-def QrunP_2(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, CNP_0, AntMoist_0, Grow):
+def QrunP_2(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, CNP_0, AntMoist_0, Grow_0):
     nlu = NLU(NRur, NUrb)
     result = np.zeros((NYrs, 12, 31, nlu))
     water = np.repeat(Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)[:, :, :, None], nlu, axis=3)
     TempE = np.repeat(Temp[:, :, :, None], nlu, axis=3)
-    c_num_perv_reten = CNumPervReten_2(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, NRur, NUrb, CNP_0, Grow)
+    c_num_perv_reten = CNumPervReten_2(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, NRur, NUrb, CNP_0, Grow_0)
     c_num_perv_reten02 = 0.2 * c_num_perv_reten
     cnp = CNP_2(NRur, NUrb, CNP_0)
     cnp_1 = np.tile(cnp[1][None, None, None, :], (NYrs, 12, 31, 1))
-    nonzero = np.where((TempE>0) &(water>=0.05) & (cnp_1>0) & ( water >= c_num_perv_reten02))
-    result[nonzero] = (water[nonzero] - c_num_perv_reten02[nonzero])**2/(water[nonzero] + 0.8 * c_num_perv_reten[nonzero])
+    nonzero = np.where((TempE > 0) & (water >= 0.05) & (cnp_1 > 0) & (water >= c_num_perv_reten02))
+    result[nonzero] = (water[nonzero] - c_num_perv_reten02[nonzero]) ** 2 / (
+                water[nonzero] + 0.8 * c_num_perv_reten[nonzero])
     return result

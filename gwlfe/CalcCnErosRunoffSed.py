@@ -22,7 +22,7 @@ from RetentionEff import RetentionEff_2
 from WashPerv import WashPerv
 from WashImperv import WashImperv
 
-from .enums import GrowFlag, LandUse
+from enums import GrowFlag, LandUse
 
 log = logging.getLogger(__name__)
 

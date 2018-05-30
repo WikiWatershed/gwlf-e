@@ -12,10 +12,12 @@ from Melt_1 import Melt_1_2
 from numba import jit
 from Memoization import memoize
 from numba.pycc import CC
-from CompiledFunction import compiled
 
-
-cc = CC('gwlfe_compiled')
+try:
+    from CNum_inner_compiled import CNum_inner
+except ImportError:
+    print("Unable to import compiled CNum_inner, using slower version")
+    from CNum_inner import CNum_inner
 
 
 @memoize
@@ -103,54 +105,6 @@ def CNum_1(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, CN, NRur, NUrb, 
     return result
 
 
-# NYrs = arg(0, name=NYrs)  :: int64
-    #   DaysMonth = arg(1, name=DaysMonth)  :: array(int32, 2d, C)
-    #   Temp = arg(2, name=Temp)  :: array(float64, 3d, C)
-    #   CN = arg(3, name=CN)  :: array(float64, 1d, C)
-    #   NRur = arg(4, name=NRur)  :: int64
-    #   melt_pest = arg(5, name=melt_pest)  :: array(float64, 3d, C)
-    #   newcn = arg(6, name=newcn)  :: array(float64, 2d, C)
-    #   amc5 = arg(7, name=amc5)  :: array(float64, 3d, C)
-    #   grow_factor = arg(8, name=grow_factor)  :: array(bool, 1d, C)
-    #   water = arg(9, name=water)  :: array(float64, 3d, C)
-
-# @jit(cache=True, nopython=True)
-@compiled
-@cc.export('CNum_inner','(int64,int32[:,::1],float64[:,:,::1],float64[::1],int64,float64[:,:,::1],float64[:,::1],float64[:,:,::1],boolean[::1],float64[:,:,::1])')
-def CNum_inner(NYrs, DaysMonth, Temp, CN, NRur, melt_pest, newcn, amc5, grow_factor, water):
-    result = np.zeros((NYrs, 12, 31, NRur))  # TODO: should we just generalize to NLU?
-    for Y in range(NYrs):
-        for i in range(12):
-            for j in range(DaysMonth[Y][i]):
-                if Temp[Y][i][j] > 0 and water[Y][i][j] > 0.01:  # forgot this
-                    for l in range(NRur):
-                        if CN[l] > 0:
-                            if melt_pest[Y][i][j] <= 0:
-                                if grow_factor[i] == True:
-                                    # growing season
-                                    if amc5[Y][i][j] >= 5.33:  # forgot "get value from yesterday"
-                                        result[Y][i][j][l] = newcn[2][l]
-                                    elif amc5[Y][i][j] < 3.56:
-                                        result[Y][i][j][l] = newcn[0][l] + (
-                                                CN[l] - newcn[0][l]) * amc5[Y][i][j] / 3.56
-                                    else:
-                                        result[Y][i][j][l] = CN[l] + (newcn[2][l] - CN[l]) * (
-                                                amc5[Y][i][j] - 3.56) / 1.77
-                                else:
-                                    # dormant season
-                                    if amc5[Y][i][j] >= 2.79:
-                                        result[Y][i][j][l] = newcn[2][l]
-                                    elif amc5[Y][i][j] < 1.27:
-                                        result[Y][i][j][l] = newcn[0][l] + (
-                                                CN[l] - newcn[0][l]) * amc5[Y][i][j] / 1.27
-                                    else:
-                                        result[Y][i][j][l] = CN[l] + (newcn[2][l] - CN[l]) * (
-                                                amc5[Y][i][j] - 1.27) / 1.52
-                            else:
-                                result[Y][i][j][l] = newcn[2][l]
-    return result
-
-
 # CNUM_2 is faster than CNUM_1. CNUM_1 is
 # @time_function
 @memoize
@@ -160,4 +114,4 @@ def CNum_2(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, CN, NRur, NUrb, 
     amc5 = AMC5_yesterday(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0)
     grow_factor = GrowFactor_2(Grow)
     water = Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
-    return CNum_inner(NYrs,DaysMonth,Temp,CN,NRur,melt_pest,newcn,amc5,grow_factor,water)
+    return CNum_inner(NYrs, DaysMonth, Temp, CN, NRur, melt_pest, newcn, amc5, grow_factor, water)

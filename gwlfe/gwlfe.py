@@ -15,15 +15,15 @@ import logging
 import numpy as np
 from DailyArrayConverter import get_value_for_yesterday
 
-from .enums import ETflag, GrowFlag
-from . import ReadGwlfDataFile
-from . import PrelimCalculations
-from . import CalcCnErosRunoffSed
-from . import AFOS_old
-from . import CalcLoads
-from . import StreamBank
-from . import AnnualMeans
-from . import WriteOutputFiles
+from enums import ETflag, GrowFlag
+import ReadGwlfDataFile
+import PrelimCalculations
+import CalcCnErosRunoffSed
+import AFOS_old
+import CalcLoads
+import StreamBank
+import AnnualMeans
+import WriteOutputFiles
 from InitSnow import InitSnow_2
 from Water import Water_2
 from GrowFactor import GrowFactor_2
@@ -33,6 +33,7 @@ from AvTileDrain import AvTileDrain
 from AvWithdrawal import AvWithdrawal
 from AvGroundWater import AvGroundWater_2
 from AvRunoff import AvRunoff_2
+from Timer import time_function
 
 log = logging.getLogger(__name__)
 
@@ -147,18 +148,21 @@ def run(z):
     # AVERAGE STREAM FLOW
 
     for i in range(12):
-        z.AvStreamFlow[i] = (AvRunoff_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
-                                z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.Qretention, z.PctAreaInfil,
-                                z.n25b, z.CN, z.Landuse, z.TileDrainDensity)[i] + AvGroundWater_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
-                  z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap,
-                  z.SatStor_0, z.RecessionCoef, z.SeepCoef, z.Landuse, z.TileDrainDensity)[i] +
-                             z.AvPtSrcFlow[i] +
-                             AvTileDrain(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area,
-                                         z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
-                                         z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap,
-                                         z.SatStor_0, z.RecessionCoef, z.SeepCoef,
-                                         z.Landuse, z.TileDrainDensity)[i] -
-                             AvWithdrawal(z.NYrs, z.StreamWithdrawal, z.GroundWithdrawal)[i])
+        z.AvStreamFlow[i] = (
+                    AvRunoff_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
+                               z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.Qretention, z.PctAreaInfil,
+                               z.n25b, z.CN, z.Landuse, z.TileDrainDensity)[i] +
+                    AvGroundWater_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
+                                    z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV,
+                                    z.PcntET, z.DayHrs, z.MaxWaterCap,
+                                    z.SatStor_0, z.RecessionCoef, z.SeepCoef, z.Landuse, z.TileDrainDensity)[i] +
+                    z.AvPtSrcFlow[i] +
+                    AvTileDrain(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area,
+                                z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
+                                z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap,
+                                z.SatStor_0, z.RecessionCoef, z.SeepCoef,
+                                z.Landuse, z.TileDrainDensity)[i] -
+                    AvWithdrawal(z.NYrs, z.StreamWithdrawal, z.GroundWithdrawal)[i])
 
         z.AvCMStream[i] = (z.AvStreamFlow[i] / 100) * TotAreaMeters(z.NRur, z.NUrb, z.Area)
         if z.AvCMStream[i] > 0:

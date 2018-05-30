@@ -7,8 +7,8 @@ import logging
 
 import numpy as np
 
-from . import LoadReductions
-from .enums import YesOrNo, LandUse
+import LoadReductions
+from enums import YesOrNo, LandUse
 from AvEvapoTrans import AvEvapoTrans
 from AreaTotal import AreaTotal_2
 from TotAEU import TotAEU_2
@@ -410,14 +410,14 @@ def WriteOutput(z):
                     AvErosion_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.Acoef, z.NRur, z.KF, z.LS, z.C,
                                 z.P, z.Area)[i]
         AvMonSed = AvMonSed + (
-                    AvSedYield_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
-                                 z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV,
-                                 z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0, z.RecessionCoef, z.SeepCoef,
-                                 z.Qretention, z.PctAreaInfil, z.n25b, z.Landuse, z.TileDrainDensity, z.PointFlow,
-                                 z.StreamWithdrawal, z.GroundWithdrawal, z.NumAnimals, z.AvgAnimalWt,
-                                 z.StreamFlowVolAdj, z.SedAFactor_0, z.AvKF, z.AvSlope, z.SedAAdjust, z.StreamLength,
-                                 z.n42b, z.n46c, z.n85d, z.AgLength, z.n42, z.n45, z.n85, z.UrbBankStab, z.Acoef, z.KF,
-                                 z.LS, z.C, z.P, z.SedDelivRatio_0) * z.RetentFactorSed * (1 - z.AttenTSS))
+                AvSedYield_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
+                             z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV,
+                             z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0, z.RecessionCoef, z.SeepCoef,
+                             z.Qretention, z.PctAreaInfil, z.n25b, z.Landuse, z.TileDrainDensity, z.PointFlow,
+                             z.StreamWithdrawal, z.GroundWithdrawal, z.NumAnimals, z.AvgAnimalWt,
+                             z.StreamFlowVolAdj, z.SedAFactor_0, z.AvKF, z.AvSlope, z.SedAAdjust, z.StreamLength,
+                             z.n42b, z.n46c, z.n85d, z.AgLength, z.n42, z.n45, z.n85, z.UrbBankStab, z.Acoef, z.KF,
+                             z.LS, z.C, z.P, z.SedDelivRatio_0) * z.RetentFactorSed * (1 - z.AttenTSS))
         AvMonDisN = AvMonDisN + (z.AvDisNitr[i] * z.RetentFactorN * (1 - z.AttenN))
         AvMonTotN = AvMonTotN + (z.AvTotNitr[i] * z.RetentFactorN * (1 - z.AttenN))
         AvMonDisP = AvMonDisP + (z.AvDisPhos[i] * z.RetentFactorP * (1 - z.AttenP))
@@ -821,7 +821,7 @@ def WriteOutput(z):
                                  z.StreamFlowVolAdj, z.SedAFactor_0, z.AvKF, z.AvSlope, z.SedAAdjust, z.StreamLength,
                                  z.n42b, z.n46c, z.n85d, z.AgLength, z.n42, z.n45, z.n85, z.UrbBankStab, z.Acoef, z.KF,
                                  z.LS, z.C, z.P, z.SedDelivRatio_0)[LowFlowMonth] * TONNE_TO_KG * KG_TO_MG) / (
-                                 MeanLowFlow * M3_TO_L))
+                             MeanLowFlow * M3_TO_L))
         LFConcN = ((z.AvTotNitr[LowFlowMonth] * KG_TO_MG) /
                    (MeanLowFlow * M3_TO_L))
         LFConcP = ((z.AvTotPhos[LowFlowMonth] * KG_TO_MG) /

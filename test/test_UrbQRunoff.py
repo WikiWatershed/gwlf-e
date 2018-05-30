@@ -12,9 +12,11 @@ class TestUrbQRunoff(unittest.TestCase):
         self.z = Parser.GmsReader(input_file).read()
 
 
-    @skip('Not Ready Yet.')
     def test_UrbQRunoff(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            UrbQRunoff.UrbQRunoff_2(),
-            UrbQRunoff.UrbQRunoff(), decimal=7)
+            UrbQRunoff.UrbQRunoff_2(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.NRur, z.NUrb, z.CNI_0, z.CNP_0,
+                                    z.AntMoist_0, z.Grow_0, z.Imper, z.ISRR, z.ISRA),
+            # UrbQRunoff.UrbQRunoff(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.NRur, z.NUrb, z.CNI_0, z.CNP_0,
+            #                         z.AntMoist_0, z.Grow_0, z.Imper, z.ISRR, z.ISRA)
+            [], decimal=7)

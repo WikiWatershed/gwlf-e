@@ -9,8 +9,8 @@ import logging
 
 import numpy as np
 
-from .datamodel import DataModel
-from .enums import YesOrNo, ETflag, GrowFlag, LandUse, SweepType
+from datamodel import DataModel
+from enums import YesOrNo, ETflag, GrowFlag, LandUse, SweepType
 
 log = logging.getLogger(__name__)
 

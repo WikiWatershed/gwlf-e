@@ -1,18 +1,11 @@
-import numpy as np
-from Timer import time_function
-from numba import jit
-from Memoization import memoize
 from numba.pycc import CC
+import numpy as np
 
-try:
-    from InitSnow_2_inner_compiled import InitSnow_2_inner
-except ImportError:
-    print("Unable to import compiled InitSnow_inner, using slower version")
-    from InitSnow_inner import InitSnow_2_inner
+cc = CC('InitSnow_2_inner_compiled')
 
 
-# @memoize
-def InitSnow(NYrs, DaysMonth, InitSnow_0, Temp, Prec):
+@cc.export('InitSnow_2_inner', '(int64, int32[:,::1], int64, float64[:,:,::1], float64[:,:,::1])')
+def InitSnow_2_inner(NYrs, DaysMonth, InitSnow_0, Temp, Prec):
     result = np.zeros((NYrs, 12, 31))
     yesterday = InitSnow_0
     for Y in range(NYrs):
@@ -27,8 +20,3 @@ def InitSnow(NYrs, DaysMonth, InitSnow_0, Temp, Prec):
                         result[Y][i][j] = yesterday
                 yesterday = result[Y][i][j]
     return result
-
-
-@memoize
-def InitSnow_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec):
-    return InitSnow_2_inner(NYrs, DaysMonth, InitSnow_0, Temp, Prec)

@@ -1,5 +1,7 @@
 import hashlib
 import numpy as np
+
+
 # without
 # 300 loops of 'test_test', average time per loop: 0.321625, best: 0.303278, worst: 0.426772
 # 300 loops of 'test_test', average time per loop: 0.006865, best: 0.001217, worst: 0.016353
@@ -17,15 +19,14 @@ def memoize_with_args(f):
             args_string = f.__name__
             for arg in args:
                 if (isinstance(arg, np.ndarray)):
-                    args_string += hashlib.sha1(arg).hexdigest()+","
+                    args_string += hashlib.sha1(arg).hexdigest() + ","
                 else:
-                    args_string += hashlib.sha1(str(arg)).hexdigest()+","
+                    args_string += hashlib.sha1(str(arg)).hexdigest() + ","
             try:
                 return self.result[args_string]
             except KeyError:
                 self.result[args_string] = self.f(*args)
                 return self.result[args_string]
-
 
     return memodict(f)
 
@@ -49,11 +50,15 @@ def memodict(f):
         def __missing__(self, *args):
             ret = self['result'] = f(*args)
             return ret
+
         def __getitem__(self, *args):
             return dict.__getitem__(self, 'result')
 
     return memodict().__getitem__
 
+
+# def memoize(f):
+#     return f
 
 def memoize(f):
     class memodict(dict):

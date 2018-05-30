@@ -9,8 +9,7 @@ Imported from PrelimCalculations.bas
 
 import math
 import logging
-from .enums import LandUse
-
+from enums import LandUse
 
 log = logging.getLogger(__name__)
 
@@ -36,14 +35,14 @@ def InitialCalculations(z):
         #     z.NewCN[2][l] = 100
 
     # for l in range(z.NRur, z.NLU):
-        # z.CNI[0][l] = z.CNI[1][l] / (2.334 - 0.01334 * z.CNI[1][1])
-        # z.CNI[2][l] = z.CNI[1][l] / (0.4036 + 0.0059 * z.CNI[1][l])
-        #
-        # print(z.CNI_2[0][l],z.CNI[0][l])
-        # print(z.CNI_2[1][l],z.CNI[1][l])
-        # print(z.CNI_2[2][l],z.CNI[2][l])
-        # z.CNP[0][l] = z.CNP[1][l] / (2.334 - 0.01334 * z.CNP[1][1])
-        # z.CNP[2][l] = z.CNP[1][l] / (0.4036 + 0.0059 * z.CNP[1][l])
+    # z.CNI[0][l] = z.CNI[1][l] / (2.334 - 0.01334 * z.CNI[1][1])
+    # z.CNI[2][l] = z.CNI[1][l] / (0.4036 + 0.0059 * z.CNI[1][l])
+    #
+    # print(z.CNI_2[0][l],z.CNI[0][l])
+    # print(z.CNI_2[1][l],z.CNI[1][l])
+    # print(z.CNI_2[2][l],z.CNI[2][l])
+    # z.CNP[0][l] = z.CNP[1][l] / (2.334 - 0.01334 * z.CNP[1][1])
+    # z.CNP[2][l] = z.CNP[1][l] / (0.4036 + 0.0059 * z.CNP[1][l])
 
     if z.FilterWidth <= 30:
         z.FilterEff = z.FilterWidth / 30
