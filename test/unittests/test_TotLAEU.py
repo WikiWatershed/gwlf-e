@@ -13,8 +13,7 @@ class TestTotLAEU(unittest.TestCase):
 
 
     def test_TotLAEU(self):
-        pass
-        # z = self.z
-        # np.testing.assert_array_almost_equal(
-        #     TotLAEU.TotLAEU_2(z.NumAnimals, z.AvgAnimalWt),
-        #     TotLAEU.TotLAEU(z.NumAnimals, z.AvgAnimalWt), decimal=7)
+        z = self.z
+        np.testing.assert_array_almost_equal(
+            TotLAEU.TotLAEU_2(z.NumAnimals, z.AvgAnimalWt),
+            TotLAEU.TotLAEU(z.NumAnimals, z.AvgAnimalWt), decimal=7)

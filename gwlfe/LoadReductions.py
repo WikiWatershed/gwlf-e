@@ -8,6 +8,7 @@ Imported from LoadReductions.bas
 """
 
 import logging
+from FilterEff import FilterEff
 
 
 log = logging.getLogger(__name__)
@@ -314,7 +315,7 @@ def AdjustScnLoads(z):
     # For urban FC
     FCURBBIO = z.n142 * z.RetentEff * z.n85u
     FCURBWET = z.n142 * z.n25b * z.n85t
-    FCURBBUF = z.n142 * z.FilterEff * z.PctStrmBuf * z.n85o
+    FCURBBUF = z.n142 * FilterEff(z.FilterWidth) * z.PctStrmBuf * z.n85o
     z.n148 = z.n142 - (FCURBBIO + FCURBWET + FCURBBUF)
     if z.n148 < 0:
         z.n148 = 0

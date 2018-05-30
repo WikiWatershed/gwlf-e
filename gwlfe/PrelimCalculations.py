@@ -44,10 +44,10 @@ def InitialCalculations(z):
     # z.CNP[0][l] = z.CNP[1][l] / (2.334 - 0.01334 * z.CNP[1][1])
     # z.CNP[2][l] = z.CNP[1][l] / (0.4036 + 0.0059 * z.CNP[1][l])
 
-    if z.FilterWidth <= 30:
-        z.FilterEff = z.FilterWidth / 30
-    else:
-        z.FilterEff = 1
+    # if z.FilterWidth <= 30:
+    #     z.FilterEff = z.FilterWidth / 30
+    # else:
+    #     z.FilterEff = 1
 
     # TODO: BasinArea is never supposed to be over 0, this retention basin data set DNE according to Barry
     # Model and Tests complete with no errors without this section of code

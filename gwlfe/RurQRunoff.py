@@ -8,12 +8,12 @@ from Qrun import Qrun
 
 
 @memoize
-def RurQRunoff(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb, CN, Grow):
+def RurQRunoff(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb, CN, Grow_0):
     result = np.zeros((NYrs, 16, 12))
     nlu = NLU(NRur, NUrb)
     water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
-    retention = Retention(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, NRur, NUrb, CN, Grow)
-    qrun = Qrun(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, CN, AntMoist_0, Grow)
+    retention = Retention(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, NRur, NUrb, CN, Grow_0)
+    qrun = Qrun(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, CN, AntMoist_0, Grow_0)
     for Y in range(NYrs):
         for i in range(12):
             for l in range(nlu):

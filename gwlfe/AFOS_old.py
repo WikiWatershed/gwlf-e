@@ -5,13 +5,13 @@ from __future__ import division
 from Precipitation import Precipitation
 from StreamFlow import StreamFlow_2
 from TotAreaMeters import TotAreaMeters
+from UrbRunoffLiter import UrbRunoffLiter
 
 """
 Imported from AFOS.bas
 """
 
 import logging
-
 
 log = logging.getLogger(__name__)
 
@@ -46,8 +46,10 @@ def AnimalOperations(z, Y):
             z.NGLostManFC[Y][i] = 0
 
         z.NGLostBarnN[Y][i] = (z.NGInitBarnN[i] * z.NGBarnNRate[i] * z.LossFactAdj[Y][i]
-                               - z.NGInitBarnN[i] * z.NGBarnNRate[i] * z.LossFactAdj[Y][i] * z.AWMSNgPct * z.NgAWMSCoeffN
-                               + z.NGInitBarnN[i] * z.NGBarnNRate[i] * z.LossFactAdj[Y][i] * z.RunContPct * z.RunConCoeffN)
+                               - z.NGInitBarnN[i] * z.NGBarnNRate[i] * z.LossFactAdj[Y][
+                                   i] * z.AWMSNgPct * z.NgAWMSCoeffN
+                               + z.NGInitBarnN[i] * z.NGBarnNRate[i] * z.LossFactAdj[Y][
+                                   i] * z.RunContPct * z.RunConCoeffN)
 
         if z.NGLostBarnN[Y][i] > z.NGInitBarnN[i]:
             z.NGLostBarnN[Y][i] = z.NGInitBarnN[i]
@@ -55,8 +57,10 @@ def AnimalOperations(z, Y):
             z.NGLostBarnN[Y][i] = 0
 
         z.NGLostBarnP[Y][i] = (z.NGInitBarnP[i] * z.NGBarnPRate[i] * z.LossFactAdj[Y][i]
-                               - z.NGInitBarnP[i] * z.NGBarnPRate[i] * z.LossFactAdj[Y][i] * z.AWMSNgPct * z.NgAWMSCoeffP
-                               + z.NGInitBarnP[i] * z.NGBarnPRate[i] * z.LossFactAdj[Y][i] * z.RunContPct * z.RunConCoeffP)
+                               - z.NGInitBarnP[i] * z.NGBarnPRate[i] * z.LossFactAdj[Y][
+                                   i] * z.AWMSNgPct * z.NgAWMSCoeffP
+                               + z.NGInitBarnP[i] * z.NGBarnPRate[i] * z.LossFactAdj[Y][
+                                   i] * z.RunContPct * z.RunConCoeffP)
 
         if z.NGLostBarnP[Y][i] > z.NGInitBarnP[i]:
             z.NGLostBarnP[Y][i] = z.NGInitBarnP[i]
@@ -64,8 +68,10 @@ def AnimalOperations(z, Y):
             z.NGLostBarnP[Y][i] = 0
 
         z.NGLostBarnFC[Y][i] = (z.NGInitBarnFC[i] * z.NGBarnFCRate[i] * z.LossFactAdj[Y][i]
-                                - z.NGInitBarnFC[i] * z.NGBarnFCRate[i] * z.LossFactAdj[Y][i] * z.AWMSNgPct * z.NgAWMSCoeffP
-                                + z.NGInitBarnFC[i] * z.NGBarnFCRate[i] * z.LossFactAdj[Y][i] * z.RunContPct * z.RunConCoeffP)
+                                - z.NGInitBarnFC[i] * z.NGBarnFCRate[i] * z.LossFactAdj[Y][
+                                    i] * z.AWMSNgPct * z.NgAWMSCoeffP
+                                + z.NGInitBarnFC[i] * z.NGBarnFCRate[i] * z.LossFactAdj[Y][
+                                    i] * z.RunContPct * z.RunConCoeffP)
 
         if z.NGLostBarnFC[Y][i] > z.NGInitBarnFC[i]:
             z.NGLostBarnFC[Y][i] = z.NGInitBarnFC[i]
@@ -98,8 +104,10 @@ def AnimalOperations(z, Y):
             z.GRLostManFC[Y][i] = 0
 
         z.GRLostBarnN[Y][i] = (z.GRInitBarnN[i] * z.GRBarnNRate[i] * z.LossFactAdj[Y][i]
-                               - z.GRInitBarnN[i] * z.GRBarnNRate[i] * z.LossFactAdj[Y][i] * z.AWMSGrPct * z.GrAWMSCoeffN
-                               + z.GRInitBarnN[i] * z.GRBarnNRate[i] * z.LossFactAdj[Y][i] * z.RunContPct * z.RunConCoeffN)
+                               - z.GRInitBarnN[i] * z.GRBarnNRate[i] * z.LossFactAdj[Y][
+                                   i] * z.AWMSGrPct * z.GrAWMSCoeffN
+                               + z.GRInitBarnN[i] * z.GRBarnNRate[i] * z.LossFactAdj[Y][
+                                   i] * z.RunContPct * z.RunConCoeffN)
 
         if z.GRLostBarnN[Y][i] > z.GRInitBarnN[i]:
             z.GRLostBarnN[Y][i] = z.GRInitBarnN[i]
@@ -107,8 +115,10 @@ def AnimalOperations(z, Y):
             z.GRLostBarnN[Y][i] = 0
 
         z.GRLostBarnP[Y][i] = (z.GRInitBarnP[i] * z.GRBarnPRate[i] * z.LossFactAdj[Y][i]
-                               - z.GRInitBarnP[i] * z.GRBarnPRate[i] * z.LossFactAdj[Y][i] * z.AWMSGrPct * z.GrAWMSCoeffP
-                               + z.GRInitBarnP[i] * z.GRBarnPRate[i] * z.LossFactAdj[Y][i] * z.RunContPct * z.RunConCoeffP)
+                               - z.GRInitBarnP[i] * z.GRBarnPRate[i] * z.LossFactAdj[Y][
+                                   i] * z.AWMSGrPct * z.GrAWMSCoeffP
+                               + z.GRInitBarnP[i] * z.GRBarnPRate[i] * z.LossFactAdj[Y][
+                                   i] * z.RunContPct * z.RunConCoeffP)
 
         if z.GRLostBarnP[Y][i] > z.GRInitBarnP[i]:
             z.GRLostBarnP[Y][i] = z.GRInitBarnP[i]
@@ -116,8 +126,10 @@ def AnimalOperations(z, Y):
             z.GRLostBarnP[Y][i] = 0
 
         z.GRLostBarnFC[Y][i] = (z.GRInitBarnFC[i] * z.GRBarnFCRate[i] * z.LossFactAdj[Y][i]
-                                - z.GRInitBarnFC[i] * z.GRBarnFCRate[i] * z.LossFactAdj[Y][i] * z.AWMSGrPct * z.GrAWMSCoeffP
-                                + z.GRInitBarnFC[i] * z.GRBarnFCRate[i] * z.LossFactAdj[Y][i] * z.RunContPct * z.RunConCoeffP)
+                                - z.GRInitBarnFC[i] * z.GRBarnFCRate[i] * z.LossFactAdj[Y][
+                                    i] * z.AWMSGrPct * z.GrAWMSCoeffP
+                                + z.GRInitBarnFC[i] * z.GRBarnFCRate[i] * z.LossFactAdj[Y][
+                                    i] * z.RunContPct * z.RunConCoeffP)
 
         if z.GRLostBarnFC[Y][i] > z.GRInitBarnFC[i]:
             z.GRLostBarnFC[Y][i] = z.GRInitBarnFC[i]
@@ -157,11 +169,11 @@ def AnimalOperations(z, Y):
                            + z.GRStreamN[i])
 
         z.AnimalP[Y][i] = ((z.NGLostManP[Y][i]
-                           + z.GRLostManP[Y][i]
-                           + z.NGLostBarnP[Y][i]
-                           + z.GRLostBarnP[Y][i]
-                           + z.GRLossP[Y][i]
-                           + z.GRStreamP[i])
+                            + z.GRLostManP[Y][i]
+                            + z.NGLostBarnP[Y][i]
+                            + z.GRLostBarnP[Y][i]
+                            + z.GRLossP[Y][i]
+                            + z.GRStreamP[i])
                            - ((z.NGLostManP[Y][i] + z.NGLostBarnP[Y][i]) * z.PhytasePct * z.PhytaseCoeff))
 
         z.AnimalFC[Y][i] = (z.NGLostManFC[Y][i]
@@ -195,7 +207,8 @@ def AnimalOperations(z, Y):
                                 * z.ForestAreaTotalSqMi
                                 * (1 - z.InstreamDieoff))
         else:
-            z.UrbOrgs[Y][i] = (z.UrbRunoffLiter[Y][i]
+            z.UrbOrgs[Y][i] = (UrbRunoffLiter(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.NRur, z.NUrb, z.Area,
+                                              z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA)[Y][i]
                                * (z.UrbEMC * 10)
                                * (1 - z.WuDieoff)
                                * (1 - z.InstreamDieoff))
@@ -213,13 +226,16 @@ def AnimalOperations(z, Y):
                              + z.WildOrgs[Y][i]
                              + z.AnimalFC[Y][i])
 
-        z.CMStream[Y][i] = (StreamFlow_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
-                              z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
-                              z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0,
-                              z.RecessionCoef, z.SeepCoef
-                              , z.Qretention, z.PctAreaInfil, z.n25b, z.Landuse, z.TileDrainDensity, z.PointFlow,
-                              z.StreamWithdrawal,
-                              z.GroundWithdrawal)[Y][i] / 100) * TotAreaMeters(z.NRur, z.NUrb, z.Area)
+        z.CMStream[Y][i] = (StreamFlow_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area,
+                                         z.CNI_0,
+                                         z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
+                                         z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap,
+                                         z.SatStor_0,
+                                         z.RecessionCoef, z.SeepCoef
+                                         , z.Qretention, z.PctAreaInfil, z.n25b, z.Landuse, z.TileDrainDensity,
+                                         z.PointFlow,
+                                         z.StreamWithdrawal,
+                                         z.GroundWithdrawal)[Y][i] / 100) * TotAreaMeters(z.NRur, z.NUrb, z.Area)
 
         if z.CMStream[Y][i] > 0:
             z.OrgConc[Y][i] = (z.TotalOrgs[Y][i] / (z.CMStream[Y][i] * 1000)) / 10

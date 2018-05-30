@@ -21,12 +21,12 @@ except ImportError:
 # @time_function
 @memoize
 # @time_function
-def AdjUrbanQTotal(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0, Imper,
+def AdjUrbanQTotal(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
                    ISRR, ISRA, Qretention, PctAreaInfil):
     result = np.zeros((NYrs, 12, 31))
     adj_urban_q_total = 0  # used because this is a buffered variable
     water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
-    urban_q_total = UrbanQTotal(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, Area, CNI_0, AntMoist_0, Grow,
+    urban_q_total = UrbanQTotal(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, Area, CNI_0, AntMoist_0, Grow_0,
                                 CNP_0, Imper, ISRR, ISRA)
     urb_area_total = UrbAreaTotal(NRur, NUrb, Area)
     area_total = AreaTotal(NRur, NUrb, Area)
@@ -57,10 +57,10 @@ def AdjUrbanQTotal(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CN
 
 @memoize
 # @time_function
-def AdjUrbanQTotal_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0, Imper,
+def AdjUrbanQTotal_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
                      ISRR, ISRA, Qretention, PctAreaInfil):
     water = Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
-    urban_q_total = UrbanQTotal_2(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, Area, CNI_0, AntMoist_0, Grow,
+    urban_q_total = UrbanQTotal_2(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, Area, CNI_0, AntMoist_0, Grow_0,
                                   CNP_0, Imper, ISRR, ISRA)
     urb_area_total = UrbAreaTotal_2(NRur, NUrb, Area)
     area_total = AreaTotal_2(Area)
@@ -68,7 +68,7 @@ def AdjUrbanQTotal_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, 
                                   area_total)
 
 # @jit
-# def AdjUrbanQTotal_2_inner(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0, Imper,
+# def AdjUrbanQTotal_2_inner(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
 #                    ISRR, ISRA, Qretention, PctAreaInfil,water,urban_q_total,urb_area_total,area_total):
 #     result = np.zeros((NYrs, 12, 31))
 #     adj_urban_q_total = 0

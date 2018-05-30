@@ -8,9 +8,9 @@ from Memoization import memoize
 
 
 @memoize
-def CNumPervReten(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, NRur, NUrb, CNP_0, Grow):
+def CNumPervReten(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, NRur, NUrb, CNP_0, Grow_0):
     cnp = CNP(NRur, NUrb, CNP_0)
-    c_num_perv = CNumPerv(NYrs, DaysMonth, Temp, NRur, NUrb, CNP_0, InitSnow_0, Prec, Grow, AntMoist_0)
+    c_num_perv = CNumPerv(NYrs, DaysMonth, Temp, NRur, NUrb, CNP_0, InitSnow_0, Prec, Grow_0, AntMoist_0)
     nlu = NLU(NRur, NUrb)
     water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     result = np.zeros((NYrs, 12, 31, nlu))
@@ -30,10 +30,10 @@ def CNumPervReten(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, NRur, NUr
 
 # @time_function
 @memoize
-def CNumPervReten_2(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, NRur, NUrb, CNP_0, Grow):
+def CNumPervReten_2(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, NRur, NUrb, CNP_0, Grow_0):
     nlu = NLU(NRur, NUrb)
     result = np.zeros((NYrs, 12, 31, nlu))
-    c_num_perv = CNumPerv_2(NYrs, DaysMonth, Temp, NRur, NUrb, CNP_0, InitSnow_0, Prec, Grow, AntMoist_0)
+    c_num_perv = CNumPerv_2(NYrs, DaysMonth, Temp, NRur, NUrb, CNP_0, InitSnow_0, Prec, Grow_0, AntMoist_0)
     cnp = CNP_2(NRur, NUrb, CNP_0)
     cnp_1 = np.tile(cnp[1][None, None, None, :], (NYrs, 12, 31, 1))
     water = np.repeat(Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)[:,:,:,None],nlu, axis=3 )

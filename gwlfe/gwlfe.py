@@ -83,10 +83,28 @@ def run(z):
 
                 # IF WATER AVAILABLE, THEN CALL SUB TO COMPUTE CN, RUNOFF,
                 # EROSION AND SEDIMENT
-                if z.Temp[Y][i][j] > 0 and Water_2(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec)[Y][i][j] > 0.01:
-                    CalcCnErosRunoffSed.CalcCN(z, i, Y, j)
-                else:
-                    pass
+                # if z.Temp[Y][i][j] > 0 and z.Water[Y][i][j] > 0.01:
+                #     CalcCnErosRunoffSed.CalcCN(z, i, Y, j)
+                # else:
+                #     pass
+                # print("n-1 init snow (",Y,i,j,")",z.InitSnow)
+
+                # DAILY CN
+                # z.DailyCN[Y][i][j] = z.CNum
+
+                # UPDATE ANTECEDENT RAIN+MELT CONDITION
+                # Subtract AMC5 by the sum of AntMoist (day 5) and Water
+                # z.AMC5_2 = z.AMC5_2 - z.AntMoist[4] + z.Water[Y][i][j]
+                # z.DailyAMC5[Y][i][j] = z.AMC5
+
+                # Shift AntMoist values to the right.
+                # z.AntMoist[4] = z.AntMoist[3]
+                # z.AntMoist[3] = z.AntMoist[2]
+                # z.AntMoist[2] = z.AntMoist[1]
+                # z.AntMoist[1] = z.AntMoist[0]
+                # z.AntMoist[0] = z.Water[Y][i][j]
+
+                # print(z.AMC5_2,z.AMC5[Y][i][j])
 
                 # ***** END WEATHER DATA ANALYSIS *****
 

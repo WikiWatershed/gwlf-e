@@ -8,11 +8,11 @@ from gwlfe import DayRunoff
 
 class TestDayRunoff(unittest.TestCase):
     def setUp(self):
-        input_file = open('unittests/input_4.gms', 'r')
+        input_file = open('input_4.gms', 'r')
         self.z = Parser.GmsReader(input_file).read()
 
 
-    @skip("not ready")
+    @skip('Not Ready Yet.')
     def test_DayRunoff(self):
         z = self.z
         np.testing.assert_array_almost_equal(

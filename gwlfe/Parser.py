@@ -54,7 +54,7 @@ class GmsReader(object):
         # z.QrunI = np.zeros(16)
         # z.QrunP = np.zeros(16)
         # z.WashPerv = np.zeros(16)
-        z.NetDisLoad = np.zeros(3)
+        # z.NetDisLoad = np.zeros(3)
 
         z.AvGRStreamFC = 0
         z.AvGRStreamN = 0
@@ -115,7 +115,7 @@ class GmsReader(object):
         z.DayNormNitr = np.zeros((12, 31))
         z.DayNormPhos = np.zeros((12, 31))
         # z.WashImperv = np.zeros(16)
-        z.NetSolidLoad = np.zeros(3)
+        # z.NetSolidLoad = np.zeros(3)
         z.DayShortNitr = np.zeros((12, 31))
         z.DayShortPhos = np.zeros((12, 31))
         z.DayDischargeNitr = np.zeros((12, 31))
@@ -211,7 +211,7 @@ class GmsReader(object):
 
         z.q = 0
         z.k = 0
-        z.FilterEff = 0
+        # z.FilterEff = 0
         z.OutFiltWidth = 0
         z.Clean = 0
         z.CleanSwitch = 0
@@ -288,12 +288,12 @@ class GmsReader(object):
 
         z.Load = np.zeros((z.DimYrs, 12, 3))
         z.DisLoad = np.zeros((z.DimYrs, 12, 3))
-        z.LuLoad = np.zeros((z.DimYrs, 16, 3))
-        z.LuDisLoad = np.zeros((z.DimYrs, 16, 3))
+        # z.LuLoad = np.zeros((z.DimYrs, 16, 3))
+        # z.LuDisLoad = np.zeros((z.DimYrs, 16, 3))
         z.UplandN = np.zeros((z.DimYrs, 12))
         z.UplandP = np.zeros((z.DimYrs, 12))
         z.UrbRunoffCm = np.zeros((z.DimYrs, 12))
-        z.UrbRunoffLiter = np.zeros((z.DimYrs, 12))
+        # z.UrbRunoffLiter = np.zeros((z.DimYrs, 12))
         # z.DailyFlow = np.zeros((z.DimYrs, 12, 31))
         z.DailyFlowMGD = np.zeros((z.DimYrs, 12, 31))
         # z.DailyFlowGPM = np.zeros((z.DimYrs, 12, 31))
@@ -349,8 +349,8 @@ class GmsReader(object):
         z.DailyET = np.zeros((z.DimYrs, 12, 31))
         z.DailyRetent = np.zeros((z.DimYrs, 12, 31))
         z.SatStorPest = np.zeros((z.DimYrs, 12, 31))
-        z.UrbanRunoff = np.zeros((z.DimYrs, 12))
-        z.RuralRunoff = np.zeros((z.DimYrs, 12))
+        # z.UrbanRunoff = np.zeros((z.DimYrs, 12))
+        # z.RuralRunoff = np.zeros((z.DimYrs, 12))
         z.DailyInfilt = np.zeros((z.DimYrs, 12, 31))
         # z.StreamFlowVol = np.zeros((z.DimYrs, 12))
         # z.DailyCN = np.zeros((z.DimYrs, 12, 31))
