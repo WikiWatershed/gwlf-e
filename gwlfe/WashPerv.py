@@ -4,7 +4,9 @@ import math
 from Memoization import memoize
 from NLU import NLU
 from Water import Water
+from Water import Water_2
 from QrunP import QrunP
+from QrunP import QrunP_2
 
 try:
     from WashPerv_inner_compiled import WashPerv_inner
@@ -43,8 +45,8 @@ def WashPerv(NYrs, DaysMonth, InitSnow_0, Temp, Prec, CNP_0, AntMoist_0, Grow_0,
 
 def WashPerv_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, CNP_0, AntMoist_0, Grow_0, NRur, NUrb):
     nlu = NLU(NRur, NUrb)
-    water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
-    qrunp = QrunP(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, CNP_0, AntMoist_0, Grow_0)
+    water = Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
+    qrunp = QrunP_2(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, CNP_0, AntMoist_0, Grow_0)
     # WashPerv_inner(NYrs, DaysMonth, Temp, NRur, nlu, water, qrunp)
     # print(WashPerv_inner.inspect_types())
     return WashPerv_inner(NYrs, DaysMonth, Temp, NRur, nlu, water, qrunp)

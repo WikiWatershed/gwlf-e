@@ -7,9 +7,8 @@ from Memoization import memoize
 
 @memoize
 def NLU(NRur, NUrb):
-    result = NRur + NUrb
-    return result
+    return NRur + NUrb
 
 
-def NLU_2():
-    pass
+# def NLU_2():
+#     pass

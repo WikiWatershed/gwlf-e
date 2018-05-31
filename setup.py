@@ -17,6 +17,7 @@ from gwlfe.InitSnowYesterday_inner import cc as isycc
 from gwlfe.Percolation_inner import cc as pcc
 from gwlfe.UnsatStor_inner import cc as usscc
 from gwlfe.WashPerv_inner import cc as wpcc
+from gwlfe.WashImperv_inner import cc as wipcc
 
 # Get the long description from DESCRIPTION.rst
 with open(path.join(path.abspath(path.dirname(__file__)),
@@ -59,5 +60,5 @@ setup(
     ext_modules=[adjcc.distutils_extension(), amc5ycc.distutils_extension(), cncc.distutils_extension(),
                  cnicc.distutils_extension(), cnpcc.distutils_extension(), dscc.distutils_extension(),
                  iscc.distutils_extension(), isycc.distutils_extension(), pcc.distutils_extension(),
-                 usscc.distutils_extension(), wpcc.distutils_extension()]
+                 usscc.distutils_extension(), wpcc.distutils_extension(), wipcc.distutils_extension()]
 )

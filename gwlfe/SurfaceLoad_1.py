@@ -18,8 +18,7 @@ def SurfaceLoad_1(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Area, CNI
     adjurbanqtotal_1 = AdjUrbanQTotal_1(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0,
                      Imper, ISRR, ISRA, Qretention, PctAreaInfil)
     surfaceload = SurfaceLoad(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0,
-                              Imper, ISRR, ISRA, Qretention, PctAreaInfil, Nqual, LoadRateImp, SweepFrac, UrbSweepFrac,
-                              LoadRatePerv, Storm, UrbBMPRed)
+                Imper, ISRR, ISRA, Qretention, PctAreaInfil, Nqual, LoadRateImp, LoadRatePerv, Storm, UrbBMPRed)
     retentioneff = RetentionEff(NYrs, DaysMonth, InitSnow_0, Temp, Prec, Qretention, NRur, NUrb, Area, CNI_0,
                                 AntMoist_0, Grow, CNP_0, Imper, ISRR, ISRA, PctAreaInfil)
     filtereff = FilterEff(FilterWidth)
