@@ -6,13 +6,19 @@ from NLU import NLU
 from Water import Water
 from QrunP import QrunP
 
+try:
+    from WashPerv_inner_compiled import WashPerv_inner
+except ImportError:
+    print("Unable to import compiled WashPerv_inner, using slower version")
+    from WashPerv_inner import WashPerv_inner
+
 
 @memoize
-def WashPerv(NYrs, DaysMonth, InitSnow_0, Temp, Prec, CNP_0, AntMoist_0, Grow, NRur, NUrb):
+def WashPerv(NYrs, DaysMonth, InitSnow_0, Temp, Prec, CNP_0, AntMoist_0, Grow_0, NRur, NUrb):
     pervaccum = np.zeros(16)
     nlu = NLU(NRur, NUrb)
     water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
-    qrunp = QrunP(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, CNP_0, AntMoist_0, Grow)
+    qrunp = QrunP(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, CNP_0, AntMoist_0, Grow_0)
     washperv = np.zeros((NYrs, 12, 31, 16))
     carryover = np.zeros(16)
     for Y in range(NYrs):
@@ -35,5 +41,10 @@ def WashPerv(NYrs, DaysMonth, InitSnow_0, Temp, Prec, CNP_0, AntMoist_0, Grow, N
     return washperv
 
 
-def PervAccum_2():
-    pass
+def WashPerv_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, CNP_0, AntMoist_0, Grow_0, NRur, NUrb):
+    nlu = NLU(NRur, NUrb)
+    water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
+    qrunp = QrunP(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, CNP_0, AntMoist_0, Grow_0)
+    # WashPerv_inner(NYrs, DaysMonth, Temp, NRur, nlu, water, qrunp)
+    # print(WashPerv_inner.inspect_types())
+    return WashPerv_inner(NYrs, DaysMonth, Temp, NRur, nlu, water, qrunp)
