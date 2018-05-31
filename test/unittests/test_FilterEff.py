@@ -12,9 +12,8 @@ class TestFilterEff(unittest.TestCase):
         self.z = Parser.GmsReader(input_file).read()
 
 
-    @skip('Not Ready Yet.')
     def test_FilterEff(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            FilterEff.FilterEff_2(),
-            FilterEff.FilterEff(), decimal=7)
+            FilterEff.FilterEff_2(z.FilterWidth),
+            FilterEff.FilterEff(z.FilterWidth), decimal=7)
