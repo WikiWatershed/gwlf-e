@@ -12,5 +12,10 @@ def FilterEff(FilterWidth):
     return result
 
 
-def FilterEff_2():
-    pass
+#Both have same running time
+@memoize
+def FilterEff_2(FilterWidth):
+    result = 1
+    if FilterWidth <= 30:
+        result = FilterWidth / 30
+    return result

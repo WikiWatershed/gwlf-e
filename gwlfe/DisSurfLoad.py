@@ -7,6 +7,10 @@ from AdjUrbanQTotal_1 import AdjUrbanQTotal_1
 from SurfaceLoad import SurfaceLoad
 from RetentionEff import RetentionEff
 from FilterEff import FilterEff
+from Water import Water
+from AdjUrbanQTotal_1 import AdjUrbanQTotal_1
+from SurfaceLoad import SurfaceLoad
+from RetentionEff import RetentionEff
 
 
 @memoize
@@ -37,5 +41,7 @@ def DisSurfLoad(NYrs, DaysMonth, InitSnow_0, Temp, Prec, Nqual, NRur, NUrb, Area
     return result
 
 
-def DisSurfLoad_2():
-    pass
+def DisSurfLoad_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, Nqual, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0,
+                     Imper, ISRR, ISRA, Qretention, PctAreaInfil, LoadRateImp, SweepFrac, UrbSweepFrac, LoadRatePerv,
+                  Storm, UrbBMPRed, DisFract, FilterWidth, PctStrmBuf):
+

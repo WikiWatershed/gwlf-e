@@ -4,6 +4,9 @@ from Memoization import memoize
 from Water import Water
 from AdjQTotal import AdjQTotal
 from QTotal import QTotal
+from Water import Water_2
+from AdjQTotal import AdjQTotal_2
+from QTotal import QTotal_2
 
 
 @memoize
@@ -29,6 +32,15 @@ def DayRunoff(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, 
                     pass
     return result
 
-
-def DayRunoff_2():
-    pass
+@memoize
+def DayRunoff_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0,
+              Imper, ISRR, ISRA, Qretention, PctAreaInfil, n25b, CN):
+    result = np.zeros((NYrs, 12, 31))
+    water = Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
+    adj_q_total = AdjQTotal_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0,
+                            Imper, ISRR, ISRA, Qretention, PctAreaInfil, n25b, CN)
+    q_total = QTotal_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
+                     ISRR, ISRA, CN)
+    result[np.where((Temp>0) & (water > 0.01) & (adj_q_total > 0))]  = adj_q_total[np.where((Temp>0) & (water > 0) & (adj_q_total > 0))]
+    result[np.where((Temp > 0) & (water > 0.01) & (q_total > 0))] = q_total[np.where((Temp > 0) & (water > 0) & (q_total > 0))]
+    return result
