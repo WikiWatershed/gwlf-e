@@ -22,11 +22,11 @@ except ImportError:
 
 @memoize
 # @time_function
-def CNum(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, CN, NRur, NUrb, Grow):
+def CNum(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, CN, NRur, NUrb, Grow_0):
     result = np.zeros((NYrs, 12, 31, 10))
     water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     melt = Melt(NYrs, DaysMonth, Temp, InitSnow_0, Prec)  # I think this should be Melt_1
-    grow_factor = GrowFactor(Grow)
+    grow_factor = GrowFactor(Grow_0)
     amc5 = AMC5(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0)
     new_cn = NewCN(NRur, NUrb, CN)
     for Y in range(NYrs):
@@ -72,12 +72,12 @@ def CNum(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, CN, NRur, NUrb, Gr
 
 
 # @time_function
-def CNum_1(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, CN, NRur, NUrb, Grow):
+def CNum_1(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, CN, NRur, NUrb, Grow_0):
     melt_pest = np.repeat(Melt_1_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)[:, :, :, None], NRur, axis=3)
     newcn = NewCN_2(NRur, NUrb, CN)
     amc5 = np.repeat(AMC5_yesterday(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0)[:, :, :, None], NRur, axis=3)
-    # g = GrowFactor(Grow)
-    grow_factor = np.tile(GrowFactor(Grow)[None, :, None, None], (NYrs, 1, 31, NRur))
+    # g = GrowFactor(Grow_0)
+    grow_factor = np.tile(GrowFactor(Grow_0)[None, :, None, None], (NYrs, 1, 31, NRur))
     water = np.repeat(Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)[:, :, :, None], NRur, axis=3)
     Temp = np.repeat(Temp[:, :, :, None], NRur, axis=3)
     CN_0 = np.tile(CN[:10][None, None, None, :], (NYrs, 12, 31, 1))
@@ -108,10 +108,10 @@ def CNum_1(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, CN, NRur, NUrb, 
 # CNUM_2 is faster than CNUM_1. CNUM_1 is
 # @time_function
 @memoize
-def CNum_2(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, CN, NRur, NUrb, Grow):
+def CNum_2(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, CN, NRur, NUrb, Grow_0):
     melt_pest = Melt_1_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     newcn = NewCN_2(NRur, NUrb, CN)
     amc5 = AMC5_yesterday(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0)
-    grow_factor = GrowFactor_2(Grow)
+    grow_factor = GrowFactor_2(Grow_0)
     water = Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     return CNum_inner(NYrs, DaysMonth, Temp, CN, NRur, melt_pest, newcn, amc5, grow_factor, water)

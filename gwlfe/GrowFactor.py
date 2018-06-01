@@ -3,6 +3,7 @@ from Timer import time_function
 from enums import GROWING_SEASON
 from numba import jit
 from enums import GrowFlag
+from Grow import Grow
 from Grow import Grow_2
 
 # @time_function
@@ -14,7 +15,7 @@ from Memoization import memoize
 def GrowFactor(Grow_0):
     result = np.zeros((12,))
     for i in range(12):
-        result[i] = Grow_0[i]==GROWING_SEASON  # TODO: seems like there is some inefficency left in Grow
+        result[i] = Grow_0[i]==GROWING_SEASON  # TODO: seems like there is some inefficency left in Grow_0
     return result
 #GrowFactor function is more effiecient than GrowFactor_2
 # @time_function

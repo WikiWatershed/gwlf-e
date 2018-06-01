@@ -5,19 +5,22 @@ from Water import Water
 from NLU import NLU
 from AdjUrbanQTotal_1 import AdjUrbanQTotal_1
 from SurfaceLoad_1 import SurfaceLoad_1
+from SurfaceLoad_1 import SurfaceLoad_1_2
 
 
 @memoize
 def LuLoad(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
-                                    Grow_0, CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil, Nqual, LoadRateImp,
-                                    SweepFrac, UrbSweepFrac, LoadRatePerv, Storm, UrbBMPRed, FilterWidth, PctStrmBuf):
+           Grow_0, CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil, Nqual, LoadRateImp,
+           LoadRatePerv, Storm, UrbBMPRed, FilterWidth, PctStrmBuf):
     result = np.zeros((NYrs, 16, 3))
     water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     nlu = NLU(NRur, NUrb)
     adjurbanqtotal_1 = AdjUrbanQTotal_1(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
                                         Grow_0, CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil)
-    surfaceload_1 = SurfaceLoad_1(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0,
-                     Imper, ISRR, ISRA, Qretention, PctAreaInfil, Nqual, LoadRateImp, SweepFrac, UrbSweepFrac, LoadRatePerv, Storm, UrbBMPRed, FilterWidth, PctStrmBuf)
+    surfaceload_1 = SurfaceLoad_1(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
+                                  CNP_0,
+                                  Imper, ISRR, ISRA, Qretention, PctAreaInfil, Nqual, LoadRateImp, LoadRatePerv, Storm,
+                                  UrbBMPRed, FilterWidth, PctStrmBuf)
     for Y in range(NYrs):
         for i in range(12):
             for j in range(DaysMonth[Y][i]):
@@ -33,5 +36,9 @@ def LuLoad(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, Ant
     return result
 
 
-def LuLoad_2():
-    pass
+def LuLoad_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
+             Grow_0, CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil, Nqual, LoadRateImp,
+             LoadRatePerv, Storm, UrbBMPRed, FilterWidth, PctStrmBuf):
+    return np.sum(SurfaceLoad_1_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
+                                  CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil, Nqual, LoadRateImp, LoadRatePerv,
+                                  Storm, UrbBMPRed, FilterWidth, PctStrmBuf), axis=(1, 2))

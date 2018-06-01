@@ -9,11 +9,11 @@ from Memoization import memoize
 
 
 @memoize
-def AgQTotal(NYrs,DaysMonth,InitSnow_0, Temp, Prec,NRur,CN, AntMoist_0,NUrb,Grow,Landuse,Area):
+def AgQTotal(NYrs,DaysMonth,InitSnow_0, Temp, Prec,NRur,CN, AntMoist_0,NUrb,Grow_0,Landuse,Area):
     result = np.zeros((NYrs,12,31))
     water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
-    retention = Retention(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, NRur, NUrb, CN, Grow)
-    q_run = Qrun(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, CN, AntMoist_0, Grow)
+    retention = Retention(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, NRur, NUrb, CN, Grow_0)
+    q_run = Qrun(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, CN, AntMoist_0, Grow_0)
     ag_area_total = AgAreaTotal(NRur, Landuse, Area)
     for Y in range(NYrs):
         for i in range(12):
@@ -42,9 +42,9 @@ def AgQTotal(NYrs,DaysMonth,InitSnow_0, Temp, Prec,NRur,CN, AntMoist_0,NUrb,Grow
 
 # @time_function
 @memoize
-def AgQTotal_2(NYrs,DaysMonth,InitSnow_0, Temp, Prec,NRur,CN, AntMoist_0,NUrb,Grow,Landuse,Area):
+def AgQTotal_2(NYrs,DaysMonth,InitSnow_0, Temp, Prec,NRur,CN, AntMoist_0,NUrb,Grow_0,Landuse,Area):
     result = np.zeros((NYrs, 12, 31))
-    q_run = Qrun_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, CN, AntMoist_0, Grow)
+    q_run = Qrun_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, CN, AntMoist_0, Grow_0)
     ag_area_total = AgAreaTotal(NRur, Landuse, Area)
     ag_used = np.array([1,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0])
     ag_area = Area * ag_used

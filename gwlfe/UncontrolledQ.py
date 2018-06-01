@@ -10,13 +10,13 @@ from LU import LU
 
 
 @memoize
-def UncontrolledQ(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Area, CNI_0, CNP_0, AntMoist_0, Grow, Imper, ISRR, ISRA):
+def UncontrolledQ(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Area, CNI_0, CNP_0, AntMoist_0, Grow_0, Imper, ISRR, ISRA):
     result = 0
     water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     nlu = NLU(NRur, NUrb)
     areatotal = AreaTotal(NRur, NUrb, Area)
-    qruni = QrunI(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, CNI_0, AntMoist_0, Grow)
-    qrunp = QrunP(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, CNP_0, AntMoist_0, Grow)
+    qruni = QrunI(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, CNI_0, AntMoist_0, Grow_0)
+    qrunp = QrunP(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, CNP_0, AntMoist_0, Grow_0)
     lu = LU(NRur, NUrb)
     for Y in range(NYrs):
         for i in range(12):

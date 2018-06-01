@@ -1,29 +1,34 @@
 import numpy as np
 from Timer import time_function
 from Memoization import memoize
-from Water import Water
 from NLU import NLU
-from AdjUrbanQTotal_1 import AdjUrbanQTotal_1
-from SurfaceLoad import SurfaceLoad
-from RetentionEff import RetentionEff
 from FilterEff import FilterEff
+from FilterEff import FilterEff_2
 from Water import Water
+from Water import Water_2
 from AdjUrbanQTotal_1 import AdjUrbanQTotal_1
+from AdjUrbanQTotal_1 import AdjUrbanQTotal_1_2
 from SurfaceLoad import SurfaceLoad
+from SurfaceLoad import SurfaceLoad_2
 from RetentionEff import RetentionEff
+from RetentionEff import RetentionEff_2
 
 
 @memoize
-def DisSurfLoad(NYrs, DaysMonth, InitSnow_0, Temp, Prec, Nqual, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0,
-                     Imper, ISRR, ISRA, Qretention, PctAreaInfil, LoadRateImp, SweepFrac, UrbSweepFrac, LoadRatePerv, Storm, UrbBMPRed, DisFract, FilterWidth, PctStrmBuf):
+def DisSurfLoad(NYrs, DaysMonth, InitSnow_0, Temp, Prec, Nqual, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0,
+                Imper, ISRR, ISRA, Qretention, PctAreaInfil, LoadRateImp, LoadRatePerv, Storm,
+                UrbBMPRed, DisFract, FilterWidth, PctStrmBuf):
     result = np.zeros((NYrs, 12, 31, 16, Nqual))
     water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     nlu = NLU(NRur, NUrb)
-    adjurbanqtotal_1 = AdjUrbanQTotal_1(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0,
-                     Imper, ISRR, ISRA, Qretention, PctAreaInfil)
-    surfaceload = SurfaceLoad(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0,
-                Imper, ISRR, ISRA, Qretention, PctAreaInfil, Nqual, LoadRateImp, LoadRatePerv, Storm, UrbBMPRed)
-    retentioneff = RetentionEff(NYrs, DaysMonth, InitSnow_0, Temp, Prec, Qretention, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0, Imper, ISRR, ISRA, PctAreaInfil)
+    adjurbanqtotal_1 = AdjUrbanQTotal_1(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
+                                        Grow_0, CNP_0,
+                                        Imper, ISRR, ISRA, Qretention, PctAreaInfil)
+    surfaceload = SurfaceLoad(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
+                              CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil, Nqual, LoadRateImp, LoadRatePerv,
+                              Storm, UrbBMPRed)
+    retentioneff = RetentionEff(NYrs, DaysMonth, InitSnow_0, Temp, Prec, Qretention, NRur, NUrb, Area, CNI_0,
+                                AntMoist_0, Grow_0, CNP_0, Imper, ISRR, ISRA, PctAreaInfil)
     filtereff = FilterEff(FilterWidth)
     for Y in range(NYrs):
         for i in range(12):
@@ -41,7 +46,22 @@ def DisSurfLoad(NYrs, DaysMonth, InitSnow_0, Temp, Prec, Nqual, NRur, NUrb, Area
     return result
 
 
-def DisSurfLoad_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, Nqual, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0,
-                     Imper, ISRR, ISRA, Qretention, PctAreaInfil, LoadRateImp, SweepFrac, UrbSweepFrac, LoadRatePerv,
+def DisSurfLoad_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, Nqual, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0,
+                  Imper, ISRR, ISRA, Qretention, PctAreaInfil, LoadRateImp, LoadRatePerv,
                   Storm, UrbBMPRed, DisFract, FilterWidth, PctStrmBuf):
-
+    nlu = NLU(NRur, NUrb)
+    result = np.zeros((NYrs, 12, 31, nlu - NRur, Nqual))
+    water = Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
+    adjurbanqtotal_1 = AdjUrbanQTotal_1_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
+                                          Grow_0, CNP_0,
+                                          Imper, ISRR, ISRA, Qretention, PctAreaInfil)
+    surfaceload = SurfaceLoad_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
+                                CNP_0,
+                                Imper, ISRR, ISRA, Qretention, PctAreaInfil, Nqual, LoadRateImp, LoadRatePerv, Storm,
+                                UrbBMPRed)
+    retentioneff = RetentionEff_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, Qretention, NRur, NUrb, Area, CNI_0,
+                                  AntMoist_0, Grow_0, CNP_0, Imper, ISRR, ISRA, PctAreaInfil)
+    filtereff = FilterEff_2(FilterWidth)
+    nonzero = np.where((Temp > 0) & (water > 0.01) & (adjurbanqtotal_1 > 0.001))
+    result[nonzero] = surfaceload[nonzero] * DisFract[NRur:] * (1 - retentioneff) * (1 - (filtereff * PctStrmBuf))
+    return result

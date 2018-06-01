@@ -12,10 +12,7 @@ def UrbLoadRed_inner(NYrs, DaysMonth, Temp,  NRur, Nqual, Storm, UrbBMPRed, wate
                     if adjurbanqtotal[Y][i][j] > 0.001:
                         for l in range(NRur, nlu):
                             for q in range(Nqual):
-                                if Storm > 0:
-                                    result[Y][i][j][l][q] = (water[Y][i][j] / Storm) * UrbBMPRed[l][q]
-                                else:
-                                    result[Y][i][j][l][q] = 0
+                                result[Y][i][j][l][q] = (water[Y][i][j] / Storm) * UrbBMPRed[l][q]
                                 if water[Y][i][j] > Storm:
                                     result[Y][i][j][l][q] = UrbBMPRed[l][q]
                 else:

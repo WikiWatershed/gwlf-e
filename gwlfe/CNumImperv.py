@@ -20,13 +20,13 @@ except ImportError:
 
 
 @memoize
-def CNumImperv(NYrs, NRur, NUrb, DaysMonth, InitSnow_0, Temp, Prec, CNI_0, Grow, AntMoist_0):
+def CNumImperv(NYrs, NRur, NUrb, DaysMonth, InitSnow_0, Temp, Prec, CNI_0, Grow_0, AntMoist_0):
     nlu = NLU(NRur, NUrb)
     result = np.zeros((NYrs, 12, 31, nlu))
     cni = CNI(NRur, NUrb, CNI_0)
     water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     melt = Melt(NYrs, DaysMonth, Temp, InitSnow_0, Prec)
-    grow_factor = GrowFactor(Grow)
+    grow_factor = GrowFactor(Grow_0)
     amc5 = AMC5(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0)
 
     for Y in range(NYrs):
@@ -70,13 +70,13 @@ def CNumImperv(NYrs, NRur, NUrb, DaysMonth, InitSnow_0, Temp, Prec, CNI_0, Grow,
     return result
 
 
-def CNumImperv_2(NYrs, NRur, NUrb, DaysMonth, InitSnow_0, Temp, Prec, CNI_0, Grow, AntMoist_0):
+def CNumImperv_2(NYrs, NRur, NUrb, DaysMonth, InitSnow_0, Temp, Prec, CNI_0, Grow_0, AntMoist_0):
     # cc.compile()
     nlu = NLU(NRur, NUrb)
     cni = CNI_2(NRur, NUrb, CNI_0)
     water = Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     melt = Melt_1_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
-    grow_factor = GrowFactor(Grow)
+    grow_factor = GrowFactor(Grow_0)
     amc5 = AMC5_yesterday(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0)
     temp = CNumImperv_2_inner(NYrs, NRur, DaysMonth, Temp, nlu, cni, water, melt, grow_factor, amc5)
     # print(CNumImperv_2_inner.inspect_types())

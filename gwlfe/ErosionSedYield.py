@@ -12,7 +12,7 @@ from StreamBankEros_1 import StreamBankEros_1_2
 
 @memoize
 def ErosionSedYield(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef, NRur, KF, LS, C, P, Area, SedDelivRatio_0,
-                    NUrb, CNI_0, AntMoist_0, Grow, CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil, n25b, CN,
+                    NUrb, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil, n25b, CN,
                     UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0, RecessionCoef, SeepCoef,
                     Landuse, TileDrainDensity, PointFlow, StreamWithdrawal, GroundWithdrawal,
                     NumAnimals, AvgAnimalWt, StreamFlowVolAdj, SedAFactor_0, AvKF, AvSlope, SedAAdjust, StreamLength,
@@ -21,14 +21,14 @@ def ErosionSedYield(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef, NRur, KF, LS
     sedyield = np.zeros((NYrs, 12))
     water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     rureros = RurEros(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef, NRur, KF, LS, C, P, Area)
-    bsed = BSed(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0, Imper,
+    bsed = BSed(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
                 ISRR, ISRA, Qretention, PctAreaInfil, n25b, CN)
     seddelivratio = SedDelivRatio(SedDelivRatio_0)
-    sedtrans = SedTrans(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0,
+    sedtrans = SedTrans(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0,
                         Imper,
                         ISRR, ISRA, Qretention, PctAreaInfil, n25b, CN)
     streambankeros_2 = StreamBankEros_1(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
-                                        Grow, CNP_0, Imper, ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs,
+                                        Grow_0, CNP_0, Imper, ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs,
                                         MaxWaterCap, SatStor_0, RecessionCoef, SeepCoef, Qretention, PctAreaInfil, n25b,
                                         Landuse, TileDrainDensity, PointFlow, StreamWithdrawal, GroundWithdrawal
                                         , NumAnimals, AvgAnimalWt, StreamFlowVolAdj, SedAFactor_0, AvKF, AvSlope,

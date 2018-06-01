@@ -76,7 +76,7 @@ def run(z):
                 # z.ErosWashoff[l, i] = 0
                 # z.RurQRunoff[l, i] = 0
                 # z.UrbQRunoff[l, i] = 0
-                z.LuErosion[Y, l] = 0
+                # z.LuErosion[Y, l] = 0
 
             # DAILY CALCULATIONS
             for j in range(z.DaysMonth[Y][i]):

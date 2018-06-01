@@ -8,22 +8,19 @@ Imported from AnnualMeans.bas
 """
 
 import logging
-from Precipitation import AvPrecipitation
 from Precipitation import AvPrecipitation_2
-from AvEvapoTrans import AvEvapoTrans
-# from ET import AvEvapoTrans_2
-from PtSrcFlow import AvPtSrcFlow
+from AvEvapoTrans import AvEvapoTrans_2
 from PtSrcFlow import AvPtSrcFlow_2
 from AvStreamBankEros import AvStreamBankEros_2
-from StreamBankN_1 import StreamBankN_1
-from AvTileDrain import AvTileDrain
+from StreamBankN_1 import StreamBankN_1_2
+from AvTileDrain import AvTileDrain_2
 from AvWithdrawal import AvWithdrawal_2
 from AvGroundWater import AvGroundWater_2
 from AvRunoff import AvRunoff_2
 from AvErosion import AvErosion_2
 from AvSedYield import AvSedYield_2
-import AnnualMeans_1
 import numpy as np
+from LuRunoff import LuRunoff_2
 
 log = logging.getLogger(__name__)
 
@@ -80,8 +77,10 @@ def CalculateAnnualMeanLoads(z, Y):
 
     # Average loads for each landuse
     for l in range(z.NRur):
-        z.AvLuRunoff[l] += z.LuRunoff[Y][l] / z.NYrs
-        z.AvLuErosion[l] += z.LuErosion[Y][l] / z.NYrs
+        z.AvLuRunoff[l] += LuRunoff_2(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.NRur, z.NUrb, z.CNI_0, z.CNP_0,
+                                z.AntMoist_0, z.Grow_0, z.Imper, z.ISRR, z.ISRA, z.CN)[Y][l] / z.NYrs
+        z.AvLuErosion[l] += LuRunoff_2(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.NRur, z.NUrb, z.CNI_0, z.CNP_0,
+                                z.AntMoist_0, z.Grow_0, z.Imper, z.ISRR, z.ISRA, z.CN)[Y][l] / z.NYrs
         z.AvLuSedYield[l] += z.LuSedYield[Y][l] / z.NYrs
         z.AvLuDisNitr[l] += z.LuDisNitr[Y][l] / z.NYrs
         z.AvLuTotNitr[l] += z.LuTotNitr[Y][l] / z.NYrs
@@ -89,7 +88,8 @@ def CalculateAnnualMeanLoads(z, Y):
         z.AvLuTotPhos[l] += z.LuTotPhos[Y][l] / z.NYrs
 
     for l in range(z.NRur, z.NLU):
-        z.AvLuRunoff[l] += z.LuRunoff[Y][l] / z.NYrs
+        z.AvLuRunoff[l] += LuRunoff_2(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.NRur, z.NUrb, z.CNI_0, z.CNP_0,
+                                z.AntMoist_0, z.Grow_0, z.Imper, z.ISRR, z.ISRA, z.CN)[Y][l] / z.NYrs
         z.AvLuTotNitr[l] += z.LuTotNitr[Y][l] / z.NYrs
         z.AvLuTotPhos[l] += z.LuTotPhos[Y][l] / z.NYrs
         z.AvLuDisNitr[l] += z.LuDisNitr[Y][l] / z.NYrs
@@ -108,7 +108,7 @@ def CalculateAnnualMeanLoads(z, Y):
     # z.AvStreamBankNSum = sum(z.AvStreamBankN)
     z.AvStreamBankPSum = sum(z.AvStreamBankP)
     z.AvPtSrcFlowSum = sum(z.AvPtSrcFlow)
-    z.AvTileDrainSum = sum(AvTileDrain(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area,
+    z.AvTileDrainSum = sum(AvTileDrain_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area,
                                          z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
                                          z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap,
                                          z.SatStor_0, z.RecessionCoef, z.SeepCoef,
@@ -119,7 +119,7 @@ def CalculateAnnualMeanLoads(z, Y):
     z.AvTileDrainSedSum = sum(z.AvTileDrainSed)
     # z.AvPrecipitationSum = sum(z.AvPrecipitation)
     z.AvEvapoTransSum = sum(
-        AvEvapoTrans(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0,
+        AvEvapoTrans_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0,
                      z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs,
                      z.MaxWaterCap))
     z.AvGroundWaterSum = sum(AvGroundWater_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,

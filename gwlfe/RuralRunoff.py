@@ -6,10 +6,10 @@ from RuralQTotal import RuralQTotal
 
 
 @memoize
-def RuralRunoff(NYrs, DaysMonth, InitSnow_0, Temp, Prec,  NRur, CN, NUrb, AntMoist_0, Grow, Area):
+def RuralRunoff(NYrs, DaysMonth, InitSnow_0, Temp, Prec,  NRur, CN, NUrb, AntMoist_0, Grow_0, Area):
     result = np.zeros((NYrs, 12))
     water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
-    ruralqtotal = RuralQTotal(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, CN, NUrb, AntMoist_0, Grow, Area)
+    ruralqtotal = RuralQTotal(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, CN, NUrb, AntMoist_0, Grow_0, Area)
     for Y in range(NYrs):
         for i in range(12):
             for j in range(DaysMonth[Y][i]):

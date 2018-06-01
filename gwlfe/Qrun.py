@@ -7,11 +7,11 @@ from Memoization import memoize
 
 
 @memoize
-def Qrun(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, CN, AntMoist_0, Grow):
+def Qrun(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, CN, AntMoist_0, Grow_0):
     nlu = NLU(NRur,NUrb)
     result = np.zeros((NYrs,12,31,nlu))
     water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
-    retention = Retention(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, NRur, NUrb, CN, Grow)
+    retention = Retention(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, NRur, NUrb, CN, Grow_0)
     for Y in range(NYrs):
         for i in range(12):
             for j in range(DaysMonth[Y][i]):
@@ -26,13 +26,13 @@ def Qrun(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, CN, AntMoist_0, Gr
 
 # @time_function
 @memoize
-def Qrun_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, CN, AntMoist_0, Grow):
+def Qrun_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, CN, AntMoist_0, Grow_0):
     nlu = NLU(NRur, NUrb)
     result = np.zeros((NYrs, 12, 31, nlu))
     water = np.repeat(Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)[:, :, :, None], nlu, axis=3)
     TempE = np.repeat(Temp[:, :, :, None], nlu, axis=3)
     cnrur = np.tile(CN[None, None, None, :], (NYrs, 12, 31, 1))
-    retention = Retention_2(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, NRur, NUrb, CN, Grow)
+    retention = Retention_2(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, NRur, NUrb, CN, Grow_0)
     retention02 = 0.2 * retention
     # val = np.zeros((NYrs, 12, 31, nlu))
     nonzero = np.where((TempE>0 ) & (water > 0.01) &(water >= retention02) & (cnrur>0))

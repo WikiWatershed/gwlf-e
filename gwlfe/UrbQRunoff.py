@@ -3,8 +3,11 @@ from Timer import time_function
 from Memoization import memoize
 from NLU import NLU
 from Water import Water
+from Water import Water_2
 from QrunI import QrunI
+from QrunI import QrunI_2
 from QrunP import QrunP
+from QrunP import QrunP_2
 from LU import LU
 
 
@@ -39,16 +42,9 @@ def UrbQRunoff(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, CNI_0, CNP_0
                     pass
     return result
 
-
 def UrbQRunoff_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, CNI_0, CNP_0, AntMoist_0, Grow_0, Imper, ISRR,
                  ISRA):
-    # result = np.zeros((NYrs, 16, 12))
-    # nlu = NLU(NRur, NUrb)
-    water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
-    qruni = QrunI(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, CNI_0, AntMoist_0, Grow_0)[:, :, :, NRur:]
-    qrunp = QrunP(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, CNP_0, AntMoist_0, Grow_0)[:, :, :, NRur:]
-    # lu = LU(NRur, NUrb)
+    qruni = QrunI_2(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, CNI_0, AntMoist_0, Grow_0)[:, :, :, NRur:]
+    qrunp = QrunP_2(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, CNP_0, AntMoist_0, Grow_0)[:, :, :, NRur:]
     temp = (Imper[NRur:] * (1 - ISRR) * (1 - ISRA))
-    # nonzero = np.where((Temp > 0) & (water > 0.01))
-    return np.sum(np.where(np.resize((Temp > 0) & (water > 0.01), (NYrs, 12, 31, 6)), (qruni + qrunp) * temp, 0),
-                  axis=2)
+    return np.sum(qruni * temp+ qrunp * (1 - temp),axis=2)

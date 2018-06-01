@@ -4,10 +4,10 @@ from Memoization import memoize
 from SedTrans import SedTrans
 from SedTrans import SedTrans_2
 
-def BSed(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0, Imper,
+def BSed(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
          ISRR, ISRA, Qretention, PctAreaInfil, n25b, CN):
     result = np.zeros((NYrs, 12))  # These used to be (NYrs,16) but it looks like a mistake
-    sedtrans = SedTrans(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0,
+    sedtrans = SedTrans(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0,
                         Imper,
                         ISRR, ISRA, Qretention, PctAreaInfil, n25b, CN)
     for Y in range(NYrs):
@@ -17,8 +17,8 @@ def BSed(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMo
                 result[Y][i] = result[Y][i] + sedtrans[Y][m]
     return result
 
-def BSed_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0, Imper,
+def BSed_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
            ISRR, ISRA, Qretention, PctAreaInfil, n25b, CN):
-    sedtrans = SedTrans_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0,
+    sedtrans = SedTrans_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0,
                         Imper, ISRR, ISRA, Qretention, PctAreaInfil, n25b, CN)
     return np.flip(np.cumsum(np.flip(sedtrans, axis=1), axis=1), axis=1)

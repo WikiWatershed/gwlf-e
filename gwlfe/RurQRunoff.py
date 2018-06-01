@@ -3,8 +3,11 @@ from Timer import time_function
 from Memoization import memoize
 from NLU import NLU
 from Water import Water
+from Water import Water_2
 from Retention import Retention
+from Retention import Retention_2
 from Qrun import Qrun
+from Qrun import Qrun_2
 
 
 @memoize
@@ -36,5 +39,9 @@ def RurQRunoff(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb, 
     return result
 
 
-def RurQRunoff_2():
-    pass
+def RurQRunoff_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb, CN, Grow_0):
+    water = np.reshape(np.repeat(Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec), repeats=NRur, axis=2),
+                       (NYrs, 12, 31, NRur))
+    retention = Retention_2(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, NRur, NUrb, CN, Grow_0)[:, :, :, :NRur]
+    qrun = Qrun_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, CN, AntMoist_0, Grow_0)[:, :, :, :NRur]
+    return np.sum(np.where((water >= 0.2 * retention) & (CN[:NRur] > 0), qrun, 0), axis=2)

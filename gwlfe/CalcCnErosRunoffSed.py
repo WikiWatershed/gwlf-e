@@ -41,7 +41,7 @@ from enums import GrowFlag, LandUse
     # Calculate Curve Number (CN)
     # for l in range(z.NRur):
         # z.Qrun = 0
-        # grow_factor = GrowFlag.intval(z.Grow[i])
+        # grow_factor = GrowFlag.intval(z.Grow_0[i])
 
         # if z.CN[l] > 0:
             # print("test2",z.CNum)
@@ -133,7 +133,7 @@ from enums import GrowFlag, LandUse
         # pass
     # else:
     #     for l in range(z.NRur, z.NLU):
-            # grow_factor = GrowFlag.intval(z.Grow[i])
+            # grow_factor = GrowFlag.intval(z.Grow_0[i])
 
             # Find curve number
             # if z.CNI[1][l] > 0:

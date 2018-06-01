@@ -12,11 +12,11 @@ from Water import Water_2
 
 
 @memoize
-def AdjUrbanQTotal_1(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow, CNP_0,
+def AdjUrbanQTotal_1(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0,
                      Imper, ISRR, ISRA, Qretention, PctAreaInfil):
     result = np.zeros((NYrs, 12, 31))
     adj_urban_q_total = AdjUrbanQTotal(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
-                                       Grow, CNP_0, Imper,
+                                       Grow_0, CNP_0, Imper,
                                        ISRR, ISRA, Qretention, PctAreaInfil)
     urb_area_total = UrbAreaTotal(NRur, NUrb, Area)
     area_total = AreaTotal(NRur, NUrb, Area)
