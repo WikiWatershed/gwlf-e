@@ -59,7 +59,7 @@ def SurfaceLoad(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Area, CNI_0
                     pass
     return result
 
-
+@memoize
 def SurfaceLoad_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0,
                   Imper, ISRR, ISRA, Qretention, PctAreaInfil, Nqual, LoadRateImp,
                   LoadRatePerv, Storm, UrbBMPRed):

@@ -34,6 +34,9 @@ from AvWithdrawal import AvWithdrawal
 from AvGroundWater import AvGroundWater_2
 from AvRunoff import AvRunoff_2
 from Timer import time_function
+from LuTotNitr import LuTotNitr_2
+from LuTotNitr import LuTotNitr
+from LuTotPhos import LuTotPhos_2
 
 log = logging.getLogger(__name__)
 
@@ -48,11 +51,17 @@ def run(z):
 
     # MODEL CALCULATIONS FOR EACH YEAR OF ANALYSIS - WATER BALANCE,
     # NUTRIENTS AND SEDIMENT LOADS
-
+    ReadGwlfDataFile.ReadAllData(z)
     # --------- run the remaining parts of the model ---------------------
 
-    ReadGwlfDataFile.ReadAllData(z)
+    z.LuTotNitr[:,:z.NRur] = LuTotNitr_2(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.NRur, z.NUrb, z.CN,
+                            z.Grow_0,
+                            z.Area, z.NitrConc, z.ManNitr, z.ManuredAreas, z.FirstManureMonth, z.LastManureMonth,
+                            z.FirstManureMonth2, z.LastManureMonth2, z.SedDelivRatio_0, z.KF, z.LS, z.C, z.P, z.SedNitr,z.Acoef)
 
+    z.LuTotPhos[:,:z.NRur] = LuTotPhos_2(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.NRur, z.NUrb, z.CN, z.Grow_0, z.Area, z.PhosConc, z.ManPhos,
+                z.ManuredAreas, z.FirstManureMonth, z.LastManureMonth, z.FirstManureMonth2, z.LastManureMonth2, z.SedDelivRatio_0,
+                z.KF, z.LS, z.C, z.P, z.Acoef, z.SedPhos)
     # CALCLULATE PRELIMINARY INITIALIZATIONS AND VALUES FOR
     # WATER BALANCE AND NUTRIENTS
     PrelimCalculations.InitialCalculations(z)
@@ -116,7 +125,7 @@ def run(z):
                                   (z.PhosSepticLoad - z.PhosPlantUptake * GrowFactor_2(z.Grow_0)[i]))
 
                 # UPDATE MASS BALANCE ON PONDED EFFLUENT
-                if z.Temp[Y][i][j] <= 0 or InitSnow_2(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec)[Y][i][j] > 0:
+                if (z.Temp[Y][i][j] <= 0 or InitSnow_2(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec)[Y][i][j] > 0):
 
                     # ALL INPUTS GO TO FROZEN STORAGE
                     z.FrozenPondNitr = z.FrozenPondNitr + z.PondNitrLoad
@@ -167,20 +176,20 @@ def run(z):
 
     for i in range(12):
         z.AvStreamFlow[i] = (
-                    AvRunoff_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
-                               z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.Qretention, z.PctAreaInfil,
-                               z.n25b, z.CN, z.Landuse, z.TileDrainDensity)[i] +
-                    AvGroundWater_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
-                                    z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV,
-                                    z.PcntET, z.DayHrs, z.MaxWaterCap,
-                                    z.SatStor_0, z.RecessionCoef, z.SeepCoef, z.Landuse, z.TileDrainDensity)[i] +
-                    z.AvPtSrcFlow[i] +
-                    AvTileDrain(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area,
-                                z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
-                                z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap,
-                                z.SatStor_0, z.RecessionCoef, z.SeepCoef,
-                                z.Landuse, z.TileDrainDensity)[i] -
-                    AvWithdrawal(z.NYrs, z.StreamWithdrawal, z.GroundWithdrawal)[i])
+                AvRunoff_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
+                           z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.Qretention, z.PctAreaInfil,
+                           z.n25b, z.CN, z.Landuse, z.TileDrainDensity)[i] +
+                AvGroundWater_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
+                                z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV,
+                                z.PcntET, z.DayHrs, z.MaxWaterCap,
+                                z.SatStor_0, z.RecessionCoef, z.SeepCoef, z.Landuse, z.TileDrainDensity)[i] +
+                z.AvPtSrcFlow[i] +
+                AvTileDrain(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area,
+                            z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
+                            z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap,
+                            z.SatStor_0, z.RecessionCoef, z.SeepCoef,
+                            z.Landuse, z.TileDrainDensity)[i] -
+                AvWithdrawal(z.NYrs, z.StreamWithdrawal, z.GroundWithdrawal)[i])
 
         z.AvCMStream[i] = (z.AvStreamFlow[i] / 100) * TotAreaMeters(z.NRur, z.NUrb, z.Area)
         if z.AvCMStream[i] > 0:

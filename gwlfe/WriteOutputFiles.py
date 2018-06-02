@@ -25,6 +25,7 @@ from AvSedYield import AvSedYield_2
 from AvSedYield import AvSedYield
 from AvRunoff import AvRunoff_2
 from LuRunoff import LuRunoff
+from LuTotPhos import LuTotPhos
 
 log = logging.getLogger(__name__)
 
@@ -529,46 +530,46 @@ def WriteOutput(z):
             z.LuDisNitr[y][l] = round((z.LuDisNitr[y][l] * z.RetentFactorN * (1 - z.AttenN)))
             z.LuTotNitr_1[y][l] = round((z.LuTotNitr[y][l] * z.RetentFactorN * (1 - z.AttenN)))
             z.LuDisPhos[y][l] = round((z.LuDisPhos[y][l] * z.RetentFactorP * (1 - z.AttenP)))
-            z.LuTotPhos[y][l] = round((z.LuTotPhos[y][l] * z.RetentFactorP * (1 - z.AttenP)))
+            z.LuTotPhos_1[y][l] = round((z.LuTotPhos[y][l] * z.RetentFactorP * (1 - z.AttenP)))
 
             if z.Landuse[l] is LandUse.HAY_PAST:
                 z.n2 = z.LuSedYield[y][l]
                 z.n6 = z.LuTotNitr_1[y][l]
-                z.n13 = z.LuTotPhos[y][l]
+                z.n13 = z.LuTotPhos_1[y][l]
                 z.n6dn = z.LuDisNitr[y][l]
                 z.n13dp = z.LuDisPhos[y][l]
             elif z.Landuse[l] is LandUse.CROPLAND:
                 z.n1 = z.LuSedYield[y][l]
                 z.n5 = z.LuTotNitr_1[y][l]
-                z.n12 = z.LuTotPhos[y][l]
+                z.n12 = z.LuTotPhos_1[y][l]
                 z.n5dn = z.LuDisNitr[y][l]
                 z.n12dp = z.LuDisPhos[y][l]
             elif z.Landuse[l] is LandUse.UNPAVED_ROAD:
                 z.n2d = z.LuSedYield[y][l]
                 z.n6d = z.LuTotNitr_1[y][l]
-                z.n13d = z.LuTotPhos[y][l]
+                z.n13d = z.LuTotPhos_1[y][l]
                 z.n6ddn = z.LuDisNitr[y][l]
                 z.n13ddp = z.LuDisPhos[y][l]
             elif z.Landuse[l] is LandUse.TURFGRASS:
                 z.n2t = z.LuSedYield[y][l]
                 z.n6t = z.LuTotNitr_1[y][l]
-                z.n13t = z.LuTotPhos[y][l]
+                z.n13t = z.LuTotPhos_1[y][l]
             else:
                 AvOtherLuSed = AvOtherLuSed + z.LuSedYield[y][l]
                 AvOtherLuNitr = AvOtherLuNitr + z.LuTotNitr_1[y][l]
-                AvOtherLuPhos = AvOtherLuPhos + z.LuTotPhos[y][l]
+                AvOtherLuPhos = AvOtherLuPhos + z.LuTotPhos_1[y][l]
 
             if z.Landuse[l] in [LandUse.LD_MIXED, LandUse.LD_RESIDENTIAL]:
                 z.n2c = z.n2c + z.LuSedYield[y][l]
                 z.n6c = z.n6c + z.LuTotNitr_1[y][l]
-                z.n13c = z.n13c + z.LuTotPhos[y][l]
+                z.n13c = z.n13c + z.LuTotPhos_1[y][l]
                 z.n6cdn = z.n6cdn + z.LuDisNitr[y][l]
                 z.n13cdp = z.n13cdp + z.LuDisPhos[y][l]
             elif z.Landuse[l] in [LandUse.MD_MIXED, LandUse.HD_MIXED,
                                   LandUse.MD_RESIDENTIAL, LandUse.HD_RESIDENTIAL]:
                 z.n2b = z.n2b + z.LuSedYield[y][l]
                 z.n6b = z.n6b + z.LuTotNitr_1[y][l]
-                z.n13b = z.n13b + z.LuTotPhos[y][l]
+                z.n13b = z.n13b + z.LuTotPhos_1[y][l]
                 z.n6bdn = z.n6bdn + z.LuDisNitr[y][l]
                 z.n13bdp = z.n13bdp + z.LuDisPhos[y][l]
 
@@ -663,64 +664,64 @@ def WriteOutput(z):
             if z.Landuse[l] is LandUse.HAY_PAST:
                 z.LuSedYield[y][l] = z.n2
                 z.LuTotNitr_1[y][l] = z.n6
-                z.LuTotPhos[y][l] = z.n13
+                z.LuTotPhos_1[y][l] = z.n13
                 z.LuDisNitr[y][l] = z.n6dn
                 z.LuDisPhos[y][l] = z.n13dp
 
                 if z.LuDisNitr[y][l] > z.LuTotNitr_1[y][l]:
                     z.LuDisNitr[y][l] = z.LuTotNitr_1[y][l]
-                if z.LuDisPhos[y][l] > z.LuTotPhos[y][l]:
-                    z.LuDisPhos[y][l] = z.LuTotPhos[y][l]
+                if z.LuDisPhos[y][l] > z.LuTotPhos_1[y][l]:
+                    z.LuDisPhos[y][l] = z.LuTotPhos_1[y][l]
             elif z.Landuse[l] is LandUse.CROPLAND:
                 if z.LuDisNitr[y][l] > 0:
                     z.LuDisNitr[y][l] = z.LuDisNitr[y][l] * z.n5 / z.LuTotNitr_1[y][l]
                 if z.LuDisPhos[y][l] > 0:
-                    z.LuDisPhos[y][l] = z.LuDisPhos[y][l] * z.n12 / z.LuTotPhos[y][l]
+                    z.LuDisPhos[y][l] = z.LuDisPhos[y][l] * z.n12 / z.LuTotPhos_1[y][l]
 
                 z.LuSedYield[y][l] = z.n1
                 z.LuTotNitr_1[y][l] = z.n5
-                z.LuTotPhos[y][l] = z.n12
+                z.LuTotPhos_1[y][l] = z.n12
                 z.LuDisNitr[y][l] = z.n5dn
                 z.LuDisPhos[y][l] = z.n12dp
             elif z.Landuse[l] is LandUse.UNPAVED_ROAD:
                 z.LuSedYield[y][l] = z.n2d
                 z.LuTotNitr_1[y][l] = z.n6d
-                z.LuTotPhos[y][l] = z.n13d
+                z.LuTotPhos_1[y][l] = z.n13d
                 z.LuDisNitr[y][l] = z.n6ddn
                 z.LuDisPhos[y][l] = z.n13ddp
 
                 if z.LuDisNitr[y][l] > z.LuTotNitr_1[y][l]:
                     z.LuDisNitr[y][l] = z.LuTotNitr_1[y][l]
-                if z.LuDisPhos[y][l] > z.LuTotPhos[y][l]:
-                    z.LuDisPhos[y][l] = z.LuTotPhos[y][l]
+                if z.LuDisPhos[y][l] > z.LuTotPhos_1[y][l]:
+                    z.LuDisPhos[y][l] = z.LuTotPhos_1[y][l]
 
             if z.n24b > 0 and z.Landuse[l] in [LandUse.LD_MIXED, LandUse.LD_RESIDENTIAL]:
                 z.LuSedYield[y][l] = z.n2c * z.Area[l] / z.n24b
                 z.LuTotNitr_1[y][l] = z.n6c * z.Area[l] / z.n24b
-                z.LuTotPhos[y][l] = z.n13c * z.Area[l] / z.n24b
+                z.LuTotPhos_1[y][l] = z.n13c * z.Area[l] / z.n24b
                 z.LuDisNitr[y][l] = z.n6cdn * z.Area[l] / z.n24b
                 z.LuDisPhos[y][l] = z.n13cdp * z.Area[l] / z.n24b
 
                 if z.LuDisNitr[y][l] > z.LuTotNitr_1[y][l]:
                     z.LuDisNitr[y][l] = z.LuTotNitr_1[y][l]
-                if z.LuDisPhos[y][l] > z.LuTotPhos[y][l]:
-                    z.LuDisPhos[y][l] = z.LuTotPhos[y][l]
+                if z.LuDisPhos[y][l] > z.LuTotPhos_1[y][l]:
+                    z.LuDisPhos[y][l] = z.LuTotPhos_1[y][l]
             elif z.n23b > 0 and z.Landuse[l] in [LandUse.MD_MIXED, LandUse.HD_MIXED,
                                                  LandUse.MD_RESIDENTIAL, LandUse.HD_RESIDENTIAL]:
                 z.LuSedYield[y][l] = z.n2b * z.Area[l] / z.n23b
                 z.LuTotNitr_1[y][l] = z.n6b * z.Area[l] / z.n23b
-                z.LuTotPhos[y][l] = z.n13b * z.Area[l] / z.n23b
+                z.LuTotPhos_1[y][l] = z.n13b * z.Area[l] / z.n23b
                 z.LuDisNitr[y][l] = z.n6bdn * z.Area[l] / z.n23b
                 z.LuDisPhos[y][l] = z.n13bdp * z.Area[l] / z.n23b
 
                 if z.LuDisNitr[y][l] > z.LuTotNitr_1[y][l]:
                     z.LuDisNitr[y][l] = z.LuTotNitr_1[y][l]
-                if z.LuDisPhos[y][l] > z.LuTotPhos[y][l]:
-                    z.LuDisPhos[y][l] = z.LuTotPhos[y][l]
+                if z.LuDisPhos[y][l] > z.LuTotPhos_1[y][l]:
+                    z.LuDisPhos[y][l] = z.LuTotPhos_1[y][l]
             if z.LuDisNitr[y][l] > z.LuTotNitr_1[y][l]:
                 z.LuDisNitr[y][l] = z.LuTotNitr_1[y][l]
-            if z.LuDisPhos[y][l] > z.LuTotPhos[y][l]:
-                z.LuDisPhos[y][l] = z.LuTotPhos[y][l]
+            if z.LuDisPhos[y][l] > z.LuTotPhos_1[y][l]:
+                z.LuDisPhos[y][l] = z.LuTotPhos_1[y][l]
 
     # WRITE THE RESULTS FILES INTO THE OUTPUT DIRECTORY IN METRIC UNITS
     # TODO: Skipping section that prepares and writes AnnualFile and AnnCsvFile

@@ -1,6 +1,6 @@
 import hashlib
 import numpy as np
-
+from dask import delayed
 
 # without
 # 300 loops of 'test_test', average time per loop: 0.321625, best: 0.303278, worst: 0.426772
