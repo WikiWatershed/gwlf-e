@@ -25,7 +25,7 @@ def SedYield(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef, NRur, KF, LS, C, P,
             for m in range(i + 1):
                 if bsed[Y][m] > 0:
                     result[Y][i] = result[Y][i] + erosion[Y][m] / bsed[Y][m]
-        for i in range(12):
+        # for i in range(12):
             result[Y][i] = seddelivratio * sedtrans[Y][i] * result[Y][i]
     return result
 
