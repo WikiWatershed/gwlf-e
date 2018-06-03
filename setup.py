@@ -1,23 +1,25 @@
 #!/usr/bin/env python
 
-from setuptools import setup, find_packages
 from codecs import open
 from os import path
+
+from setuptools import setup, find_packages
+
+from gwlfe.AMC5_yesterday_inner import cc as amc5ycc
 # Added to fix error.
 # See http://stackoverflow.com/questions/9352656/python-assertionerror-when-running-nose-tests-with-coverage  # NOQA
-from multiprocessing import util  # NOQA
 from gwlfe.AdjUrbanQTotal_2_inner import cc as adjcc  # TODO: use full length names
-from gwlfe.AMC5_yesterday_inner import cc as amc5ycc
-from gwlfe.CNum_inner import cc as cncc
 from gwlfe.CNumImperv_2_inner import cc as cnicc
 from gwlfe.CNumPerv_2_inner import cc as cnpcc
+from gwlfe.CNum_inner import cc as cncc
 from gwlfe.DeepSeep_inner import cc as dscc
-from gwlfe.InitSnow_inner import cc as iscc
 from gwlfe.InitSnowYesterday_inner import cc as isycc
+from gwlfe.InitSnow_inner import cc as iscc
 from gwlfe.Percolation_inner import cc as pcc
 from gwlfe.UnsatStor_inner import cc as usscc
-from gwlfe.WashPerv_inner import cc as wpcc
+from gwlfe.UrbLoadRed_inner import cc as ulrcc
 from gwlfe.WashImperv_inner import cc as wipcc
+from gwlfe.WashPerv_inner import cc as wpcc
 
 # Get the long description from DESCRIPTION.rst
 with open(path.join(path.abspath(path.dirname(__file__)),
@@ -60,5 +62,6 @@ setup(
     ext_modules=[adjcc.distutils_extension(), amc5ycc.distutils_extension(), cncc.distutils_extension(),
                  cnicc.distutils_extension(), cnpcc.distutils_extension(), dscc.distutils_extension(),
                  iscc.distutils_extension(), isycc.distutils_extension(), pcc.distutils_extension(),
-                 usscc.distutils_extension(), wpcc.distutils_extension(), wipcc.distutils_extension()]
+                 usscc.distutils_extension(), ulrcc.distutils_extension(), wpcc.distutils_extension(),
+                 wipcc.distutils_extension()]
 )

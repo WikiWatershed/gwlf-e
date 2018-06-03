@@ -1,6 +1,5 @@
 import numpy as np
 from Timer import time_function
-from DailyArrayConverter import get_value_for_yesterday
 from NLU import NLU
 from Water import Water, Water_2
 from CNI import CNI, CNI_2
@@ -8,9 +7,7 @@ from Melt import Melt
 from Melt_1 import Melt_1_2
 from GrowFactor import GrowFactor
 from AMC5 import AMC5, AMC5_yesterday
-from numba import jit
 from Memoization import memoize
-from numba.pycc import CC
 
 try:
     from CNumImperv_2_inner_compiled import CNumImperv_2_inner
@@ -71,13 +68,10 @@ def CNumImperv(NYrs, NRur, NUrb, DaysMonth, InitSnow_0, Temp, Prec, CNI_0, Grow_
 
 
 def CNumImperv_2(NYrs, NRur, NUrb, DaysMonth, InitSnow_0, Temp, Prec, CNI_0, Grow_0, AntMoist_0):
-    # cc.compile()
     nlu = NLU(NRur, NUrb)
     cni = CNI_2(NRur, NUrb, CNI_0)
     water = Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     melt = Melt_1_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     grow_factor = GrowFactor(Grow_0)
     amc5 = AMC5_yesterday(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0)
-    temp = CNumImperv_2_inner(NYrs, NRur, DaysMonth, Temp, nlu, cni, water, melt, grow_factor, amc5)
-    # print(CNumImperv_2_inner.inspect_types())
-    return temp
+    return CNumImperv_2_inner(NYrs, NRur, DaysMonth, Temp, nlu, cni, water, melt, grow_factor, amc5)

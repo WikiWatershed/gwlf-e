@@ -1,7 +1,6 @@
 import numpy as np
 from Timer import time_function
 from NLU import NLU
-from numba import jit
 from Memoization import memoize
 
 

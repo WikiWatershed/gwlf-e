@@ -1,7 +1,6 @@
 import numpy as np
 from Timer import time_function
 from enums import GROWING_SEASON
-from numba import jit
 from enums import GrowFlag
 from Grow import Grow
 from Grow import Grow_2

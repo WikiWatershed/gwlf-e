@@ -1,5 +1,4 @@
 import numpy as np
-from numba import jit
 from Timer import time_function
 from Percolation import Percolation
 from Percolation import Percolation_2

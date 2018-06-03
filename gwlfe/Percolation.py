@@ -1,5 +1,4 @@
 import numpy as np
-from numba import jit
 from Timer import time_function
 from Infiltration import Infiltration
 from Infiltration import Infiltration_2
@@ -43,7 +42,6 @@ def Percolation(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0
 
 def Percolation_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
                   ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap):
-    # cc.compile()
     infiltration = Infiltration_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
                                   CNP_0, Imper, ISRR, ISRA, CN)
 

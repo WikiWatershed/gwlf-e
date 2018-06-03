@@ -2,9 +2,7 @@ import numpy as np
 from Timer import time_function
 from Water import Water, Water_2
 import copy
-from numba import jit
 from Memoization import memoize
-from numba.pycc import CC
 
 try:
     from AMC5_yesterday_inner_compiled import AMC5_yesterday_inner

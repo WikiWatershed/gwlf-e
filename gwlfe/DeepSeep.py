@@ -1,10 +1,8 @@
 import numpy as np
-from numba import jit
 from Timer import time_function
 from Percolation import Percolation
 from Percolation import Percolation_2
 from Memoization import memoize
-from numba.pycc import CC
 
 try:
     from DeepSeep_inner_compiled import DeepSeep_inner
@@ -38,11 +36,7 @@ def DeepSeep(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, A
 # @memoize
 def DeepSeep_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
                ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0, RecessionCoef, SeepCoef):
-    # cc.compile()
     percolation = Percolation_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
                                 CNP_0,
                                 Imper, ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap)
-
-    temp =  DeepSeep_inner(NYrs, SatStor_0, DaysMonth, RecessionCoef, SeepCoef, percolation)[0]
-    # print (DeepSeep_inner.inspect_types())
-    return temp
+    return DeepSeep_inner(NYrs, SatStor_0, DaysMonth, RecessionCoef, SeepCoef, percolation)[0]

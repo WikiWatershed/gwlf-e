@@ -1,5 +1,5 @@
-from numba.pycc import CC
 import numpy as np
+from numba.pycc import CC
 
 cc = CC('AdjUrbanQTotal_2_inner_compiled')
 

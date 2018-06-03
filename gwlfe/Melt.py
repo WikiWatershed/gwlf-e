@@ -1,10 +1,7 @@
 import numpy as np
 from Timer import time_function
-from DailyArrayConverter import get_value_for_yesterday
 from InitSnow import InitSnow, InitSnow_2
 from InitSnowYesterday import InitSnowYesterday
-#import InitSnow
-from numba import jit
 from Memoization import memoize
 
 # @memoize

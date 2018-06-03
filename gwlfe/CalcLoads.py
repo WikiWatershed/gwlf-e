@@ -1,19 +1,18 @@
 # -*- coding: utf-8 -*-
+from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
-from __future__ import division
 
 """
 Imported from CalcLoads.bas
 """
 
-import logging
+# import logging
 
 import numpy as np
 
-log = logging.getLogger(__name__)
+# log = logging.getLogger(__name__)
 
-from Memoization import memoize
 from AreaTotal import AreaTotal_2
 from GroundWatLE_2 import GroundWatLE_2
 from TileDrain import TileDrain_2
@@ -21,15 +20,8 @@ from TotAreaMeters import TotAreaMeters
 from SedDelivRatio import SedDelivRatio
 from Erosion_1 import Erosion_1_2
 from SedYield import SedYield_2
-from RurQRunoff import RurQRunoff_2
-from ErosWashoff import ErosWashoff_2
-from ErosWashoff import ErosWashoff
-from UrbQRunoff import UrbQRunoff_2
-from UrbQRunoff import UrbQRunoff
 from LuLoad import LuLoad_2
-from LuLoad import LuLoad
 from LuDisLoad import LuDisLoad_2
-from LuDisLoad import LuDisLoad
 from LuErosion import LuErosion_2
 from nRunoff import nRunoff_2
 from pRunoff import pRunoff_2

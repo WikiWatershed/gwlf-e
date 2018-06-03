@@ -9,7 +9,6 @@ from Water import Water_2
 from UrbanQTotal import UrbanQTotal_2
 from UrbAreaTotal import UrbAreaTotal_2
 from AreaTotal import AreaTotal_2
-from numba import jit
 
 try:
     from AdjUrbanQTotal_2_inner_compiled import AdjUrbanQTotal_2_inner

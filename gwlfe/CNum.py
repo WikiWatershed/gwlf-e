@@ -1,6 +1,5 @@
 import numpy as np
 from Timer import time_function
-from DailyArrayConverter import get_value_for_yesterday
 from MeltPest import MeltPest
 from NewCN import NewCN, NewCN_2
 from AMC5 import AMC5, AMC5_1, AMC5_yesterday
@@ -9,9 +8,7 @@ from GrowFactor import GrowFactor_2
 from Water import Water, Water_2
 from Melt import Melt
 from Melt_1 import Melt_1_2
-from numba import jit
 from Memoization import memoize
-from numba.pycc import CC
 
 try:
     from CNum_inner_compiled import CNum_inner

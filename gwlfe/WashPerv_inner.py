@@ -1,6 +1,6 @@
-from numba.pycc import CC
 import numpy as np
 import math
+from numba.pycc import CC
 
 cc = CC('WashPerv_inner_compiled')
 

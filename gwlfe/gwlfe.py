@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
-from __future__ import division
 
 """
 Runs the GWLF-E MapShed model.
@@ -13,9 +13,6 @@ Imported from GWLF-E.frm
 import logging
 
 import numpy as np
-from DailyArrayConverter import get_value_for_yesterday
-
-from enums import ETflag, GrowFlag
 import ReadGwlfDataFile
 import PrelimCalculations
 import AFOS_old
@@ -30,7 +27,6 @@ from AvTileDrain import AvTileDrain_2
 from AvWithdrawal import AvWithdrawal_2
 from AvGroundWater import AvGroundWater_2
 from AvRunoff import AvRunoff_2
-from Timer import time_function
 from LuTotNitr import LuTotNitr_2
 from LuTotPhos import LuTotPhos_2
 

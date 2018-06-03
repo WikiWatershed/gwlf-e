@@ -7,7 +7,6 @@ from Memoization import memoize
 from AdjQTotal import AdjQTotal_2
 from QTotal import QTotal_2
 from TileDrainRO import TileDrainRO_2
-from numba import jit
 
 def Runoff(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
            ISRR, ISRA, Qretention, PctAreaInfil, n25b, CN, Landuse, TileDrainDensity):
