@@ -34,9 +34,11 @@ def LuDisLoad(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, 
                     pass
     return result
 
+
+@memoize
 def LuDisLoad_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, Nqual, NRur, NUrb, Area, CNI_0, AntMoist_0,
-                                 Grow_0, CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil, LoadRateImp, LoadRatePerv,
-                                 Storm, UrbBMPRed, DisFract, FilterWidth, PctStrmBuf):
+                Grow_0, CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil, LoadRateImp, LoadRatePerv,
+                Storm, UrbBMPRed, DisFract, FilterWidth, PctStrmBuf):
     return np.sum(DisSurfLoad_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, Nqual, NRur, NUrb, Area, CNI_0, AntMoist_0,
-                                 Grow_0, CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil, LoadRateImp, LoadRatePerv,
-                                 Storm, UrbBMPRed, DisFract, FilterWidth, PctStrmBuf),axis=(1,2))
+                                Grow_0, CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil, LoadRateImp, LoadRatePerv,
+                                Storm, UrbBMPRed, DisFract, FilterWidth, PctStrmBuf), axis=(1, 2))

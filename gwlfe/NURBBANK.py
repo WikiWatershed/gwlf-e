@@ -2,15 +2,15 @@ import numpy as np
 from Timer import time_function
 from Memoization import memoize
 from StreamBankN import StreamBankN
+from StreamBankN import StreamBankN_2
 
 def NURBBANK(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area,
-                               CNI_0, AntMoist_0, Grow_0, CNP_0, Imper, ISRR, ISRA, CN,
-                               UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0,
-                               RecessionCoef, SeepCoef, Qretention, PctAreaInfil, n25b, Landuse,
-                               TileDrainDensity, PointFlow, StreamWithdrawal, GroundWithdrawal,
-                               NumAnimals, AvgAnimalWt, StreamFlowVolAdj, SedAFactor_0, AvKF,
-                               AvSlope, SedAAdjust, StreamLength, n42b, n46c, n85d, AgLength,
-                               n42, n54, n85, UrbBankStab, SedNitr, BankNFrac,n69c):
+             CNI_0, AntMoist_0, Grow_0, CNP_0, Imper, ISRR, ISRA, CN,
+             UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0,
+             RecessionCoef, SeepCoef, Qretention, PctAreaInfil, n25b, Landuse,
+             TileDrainDensity, PointFlow, StreamWithdrawal, GroundWithdrawal,
+             NumAnimals, AvgAnimalWt, StreamFlowVolAdj, SedAFactor_0, AvKF,
+             AvSlope, SedAAdjust, StreamLength, n42b, UrbBankStab, SedNitr, BankNFrac, n69c):
     result = np.zeros((NYrs, 12))
     streambank_n = StreamBankN(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area,
                                CNI_0, AntMoist_0, Grow_0, CNP_0, Imper, ISRR, ISRA, CN,
@@ -24,6 +24,17 @@ def NURBBANK(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area,
             result[Y][i] = (UrbBankStab / n42b) * streambank_n[Y][i] * n69c
     return result
 
-
-def NURBBANK_2():
-    pass
+def NURBBANK_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area,
+               CNI_0, AntMoist_0, Grow_0, CNP_0, Imper, ISRR, ISRA, CN,
+               UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0,
+               RecessionCoef, SeepCoef, Qretention, PctAreaInfil, n25b, Landuse,
+               TileDrainDensity, PointFlow, StreamWithdrawal, GroundWithdrawal,
+               NumAnimals, AvgAnimalWt, StreamFlowVolAdj, SedAFactor_0, AvKF,
+               AvSlope, SedAAdjust, StreamLength, n42b, UrbBankStab, SedNitr, BankNFrac, n69c):
+    return (UrbBankStab / n42b) * StreamBankN_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area,
+                                                CNI_0, AntMoist_0, Grow_0, CNP_0, Imper, ISRR, ISRA, CN,
+                                                UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0,
+                                                RecessionCoef, SeepCoef, Qretention, PctAreaInfil, n25b, Landuse,
+                                                TileDrainDensity, PointFlow, StreamWithdrawal, GroundWithdrawal,
+                                                NumAnimals, AvgAnimalWt, StreamFlowVolAdj, SedAFactor_0, AvKF,
+                                                AvSlope, SedAAdjust, StreamLength, SedNitr, BankNFrac) * n69c

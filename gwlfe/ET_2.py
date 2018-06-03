@@ -11,9 +11,8 @@ from UnsatStor import UnsatStor_inner
 def ET_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
          ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap):
     result = np.zeros((NYrs, 12, 31))
-    infiltration = Infiltration(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
-                                CNP_0, Imper,
-                                ISRR, ISRA, CN)
+    infiltration = Infiltration_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
+                                  CNP_0, Imper, ISRR, ISRA, CN)
     unsatstor_carryover = UnsatStor_0
     et = DailyET_2(Temp, KV, PcntET, DayHrs)
     for Y in range(NYrs):

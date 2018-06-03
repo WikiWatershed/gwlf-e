@@ -5,7 +5,7 @@ from __future__ import division
 from Precipitation import Precipitation
 from StreamFlow import StreamFlow_2
 from TotAreaMeters import TotAreaMeters
-from UrbRunoffLiter import UrbRunoffLiter
+from UrbRunoffLiter import UrbRunoffLiter_2
 
 """
 Imported from AFOS.bas
@@ -207,11 +207,12 @@ def AnimalOperations(z, Y):
                                 * z.ForestAreaTotalSqMi
                                 * (1 - z.InstreamDieoff))
         else:
-            z.UrbOrgs[Y][i] = (UrbRunoffLiter(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.NRur, z.NUrb, z.Area,
-                                              z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA)[Y][i]
-                               * (z.UrbEMC * 10)
-                               * (1 - z.WuDieoff)
-                               * (1 - z.InstreamDieoff))
+            z.UrbOrgs[Y][i] = (
+                    UrbRunoffLiter_2(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.NRur, z.NUrb, z.Area,
+                                     z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA)[Y][i]
+                    * (z.UrbEMC * 10)
+                    * (1 - z.WuDieoff)
+                    * (1 - z.InstreamDieoff))
             z.WildOrgs[Y][i] = (z.WildOrgsDay
                                 * z.DaysMonth[Y][i]
                                 * z.WildDensity

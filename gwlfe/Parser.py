@@ -372,21 +372,6 @@ class GmsReader(object):
         z.TileDrainN = np.zeros((z.DimYrs, 12))
         z.TileDrainP = np.zeros((z.DimYrs, 12))
         z.TileDrainSed = np.zeros((z.DimYrs, 12))
-        # z.TileDrain = np.zeros((z.DimYrs, 12))
-        # z.TileDrainRO = np.zeros((z.DimYrs, 12))
-        # z.TileDrainGW = np.zeros((z.DimYrs, 12))
-        # z.GwAgLE = np.zeros((z.DimYrs, 12))
-        # z.Withdrawal = np.zeros((z.DimYrs, 12))
-        # z.PtSrcFlow = np.zeros((z.DimYrs, 12))
-        # z.StreamFlow = np.zeros((z.DimYrs, 12))
-        # z.StreamFlowLE = np.zeros((z.DimYrs, 12))
-        # z.Precipitation = np.zeros((z.DimYrs, 12))
-        # z.Evapotrans = np.zeros((z.DimYrs, 12))
-        # z.GroundWatLE = np.zeros((z.DimYrs, 12))
-        # z.AgRunoff = np.zeros((z.DimYrs, 12))
-        # z.Runoff = np.zeros((z.DimYrs, 12))
-        # z.Erosion = np.zeros((z.DimYrs, 12))
-        # z.SedYield = np.zeros((z.DimYrs, 12))
         z.GroundNitr = np.zeros((z.DimYrs, 12))
         z.GroundPhos = np.zeros((z.DimYrs, 12))
         z.DisNitr = np.zeros((z.DimYrs, 12))
@@ -395,16 +380,13 @@ class GmsReader(object):
         z.TotNitr = np.zeros((z.DimYrs, 12))
         z.DisPhos = np.zeros((z.DimYrs, 12))
         z.TotPhos = np.zeros((z.DimYrs, 12))
-        # z.LuRunoff = np.zeros((z.DimYrs, 16))
-        # z.LuErosion = np.zeros((z.DimYrs, 16))
         z.LuSedYield = np.zeros((z.DimYrs, 16))
         z.LuDisNitr = np.zeros((z.DimYrs, 16))
         z.LuTotNitr = np.zeros((z.DimYrs, 16))
-        z.LuTotNitr_1 = np.zeros((z.DimYrs, 16))
+        z.LuTotNitr_2 = np.zeros((z.DimYrs, 16))
         z.LuDisPhos = np.zeros((z.DimYrs, 16))
         z.LuTotPhos = np.zeros((z.DimYrs, 16))
         z.LuTotPhos_1 = np.zeros((z.DimYrs, 16))
-        # z.SedTrans = np.zeros((z.DimYrs, 16))
         z.SepticNitr = np.zeros(z.DimYrs)
         z.SepticPhos = np.zeros(z.DimYrs)
 
@@ -441,10 +423,8 @@ class GmsReader(object):
         z.CMStream = np.zeros((z.DimYrs, 12))
         z.OrgConc = np.zeros((z.DimYrs, 12))
 
-        # z.StreamBankNSum = np.zeros(z.WxYrs)
         z.StreamBankPSum = np.zeros(z.WxYrs)
         z.StreamBankErosSum = np.zeros(z.WxYrs)
-        # z.StreamBankNSum = np.zeros(z.WxYrs)
         z.StreamBankPSum = np.zeros(z.WxYrs)
         z.GroundNitrSum = np.zeros(z.WxYrs)
         z.GroundPhosSum = np.zeros(z.WxYrs)
@@ -480,8 +460,6 @@ class GmsReader(object):
         z.AntMoist_0 = np.zeros(5)
 
         for i in range(5):
-            # z.AntMoist[i] = self.next(float)
-            # z.AntMoist_0[i] = z.AntMoist[i]
             z.AntMoist_0[i] = self.next(float)
             self.next(EOL)
 
@@ -521,20 +499,14 @@ class GmsReader(object):
         z.Imper = np.zeros(z.NLU)
         z.TotSusSolids = np.zeros(z.NLU)
 
-        # z.CNI = np.zeros((3, z.NLU))
         z.CNI_0 = np.zeros((3, z.NLU))
-        # z.CNP = np.zeros((3, z.NLU))
         z.CNP_0 = np.zeros((3, z.NLU))
-        # z.NewCN = np.zeros((3, z.NLU))
 
         for i in range(z.NRur, z.NLU):
             z.Landuse[i] = self.next(LandUse.parse)  # Urban Land Use Category
             z.Area[i] = self.next(float)  # Area (Ha)
             z.Imper[i] = self.next(float)  # Impervious Surface %
-            # z.CNI[1][i] = self.next(float)  # Curve Number(Impervious Surfaces)
-            # z.CNI_0[1][i] = z.CNI[1][i]  # Curve Number(Impervious Surfaces)
             z.CNI_0[1][i] = self.next(float)  # Curve Number(Impervious Surfaces)
-            # z.CNP[1][i] = self.next(float)  # Curve Number(Pervious Surfaces)
             z.CNP_0[1][i] = self.next(float)  # Curve Number(Pervious Surfaces)
             z.TotSusSolids[i] = self.next(float)  # Total Suspended Solids Factor
             self.next(EOL)

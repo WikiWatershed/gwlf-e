@@ -14,7 +14,7 @@ def pRunoff(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb, CN,
     result = np.zeros((NYrs, 12))
     rur_q_runoff = RurQRunoff(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb, CN, Grow_0)
     p_conc = PConc(NRur, NUrb, PhosConc, ManPhos, ManuredAreas, FirstManureMonth, LastManureMonth, FirstManureMonth2,
-          LastManureMonth2)
+                   LastManureMonth2)
     for Y in range(NYrs):
         for i in range(12):
             for l in range(NRur):
@@ -22,6 +22,7 @@ def pRunoff(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb, CN,
     return result
 
 
+@memoize
 def pRunoff_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb, CN, Grow_0, Area, PhosConc, ManuredAreas,
               FirstManureMonth, LastManureMonth, ManPhos, FirstManureMonth2, LastManureMonth2):
     p_conc = PConc(NRur, NUrb, PhosConc, ManPhos, ManuredAreas, FirstManureMonth, LastManureMonth, FirstManureMonth2,

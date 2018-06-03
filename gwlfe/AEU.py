@@ -7,6 +7,7 @@ from AreaTotal import AreaTotal_2
 
 
 def AEU(NumAnimals, AvgAnimalWt, NRur, NUrb, Area):
+    # Recalculate AEU using the TotAEU from the animal file and the total area of the basin in Acres
     result = 0
     areatotal = AreaTotal(NRur, NUrb, Area)
     totLAEU = TotLAEU(NumAnimals, AvgAnimalWt)
