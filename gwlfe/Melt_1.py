@@ -3,7 +3,6 @@ from Timer import time_function
 from InitSnow import InitSnow
 from InitSnowYesterday import InitSnowYesterday
 from Melt import Melt, Melt_2
-from numba import jit
 from Memoization import memoize
 
 @memoize
@@ -22,8 +21,7 @@ def Melt_1(NYrs, DaysMonth, InitSnow_0, Temp, Prec):
                 init_snow_yesterday = init_snow[Y][i][j]
     return result
 
-# @time_function
-# @jit(cache=True)
+@memoize
 def Melt_1_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec):
     # result = np.zeros((NYrs, 12, 31))
     init_snow_yesterday = InitSnowYesterday(NYrs, DaysMonth, InitSnow_0, Temp, Prec)

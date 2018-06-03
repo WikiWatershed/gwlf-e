@@ -2,7 +2,6 @@ import numpy as np
 from Timer import time_function
 from Melt_1 import Melt_1, Melt_1_2
 from Rain import Rain, Rain_2
-from numba import jit
 from Memoization import memoize
 
 @memoize
@@ -16,8 +15,6 @@ def Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec):
                 result[Y][i][j] = rain[Y][i][j] + melt_1[Y][i][j]
     return result
 
-# @time_function
-# @jit(cache=True)
 @memoize
 def Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec):
     melt_1 = Melt_1_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)

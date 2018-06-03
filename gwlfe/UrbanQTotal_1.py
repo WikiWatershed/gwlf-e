@@ -28,10 +28,8 @@ def UrbanQTotal_1(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI
 @memoize
 def UrbanQTotal_1_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
                   ISRR, ISRA):
-    result = np.zeros((NYrs, 12, 31))
     urban_area_total = UrbAreaTotal(NRur, NUrb, Area)
     area_total = AreaTotal(NRur, NUrb, Area)
     urban_q_total = UrbanQTotal_2(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, Area, CNI_0, AntMoist_0, Grow_0,
                                 CNP_0, Imper, ISRR, ISRA)
-    result = urban_q_total * urban_area_total / area_total
-    return result
+    return urban_q_total * urban_area_total / area_total

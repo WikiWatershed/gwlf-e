@@ -19,6 +19,7 @@ def RurEros(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef, NRur, KF, LS, C, P, 
                         result[Y][i][j][l] = 1.32 * erosiv[Y][i][j] * KF[l] * LS[l] * C[l] * P[l] * Area[l]
     return result
 
+@memoize
 def RurEros_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef, NRur, KF, LS, C, P, Area):
     erosiv = np.reshape(np.repeat(Erosiv_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef), NRur, axis=2),(NYrs, 12, 31, NRur))
     water = np.reshape(np.repeat(Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec),NRur,axis=2),(NYrs, 12, 31, NRur)) #TODO: is there a way to repeating

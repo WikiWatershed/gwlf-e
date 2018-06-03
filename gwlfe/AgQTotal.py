@@ -40,7 +40,6 @@ def AgQTotal(NYrs,DaysMonth,InitSnow_0, Temp, Prec,NRur,CN, AntMoist_0,NUrb,Grow
                         result[Y][i][j] = 0
     return result
 
-# @time_function
 @memoize
 def AgQTotal_2(NYrs,DaysMonth,InitSnow_0, Temp, Prec,NRur,CN, AntMoist_0,NUrb,Grow_0,Landuse,Area):
     result = np.zeros((NYrs, 12, 31))

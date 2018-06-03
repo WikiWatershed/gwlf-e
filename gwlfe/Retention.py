@@ -3,7 +3,6 @@ from Timer import time_function
 from NLU import NLU
 from CNum import CNum, CNum_2
 from Water import Water, Water_2
-# @time_function
 from Memoization import memoize
 
 
@@ -24,7 +23,7 @@ def Retention(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, NRur, NUrb, C
                                 result[Y][i][j][l] = 0
     return result
 
-# @time_function
+@memoize
 def Retention_2(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, NRur, NUrb, CN, Grow_0):
     nlu = NLU(NRur, NUrb)
     result = np.zeros((NYrs, 12, 31, nlu))
