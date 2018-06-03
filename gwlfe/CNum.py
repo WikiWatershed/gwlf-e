@@ -1,5 +1,6 @@
 import numpy as np
 from Timer import time_function
+from DailyArrayConverter import get_value_for_yesterday
 from MeltPest import MeltPest
 from NewCN import NewCN, NewCN_2
 from AMC5 import AMC5, AMC5_1, AMC5_yesterday

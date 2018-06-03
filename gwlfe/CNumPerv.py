@@ -1,5 +1,6 @@
 import numpy as np
 from Timer import time_function
+from DailyArrayConverter import get_value_for_yesterday
 from NLU import NLU
 from Water import Water, Water_2
 from CNP import CNP, CNP_2
