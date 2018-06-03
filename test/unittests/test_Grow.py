@@ -3,7 +3,7 @@ from unittest import skip
 from mock import patch
 import numpy as np
 from gwlfe import Parser
-from gwlfe import Grow_0
+from gwlfe import Grow
 from gwlfe import enums
 
 
@@ -15,5 +15,5 @@ class TestGrow(unittest.TestCase):
     def test_Grow(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            Grow_0.Grow_2(z.Grow_0),
-            Grow_0.Grow_0(z.Grow_0)==enums.GROWING_SEASON, decimal=7)
+            Grow.Grow_2(z.Grow_0),
+            Grow.Grow(z.Grow_0)==enums.GROWING_SEASON, decimal=7)
