@@ -27,4 +27,5 @@ def Erosion(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef, NRur, KF, LS, C, P, 
 def Erosion_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef, NRur, KF, LS, C, P, Area):
     water = Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     rureros = RurEros_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef, NRur, KF, LS, C, P, Area)
-    return np.sum(np.where((Temp > 0) & (water > 0.01), np.sum(rureros, axis=3), 0), axis=2)
+    # return np.sum(np.where((Temp > 0) & (water > 0.01), np.sum(rureros, axis=3), 0), axis=2)
+    return np.sum(np.sum(rureros, axis=3), axis=2)
