@@ -79,12 +79,12 @@ class TestOutput(unittest.TestCase):
             self.assertItemsEqual(self.generated_output["SummaryLoads"][i], self.static_output["SummaryLoads"][i])
             for (key, val) in month.iteritems():
                 try:
-                    if (type(key) == float):
+                    try:
                         np.testing.assert_almost_equal(self.generated_output["SummaryLoads"][i][key],
                                                        self.static_output["SummaryLoads"][i][key],
                                                        decimal=7, err_msg='',
                                                        verbose=True)
-                    else:
+                    except TypeError:
                         self.assertEqual(self.generated_output["SummaryLoads"][i][key],
                                          self.static_output["SummaryLoads"][i][key])
                 except Exception as e:
@@ -100,12 +100,12 @@ class TestOutput(unittest.TestCase):
             self.assertItemsEqual(self.generated_output["Loads"][i], self.static_output["Loads"][i])
             for (key, val) in month.iteritems():
                 try:
-                    if (type(key) == float):
+                    try:
                         np.testing.assert_almost_equal(self.generated_output["Loads"][i][key],
                                                        self.static_output["Loads"][i][key],
                                                        decimal=7, err_msg='',
                                                        verbose=True)
-                    else:
+                    except TypeError:
                         self.assertEqual(self.generated_output["Loads"][i][key], self.static_output["Loads"][i][key])
                 except AssertionError as e:
                     print("AssertionError on %s (%s)" % (key, self.static_output["Loads"][i]["Source"]))
