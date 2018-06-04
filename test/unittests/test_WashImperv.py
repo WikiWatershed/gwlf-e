@@ -12,9 +12,8 @@ class TestWashImperv(unittest.TestCase):
         self.z = Parser.GmsReader(input_file).read()
 
 
-    @skip('Not Ready Yet.')
     def test_WashImperv(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            WashImperv.WashImperv_2(),
-            WashImperv.WashImperv(), decimal=7)
+            WashImperv.WashImperv_2(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.CNI_0, z.AntMoist_0, z.Grow_0, z.NRur, z.NUrb),
+            WashImperv.WashImperv(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.CNI_0, z.AntMoist_0, z.Grow_0, z.NRur, z.NUrb), decimal=7)
