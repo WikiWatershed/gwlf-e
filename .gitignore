@@ -18,5 +18,6 @@ __pycache__/
 .tox
 .cache
 .eggs
+**.npy
 **.csv
 **.dot

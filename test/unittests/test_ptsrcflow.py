@@ -2,7 +2,7 @@ import unittest
 from unittest import skip
 import numpy as np
 from gwlfe import Parser
-from gwlfe import PtSrcFlow
+from gwlfe.MultiUse_Fxns import PtSrcFlow
 
 
 class TestPrecipitation(unittest.TestCase):

@@ -9,8 +9,8 @@ import logging
 
 import numpy as np
 
-from datamodel import DataModel
-from enums import YesOrNo, ETflag, GrowFlag, LandUse, SweepType
+from .datamodel import DataModel
+from .enums import YesOrNo, ETflag, GrowFlag, LandUse, SweepType
 
 log = logging.getLogger(__name__)
 
@@ -57,7 +57,7 @@ class GmsReader(object):
         # z.NetDisLoad = np.zeros(3)
 
         z.AvGRStreamFC = 0
-        z.AvGRStreamN = 0
+        # z.AvGRStreamN = 0
         z.AvGRStreamP = 0
         # z.AvTileDrain = np.zeros(12)
         # z.RurAreaTotal = 0
@@ -159,38 +159,38 @@ class GmsReader(object):
         z.AvPtSrcFlow = np.zeros(12)
 
         # Calculated Values for Animal Feeding Operations
-        z.NGLoadN = np.zeros(9)
+        # z.NGLoadN = np.zeros(9)
         z.NGLoadP = np.zeros(9)
         z.NGLoadFC = np.zeros(9)
-        z.NGAccManAppN = np.zeros(12)
+        # z.NGAccManAppN = np.zeros(12)
         z.NGAccManAppP = np.zeros(12)
         z.NGAccManAppFC = np.zeros(12)
-        z.NGAppManN = np.zeros(12)
-        z.NGInitBarnN = np.zeros(12)
+        # z.NGAppManN = np.zeros(12)
+        # z.NGInitBarnN = np.zeros(12)
         z.NGAppManP = np.zeros(12)
         z.NGInitBarnP = np.zeros(12)
         z.NGAppManFC = np.zeros(12)
         z.NGInitBarnFC = np.zeros(12)
 
-        z.GRLoadN = np.zeros(9)
+        # z.GRLoadN = np.zeros(9)
         z.GRLoadP = np.zeros(9)
         z.GRLoadFC = np.zeros(9)
-        z.GRAccManAppN = np.zeros(12)
+        # z.GRAccManAppN = np.zeros(12)
         z.GRAccManAppP = np.zeros(12)
         z.GRAccManAppFC = np.zeros(12)
-        z.GRAppManN = np.zeros(12)
-        z.GRInitBarnN = np.zeros(12)
+        # z.GRAppManN = np.zeros(12)
+        # z.GRInitBarnN = np.zeros(12)
         z.GRAppManP = np.zeros(12)
         z.GRInitBarnP = np.zeros(12)
         z.GRAppManFC = np.zeros(12)
         z.GRInitBarnFC = np.zeros(12)
-        z.GrazingN = np.zeros(12)
+        # z.GrazingN = np.zeros(12)
         z.GrazingP = np.zeros(12)
         z.GrazingFC = np.zeros(12)
         z.GRStreamN = np.zeros(12)
         z.GRStreamP = np.zeros(12)
         z.GRStreamFC = np.zeros(12)
-        z.AvAnimalN = np.zeros(12)
+        # z.AvAnimalN = np.zeros(12)
         z.AvAnimalP = np.zeros(12)
         z.AvAnimalFC = np.zeros(12)
         z.AvWWOrgs = np.zeros(12)
@@ -200,9 +200,9 @@ class GmsReader(object):
         z.AvTotalOrgs = np.zeros(12)
         z.AvCMStream = np.zeros(12)
         z.AvOrgConc = np.zeros(12)
-        z.AvGRLostBarnN = np.zeros(12)
+        # z.AvGRLostBarnN = np.zeros(12)
         z.AvGRLostBarnP = np.zeros(12)
-        z.AvNGLostBarnN = np.zeros(12)
+        # z.AvNGLostBarnN = np.zeros(12)
         z.AvNGLostBarnP = np.zeros(12)
         z.AvNGLostManP = np.zeros(12)
         z.AvNGLostBarnFC = np.zeros(12)
@@ -402,7 +402,7 @@ class GmsReader(object):
         z.NGLostManFC = np.zeros((z.DimYrs, 12))
         z.NGLostBarnFC = np.zeros((z.DimYrs, 12))
 
-        z.GRLostManN = np.zeros((z.DimYrs, 12))
+        # z.GRLostManN = np.zeros((z.DimYrs, 12))
         z.GRLostBarnN = np.zeros((z.DimYrs, 12))
         z.GRLossN = np.zeros((z.DimYrs, 12))
         z.GRLostManP = np.zeros((z.DimYrs, 12))
@@ -411,8 +411,8 @@ class GmsReader(object):
         z.GRLostManFC = np.zeros((z.DimYrs, 12))
         z.GRLostBarnFC = np.zeros((z.DimYrs, 12))
         z.GRLossFC = np.zeros((z.DimYrs, 12))
-        z.LossFactAdj = np.zeros((z.DimYrs, 12))
-        z.AnimalN = np.zeros((z.DimYrs, 12))
+        # z.LossFactAdj = np.zeros((z.DimYrs, 12))
+        # z.AnimalN = np.zeros((z.DimYrs, 12))
         z.AnimalP = np.zeros((z.DimYrs, 12))
         z.AnimalFC = np.zeros((z.DimYrs, 12))
         z.WWOrgs = np.zeros((z.DimYrs, 12))
@@ -440,10 +440,10 @@ class GmsReader(object):
         z.UrbOrgsSum = np.zeros(z.WxYrs)
         z.WildOrgsSum = np.zeros(z.WxYrs)
         z.TotalOrgsSum = np.zeros(z.WxYrs)
-        z.GRLostBarnNSum = np.zeros(z.WxYrs)
+        # z.GRLostBarnNSum = np.zeros(z.WxYrs)
         z.GRLostBarnPSum = np.zeros(z.WxYrs)
         z.GRLostBarnFCSum = np.zeros(z.WxYrs)
-        z.NGLostBarnNSum = np.zeros(z.WxYrs)
+        # z.NGLostBarnNSum = np.zeros(z.WxYrs)
         z.NGLostBarnPSum = np.zeros(z.WxYrs)
         z.NGLostBarnFCSum = np.zeros(z.WxYrs)
         z.NGLostManPSum = np.zeros(z.WxYrs)
@@ -491,8 +491,8 @@ class GmsReader(object):
             z.CN[i] = self.next(float)  # Curve Number
             z.KF[i] = self.next(float)  # K Factor
             z.LS[i] = self.next(float)  # LS Factor
-            z.C[i] = self.next(float)  # C Factor
-            z.P[i] = self.next(float)  # P Factor
+            z.C[i] = self.next(float)   # C Factor
+            z.P[i] = self.next(float)   # P Factor
             self.next(EOL)
 
         # Lines 30 - 35: (for each Urban Land Use Category)
@@ -659,7 +659,8 @@ class GmsReader(object):
         z.n6c = self.next(float)  # Low Density Urban
         z.n6d = self.next(float)  # Unpaved Roads
         z.n7 = self.next(float)  # Other
-        z.n7b = self.next(float)  # Farm Animals
+        # z.n7b_0 = self.next(float)  # Farm Animals
+        _ = self.next(float)  # Farm Animals
         z.n8 = self.next(float)  # Streambank Erosion
         z.n9 = self.next(float)  # Groundwater/Subsurface
         z.n10 = self.next(float)  # Point Source Discharges
@@ -762,15 +763,18 @@ class GmsReader(object):
         z.n42b = self.next(float)  # Total Stream Length (km)
         z.n42c = self.next(float)  # Unpaved Road Length (km)
         z.n43 = self.next(float)  # Stream Km with Vegetated Buffer Strips: Existing
-        z.GRLBN = self.next(float)  # Average Grazing Animal Loss Rate (Barnyard/Confined Area): Nitrogen
-        z.NGLBN = self.next(float)  # Average Non-Grazing Animal Loss Rate (Barnyard/Confined Area): Nitrogen
+        # z.GRLBN = self.next(float)  # Average Grazing Animal Loss Rate (Barnyard/Confined Area): Nitrogen
+        _ = self.next(float)  # Average Grazing Animal Loss Rate (Barnyard/Confined Area): Nitrogen
+        # z.NGLBN = self.next(float)  # Average Non-Grazing Animal Loss Rate (Barnyard/Confined Area): Nitrogen
+        _ = self.next(float)  # Average Non-Grazing Animal Loss Rate (Barnyard/Confined Area): Nitrogen
         z.GRLBP = self.next(float)  # Average Grazing Animal Loss Rate (Barnyard/Confined Area): Phosphorus
         z.NGLBP = self.next(float)  # Average Non-Grazing Animal Loss Rate (Barnyard/Confined Area): Phosphorus
         z.NGLManP = self.next(float)  # Average Non-Grazing Animal Loss Rate (Manure Spreading): Phosphorus
         z.NGLBFC = self.next(float)  # Average Non-Grazing Animal Loss Rate (Barnyard/Confined Area): Fecal Coliform
         z.GRLBFC = self.next(float)  # Average Grazing Animal Loss Rate (Barnyard/Confined Area): Fecal Coliform
         z.GRSFC = self.next(float)  # Average Grazing Animal Loss Rate (Spent in Streams): Fecal Coliform
-        z.GRSN = self.next(float)  # Average Grazing Animal Loss Rate (Spent in Streams): Nitrogen
+        # z.GRSN = self.next(float)  # Average Grazing Animal Loss Rate (Spent in Streams): Nitrogen
+        _ = self.next(float)  # Value set before it is used
         z.GRSP = self.next(float)  # Average Grazing Animal Loss Rate (Spent in Streams): Phosphorus
         self.next(EOL)
 
@@ -1103,13 +1107,15 @@ class GmsReader(object):
         self.next(EOL)
 
         # Line 146:
-        z.InitNgN = self.next(float)  # Initial Non-Grazing Animal Totals: Nitrogen (kg/yr)
+        # z.InitNgN = self.next(float)  # Initial Non-Grazing Animal Totals: Nitrogen (kg/yr)
+        _ = self.next(float)  # Seems to be set to 0 before it is used
         z.InitNgP = self.next(float)  # Initial Non-Grazing Animal Totals: Phosphorus (kg/yr)
         z.InitNgFC = self.next(float)  # Initial Non-Grazing Animal Totals: Fecal Coliforms (orgs/yr)
         z.NGAppSum = self.next(float)  # Non-Grazing Manure Data Check: Land Applied (%)
         z.NGBarnSum = self.next(float)  # Non-Grazing Manure Data Check: In Confined Areas (%)
         z.NGTotSum = self.next(float)  # Non-Grazing Manure Data Check: Total (<= 1)
-        z.InitGrN = self.next(float)  # Initial Grazing Animal Totals: Nitrogen (kg/yr)
+        # z.InitGrN = self.next(float)  # Initial Grazing Animal Totals: Nitrogen (kg/yr)
+        _ = self.next(float)  # Value seems to be set to 0 before it is used
         z.InitGrP = self.next(float)  # Initial Grazing Animal Totals: Phosphorus (kg/yr)
         z.InitGrFC = self.next(float)  # Initial Grazing Animal Totals: Fecal Coliforms (orgs/yr)
         z.GRAppSum = self.next(float)  # Grazing Manure Data Check: Land Applied (%)
@@ -1136,7 +1142,7 @@ class GmsReader(object):
         # Line 148-156: (For each Animal type)
         z.AnimalName = np.zeros(z.NAnimals, dtype=object)
         z.NumAnimals = np.zeros(z.NAnimals, dtype=int)
-        z.GrazingAnimal = np.zeros(z.NAnimals, dtype=object)
+        z.GrazingAnimal_0 = np.zeros(z.NAnimals, dtype=object)
         z.AvgAnimalWt = np.zeros(z.NAnimals)
         z.AnimalDailyN = np.zeros(z.NAnimals)
         z.AnimalDailyP = np.zeros(z.NAnimals)
@@ -1145,7 +1151,7 @@ class GmsReader(object):
         for i in range(z.NAnimals):
             z.AnimalName[i] = self.next(str)  # Animal Name
             z.NumAnimals[i] = self.next(int)  # Number of Animals
-            z.GrazingAnimal[i] = self.next(YesOrNo.parse)  # Flag: Grazing Animal (“N” No, “Y” Yes)
+            z.GrazingAnimal_0[i] = self.next(YesOrNo.parse)  # Flag: Grazing Animal (“N” No, “Y” Yes)
             z.AvgAnimalWt[i] = self.next(float)  # Average Animal Weight (kg)
             z.AnimalDailyN[i] = self.next(float)  # Animal Daily Loads: Nitrogen (kg/AEU)
             z.AnimalDailyP[i] = self.next(float)  # Animal Daily Loads: Phosphorus (kg/AEU)
@@ -1977,7 +1983,7 @@ class GmsWriter(object):
             self.writerow([
                 z.AnimalName[i],
                 z.NumAnimals[i],
-                z.GrazingAnimal[i],
+                z.GrazingAnimal_0[i],
                 z.AvgAnimalWt[i],
                 z.AnimalDailyN[i],
                 z.AnimalDailyP[i],

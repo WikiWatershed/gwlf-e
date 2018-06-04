@@ -55,14 +55,14 @@ def CalculateAnnualMeanLoads(z, Y):
         z.AvTotPhos[i] += z.TotPhos[Y][i] / z.NYrs
         z.AvGroundNitr[i] += z.GroundNitr[Y][i] / z.NYrs
         z.AvGroundPhos[i] += z.GroundPhos[Y][i] / z.NYrs
-        z.AvAnimalN[i] += z.AnimalN[Y][i] / z.NYrs
+        # z.AvAnimalN[i] += z.AnimalN[Y][i] / z.NYrs
         z.AvAnimalP[i] += z.AnimalP[Y][i] / z.NYrs
 
-        z.AvGRLostBarnN[i] += z.GRLostBarnN[Y][i] / z.NYrs
+        # z.AvGRLostBarnN[i] += z.GRLostBarnN[Y][i] / z.NYrs
         z.AvGRLostBarnP[i] += z.GRLostBarnP[Y][i] / z.NYrs
         z.AvGRLostBarnFC[i] += z.GRLostBarnFC[Y][i] / z.NYrs
 
-        z.AvNGLostBarnN[i] += z.NGLostBarnN[Y][i] / z.NYrs
+        # z.AvNGLostBarnN[i] += z.NGLostBarnN[Y][i] / z.NYrs
         z.AvNGLostBarnP[i] += z.NGLostBarnP[Y][i] / z.NYrs
         z.AvNGLostBarnFC[i] += z.NGLostBarnFC[Y][i] / z.NYrs
 
@@ -157,12 +157,12 @@ def CalculateAnnualMeanLoads(z, Y):
     z.AvTotPhosSum = sum(z.AvTotPhos)
     z.AvGroundNitrSum = sum(z.AvGroundNitr)
     z.AvGroundPhosSum = sum(z.AvGroundPhos)
-    z.AvAnimalNSum = sum(z.AvAnimalN)
+    # z.AvAnimalNSum = sum(z.AvAnimalN)
     z.AvAnimalPSum = sum(z.AvAnimalP)
-    z.AvGRLostBarnNSum = sum(z.AvGRLostBarnN)
+    # z.AvGRLostBarnNSum = sum(z.AvGRLostBarnN)
     z.AvGRLostBarnPSum = sum(z.AvGRLostBarnP)
     z.AvGRLostBarnFCSum = sum(z.AvGRLostBarnFC)
-    z.AvNGLostBarnNSum = sum(z.AvNGLostBarnN)
+    # z.AvNGLostBarnNSum = sum(z.AvNGLostBarnN)
     z.AvNGLostBarnPSum = sum(z.AvNGLostBarnP)
     z.AvNGLostBarnFCSum = sum(z.AvNGLostBarnFC)
     z.AvNGLostManPSum = sum(z.AvNGLostManP)

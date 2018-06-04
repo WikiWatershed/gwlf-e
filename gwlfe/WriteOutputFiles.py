@@ -29,6 +29,10 @@ from LuTotPhos import LuTotPhos
 from LuTotNitr_1 import LuTotNitr_1_2
 from RetentFactorN import RetentFactorN
 from AttenN import AttenN
+from MultiUse_Fxns.Constants import NPConvert
+from Outputs.AvAnimalNSum.AvAnimalNSum_1 import AvAnimalNSum_1_2
+from Outputs.AvAnimalNSum.N7b_1 import N7b_1
+
 
 log = logging.getLogger(__name__)
 
@@ -163,11 +167,11 @@ def WriteOutput(z):
     # Set the conversion factors from metric to english
     SedConvert = 1000
     SedConvert = 1
-    NPConvert = 1
+    # NPConvert = 1
 
     # Get the animal nuntient loads
-    z.GRLBN = z.AvGRLostBarnNSum
-    z.NGLBN = z.AvNGLostBarnNSum
+    # z.GRLBN = z.AvGRLostBarnNSum
+    # z.NGLBN = z.AvNGLostBarnNSum
     z.GRLBP = z.AvGRLostBarnPSum
     z.NGLBP = z.AvNGLostBarnPSum
     z.NGLManP = z.AvNGLostManPSum
@@ -176,7 +180,7 @@ def WriteOutput(z):
     z.NGLBFC = z.AvNGLostBarnFCSum
     z.GRLBFC = z.AvGRLostBarnFCSum
     z.GRSFC = z.AvGRStreamFC
-    z.GRSN = z.AvGRStreamN
+    # z.GRSN = z.AvGRStreamN
     z.GRSP = z.AvGRStreamP
 
     # Get the initial pathogen loads
@@ -190,7 +194,7 @@ def WriteOutput(z):
     z.n149 = z.AvWildOrgsSum
 
     # FARM ANIMAL LOADS
-    z.n7b = z.AvAnimalNSum
+    # z.n7b_2 = z.AvAnimalNSum
     z.n14b = z.AvAnimalPSum
 
     # XXX: These are not used in our port.
@@ -256,21 +260,21 @@ def WriteOutput(z):
     z.AvTotalOrgsSum = z.n150
 
     # FARM ANIMAL LOAD REDUCTION FOR N AND P
-    z.AvAnimalNSum = z.n7b
+    # z.AvAnimalNSum_1 = z.n7b
     z.AvAnimalPSum = z.n14b
-    z.n7b = z.n7b * NPConvert
+    # z.n7b_1 = z.n7b * NPConvert
     z.n14b = z.n14b * NPConvert
 
     # XXX: These are not used in our port
     # FinalAnimalN = z.n7b
     # FinalAnimalP = z.n14b
 
-    z.GRLBN = z.GRLBN * NPConvert
-    z.NGLBN = z.NGLBN * NPConvert
+    # z.GRLBN = z.GRLBN * NPConvert #not used
+    # z.NGLBN = z.NGLBN * NPConvert
     z.GRLBP = z.GRLBP * NPConvert
     z.NGLBP = z.NGLBP * NPConvert
     z.NGLManP = z.NGLManP * NPConvert
-    z.GRSN = z.AvGRStreamN * NPConvert
+    # z.GRSN_2 = z.AvGRStreamN * NPConvert
     z.GRSP = z.AvGRStreamP * NPConvert
 
     # RESET GWLF OUTPUT VALUES FOR RURAL LANDUSE TO REDUCED LOADS AND CONVERT SCENARIO VALUES
@@ -396,14 +400,12 @@ def WriteOutput(z):
 
     # COMPLETE CALCULATING THE TOTAL SOURCE LOADS FOR SEDIMENT, N AND P
     AvTotalSed = (AvTotalSed + (((z.AvStreamBankErosSum / 1000) +
-                                 ((z.AvTileDrainSedSum / 1000)) * z.RetentFactorSed * (1 - z.AttenTSS))))
+                  ((z.AvTileDrainSedSum / 1000)) * z.RetentFactorSed * (1 - z.AttenTSS))))
     AvDisN = (AvDisN + ((z.AvGroundNitrSum + YrPointNitr + z.AvSeptNitr) *
                         RetentFactorN(z.ShedAreaDrainLake, z.RetentNLake) * (
                                 1 - AttenN(z.AttenFlowDist, z.AttenFlowVel, z.AttenLossRateN))))
-    AvTotalN = (AvTotalN + ((z.AvStreamBankNSum + (z.AvGroundNitrSum + z.AvTileDrainNSum +
-                                                   z.AvAnimalNSum + YrPointNitr + z.AvSeptNitr) * RetentFactorN(
-        z.ShedAreaDrainLake, z.RetentNLake) * (
-                                     1 - AttenN(z.AttenFlowDist, z.AttenFlowVel, z.AttenLossRateN)))))
+    # AvTotalN = (AvTotalN + ((z.AvStreamBankNSum + (z.AvGroundNitrSum + z.AvTileDrainNSum +
+    #             z.AvAnimalNSum + YrPointNitr + z.AvSeptNitr) * z.RetentFactorN * (1 - z.AttenN))))
     AvDisP = AvDisP + ((z.AvGroundPhosSum + YrPointPhos + z.AvSeptPhos) * z.RetentFactorP * (1 - z.AttenP))
     AvTotalP = (AvTotalP + ((z.AvStreamBankPSum + (z.AvGroundPhosSum + z.AvTileDrainPSum +
                                                    z.AvAnimalPSum + YrPointPhos + z.AvSeptPhos) * z.RetentFactorP * (
@@ -634,8 +636,8 @@ def WriteOutput(z):
                 z.n13bdp = z.n13bdp + z.LuDisPhos[y][l]
 
         # Convert animal loads into English units
-        z.GRLBN = z.GRLostBarnNSum[y]
-        z.NGLBN = z.NGLostBarnNSum[y]
+        # z.GRLBN = z.GRLostBarnNSum[y] #not used
+        # z.NGLBN = z.NGLostBarnNSum[y]
         z.GRLBP = z.GRLostBarnPSum[y]
         z.NGLBP = z.NGLostBarnPSum[y]
         z.NGLManP = z.NGLostManPSum[y]
@@ -644,7 +646,7 @@ def WriteOutput(z):
         z.NGLBFC = z.NGLostBarnFCSum[y]
         z.GRLBFC = z.GRLostBarnFCSum[y]
         z.GRSFC = z.AvGRStreamFC
-        z.GRSN = z.AvGRStreamN
+        # z.GRSN_3 = z.AvGRStreamN
         z.GRSP = z.AvGRStreamP
 
         # Get the initial pathogen loads
@@ -835,14 +837,16 @@ def WriteOutput(z):
     # kg
     SumNitr = sum(z.AvLuTotNitr[l] for l in sources)
     SumNitr += z.AvStreamBankNSum
-    SumNitr += z.AvAnimalNSum * RetentFactorN(z.ShedAreaDrainLake, z.RetentNLake) * (
-            1 - AttenN(z.AttenFlowDist, z.AttenFlowVel, z.AttenLossRateN))
-    SumNitr += z.AvGroundNitrSum * RetentFactorN(z.ShedAreaDrainLake, z.RetentNLake) * (
-            1 - AttenN(z.AttenFlowDist, z.AttenFlowVel, z.AttenLossRateN))
-    SumNitr += YrPointNitr * RetentFactorN(z.ShedAreaDrainLake, z.RetentNLake) * (
-            1 - AttenN(z.AttenFlowDist, z.AttenFlowVel, z.AttenLossRateN))
-    SumNitr += z.AvSeptNitr * RetentFactorN(z.ShedAreaDrainLake, z.RetentNLake) * (
-            1 - AttenN(z.AttenFlowDist, z.AttenFlowVel, z.AttenLossRateN))
+    SumNitr += AvAnimalNSum_1_2(z.NYrs, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN, z.NGAppNRate,
+                              z.NGPctSoilIncRate, z.GRAppNRate, z.GRPctSoilIncRate, z.GrazingNRate, z.GRPctManApp,
+                              z.PctGrazing, z.GRBarnNRate,
+                              z.Prec, z.DaysMonth, z.AWMSGrPct, z.GrAWMSCoeffN, z.RunContPct, z.RunConCoeffN, z.n41b,
+                              z.n85h, z.NGPctManApp, z.AWMSNgPct,
+                              z.NGBarnNRate, z.NgAWMSCoeffN, z.n41d, z.n85j, z.n41f, z.n85l, z.PctStreams, z.n42, z.n45,
+                              z.n69, z.n43, z.n64) * RetentFactorN(z.ShedAreaDrainLake, z.RetentNLake) * (1 - AttenN(z.AttenFlowDist, z.AttenFlowVel, z.AttenLossRateN))
+    SumNitr += z.AvGroundNitrSum * RetentFactorN(z.ShedAreaDrainLake, z.RetentNLake) * (1 - AttenN(z.AttenFlowDist, z.AttenFlowVel, z.AttenLossRateN))
+    SumNitr += YrPointNitr * RetentFactorN(z.ShedAreaDrainLake, z.RetentNLake) * (1 - AttenN(z.AttenFlowDist, z.AttenFlowVel, z.AttenLossRateN))
+    SumNitr += z.AvSeptNitr * RetentFactorN(z.ShedAreaDrainLake, z.RetentNLake) * (1 - AttenN(z.AttenFlowDist, z.AttenFlowVel, z.AttenLossRateN))
 
     # kg
     SumPhos = sum(z.AvLuTotPhos[l] for l in sources)
@@ -1020,8 +1024,13 @@ def WriteOutput(z):
     output['Loads'].append({
         'Source': 'Farm Animals',
         'Sediment': 0,
-        'TotalN': z.AvAnimalNSum * RetentFactorN(z.ShedAreaDrainLake, z.RetentNLake) * (
-                1 - AttenN(z.AttenFlowDist, z.AttenFlowVel, z.AttenLossRateN)),
+        'TotalN': AvAnimalNSum_1_2(z.NYrs, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN, z.NGAppNRate,
+                                 z.NGPctSoilIncRate, z.GRAppNRate, z.GRPctSoilIncRate, z.GrazingNRate, z.GRPctManApp,
+                                 z.PctGrazing, z.GRBarnNRate,
+                                 z.Prec, z.DaysMonth, z.AWMSGrPct, z.GrAWMSCoeffN, z.RunContPct, z.RunConCoeffN, z.n41b,
+                                 z.n85h, z.NGPctManApp, z.AWMSNgPct,
+                                 z.NGBarnNRate, z.NgAWMSCoeffN, z.n41d, z.n85j, z.n41f, z.n85l, z.PctStreams, z.n42,
+                                 z.n45, z.n69, z.n43, z.n64) * RetentFactorN(z.ShedAreaDrainLake, z.RetentNLake) * (1 -  AttenN(z.AttenFlowDist, z.AttenFlowVel, z.AttenLossRateN)),
         'TotalP': z.AvAnimalPSum * z.RetentFactorP * (1 - z.AttenP),
     })
     output['Loads'].append({

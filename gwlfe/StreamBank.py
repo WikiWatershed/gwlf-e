@@ -14,6 +14,7 @@ from StreamBankEros_1 import StreamBankEros_1_2
 from AGSTRM import AGSTRM_2
 from StreamBankN_1 import StreamBankN_1_2
 from StreamBankNSum import StreamBankNSum
+from Outputs.AvAnimalNSum.AnimalN import AnimalN_2
 
 log = logging.getLogger(__name__)
 
@@ -197,7 +198,7 @@ def CalculateStreamBankEros(z, Y):
         z.TileDrainNSum[Y] += z.TileDrainN[Y][i]
         z.TileDrainPSum[Y] += z.TileDrainP[Y][i]
         z.TileDrainSedSum[Y] += z.TileDrainSed[Y][i]
-        z.AnimalNSum[Y] += z.AnimalN[Y][i]
+        # z.AnimalNSum[Y] += z.AnimalN[Y][i]
         z.AnimalPSum[Y] += z.AnimalP[Y][i]
         z.AnimalFCSum[Y] += z.AnimalFC[Y][i]
         z.WWOrgsSum[Y] += z.WWOrgs[Y][i]
@@ -206,10 +207,10 @@ def CalculateStreamBankEros(z, Y):
         z.TotalOrgsSum[Y] += z.TotalOrgs[Y][i]
         z.WildOrgsSum[Y] += z.WildOrgs[Y][i]
 
-        z.GRLostBarnNSum[Y] += z.GRLostBarnN[Y][i]
+        # z.GRLostBarnNSum[Y] += z.GRLostBarnN[Y][i]
         z.GRLostBarnPSum[Y] += z.GRLostBarnP[Y][i]
         z.GRLostBarnFCSum[Y] += z.GRLostBarnFC[Y][i]
-        z.NGLostBarnNSum[Y] += z.NGLostBarnN[Y][i]
+        # z.NGLostBarnNSum[Y] += z.NGLostBarnN[Y][i]
         z.NGLostBarnPSum[Y] += z.NGLostBarnP[Y][i]
         z.NGLostBarnFCSum[Y] += z.NGLostBarnFC[Y][i]
         z.NGLostManPSum[Y] += z.NGLostManP[Y][i]
@@ -222,7 +223,9 @@ def CalculateStreamBankEros(z, Y):
                                            z.NumAnimals, z.AvgAnimalWt, z.StreamFlowVolAdj, z.SedAFactor_0, z.AvKF,
                                            z.AvSlope, z.SedAAdjust, z.StreamLength, z.n42b, z.AgLength,
                                            z.UrbBankStab, z.SedNitr, z.BankNFrac, z.n69c, z.n45, z.n69)[Y][i] + \
-                           z.TileDrainN[Y][i] + z.AnimalN[Y][i]
+                           z.TileDrainN[Y][i] +  AnimalN_2(z.NYrs, z.NGPctManApp, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN, z.NGAppNRate, z.Prec, z.DaysMonth,
+            z.NGPctSoilIncRate, z.GRPctManApp, z.GRAppNRate, z.GRPctSoilIncRate, z.NGBarnNRate, z.AWMSNgPct, z.NgAWMSCoeffN,
+            z.RunContPct, z.RunConCoeffN, z.PctGrazing, z.GRBarnNRate, z.AWMSGrPct, z.GrAWMSCoeffN, z.PctStreams, z.GrazingNRate)[Y][i]
         z.TotPhos[Y][i] += z.StreamBankP[Y][i] + z.TileDrainP[Y][i] + z.AnimalP[Y][i]
         z.TotNitrSum[Y] += StreamBankN_1_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area,
                                            z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN,
@@ -232,5 +235,7 @@ def CalculateStreamBankEros(z, Y):
                                            z.NumAnimals, z.AvgAnimalWt, z.StreamFlowVolAdj, z.SedAFactor_0, z.AvKF,
                                            z.AvSlope, z.SedAAdjust, z.StreamLength, z.n42b, z.AgLength,
                                            z.UrbBankStab, z.SedNitr, z.BankNFrac, z.n69c, z.n45, z.n69)[Y][i] + \
-                           z.TileDrainN[Y][i] + z.AnimalN[Y][i]
+                           z.TileDrainN[Y][i] + AnimalN_2(z.NYrs, z.NGPctManApp, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN, z.NGAppNRate, z.Prec, z.DaysMonth,
+            z.NGPctSoilIncRate, z.GRPctManApp, z.GRAppNRate, z.GRPctSoilIncRate, z.NGBarnNRate, z.AWMSNgPct, z.NgAWMSCoeffN,
+            z.RunContPct, z.RunConCoeffN, z.PctGrazing, z.GRBarnNRate, z.AWMSGrPct, z.GrAWMSCoeffN, z.PctStreams, z.GrazingNRate)[Y][i]
         z.TotPhosSum[Y] += z.StreamBankP[Y][i] + z.TileDrainP[Y][i] + z.AnimalP[Y][i]
