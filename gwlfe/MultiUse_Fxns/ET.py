@@ -1,4 +1,4 @@
-from enums import ETflag
+from gwlfe.enums import ETflag
 import numpy as np
 from Timer import time_function
 from Memoization import memoize

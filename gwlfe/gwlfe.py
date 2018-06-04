@@ -13,6 +13,8 @@ Imported from GWLF-E.frm
 import logging
 
 import numpy as np
+
+from .enums import GrowFlag
 import ReadGwlfDataFile
 import PrelimCalculations
 import AFOS_old
@@ -46,6 +48,7 @@ def run(z):
     # MODEL CALCULATIONS FOR EACH YEAR OF ANALYSIS - WATER BALANCE,
     # NUTRIENTS AND SEDIMENT LOADS
     ReadGwlfDataFile.ReadAllData(z)
+
     # --------- run the remaining parts of the model ---------------------
 
     # z.LuTotNitr[:, :z.NRur] = LuTotNitr_2(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.NRur,

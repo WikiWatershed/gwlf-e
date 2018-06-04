@@ -10,11 +10,10 @@ class TestUncontrolledQ(unittest.TestCase):
     def setUp(self):
         input_file = open('unittests/input_4.gms', 'r')
         self.z = Parser.GmsReader(input_file).read()
-
-
-    @skip('Not Ready Yet.')
-    def test_UncontrolledQ(self):
-        z = self.z
-        np.testing.assert_array_almost_equal(
-            UncontrolledQ.UncontrolledQ_2(),
-            UncontrolledQ.UncontrolledQ(), decimal=7)
+    #
+    #
+    # def test_UncontrolledQ(self):
+    #     z = self.z
+    #     np.testing.assert_array_almost_equal(
+    #         UncontrolledQ.UncontrolledQ_2(),
+    #         UncontrolledQ.UncontrolledQ(), decimal=7)

@@ -38,7 +38,7 @@ def RurQRunoff(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb, 
 
     return result
 
-
+@memoize
 def RurQRunoff_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb, CN, Grow_0):
     water = np.reshape(np.repeat(Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec), repeats=NRur, axis=2),
                        (NYrs, 12, 31, NRur))

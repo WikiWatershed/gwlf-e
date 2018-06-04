@@ -4,7 +4,7 @@ from Memoization import memoize
 from RurQRunoff import RurQRunoff
 from RurQRunoff import RurQRunoff_2
 from PConc import PConc
-from PConc import PConc
+from PConc import PConc_2
 
 
 @memoize
@@ -26,7 +26,7 @@ def pRunoff(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb, CN,
 @memoize
 def pRunoff_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb, CN, Grow_0, Area, PhosConc, ManuredAreas,
               FirstManureMonth, LastManureMonth, ManPhos, FirstManureMonth2, LastManureMonth2):
-    p_conc = PConc(NRur, NUrb, PhosConc, ManPhos, ManuredAreas, FirstManureMonth, LastManureMonth, FirstManureMonth2,
+    p_conc = PConc_2(NRur, NUrb, PhosConc, ManPhos, ManuredAreas, FirstManureMonth, LastManureMonth, FirstManureMonth2,
                    LastManureMonth2)[:, :NRur]
     rur_q_runoff = RurQRunoff_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb, CN, Grow_0)
     return 0.1 * np.sum(p_conc * rur_q_runoff * Area[:NRur], axis=2)

@@ -1,6 +1,5 @@
 import numpy as np
-from Timer import time_function
-from Memoization import memoize
+
 from NLU import NLU
 
 
@@ -18,5 +17,13 @@ def NConc(NRur, NUrb, NitrConc, ManNitr, ManuredAreas, FirstManureMonth, LastMan
     return result
 
 
-def NConc_2():
-    pass
+def NConc_2(NRur, NUrb, NitrConc, ManNitr, ManuredAreas, FirstManureMonth, LastManureMonth, FirstManureMonth2,
+            LastManureMonth2):
+    if (FirstManureMonth < 0 and FirstManureMonth2 < 0 and LastManureMonth < 0 and LastManureMonth2 < 0):
+        return np.reshape(np.repeat(NitrConc[None, :], repeats=12, axis=0), (12, -1))
+    else:
+        nlu = NLU(NRur, NUrb)
+        result = np.reshape(np.repeat(NitrConc, repeats=12, axis=0), (12, nlu))
+        result[FirstManureMonth:LastManureMonth, :ManuredAreas] = ManNitr
+        result[FirstManureMonth2:LastManureMonth2, :ManuredAreas] = ManNitr
+        return result

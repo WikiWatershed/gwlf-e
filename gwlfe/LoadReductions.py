@@ -10,7 +10,6 @@ Imported from LoadReductions.bas
 import logging
 from FilterEff import FilterEff
 
-
 log = logging.getLogger(__name__)
 
 
@@ -212,14 +211,14 @@ def AdjustScnLoads(z):
         z.n13dp = n13dpStart * 0.05
 
     # Calculate nitrogen reducton for animal activities based on differnt percent usage of BMPs
-    NAWMSL = (z.n41b / 100) * z.n85h * z.GRLBN
-    NAWMSP = (z.n41d / 100) * z.n85j * z.NGLBN
-    NRUNCON = (z.n41f / 100) * z.n85l * (z.GRLBN + z.NGLBN)
-    if z.n42 > 0:
-        NFENCING = (z.n45 / z.n42) * z.n69 * z.GRSN
-        NAGBUFFER = (z.n43 / z.n42) * z.n64 * (z.n7b - (z.NGLBN + z.GRLBN + z.GRSN))
+    # NAWMSL = (z.n41b / 100) * z.n85h * z.GRLBN
+    # NAWMSP = (z.n41d / 100) * z.n85j * z.NGLBN
+    # NRUNCON = (z.n41f / 100) * z.n85l * (z.GRLBN + z.NGLBN)
+    # if z.n42 > 0:
+    # NFENCING = (z.n45 / z.n42) * z.n69 * z.GRSN
+    # NAGBUFFER = (z.n43 / z.n42) * z.n64 * (z.AvAnimalNSum - (z.NGLBN + z.GRLBN + z.GRSN))
 
-    z.n7b = z.n7b - (NAWMSL + NAWMSP + NRUNCON + NFENCING + NAGBUFFER)
+    # z.n7b = z.AvAnimalNSum - (z.NAWMSL + z.NAWMSP + z.NRUNCON + z.NFENCING + z.NAGBUFFER)
 
     # Calculate phosphorus reduction for animal activities based on different percent of BMPs
     PAWMSL = (z.n41b / 100) * z.n85i * z.GRLBP

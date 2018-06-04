@@ -11,9 +11,10 @@ class TestPConc(unittest.TestCase):
         input_file = open('unittests/input_4.gms', 'r')
         self.z = Parser.GmsReader(input_file).read()
 
-    @skip("not ready")
     def test_PConc(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            PConc.PConc_2(),
-            PConc.PConc(), decimal=7)
+            PConc.PConc_2(z.NRur, z.NUrb, z.PhosConc, z.ManPhos, z.ManuredAreas, z.FirstManureMonth, z.LastManureMonth, z.FirstManureMonth2,
+          z.LastManureMonth2),
+            PConc.PConc(z.NRur, z.NUrb, z.PhosConc, z.ManPhos, z.ManuredAreas, z.FirstManureMonth, z.LastManureMonth, z.FirstManureMonth2,
+          z.LastManureMonth2), decimal=7)

@@ -1,6 +1,6 @@
 import numpy as np
-from Timer import time_function
-from Memoization import memoize
+from gwlfe.Timer import time_function
+from gwlfe.Memoization import memoize
 
 
 @memoize
