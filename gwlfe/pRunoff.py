@@ -11,14 +11,15 @@ from PConc import PConc
 def pRunoff(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb, CN, Grow_0, Area, PhosConc, ManuredAreas,
             FirstManureMonth, LastManureMonth, ManPhos, FirstManureMonth2,
             LastManureMonth2):
-    result = np.zeros((NYrs, 12))
+    result = np.zeros((NYrs, 12,10))
     rur_q_runoff = RurQRunoff(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb, CN, Grow_0)
     p_conc = PConc(NRur, NUrb, PhosConc, ManPhos, ManuredAreas, FirstManureMonth, LastManureMonth, FirstManureMonth2,
                    LastManureMonth2)
     for Y in range(NYrs):
         for i in range(12):
             for l in range(NRur):
-                result[Y][i] += 0.1 * p_conc[i][l] * rur_q_runoff[Y][l][i] * Area[l]
+                # += changed to =
+                result[Y][i][l] = 0.1 * p_conc[i][l] * rur_q_runoff[Y][l][i] * Area[l]
     return result
 
 

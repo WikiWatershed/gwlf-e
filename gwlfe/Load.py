@@ -12,12 +12,13 @@ def Load(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMo
                         SweepFrac, UrbSweepFrac, LoadRatePerv, Storm, UrbBMPRed, DisFract, FilterWidth, PctStrmBuf):
     result = np.zeros((NYrs, 12, 3))
     water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
+
     netdisload = NetDisLoad(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
                         Grow_0, CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil, Nqual, LoadRateImp,
-                        SweepFrac, UrbSweepFrac, LoadRatePerv, Storm, UrbBMPRed, DisFract, FilterWidth, PctStrmBuf)
+                        LoadRatePerv, Storm, UrbBMPRed, DisFract, FilterWidth, PctStrmBuf)
     netsolidload = NetSolidLoad(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
                         Grow_0, CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil, Nqual, LoadRateImp,
-                        SweepFrac, UrbSweepFrac, LoadRatePerv, Storm, UrbBMPRed, DisFract, FilterWidth, PctStrmBuf)
+                         LoadRatePerv, Storm, UrbBMPRed, DisFract, FilterWidth, PctStrmBuf)
     for Y in range(NYrs):
         for i in range(12):
             for j in range(DaysMonth[Y][i]):

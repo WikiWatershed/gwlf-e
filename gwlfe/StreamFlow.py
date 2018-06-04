@@ -36,13 +36,13 @@ def StreamFlow(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0,
     withdrawal = Withdrawal(NYrs, StreamWithdrawal, GroundWithdrawal)
     for Y in range(NYrs):
         for i in range(12):
-            for j in range(DaysMonth[Y][i]):
-                result[Y][i] = result[Y][i] + flow[Y][i][j]  # This is weird, it seems to be immediately overwritten
-                result[Y][i] = (runoff[Y][i]
-                                + groundwatle_2[Y][i]
-                                + ptsrcflow[Y][i]
-                                + tiledrain[Y][i]
-                                - withdrawal[Y][i])
+            # for j in range(DaysMonth[Y][i]):
+            #     result[Y][i] = result[Y][i] + flow[Y][i][j]  # This is weird, it seems to be immediately overwritten
+            result[Y][i] = (runoff[Y][i]
+                            + groundwatle_2[Y][i]
+                            + ptsrcflow[Y][i]
+                            + tiledrain[Y][i]
+                            - withdrawal[Y][i])
     return result
 
 @memoize

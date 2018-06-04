@@ -39,4 +39,4 @@ def SedYield_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef, NRur, KF, LS, C, 
     sedtrans = SedTrans_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0,
                           Imper, ISRR, ISRA, Qretention, PctAreaInfil, n25b, CN)
 
-    return seddelivratio * sedtrans * np.cumsum(np.where(bsed > 0, erosion / bsed, 0), axis=1)
+    return seddelivratio * sedtrans * np.cumsum(np.where(bsed > 0., erosion / bsed, 0.), axis=1)

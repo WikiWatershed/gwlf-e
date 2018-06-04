@@ -36,4 +36,4 @@ def AvStreamBankNSum_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area
                                   PointFlow, StreamWithdrawal, GroundWithdrawal, NumAnimals, AvgAnimalWt,
                                   StreamFlowVolAdj,
                                   SedAFactor_0, AvKF, AvSlope, SedAAdjust, StreamLength, n42b, AgLength,
-                                  UrbBankStab, SedNitr, BankNFrac, n69c, n45, n69)) / NYrs
+                                  UrbBankStab, SedNitr, BankNFrac, n69c, n45, n69, n46c, n42)) / NYrs

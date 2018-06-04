@@ -7,7 +7,8 @@ from pRunoff import pRunoff_2
 from ErosWashoff import ErosWashoff
 from ErosWashoff import ErosWashoff_2
 from LuLoad import LuLoad
-
+from NLU import NLU
+from LuLoad import LuLoad_2
 
 @memoize
 def LuTotPhos(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb, CN, Grow_0, Area, PhosConc, ManPhos,
@@ -24,26 +25,37 @@ def LuTotPhos(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb, C
     lu_load = LuLoad(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0,
                      AntMoist_0, Grow_0, CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil, Nqual,
                      LoadRateImp, LoadRatePerv, Storm, UrbBMPRed, FilterWidth, PctStrmBuf)
+    nlu = NLU(NRur, NUrb)
     for Y in range(NYrs):
         for i in range(12):
             # Add in the urban calucation for sediment
             for l in range(NRur):
-                result[Y][l] += p_runoff[Y][i]
+                result[Y][l] += p_runoff[Y][i][l]
                 result[Y][l] += 0.001 * sed_deliv_ratio * eros_washoff[Y][l][i] * SedPhos
+
+            for l in range(NRur, nlu):
                 result[Y][l] += lu_load[Y][l][1] / NYrs / 2
     return result
 
 def LuTotPhos_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb, CN, Grow_0, Area, PhosConc, ManPhos,
-                ManuredAreas, FirstManureMonth, LastManureMonth, FirstManureMonth2, LastManureMonth2, SedDelivRatio_0,
-                KF, LS, C, P, Acoef, SedPhos):
-    p_runoff = np.reshape(
-        np.repeat(np.sum(
-            pRunoff_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb, CN, Grow_0, Area, PhosConc,
-                      ManuredAreas,
-                      FirstManureMonth, LastManureMonth, ManPhos, FirstManureMonth2, LastManureMonth2), axis=1),
-            repeats=10), (NYrs, 10))
+              ManuredAreas, FirstManureMonth, LastManureMonth, FirstManureMonth2, LastManureMonth2, SedDelivRatio_0, KF,
+              LS, C, P, CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil, Nqual, LoadRateImp, LoadRatePerv, Storm,
+              UrbBMPRed, FilterWidth, PctStrmBuf, Acoef, SedPhos, CNI_0):
+    # p_runoff = np.reshape(
+    #     np.repeat(np.sum(
+    #         pRunoff(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb, CN, Grow_0, Area, PhosConc,
+    #                   ManuredAreas,
+    #                   FirstManureMonth, LastManureMonth, ManPhos, FirstManureMonth2, LastManureMonth2), axis=1),
+    #         repeats=10), (NYrs, 10))
+    p_runoff = np.sum(pRunoff(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb, CN, Grow_0, Area, PhosConc,
+                       ManuredAreas, FirstManureMonth, LastManureMonth, ManPhos, FirstManureMonth2,
+                       LastManureMonth2), axis=1)
     sed_deliv_ratio = SedDelivRatio(SedDelivRatio_0)
     eros_washoff = np.sum(ErosWashoff_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, Acoef,
                                         KF, LS, C, P, Area), axis=1)
+
+    lu_load = LuLoad_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
+             Grow_0, CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil, Nqual, LoadRateImp,
+             LoadRatePerv, Storm, UrbBMPRed, FilterWidth, PctStrmBuf)[:,:,1]
     # luLoad is not needed because it is only defined for NUrb land use, and the others are only defined for NRur
-    return p_runoff + 0.001 * sed_deliv_ratio * eros_washoff * SedPhos  # + lu_load / NYrs / 2
+    return np.hstack((p_runoff + 0.001 * sed_deliv_ratio * eros_washoff * SedPhos, 12 * lu_load / NYrs / 2 )) # + lu_load / NYrs / 2

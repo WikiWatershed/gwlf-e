@@ -6,7 +6,7 @@ from ErosWashoff import ErosWashoff_2
 
 def LuErosion(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Acoef, KF, LS,
               C, P, Area):
-    result = np.zeros((NYrs, 16))
+    result = np.zeros((NYrs, 10))
     eros_washoff = ErosWashoff(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Acoef, KF, LS,
                                C, P, Area)
     for Y in range(NYrs):
@@ -19,4 +19,4 @@ def LuErosion(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Acoef, KF, LS
 def LuErosion_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, Acoef, KF, LS,
                 C, P, Area):
     return np.sum(ErosWashoff_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, Acoef, KF, LS,
-                                C, P, Area), axis=2)
+                                C, P, Area), axis=1)

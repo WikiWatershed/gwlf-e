@@ -23,8 +23,8 @@ from SedYield import SedYield_2
 from LuLoad import LuLoad_2
 from LuDisLoad import LuDisLoad_2
 from LuErosion import LuErosion_2
-from nRunoff import nRunoff_2
-from pRunoff import pRunoff_2
+from nRunoff import nRunoff
+from pRunoff import pRunoff
 
 
 def CalculateLoads(z, Y):
@@ -92,25 +92,25 @@ def CalculateLoads(z, Y):
                 LuErosion_2(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.NRur, z.Acoef, z.KF, z.LS,
                             z.C, z.P, z.Area)[Y][l] * SedDelivRatio(z.SedDelivRatio_0)
             z.DisNitr[Y][i] += \
-                nRunoff_2(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.NRur, z.NUrb, z.CN,
+                nRunoff(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.NRur, z.NUrb, z.CN,
                           z.Grow_0,
                           z.Area, z.NitrConc, z.ManNitr, z.ManuredAreas, z.FirstManureMonth, z.LastManureMonth,
-                          z.FirstManureMonth2, z.LastManureMonth2)[Y][i]
+                          z.FirstManureMonth2, z.LastManureMonth2)[Y][i][l]
             z.DisPhos[Y][i] += \
-                pRunoff_2(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.NRur, z.NUrb, z.CN,
+                pRunoff(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.NRur, z.NUrb, z.CN,
                           z.Grow_0,
                           z.Area, z.PhosConc, z.ManuredAreas, z.FirstManureMonth, z.LastManureMonth, z.ManPhos,
-                          z.FirstManureMonth2, z.LastManureMonth2)[Y][i]
+                          z.FirstManureMonth2, z.LastManureMonth2)[Y][i][l]
             z.LuDisNitr[Y][l] += \
-                nRunoff_2(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.NRur, z.NUrb, z.CN,
+                nRunoff(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.NRur, z.NUrb, z.CN,
                           z.Grow_0,
                           z.Area, z.NitrConc, z.ManNitr, z.ManuredAreas, z.FirstManureMonth, z.LastManureMonth,
-                          z.FirstManureMonth2, z.LastManureMonth2)[Y][i]
+                          z.FirstManureMonth2, z.LastManureMonth2)[Y][i][l]
             z.LuDisPhos[Y][l] += \
-                pRunoff_2(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.NRur, z.NUrb, z.CN,
+                pRunoff(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.NRur, z.NUrb, z.CN,
                           z.Grow_0,
                           z.Area, z.PhosConc, z.ManuredAreas, z.FirstManureMonth, z.LastManureMonth, z.ManPhos,
-                          z.FirstManureMonth2, z.LastManureMonth2)[Y][i]
+                          z.FirstManureMonth2, z.LastManureMonth2)[Y][i][l]
 
         z.TotNitr[Y][i] = z.DisNitr[Y][i] + 0.001 * z.SedNitr * \
                           SedYield_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.Acoef, z.NRur, z.KF, z.LS,
@@ -149,22 +149,23 @@ def CalculateLoads(z, Y):
                                                 z.MaxWaterCap, z.SatStor_0,
                                                 z.RecessionCoef, z.SeepCoef, z.Landuse,
                                                 z.TileDrainDensity)[Y][i] / 100) * TotAreaMeters(z.NRur, z.NUrb,
+
                                                                                                  z.Area)) * 1000) * z.TileSedConc) / 1000000
-        z.LuDisNitr[:, z.NRur:] += \
+        z.LuDisNitr[Y, z.NRur:] += \
             LuDisLoad_2(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.Nqual, z.NRur, z.NUrb, z.Area, z.CNI_0,
                         z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.Qretention, z.PctAreaInfil,
                         z.LoadRateImp, z.LoadRatePerv, z.Storm, z.UrbBMPRed, z.DisFract,
-                        z.FilterWidth, z.PctStrmBuf)[:, :, 0] / z.NYrs / 2
-        z.LuDisPhos[:, z.NRur:] += \
+                        z.FilterWidth, z.PctStrmBuf)[Y, :, 0] / z.NYrs / 2
+        z.LuDisPhos[Y, z.NRur:] += \
             LuDisLoad_2(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.Nqual, z.NRur, z.NUrb, z.Area, z.CNI_0,
                         z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.Qretention, z.PctAreaInfil,
                         z.LoadRateImp, z.LoadRatePerv, z.Storm, z.UrbBMPRed, z.DisFract,
-                        z.FilterWidth, z.PctStrmBuf)[:, :, 1] / z.NYrs / 2
-        z.LuSedYield[:, z.NRur:] += (LuLoad_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area,
+                        z.FilterWidth, z.PctStrmBuf)[Y, :, 1] / z.NYrs / 2
+        z.LuSedYield[Y, z.NRur:] += (LuLoad_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area,
                                               z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA,
                                               z.Qretention, z.PctAreaInfil, z.Nqual, z.LoadRateImp, z.LoadRatePerv,
                                               z.Storm, z.UrbBMPRed,
-                                              z.FilterWidth, z.PctStrmBuf)[:, :, 2] / z.NYrs) / 1000 / 2
+                                              z.FilterWidth, z.PctStrmBuf)[Y, :, 2] / z.NYrs) / 1000 / 2
 
         z.DisNitr[Y][i] += z.DisLoad[Y][i][0]
         z.DisPhos[Y][i] += z.DisLoad[Y][i][1]

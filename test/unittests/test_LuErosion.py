@@ -11,9 +11,11 @@ class TestLuErosion(unittest.TestCase):
         input_file = open('unittests/input_4.gms', 'r')
         self.z = Parser.GmsReader(input_file).read()
 
-    @skip("not ready")
+    # @skip("not ready")
     def test_LuErosion(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            LuErosion.LuErosion_2(),
-            LuErosion.LuErosion(), decimal=7)
+            LuErosion.LuErosion_2(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.NRur, z.Acoef, z.KF, z.LS,
+                z.C, z.P, z.Area),
+            LuErosion.LuErosion(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.NRur, z.NUrb,z.Acoef, z.KF, z.LS,
+                z.C, z.P, z.Area), decimal=7)

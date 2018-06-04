@@ -40,7 +40,7 @@ def StreamBankNSum_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area,
                      TileDrainDensity, PointFlow, StreamWithdrawal, GroundWithdrawal,
                      NumAnimals, AvgAnimalWt, StreamFlowVolAdj, SedAFactor_0, AvKF,
                      AvSlope, SedAAdjust, StreamLength, n42b, AgLength,
-                     UrbBankStab, SedNitr, BankNFrac, n69c, n45, n69):
+                     UrbBankStab, SedNitr, BankNFrac, n69c, n45, n69, n46c, n42):
     return np.sum(StreamBankN_1_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area,
                                   CNI_0, AntMoist_0, Grow_0, CNP_0, Imper, ISRR, ISRA, CN,
                                   UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0,
@@ -48,4 +48,4 @@ def StreamBankNSum_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area,
                                   TileDrainDensity, PointFlow, StreamWithdrawal, GroundWithdrawal,
                                   NumAnimals, AvgAnimalWt, StreamFlowVolAdj, SedAFactor_0, AvKF,
                                   AvSlope, SedAAdjust, StreamLength, n42b, AgLength,
-                                  UrbBankStab, SedNitr, BankNFrac, n69c, n45, n69), axis=1)
+                                  UrbBankStab, SedNitr, BankNFrac, n69c, n45, n69, n46c, n42), axis=1)
