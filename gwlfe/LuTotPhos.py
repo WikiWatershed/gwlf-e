@@ -51,6 +51,7 @@ def LuTotPhos_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb,
                        ManuredAreas, FirstManureMonth, LastManureMonth, ManPhos, FirstManureMonth2,
                        LastManureMonth2), axis=1)
     sed_deliv_ratio = SedDelivRatio(SedDelivRatio_0)
+
     eros_washoff = np.sum(ErosWashoff_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, Acoef,
                                         KF, LS, C, P, Area), axis=1)
 
@@ -58,4 +59,4 @@ def LuTotPhos_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb,
              Grow_0, CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil, Nqual, LoadRateImp,
              LoadRatePerv, Storm, UrbBMPRed, FilterWidth, PctStrmBuf)[:,:,1]
     # luLoad is not needed because it is only defined for NUrb land use, and the others are only defined for NRur
-    return np.hstack((p_runoff + 0.001 * sed_deliv_ratio * eros_washoff * SedPhos, 12 * lu_load / NYrs / 2 )) # + lu_load / NYrs / 2
+    return np.hstack((p_runoff + 0.001 * sed_deliv_ratio * eros_washoff * SedPhos, 12. * lu_load / NYrs / 2 )) # + lu_load / NYrs / 2

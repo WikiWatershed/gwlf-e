@@ -21,8 +21,14 @@ def RurEros(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef, NRur, KF, LS, C, P, 
 
 @memoize
 def RurEros_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef, NRur, KF, LS, C, P, Area):
-    erosiv = np.reshape(np.repeat(Erosiv_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef), NRur, axis=2),(NYrs, 12, 31, NRur))
-    water = np.reshape(np.repeat(Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec),NRur,axis=2),(NYrs, 12, 31, NRur)) #TODO: is there a way to repeating
-    resized_temp = np.reshape(np.repeat(Temp,NRur,axis=2),(NYrs, 12, 31, NRur))
+    # erosiv = np.reshape(np.repeat(Erosiv_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef), NRur, axis=2),(NYrs, 12, 31, NRur))
+    # water = np.reshape(np.repeat(Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec),NRur,axis=2),(NYrs, 12, 31, NRur)) #TODO: is there a way to repeating
+    # resized_temp = np.reshape(np.repeat(Temp,NRur,axis=2),(NYrs, 12, 31, NRur))
+    erosiv = np.repeat(Erosiv_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef)[:,:,:,None], NRur, axis =3)
+    Temp_r = Temp[:,:,:,None]
+    water = Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
+    water = water[:,:,:,None]
+    resized_temp = np.repeat(Temp[:,:,:,None], NRur, axis=3)
+    water_r = np.repeat(water, NRur, axis =3)
     temp = KF * LS * C * P * Area
-    return np.where((resized_temp > 0) & (water > 0.01), 1.32 * erosiv * temp[:NRur], 0)
+    return np.where((resized_temp > 0) & (water_r > 0.01), 1.32 * erosiv * temp[:NRur], 0.)

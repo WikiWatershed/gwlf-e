@@ -23,6 +23,7 @@ def Erosiv(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef):
                     else:
                         if rain[Y][i][j] > 0 and init_snow_yesterday < 0.001:
                             result[Y][i][j] = 6.46 * Acoef[i] * rain[Y][i][j] ** 1.81
+
                 init_snow_yesterday = init_snow[Y][i][j]
     return result
 

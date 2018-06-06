@@ -15,6 +15,8 @@ from AGSTRM import AGSTRM_2
 from StreamBankN_1 import StreamBankN_1_2
 from StreamBankNSum import StreamBankNSum
 from Outputs.AvAnimalNSum.AnimalN import AnimalN_2
+from StreamBankEros import StreamBankEros_2
+
 
 log = logging.getLogger(__name__)
 
@@ -40,16 +42,21 @@ def CalculateStreamBankEros(z, Y):
         #                      z.NumAnimals, z.AvgAnimalWt, z.StreamFlowVolAdj, z.SedAFactor_0, z.AvKF,
         #                      z.AvSlope, z.SedAAdjust, z.StreamLength, z.n42b, z.n46c, z.n85d, z.AgLength,
         #                      z.n42, z.n54, z.n85, z.UrbBankStab)[Y][i] * (z.SedNitr / 1000000) * z.BankNFrac
-        z.StreamBankP[Y][i] = \
-            StreamBankEros_1_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area,
-                               z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN,
-                               z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0,
-                               z.RecessionCoef, z.SeepCoef, z.Qretention, z.PctAreaInfil, z.n25b, z.Landuse,
-                               z.TileDrainDensity, z.PointFlow, z.StreamWithdrawal, z.GroundWithdrawal,
-                               z.NumAnimals, z.AvgAnimalWt, z.StreamFlowVolAdj, z.SedAFactor_0, z.AvKF,
-                               z.AvSlope, z.SedAAdjust, z.StreamLength, z.n42b, z.n46c, z.n85d, z.AgLength,
-                               z.n42, z.n54, z.n85, z.UrbBankStab)[Y][i] * (z.SedPhos / 1000000) * z.BankPFrac
+        # z.StreamBankP[Y][i] = \
+        #     StreamBankEros_1_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area,
+        #                        z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN,
+        #                        z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0,
+        #                        z.RecessionCoef, z.SeepCoef, z.Qretention, z.PctAreaInfil, z.n25b, z.Landuse,
+        #                        z.TileDrainDensity, z.PointFlow, z.StreamWithdrawal, z.GroundWithdrawal,
+        #                        z.NumAnimals, z.AvgAnimalWt, z.StreamFlowVolAdj, z.SedAFactor_0, z.AvKF,
+        #                        z.AvSlope, z.SedAAdjust, z.StreamLength, z.n42b, z.n46c, z.n85d, z.AgLength,
+        #                        z.n42, z.n54, z.n85, z.UrbBankStab)[Y][i] * (z.SedPhos / 1000000) * z.BankPFrac
 
+        z.StreamBankP[Y][i] = StreamBankEros_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
+                     z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0, z.RecessionCoef, z.SeepCoef,
+                     z.Qretention, z.PctAreaInfil, z.n25b, z.Landuse, z.TileDrainDensity, z.PointFlow, z.StreamWithdrawal,
+                     z.GroundWithdrawal, z.NumAnimals, z.AvgAnimalWt, z.StreamFlowVolAdj, z.SedAFactor_0, z.AvKF, z.AvSlope,
+                     z.SedAAdjust, z.StreamLength)[Y][i] * (z.SedPhos / 1000000) * z.BankPFrac
         # CALCULATIONS FOR STREAM BANK STABILIZATION AND FENCING
         # z.SURBBANK = 0
         # z.NURBBANK = 0
@@ -72,6 +79,13 @@ def CalculateStreamBankEros(z, Y):
 
         # print("SEDSTAB orig = ", z.SEDSTAB, "SEDSTAB new = ", z.SURBBANK_temp[Y][i])
         # print(z.SEDSTAB == z.SURBBANK_temp[Y][i])
+        # StreamBankEros_1_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0,
+        #                    z.Imper,
+        #                    z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0, z.RecessionCoef,
+        #                    z.SeepCoef,
+        #                    z.Qretention, z.PctAreaInfil, z.n25b, z.Landuse, z.TileDrainDensity, z.PointFlow, z.StreamWithdrawal,
+        #                    z.GroundWithdrawal, z.NumAnimals, z.AvgAnimalWt, z.StreamFlowVolAdj, z.SedAFactor_0, z.AvKF, z.AvSlope,
+        #                    z.SedAAdjust, z.StreamLength, z.n42b, z.n46c, z.n85d, z.AgLength, z.n42, z.n45, z.n85, z.UrbBankStab)
 
         # z.StreamBankEros[Y][i] = z.StreamBankEros[Y][i] - (z.SEDSTAB[Y][i] + z.SEDFEN[Y][i] + z.SURBBANK[Y][i])
         # if z.StreamBankEros[Y][i] < 0:
