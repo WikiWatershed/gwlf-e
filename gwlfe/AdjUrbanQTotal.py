@@ -44,10 +44,10 @@ def AdjUrbanQTotal(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CN
                                     adj_urban_q_total = 0
                                 else:
                                     adj_urban_q_total = urban_q_total[Y][i][j] - Qretention * PctAreaInfil
-                    if urb_area_total > 0:
-                        adj_urban_q_total = adj_urban_q_total * urb_area_total / area_total
-                    else:
-                        adj_urban_q_total = 0
+                    # if urb_area_total > 0:
+                    #     adj_urban_q_total = adj_urban_q_total * urb_area_total / area_total
+                    # else:
+                    #     adj_urban_q_total = 0
                 else:
                     pass
                 result[Y][i][j] = adj_urban_q_total

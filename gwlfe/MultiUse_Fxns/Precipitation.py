@@ -10,6 +10,8 @@ def Precipitation(NYrs, DaysMonth, Prec):#TODO: change internal "Precipitation" 
     return Precipitation
 
 def Precipitation_2(Prec):
-    return np.sum(Prec, axis=(2))
+    return np.sum(Prec, dtype=np.float64, axis=(2))
 
 
+def AvPrecipitation_2(Precipitation):
+    return np.average(Precipitation, axis=0)

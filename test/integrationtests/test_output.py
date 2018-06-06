@@ -53,7 +53,7 @@ class TestOutput(unittest.TestCase):
                 try:
                     np.testing.assert_almost_equal(self.generated_output["monthly"][i][key],
                                                    self.static_output["monthly"][i][key],
-                                                   decimal=20,
+                                                   decimal=7,
                                                    verbose=True)
                 except AssertionError as e:
                     print("AssertionError on %s (month %i)" % (key, i))
@@ -82,7 +82,7 @@ class TestOutput(unittest.TestCase):
                     try:
                         np.testing.assert_almost_equal(self.generated_output["SummaryLoads"][i][key],
                                                        self.static_output["SummaryLoads"][i][key],
-                                                       decimal=20, err_msg='',
+                                                       decimal=7, err_msg='',
                                                        verbose=True)
                     except TypeError:
                         self.assertEqual(self.generated_output["SummaryLoads"][i][key],
@@ -103,7 +103,7 @@ class TestOutput(unittest.TestCase):
                     try:
                         np.testing.assert_almost_equal(self.generated_output["Loads"][i][key],
                                                        self.static_output["Loads"][i][key],
-                                                       decimal=20, err_msg='',
+                                                       decimal=7, err_msg='',
                                                        verbose=True)
                     except TypeError:
                         self.assertEqual(self.generated_output["Loads"][i][key], self.static_output["Loads"][i][key])

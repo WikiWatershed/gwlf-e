@@ -8,9 +8,10 @@ Imported from AnnualMeans.bas
 """
 
 import logging
-from Precipitation import AvPrecipitation_2
+# from Precipitation import AvPrecipitation_2
+from MultiUse_Fxns import Precipitation
 from AvEvapoTrans import AvEvapoTrans_2
-from PtSrcFlow import AvPtSrcFlow_2
+from MultiUse_Fxns.PtSrcFlow import AvPtSrcFlow_2
 from AvStreamBankEros import AvStreamBankEros_2
 from StreamBankN_1 import StreamBankN_1_2
 from AvTileDrain import AvTileDrain_2
@@ -47,7 +48,8 @@ def CalculateAnnualMeanLoads(z, Y):
         z.AvTileDrainSed[i] += z.TileDrainSed[Y][i] / z.NYrs
 
     # COMPUTE ANNUAL MEANS
-    z.AvPrecipitation = AvPrecipitation_2(z.Prec)
+    # z.AvPrecipitation = AvPrecipitation_2(z.Prec)
+    z.AvPrecipitation = Precipitation.AvPrecipitation_2(Precipitation.Precipitation_2(z.Prec))
     for i in range(12):
         z.AvDisNitr[i] += z.DisNitr[Y][i] / z.NYrs
         z.AvTotNitr[i] += z.TotNitr[Y][i] / z.NYrs

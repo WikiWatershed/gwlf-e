@@ -2,12 +2,10 @@ import numpy as np
 from Timer import time_function
 from Memoization import memoize
 from Water import Water
-from Water import Water_2
-from AdjUrbanQTotal_1 import AdjUrbanQTotal_1
-from AdjUrbanQTotal_1 import AdjUrbanQTotal_1_2
 from NLU import NLU
 from Water import Water_2
-from AdjUrbanQTotal_1 import AdjUrbanQTotal_1_2
+from AdjUrbanQTotal import AdjUrbanQTotal
+from AdjUrbanQTotal import AdjUrbanQTotal_2
 from UrbLoadRed_inner import UrbLoadRed_inner
 
 
@@ -16,7 +14,7 @@ def UrbLoadRed(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Area, CNI_0,
                Imper, ISRR, ISRA, Qretention, PctAreaInfil, Nqual, Storm, UrbBMPRed):
     result = np.zeros((NYrs, 12, 31, 16, Nqual))
     water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
-    adjurbanqtotal = AdjUrbanQTotal_1(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
+    adjurbanqtotal = AdjUrbanQTotal(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
                                       Grow_0, CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil)
     nlu = NLU(NRur, NUrb)
     for Y in range(NYrs):
@@ -43,7 +41,7 @@ def UrbLoadRed_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Area, CNI_
                  Imper, ISRR, ISRA, Qretention, PctAreaInfil, Nqual, Storm, UrbBMPRed):
     if (Storm > 0):
         water = Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
-        adjurbanqtotal = AdjUrbanQTotal_1_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
+        adjurbanqtotal = AdjUrbanQTotal_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
                                             Grow_0, CNP_0,
                                             Imper, ISRR, ISRA, Qretention, PctAreaInfil)
         nlu = NLU(NRur, NUrb)
@@ -55,7 +53,7 @@ def UrbLoadRed_1(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Area, CNI_
                  Imper, ISRR, ISRA, Qretention, PctAreaInfil, Nqual, Storm, UrbBMPRed):
     result = np.zeros((NYrs, 12, 31, 16, Nqual))
     water = Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
-    adjurbanqtotal = AdjUrbanQTotal_1_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
+    adjurbanqtotal = AdjUrbanQTotal_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
                                         Grow_0, CNP_0,
                                         Imper, ISRR, ISRA, Qretention, PctAreaInfil)
     np.repeat(Temp[:, :, :, None, None], NRur, axis=3)
@@ -82,7 +80,7 @@ def UrbLoadRed_3(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Area, CNI_
             np.repeat(Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec), repeats=(nlu - NRur) * Nqual, axis=2),
             (NYrs, 12, 31, nlu - NRur, Nqual))
         adjurbanqtotal = np.reshape(
-            np.repeat(AdjUrbanQTotal_1_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0,
+            np.repeat(AdjUrbanQTotal_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0,
                                             AntMoist_0, Grow_0, CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil), repeats=(nlu - NRur) * Nqual, axis=2),
             (NYrs, 12, 31, nlu - NRur, Nqual))
 

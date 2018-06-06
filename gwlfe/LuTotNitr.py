@@ -67,4 +67,4 @@ def LuTotNitr_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb,
                      LoadRatePerv, Storm, UrbBMPRed,
                      FilterWidth, PctStrmBuf)[:,:,0]
     # luLoad is not needed because it is only defined for NUrb land use, and the others are only defined for NRur
-    return np.hstack((n_runoff + 0.001 * sed_deliv_ratio * eros_washoff * SedNitr , 12 * lu_load / NYrs / 2))
+    return np.hstack((n_runoff + 0.001 * sed_deliv_ratio * eros_washoff * SedNitr , 12. * lu_load / NYrs / 2))
