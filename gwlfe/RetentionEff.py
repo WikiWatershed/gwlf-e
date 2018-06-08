@@ -10,7 +10,8 @@ from UrbanQTotal import UrbanQTotal_2
 # Precipitation.Precipitation(z.NYrs, z.DaysMonth, z.Prec)ize
 def RetentionEff(NYrs, DaysMonth, InitSnow_0, Temp, Prec, Qretention, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0,
                  Imper, ISRR, ISRA, PctAreaInfil):
-    result = 0
+    # result = 0
+    result = np.zeros((NYrs, 12, 31))
     water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     urbanqtotal = UrbanQTotal(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, Area, CNI_0, AntMoist_0, Grow_0, CNP_0,
                               Imper, ISRR,
@@ -25,15 +26,15 @@ def RetentionEff(NYrs, DaysMonth, InitSnow_0, Temp, Prec, Qretention, NRur, NUrb
                         if Qretention > 0:
                             if urbanqtotal[Y][i][j] > 0:
                                 if urbanqtotal[Y][i][j] <= Qretention * PctAreaInfil:
-                                    result = 1
+                                    result[Y][i][j] = 1
                                 else:
-                                    result = Qretention * PctAreaInfil / urbanqtotal[Y][i][j]
+                                    result[Y][i][j]= Qretention * PctAreaInfil / urbanqtotal[Y][i][j]
                 else:
                     pass
     return result
 
 
-def RetentionEff_3(NYrs, DaysMonth, InitSnow_0, Temp, Prec, Qretention, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
+def RetentionEff_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, Qretention, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
                    CNP_0, Imper, ISRR, ISRA, PctAreaInfil):
     result = np.zeros((NYrs, 12, 31))
     water = Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
@@ -47,11 +48,11 @@ def RetentionEff_3(NYrs, DaysMonth, InitSnow_0, Temp, Prec, Qretention, NRur, NU
         Qretention * PctAreaInfil / urbanqtotal[np.where(
             (Temp > 0) & (water > 0.05) & (Qretention > 0) & (urbanqtotal > 0) & (
                         urbanqtotal > Qretention * PctAreaInfil))]
-    np.nonzero(result)
-    return
+
+    return result
 
 @memoize
-def RetentionEff_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, Qretention, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
+def RetentionEff_3(NYrs, DaysMonth, InitSnow_0, Temp, Prec, Qretention, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
                    CNP_0, Imper, ISRR, ISRA, PctAreaInfil):
     water = Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     urbanqtotal = UrbanQTotal_2(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, Area, CNI_0, AntMoist_0, Grow_0,
@@ -65,3 +66,4 @@ def RetentionEff_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, Qretention, NRur, NU
             return Qretention * PctAreaInfil / test
     except IndexError:
         return 0
+    #

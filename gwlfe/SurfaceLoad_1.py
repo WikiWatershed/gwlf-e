@@ -38,7 +38,7 @@ def SurfaceLoad_1(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Area, CNI
                     if adjurbanqtotal[Y][i][j] > 0.001:
                         for l in range(NRur, nlu):
                             for q in range(Nqual):
-                                result[Y][i][j][l][q] = surfaceload[Y][i][j][l][q] * ((1 - retentioneff) * (
+                                result[Y][i][j][l][q] = surfaceload[Y][i][j][l][q] * ((1 - retentioneff[Y][i][j]) * (
                                         1 - (filtereff * PctStrmBuf)))
                     else:
                         pass
@@ -61,8 +61,9 @@ def SurfaceLoad_1_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Area, C
                                 Imper, ISRR, ISRA, Qretention, PctAreaInfil, Nqual, LoadRateImp, LoadRatePerv, Storm,
                                 UrbBMPRed)
     retentioneff = RetentionEff_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, Qretention, NRur, NUrb, Area, CNI_0,
-                                  AntMoist_0, Grow_0, CNP_0, Imper, ISRR, ISRA, PctAreaInfil)
+                                  AntMoist_0, Grow_0, CNP_0, Imper, ISRR, ISRA, PctAreaInfil)[:,:,:,None,None]
+    retentioneff = np.repeat(np.repeat(retentioneff, nlu-NRur, axis =3), Nqual, axis=4)
     filtereff = FilterEff_2(FilterWidth)
     nonzero = np.where((Temp > 0) & (water > 0.01) & (adjurbanqtotal > 0.001))
-    result[nonzero] = surfaceload[nonzero] * ((1 - retentioneff) * (1 - (filtereff * PctStrmBuf)))
+    result[nonzero] = surfaceload[nonzero] * (1 - retentioneff[nonzero]) * (1 - (filtereff * PctStrmBuf))
     return result
