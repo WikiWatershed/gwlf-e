@@ -48,5 +48,6 @@ def AgQTotal_2(NYrs,DaysMonth,InitSnow_0, Temp, Prec,NRur,CN, AntMoist_0,NUrb,Gr
     ag_used = np.array([1,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0])
     ag_area = Area * ag_used
     qrun_agarea = q_run * ag_area
-    result = np.sum(qrun_agarea, axis=3) / ag_area_total
+    if ag_area_total > 0:
+        result = np.sum(qrun_agarea, axis=3) / ag_area_total
     return result

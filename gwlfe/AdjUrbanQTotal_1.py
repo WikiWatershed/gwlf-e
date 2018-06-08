@@ -29,7 +29,8 @@ def AdjUrbanQTotal_1(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, 
                     if urb_area_total > 0:
                         result[Y][i][j] = adj_urban_q_total[Y][i][j] * urb_area_total / area_total
                     else:
-                        adj_urban_q_total = 0
+                        # adj_urban_q_total = 0
+                        result[Y][i][j] = 0
                     # TODO: when I broke this cycle, the only way I could think to do this was to undo the calculation done at the end of adj_urban_q_total. Hopefully there is a better way
     return result
 

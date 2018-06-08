@@ -17,7 +17,8 @@ def AdjUrbanQTotal_2_inner(NYrs, DaysMonth, Temp, Qretention, PctAreaInfil, wate
                 if Temp[Y][i][j] > 0 and water[Y][i][j] > 0.01:
                     if water[Y][i][j] < 0.05:
                         # z.adj_urban_q_total = get_value_for_yesterday(z.adj_urban_q_total_1,0,Y,i,j,z.NYrs,z.DaysMonth)
-                        pass
+                        # pass
+                        adj_urban_q_total *= urb_area_total / area_total
                     else:
                         adj_urban_q_total = urban_q_total[Y][i][j]
                         if Qretention > 0 and urban_q_total[Y][i][j] > 0:
