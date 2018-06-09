@@ -196,10 +196,13 @@ def run(z):
                     if z.Rain > 0 and z.InitSnow < 0.001:
                         z.Erosiv = 6.46 * z.Acoef[i] * z.Rain ** 1.81
 
+                    timer.resume("CalcCN")
                     # IF WATER AVAILABLE, THEN CALL SUB TO COMPUTE CN, RUNOFF,
                     # EROSION AND SEDIMENT
                     if z.Water > 0.01:
                         CalcCnErosRunoffSed.CalcCN(z, i, Y, j)
+
+                    timer.resume("outer_loop")
 
                 # DAILY CN
                 z.DailyCN[Y,i,j] = z.CNum
