@@ -28,6 +28,76 @@ from . import WriteOutputFiles
 log = logging.getLogger(__name__)
 
 
+
+
+import time
+from datetime import datetime, timedelta
+
+
+
+class Timer:
+    def __init__(self):
+        self.times=dict()
+        self.totals=dict()
+        self.start = time.time()
+        self.use_name=None
+
+    def resume(self,name=None):
+        if self.use_name is not None:
+            self.pause()
+        if name is None:
+            return
+        self.use_name=name
+        if name not in self.times:
+            self.times[name] = time.time()
+            return
+
+        if self.times[name] is not None:
+            logger = get_logger(__name__)
+            logger.warn("timer {!s} is already running!".format(name))
+            return
+        self.times[name]=time.time()
+
+    def pause(self, name=None):
+        name=name if self.use_name is None else self.use_name
+        if name is None:
+            logger = get_logger(__name__)
+            logger.warn ("timer name was never set!")
+            return
+
+        self.use_name=None
+
+        if name not in self.times:
+            logger = get_logger(__name__)
+            logger.warn("timer {!s} was never started!".format(name))
+            return
+
+        if name not in self.totals:
+            self.totals[name]=0#0timedelta(seconds=0)
+        self.totals[name]+=(time.time()-self.times[name])
+        self.times[name]=None
+
+    def get_report_str(self):
+        for kk,vv in self.times.iteritems():
+            if vv is not None:
+                self.pause(kk)
+        report=[]
+        report.append("Total    time:     {!s}".format(self.timer_str(time.time()-self.start)))
+        for kk,vv in self.totals.iteritems():
+            report.append("    {!s} time:     {!s}".format(kk, self.timer_str(self.totals[kk])))
+        return report
+
+
+    @staticmethod
+    def timer_str(tdiff):
+        m, s = divmod(tdiff, 60)
+        h, m = divmod(m, 60)
+        time_str = "%02d:%02d:%2.2f" % (h, m, s)
+        return time_str
+
+
+
+
 def run(z):
     log.debug('Running model...')
 
@@ -35,11 +105,17 @@ def run(z):
     # overflow, underflow, and division by 0 errors.
     np.seterr(all='raise')
 
+
+    timer=Timer()
+
+    timer.resume("load_save")
     ReadGwlfDataFile.ReadAllData(z)
 
     # CALCLULATE PRELIMINARY INITIALIZATIONS AND VALUES FOR
     # WATER BALANCE AND NUTRIENTS
     PrelimCalculations.InitialCalculations(z)
+
+    timer.resume("outer_loop")
 
     # MODEL CALCULATIONS FOR EACH YEAR OF ANALYSIS - WATER BALANCE,
     # NUTRIENTS AND SEDIMENT LOADS
@@ -66,11 +142,11 @@ def run(z):
                 z.LuErosion[Y, l] = 0
 
             # DAILY CALCULATIONS
-            for j in range(z.DaysMonth[Y][i]):
-                # DAILYWEATHERANALY TEMP[Y][I][J], PREC[Y][I][J]
+            for j in range(z.DaysMonth[Y,i]):
+                # DAILYWEATHERANALY TEMP[Y,I,J], PREC[Y,I,J]
                 # ***** BEGIN WEATHER DATA ANALYSIS *****
-                z.DailyTemp = z.Temp[Y][i][j]
-                z.DailyPrec = z.Prec[Y][i][j]
+                z.DailyTemp = z.Temp[Y,i,j]
+                z.DailyPrec = z.Prec[Y,i,j]
                 z.Melt = 0
                 z.Rain = 0
                 z.Water = 0
@@ -104,17 +180,17 @@ def run(z):
                         # A DEGREE-DAY INITSNOW MELT, BUT NO MORE THAN EXISTED
                         # INITSNOW
                         z.Melt = 0.45 * z.DailyTemp
-                        z.MeltPest[Y][i][j] = z.Melt
+                        z.MeltPest[Y,i,j] = z.Melt
                         if z.Melt > z.InitSnow:
                             z.Melt = z.InitSnow
-                            z.MeltPest[Y][i][j] = z.InitSnow
+                            z.MeltPest[Y,i,j] = z.InitSnow
                         z.InitSnow = z.InitSnow - z.Melt
                     else:
-                        z.MeltPest[Y][i][j] = 0
+                        z.MeltPest[Y,i,j] = 0
 
                     # AVAILABLE WATER CALCULATION
                     z.Water = z.Rain + z.Melt
-                    z.DailyWater[Y][i][j] = z.Water
+                    z.DailyWater[Y,i,j] = z.Water
 
                     # Compute erosivity when erosion occurs, i.e., with rain and no InitSnow left
                     if z.Rain > 0 and z.InitSnow < 0.001:
@@ -126,12 +202,12 @@ def run(z):
                         CalcCnErosRunoffSed.CalcCN(z, i, Y, j)
 
                 # DAILY CN
-                z.DailyCN[Y][i][j] = z.CNum
+                z.DailyCN[Y,i,j] = z.CNum
 
                 # UPDATE ANTECEDENT RAIN+MELT CONDITION
                 # Subtract AMC5 by the sum of AntMoist (day 5) and Water
                 z.AMC5 = z.AMC5 - z.AntMoist[4] + z.Water
-                z.DailyAMC5[Y][i][j] = z.AMC5
+                z.DailyAMC5[Y,i,j] = z.AMC5
 
                 # Shift AntMoist values to the right.
                 z.AntMoist[4] = z.AntMoist[3]
@@ -153,7 +229,7 @@ def run(z):
                         z.ET = z.KV[i] * z.PotenET * z.PcntET[i]
 
                 # Daily ET calculation
-                z.DailyET[Y][i][j] = z.ET
+                z.DailyET[Y,i,j] = z.ET
 
                 # ***** END WEATHER DATA ANALYSIS *****
 
@@ -180,12 +256,12 @@ def run(z):
                 # Obtain the Percolation, adjust precip and UnsatStor values
                 if z.UnsatStor > z.MaxWaterCap:
                     z.Percolation = z.UnsatStor - z.MaxWaterCap
-                    z.Perc[Y][i][j] = z.UnsatStor - z.MaxWaterCap
+                    z.Perc[Y,i,j] = z.UnsatStor - z.MaxWaterCap
                     z.UnsatStor = z.UnsatStor - z.Percolation
                 else:
                     z.Percolation = 0
-                    z.Perc[Y][i][j] = 0
-                z.PercCm[Y][i][j] = z.Percolation / 100
+                    z.Perc[Y,i,j] = 0
+                z.PercCm[Y,i,j] = z.Percolation / 100
 
                 # CALCULATE STORAGE IN SATURATED ZONES AND GROUNDWATER
                 # DISCHARGE
@@ -193,20 +269,20 @@ def run(z):
                 if z.SatStor < 0:
                     z.SatStor = 0
                 z.Flow = z.QTotal + z.GrFlow
-                z.DailyFlow[Y][i][j] = z.DayRunoff[Y][i][j] + z.GrFlow
+                z.DailyFlow[Y,i,j] = z.DayRunoff[Y,i,j] + z.GrFlow
 
-                z.DailyFlowGPM[Y][i][j] = z.Flow * 0.00183528 * z.TotAreaMeters
-                z.DailyGrFlow[Y][i][j] = z.GrFlow  # (for daily load calculations)
+                z.DailyFlowGPM[Y,i,j] = z.Flow * 0.00183528 * z.TotAreaMeters
+                z.DailyGrFlow[Y,i,j] = z.GrFlow  # (for daily load calculations)
 
                 # MONTHLY FLOW
-                z.MonthFlow[Y][i] = z.MonthFlow[Y][i] + z.DailyFlow[Y][i][j]
+                z.MonthFlow[Y,i] = z.MonthFlow[Y,i] + z.DailyFlow[Y,i,j]
 
                 # CALCULATE TOTALS
-                z.Precipitation[Y][i] = z.Precipitation[Y][i] + z.Prec[Y][i][j]
-                z.Evapotrans[Y][i] = z.Evapotrans[Y][i] + z.ET
+                z.Precipitation[Y,i] = z.Precipitation[Y,i] + z.Prec[Y,i,j]
+                z.Evapotrans[Y,i] = z.Evapotrans[Y,i] + z.ET
 
-                z.StreamFlow[Y][i] = z.StreamFlow[Y][i] + z.Flow
-                z.GroundWatLE[Y][i] = z.GroundWatLE[Y][i] + z.GrFlow
+                z.StreamFlow[Y,i] = z.StreamFlow[Y,i] + z.Flow
+                z.GroundWatLE[Y,i] = z.GroundWatLE[Y,i] + z.GrFlow
 
                 grow_factor = GrowFlag.intval(z.Grow[i])
 
@@ -217,7 +293,7 @@ def run(z):
                                   (z.PhosSepticLoad - z.PhosPlantUptake * grow_factor))
 
                 # UPDATE MASS BALANCE ON PONDED EFFLUENT
-                if z.Temp[Y][i][j] <= 0 or z.InitSnow > 0:
+                if z.Temp[Y,i,j] <= 0 or z.InitSnow > 0:
 
                     # ALL INPUTS GO TO FROZEN STORAGE
                     z.FrozenPondNitr = z.FrozenPondNitr + z.PondNitrLoad
@@ -252,35 +328,37 @@ def run(z):
                 z.MonthDischargePhos[i] = z.MonthDischargePhos[i] + z.PhosSepticLoad
 
             # CALCULATE WITHDRAWAL AND POINT SOURCE FLOW VALUES
-            z.Withdrawal[Y][i] = (z.Withdrawal[Y][i] + z.StreamWithdrawal[i] +
+            z.Withdrawal[Y,i] = (z.Withdrawal[Y,i] + z.StreamWithdrawal[i] +
                                   z.GroundWithdrawal[i])
-            z.PtSrcFlow[Y][i] = z.PtSrcFlow[Y][i] + z.PointFlow[i]
+            z.PtSrcFlow[Y,i] = z.PtSrcFlow[Y,i] + z.PointFlow[i]
 
             # CALCULATE THE SURFACE RUNOFF PORTION OF TILE DRAINAGE
-            z.TileDrainRO[Y][i] = (z.TileDrainRO[Y][i] + [z.AgRunoff[Y][i] *
+            z.TileDrainRO[Y,i] = (z.TileDrainRO[Y,i] + [z.AgRunoff[Y,i] *
                                    z.TileDrainDensity])
 
             # CALCULATE SUBSURFACE PORTION OF TILE DRAINAGE
             if z.AreaTotal > 0:
-                z.GwAgLE[Y][i] = (z.GwAgLE[Y][i] + (z.GroundWatLE[Y][i] *
+                z.GwAgLE[Y,i] = (z.GwAgLE[Y,i] + (z.GroundWatLE[Y,i] *
                                   (z.AgAreaTotal / z.AreaTotal)))
-            z.TileDrainGW[Y][i] = (z.TileDrainGW[Y][i] + [z.GwAgLE[Y][i] *
+            z.TileDrainGW[Y,i] = (z.TileDrainGW[Y,i] + [z.GwAgLE[Y,i] *
                                    z.TileDrainDensity])
 
             # ADD THE TWO COMPONENTS OF TILE DRAINAGE FLOW
-            z.TileDrain[Y][i] = (z.TileDrain[Y][i] + z.TileDrainRO[Y][i] +
-                                 z.TileDrainGW[Y][i])
+            z.TileDrain[Y,i] = (z.TileDrain[Y,i] + z.TileDrainRO[Y,i] +
+                                 z.TileDrainGW[Y,i])
 
             # ADJUST THE GROUNDWATER FLOW
-            z.GroundWatLE[Y][i] = z.GroundWatLE[Y][i] - z.TileDrainGW[Y][i]
-            if z.GroundWatLE[Y][i] < 0:
-                z.GroundWatLE[Y][i] = 0
+            z.GroundWatLE[Y,i] = z.GroundWatLE[Y,i] - z.TileDrainGW[Y,i]
+            if z.GroundWatLE[Y,i] < 0:
+                z.GroundWatLE[Y,i] = 0
 
             # ADJUST THE SURFACE RUNOFF
-            z.Runoff[Y][i] = z.Runoff[Y][i] - z.TileDrainRO[Y][i]
+            z.Runoff[Y,i] = z.Runoff[Y,i] - z.TileDrainRO[Y,i]
 
-            if z.Runoff[Y][i] < 0:
-                z.Runoff[Y][i] = 0
+            if z.Runoff[Y,i] < 0:
+                z.Runoff[Y,i] = 0
+
+        timer.resume("func")
 
         # CALCULATE ANIMAL FEEDING OPERATIONS OUTPUT
         AFOS.AnimalOperations(z, Y)
@@ -293,6 +371,10 @@ def run(z):
 
         # CALCULATE FINAL ANNUAL MEAN LOADS
         AnnualMeans.CalculateAnnualMeanLoads(z, Y)
+
+        timer.resume("outer_loop")
+
+
 
     # CALCULATE FINAL MONTHLY AND ANNUAL WATER BALANCE FOR
     # AVERAGE STREAM FLOW
@@ -315,7 +397,10 @@ def run(z):
 
     log.debug("Model run complete for " + str(z.NYrs) + " years of data.")
 
+    timer.resume("load_save")
+
     output = WriteOutputFiles.WriteOutput(z)
     # WriteOutputFiles.WriteOutputSumFiles()
 
+    log.debug("\n".join(timer.get_report_str()))
     return output
