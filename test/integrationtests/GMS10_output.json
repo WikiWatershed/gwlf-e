@@ -12,7 +12,7 @@
             "AvStreamFlow": 0.07099143471807097
         }, 
         {
-            "AvEvapoTrans": 0.4856876904926166, 
+            "AvEvapoTrans": 0.4856876904926167, 
             "AvTileDrain": 0.0, 
             "AvPrecipitation": 1.463886666666667, 
             "AvRunoff": 0.05606642009244461, 
@@ -46,10 +46,10 @@
             "AvTileDrain": 0.0, 
             "AvPrecipitation": 4.517390000000001, 
             "AvRunoff": 0.057628502128901485, 
-            "AvGroundWater": 0.38325217646414567, 
+            "AvGroundWater": 0.3832521764641456, 
             "AvPtSrcFlow": 0.0, 
             "AvWithdrawal": 0.0, 
-            "AvStreamFlow": 0.44088067859304714
+            "AvStreamFlow": 0.4408806785930471
         }, 
         {
             "AvEvapoTrans": 4.885726267400887, 
@@ -76,10 +76,10 @@
             "AvTileDrain": 0.0, 
             "AvPrecipitation": 1.6958733333333333, 
             "AvRunoff": 3.621936338521921e-05, 
-            "AvGroundWater": 0.08270727025211347, 
+            "AvGroundWater": 0.08270727025211345, 
             "AvPtSrcFlow": 0.0, 
             "AvWithdrawal": 0.0, 
-            "AvStreamFlow": 0.08274348961549868
+            "AvStreamFlow": 0.08274348961549867
         }, 
         {
             "AvEvapoTrans": 2.2696447446976022, 
@@ -96,10 +96,10 @@
             "AvTileDrain": 0.0, 
             "AvPrecipitation": 2.4481366666666666, 
             "AvRunoff": 0.010508072606206766, 
-            "AvGroundWater": 0.026291746738686672, 
+            "AvGroundWater": 0.02629174673868667, 
             "AvPtSrcFlow": 0.0, 
             "AvWithdrawal": 0.0, 
-            "AvStreamFlow": 0.03679981934489344
+            "AvStreamFlow": 0.03679981934489343
         }, 
         {
             "AvEvapoTrans": 0.7864280716962907, 
@@ -112,7 +112,7 @@
             "AvStreamFlow": 0.026301438108231996
         }, 
         {
-            "AvEvapoTrans": 0.24463641458205002, 
+            "AvEvapoTrans": 0.24463641458205007, 
             "AvTileDrain": 0.0, 
             "AvPrecipitation": 1.5400866666666666, 
             "AvRunoff": 0.014233154085649995, 
@@ -186,13 +186,13 @@
             "Source": "Wetlands", 
             "TotalN": 223.24193220776334, 
             "TotalP": 11.991854766729954, 
-            "Sediment": 188.25066403066413
+            "Sediment": 188.25066403066404
         }, 
         {
             "Source": "Open Land", 
             "TotalN": 459.8803066895056, 
             "TotalP": 14.162483878769056, 
-            "Sediment": 3617.5870265295457
+            "Sediment": 3617.587026529545
         }, 
         {
             "Source": "Barren Areas", 
