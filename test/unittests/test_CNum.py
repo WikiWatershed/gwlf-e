@@ -15,7 +15,7 @@ class TestCNum(unittest.TestCase):
         z = self.z
         np.testing.assert_array_almost_equal(
             np.load("unittests/CNum.npy"),
-            CNum.CNum_1(z.NYrs, z.DaysMonth, z.Temp, z.Prec, z.InitSnow_0, z.AntMoist_0, z.CN, z.NRur, z.NUrb,
+            CNum.CNum(z.NYrs, z.DaysMonth, z.Temp, z.Prec, z.InitSnow_0, z.AntMoist_0, z.CN, z.NRur, z.NUrb,
                         z.Grow_0), decimal=7)
 
     def test_CNum(self):

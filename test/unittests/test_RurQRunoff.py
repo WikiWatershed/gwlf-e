@@ -8,7 +8,7 @@ from gwlfe import RurQRunoff
 
 class TestRurQRunoff(unittest.TestCase):
     def setUp(self):
-        input_file = open('input_4.gms', 'r')
+        input_file = open('integrationtests/test1.gms', 'r')
         self.z = Parser.GmsReader(input_file).read()
 
     def test_RurQRunoff(self):
