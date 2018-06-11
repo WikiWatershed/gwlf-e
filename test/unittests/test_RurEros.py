@@ -16,7 +16,7 @@ class TestRurEros(unittest.TestCase):
         np.testing.assert_array_almost_equal(
             np.load("unittests/RurEros.npy"),
             RurEros.RurEros_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.Acoef, z.NRur, z.KF, z.LS, z.C, z.P,
-                            z.Area), decimal=20)
+                            z.Area), decimal=7)
 
     def test_RurEros(self):
         z = self.z
@@ -24,4 +24,4 @@ class TestRurEros(unittest.TestCase):
             RurEros.RurEros_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.Acoef, z.NRur, z.KF, z.LS, z.C, z.P,
                               z.Area),
             RurEros.RurEros(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.Acoef, z.NRur, z.KF, z.LS, z.C, z.P,
-                            z.Area), decimal=20)
+                            z.Area), decimal=7)

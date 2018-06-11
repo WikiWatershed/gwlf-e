@@ -3,6 +3,8 @@ from Timer import time_function
 from Memoization import memoize
 from Water import Water
 from NetDisLoad import NetDisLoad
+from Water import Water_2
+from NetDisLoad import NetDisLoad_2
 
 
 @memoize
@@ -26,6 +28,15 @@ def DisLoad(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, An
                     pass
     return result
 
-
-def DisLoad_2():
-    pass
+@memoize
+def DisLoad_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
+                 Grow_0, CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil, Nqual, LoadRateImp,
+                 LoadRatePerv, Storm, UrbBMPRed, DisFract, FilterWidth, PctStrmBuf):
+    water = np.repeat(Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)[:,:,:,None], Nqual, axis =3)
+    temp = np.repeat(Temp[:,:,:,None], Nqual, axis = 3)
+    netdisload = NetDisLoad_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
+                 Grow_0, CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil, Nqual, LoadRateImp,
+                 LoadRatePerv, Storm, UrbBMPRed, DisFract, FilterWidth, PctStrmBuf)
+    result = np.sum(np.where((temp > 0) & (water > 0.01), netdisload, 0), axis = 2)
+    result[result<0] = 0
+    return result
