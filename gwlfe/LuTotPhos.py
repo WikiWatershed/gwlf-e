@@ -47,7 +47,7 @@ def LuTotPhos_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb,
     #                   ManuredAreas,
     #                   FirstManureMonth, LastManureMonth, ManPhos, FirstManureMonth2, LastManureMonth2), axis=1),
     #         repeats=10), (NYrs, 10))
-    p_runoff = np.sum(pRunoff(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb, CN, Grow_0, Area, PhosConc,
+    p_runoff = np.sum(pRunoff_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb, CN, Grow_0, Area, PhosConc,
                        ManuredAreas, FirstManureMonth, LastManureMonth, ManPhos, FirstManureMonth2,
                        LastManureMonth2), axis=1)
     sed_deliv_ratio = SedDelivRatio(SedDelivRatio_0)

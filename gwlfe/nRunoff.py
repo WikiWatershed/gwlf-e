@@ -28,6 +28,5 @@ def nRunoff_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb, C
     n_conc = NConc_2(NRur, NUrb, NitrConc, ManNitr, ManuredAreas, FirstManureMonth, LastManureMonth, FirstManureMonth2,
                    LastManureMonth2)[:, :NRur]
 
-    return 0.1 * np.sum(n_conc *
-                        RurQRunoff_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb, CN,
-                                     Grow_0) * Area[:NRur], axis=2)
+    return 0.1 * n_conc * RurQRunoff_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb, CN,
+                                     Grow_0) * Area[:NRur]

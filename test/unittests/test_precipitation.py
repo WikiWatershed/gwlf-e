@@ -16,5 +16,5 @@ class TestPrecipitation(unittest.TestCase):
         temp_2 = Precipitation.Precipitation_2(z.Prec)
         temp = Precipitation.Precipitation(z.NYrs, z.DaysMonth, z.Prec)
         np.testing.assert_array_almost_equal(Precipitation.Precipitation_2(z.Prec),
-                                             Precipitation.Precipitation(z.NYrs, z.DaysMonth, z.Prec), decimal=20)
+                                             Precipitation.Precipitation(z.NYrs, z.DaysMonth, z.Prec), decimal=7)
 

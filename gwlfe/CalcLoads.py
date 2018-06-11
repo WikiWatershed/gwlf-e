@@ -23,8 +23,8 @@ from SedYield import SedYield_2
 from LuLoad import LuLoad_2
 from LuDisLoad import LuDisLoad_2
 from LuErosion import LuErosion_2
-from nRunoff import nRunoff
-from pRunoff import pRunoff
+from nRunoff import nRunoff_2
+from pRunoff import pRunoff_2
 
 
 def CalculateLoads(z, Y):
@@ -92,22 +92,22 @@ def CalculateLoads(z, Y):
                 LuErosion_2(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.NRur, z.Acoef, z.KF, z.LS,
                             z.C, z.P, z.Area)[Y][l] * SedDelivRatio(z.SedDelivRatio_0)
             z.DisNitr[Y][i] += \
-                nRunoff(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.NRur, z.NUrb, z.CN,
+                nRunoff_2(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.NRur, z.NUrb, z.CN,
                           z.Grow_0,
                           z.Area, z.NitrConc, z.ManNitr, z.ManuredAreas, z.FirstManureMonth, z.LastManureMonth,
                           z.FirstManureMonth2, z.LastManureMonth2)[Y][i][l]
             z.DisPhos[Y][i] += \
-                pRunoff(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.NRur, z.NUrb, z.CN,
+                pRunoff_2(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.NRur, z.NUrb, z.CN,
                           z.Grow_0,
                           z.Area, z.PhosConc, z.ManuredAreas, z.FirstManureMonth, z.LastManureMonth, z.ManPhos,
                           z.FirstManureMonth2, z.LastManureMonth2)[Y][i][l]
             z.LuDisNitr[Y][l] += \
-                nRunoff(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.NRur, z.NUrb, z.CN,
+                nRunoff_2(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.NRur, z.NUrb, z.CN,
                           z.Grow_0,
                           z.Area, z.NitrConc, z.ManNitr, z.ManuredAreas, z.FirstManureMonth, z.LastManureMonth,
                           z.FirstManureMonth2, z.LastManureMonth2)[Y][i][l]
             z.LuDisPhos[Y][l] += \
-                pRunoff(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.NRur, z.NUrb, z.CN,
+                pRunoff_2(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.NRur, z.NUrb, z.CN,
                           z.Grow_0,
                           z.Area, z.PhosConc, z.ManuredAreas, z.FirstManureMonth, z.LastManureMonth, z.ManPhos,
                           z.FirstManureMonth2, z.LastManureMonth2)[Y][i][l]

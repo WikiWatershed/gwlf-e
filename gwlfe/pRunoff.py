@@ -29,4 +29,4 @@ def pRunoff_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb, C
     p_conc = PConc_2(NRur, NUrb, PhosConc, ManPhos, ManuredAreas, FirstManureMonth, LastManureMonth, FirstManureMonth2,
                    LastManureMonth2)[:, :NRur]
     rur_q_runoff = RurQRunoff_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb, CN, Grow_0)
-    return 0.1 * np.sum(p_conc * rur_q_runoff * Area[:NRur], axis=2)
+    return 0.1 * p_conc * rur_q_runoff * Area[:NRur]

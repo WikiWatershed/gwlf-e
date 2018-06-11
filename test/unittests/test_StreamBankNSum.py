@@ -30,4 +30,4 @@ class TestStreamBankNSum(unittest.TestCase):
                    z.TileDrainDensity, z.PointFlow, z.StreamWithdrawal, z.GroundWithdrawal,
                    z.NumAnimals, z.AvgAnimalWt, z.StreamFlowVolAdj, z.SedAFactor_0, z.AvKF,
                    z.AvSlope, z.SedAAdjust, z.StreamLength, z.n42b, z.AgLength,
-                   z.UrbBankStab, z.SedNitr, z.BankNFrac, z.n69c, z.n45, z.n69), decimal=7)
+                   z.UrbBankStab, z.SedNitr, z.BankNFrac, z.n69c, z.n45, z.n69, z.n46c, z.n42), decimal=7)

@@ -53,7 +53,7 @@ def LuTotNitr_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb,
     #     np.repeat(np.sum(nRunoff(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb, CN, Grow_0,
     #                                Area, NitrConc, ManNitr, ManuredAreas, FirstManureMonth, LastManureMonth,
     #                                FirstManureMonth2, LastManureMonth2), axis=1), repeats=10), (NYrs, 10))
-    n_runoff = np.sum(nRunoff(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb, CN, Grow_0,
+    n_runoff = np.sum(nRunoff_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb, CN, Grow_0,
                        Area, NitrConc, ManNitr, ManuredAreas, FirstManureMonth, LastManureMonth,
                        FirstManureMonth2, LastManureMonth2), axis =1)
     sed_deliv_ratio = SedDelivRatio(SedDelivRatio_0)
