@@ -1,11 +1,12 @@
-import numpy as np
-from gwlfe.Timer import time_function
+from numpy import repeat
+from numpy import zeros
+
 from gwlfe.Memoization import memoize
 
 
 @memoize
 def PtSrcFlow(NYrs, PointFlow):
-    result = np.zeros((NYrs, 12))
+    result = zeros((NYrs, 12))
     for Y in range(NYrs):
         for i in range(12):
             result[Y][i] = result[Y][i] + PointFlow[i]
@@ -13,11 +14,11 @@ def PtSrcFlow(NYrs, PointFlow):
 
 
 def PtSrcFlow_2(NYrs, PointFlow):
-    return np.repeat(PointFlow[:, None], NYrs, axis=1).T
+    return repeat(PointFlow[:, None], NYrs, axis=1).T
 
 
 def AvPtSrcFlow(NYrs, PtSrcFlow):
-    result = np.zeros((12,))
+    result = zeros((12,))
     for Y in range(NYrs):
         for i in range(12):
             result[i] += PtSrcFlow[Y][i] / NYrs

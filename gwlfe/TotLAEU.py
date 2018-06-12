@@ -1,6 +1,4 @@
-import numpy as np
 # from Timer import time_function
-from Memoization import memoize
 
 
 def TotLAEU(NumAnimals, AvgAnimalWt):
@@ -15,4 +13,4 @@ def TotLAEU(NumAnimals, AvgAnimalWt):
 
 
 def TotLAEU_2(NumAnimals, AvgAnimalWt):
-    return np.sum(NumAnimals[[0, 1, 4, 5, 6]] * AvgAnimalWt[[0, 1, 4, 5, 6]] / 1000)
+    return sum(NumAnimals[[0, 1, 4, 5, 6]] * AvgAnimalWt[[0, 1, 4, 5, 6]] / 1000)

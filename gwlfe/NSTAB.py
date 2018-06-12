@@ -1,6 +1,6 @@
-import numpy as np
+from numpy import zeros
+
 # from Timer import time_function
-from Memoization import memoize
 from StreamBankN import StreamBankN
 from StreamBankN import StreamBankN_2
 
@@ -12,7 +12,7 @@ def NSTAB(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area,
           TileDrainDensity, PointFlow, StreamWithdrawal, GroundWithdrawal,
           NumAnimals, AvgAnimalWt, StreamFlowVolAdj, SedAFactor_0, AvKF,
           AvSlope, SedAAdjust, StreamLength, n42b, n46c, SedNitr, BankNFrac, n69c):
-    result = np.zeros((NYrs, 12))
+    result = zeros((NYrs, 12))
     streabank_n = StreamBankN(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area,
                               CNI_0, AntMoist_0, Grow_0, CNP_0, Imper, ISRR, ISRA, CN,
                               UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0,
@@ -45,4 +45,4 @@ def NSTAB_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area,
                                              NumAnimals, AvgAnimalWt, StreamFlowVolAdj, SedAFactor_0, AvKF,
                                              AvSlope, SedAAdjust, StreamLength, SedNitr, BankNFrac) * n69c
     else:
-        return np.zeros((NYrs, 12))
+        return zeros((NYrs, 12))

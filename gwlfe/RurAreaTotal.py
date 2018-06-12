@@ -1,4 +1,3 @@
-import numpy as np
 # from Timer import time_function
 from Memoization import memoize
 
@@ -15,4 +14,4 @@ def RurAreaTotal(NRur, Area):
 # @memoize
 # @time_function
 def RurAreaTotal_2(NRur, Area):
-    return np.sum(Area[0:NRur])
+    return sum(Area[0:NRur])

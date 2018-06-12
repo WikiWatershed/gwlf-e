@@ -1,5 +1,6 @@
-from gwlfe.Memoization import memoize_with_args
 from mock import patch
+
+from gwlfe.Memoization import memoize_with_args
 
 patch('gwlfe.Memoization.memoize', memoize_with_args).start()
 

@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
+from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
-from __future__ import division
 
 """
 Imported from PrelimCalculations.bas
 """
 
-import math
 import logging
 from enums import LandUse
 

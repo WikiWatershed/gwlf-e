@@ -1,12 +1,15 @@
-import numpy as np
-# from Timer import time_function
-from Memoization import memoize
+from numpy import sum
+from numpy import zeros
+
 from ErosWashoff import ErosWashoff
 from ErosWashoff import ErosWashoff_2
+# from Timer import time_function
+from Memoization import memoize
+
 
 def LuErosion(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Acoef, KF, LS,
               C, P, Area):
-    result = np.zeros((NYrs, 10))
+    result = zeros((NYrs, 10))
     eros_washoff = ErosWashoff(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Acoef, KF, LS,
                                C, P, Area)
     for Y in range(NYrs):
@@ -18,5 +21,5 @@ def LuErosion(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Acoef, KF, LS
 @memoize
 def LuErosion_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, Acoef, KF, LS,
                 C, P, Area):
-    return np.sum(ErosWashoff_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, Acoef, KF, LS,
+    return sum(ErosWashoff_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, Acoef, KF, LS,
                                 C, P, Area), axis=1)

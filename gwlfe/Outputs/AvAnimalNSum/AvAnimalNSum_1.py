@@ -1,5 +1,3 @@
-import numpy as np
-from gwlfe.Timer import time_function
 from N7b import N7b
 from N7b import N7b_2
 from gwlfe.Memoization import memoize

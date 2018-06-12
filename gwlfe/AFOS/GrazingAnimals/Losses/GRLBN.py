@@ -1,5 +1,3 @@
-import numpy as np
-from gwlfe.Timer import time_function
 from AvGRLostBarnNSum import AvGRLostBarnNSum
 from AvGRLostBarnNSum import AvGRLostBarnNSum_2
 

@@ -9,7 +9,7 @@ Imported from CalcLoads.bas
 
 # import logging
 
-import numpy as np
+from numpy import zeros
 
 # log = logging.getLogger(__name__)
 
@@ -30,7 +30,7 @@ from pRunoff import pRunoff_2
 def CalculateLoads(z, Y):
     # PrecipitationTotal = 0
     # RunoffTotal = 0
-    GroundWatLETotal = np.zeros(z.WxYrs)
+    GroundWatLETotal = zeros(z.WxYrs)
     # EvapotransTotal = 0
     # PtSrcFlowTotal = 0
     # WithdrawalTotal = 0

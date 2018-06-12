@@ -1,14 +1,16 @@
-import numpy as np
+from numpy import zeros
+
 # from Timer import time_function
 from AgRunoff import AgRunoff
-from Memoization import memoize
 from AgRunoff import AgRunoff_2
+from Memoization import memoize
+
 
 # @time_function
 @memoize
 def TileDrainRO(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, CN, AntMoist_0, NUrb, Grow_0, Landuse, Area,
                 TileDrainDensity):
-    result = np.zeros((NYrs, 12))
+    result = zeros((NYrs, 12))
     ag_runoff = AgRunoff(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, CN, AntMoist_0, NUrb, Grow_0, Landuse, Area)
     for Y in range(NYrs):
         for i in range(12):

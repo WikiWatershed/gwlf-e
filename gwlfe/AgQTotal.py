@@ -1,16 +1,19 @@
-import numpy as np
-# from Timer import time_function
-from Water import Water
-from Retention import Retention
-from enums import LandUse
-from Qrun import Qrun, Qrun_2
+from numpy import array
+from numpy import sum
+from numpy import zeros
+
 from AgAreaTotal import AgAreaTotal
 from Memoization import memoize
+from Qrun import Qrun, Qrun_2
+from Retention import Retention
+# from Timer import time_function
+from Water import Water
+from enums import LandUse
 
 
 @memoize
 def AgQTotal(NYrs,DaysMonth,InitSnow_0, Temp, Prec,NRur,CN, AntMoist_0,NUrb,Grow_0,Landuse,Area):
-    result = np.zeros((NYrs,12,31))
+    result = zeros((NYrs,12,31))
     water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     retention = Retention(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, NRur, NUrb, CN, Grow_0)
     q_run = Qrun(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, CN, AntMoist_0, Grow_0)
@@ -42,12 +45,12 @@ def AgQTotal(NYrs,DaysMonth,InitSnow_0, Temp, Prec,NRur,CN, AntMoist_0,NUrb,Grow
 
 @memoize
 def AgQTotal_2(NYrs,DaysMonth,InitSnow_0, Temp, Prec,NRur,CN, AntMoist_0,NUrb,Grow_0,Landuse,Area):
-    result = np.zeros((NYrs, 12, 31))
+    result = zeros((NYrs, 12, 31))
     q_run = Qrun_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, CN, AntMoist_0, Grow_0)
     ag_area_total = AgAreaTotal(NRur, Landuse, Area)
-    ag_used = np.array([1,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0])
+    ag_used = array([1,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0])
     ag_area = Area * ag_used
     qrun_agarea = q_run * ag_area
     if ag_area_total > 0:
-        result = np.sum(qrun_agarea, axis=3) / ag_area_total
+        result = sum(qrun_agarea, axis=3) / ag_area_total
     return result

@@ -1,12 +1,12 @@
 from numba.pycc import CC
-import numpy as np
+from numpy import zeros
 
 cc = CC('AMC5_yesterday_inner_compiled')
 
 @cc.export('AMC5_yesterday_inner','(int64, int32[:,::1], float64[::1], float64[:,:,::1])')
 def AMC5_yesterday_inner(NYrs, DaysMonth, AntMoist_0, water):
-    result = np.zeros((NYrs, 12, 31))
-    AntMoist1 = np.zeros((5,))
+    result = zeros((NYrs, 12, 31))
+    AntMoist1 = zeros((5,))
     AMC5 = 0
     for k in range(5):
         AMC5 += AntMoist_0[k]

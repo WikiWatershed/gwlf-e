@@ -1,4 +1,9 @@
-import numpy as np
+from numpy import maximum
+from numpy import minimum
+from numpy import ndarray
+from numpy import reshape
+from numpy import tile
+from numpy import zeros
 
 from gwlfe.AFOS.nonGrazingAnimals.Loads.NGAppManN import NGAppManN
 from gwlfe.AFOS.nonGrazingAnimals.Loads.NGAppManN import NGAppManN_2
@@ -9,7 +14,7 @@ from gwlfe.MultiUse_Fxns.LossFactAdj import LossFactAdj_2
 def NGLostManN(NYrs, NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, NGAppNRate, Prec, DaysMonth,
                NGPctSoilIncRate):
     # Non-grazing animal losses
-    result = np.zeros((NYrs, 12))
+    result = zeros((NYrs, 12))
     loss_fact_adj = LossFactAdj(NYrs, Prec, DaysMonth)
     ng_app_man_n = NGAppManN(NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN)
     for Y in range(NYrs):
@@ -27,7 +32,7 @@ def NGLostManN_2(NYrs, NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, An
                  NGPctSoilIncRate):
     lossFactAdj = LossFactAdj_2(Prec, DaysMonth)
     ng_app_man_n = NGAppManN_2(NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN)
-    result = np.tile(ng_app_man_n * NGAppNRate * (1 - NGPctSoilIncRate), NYrs) * np.ndarray.flatten(lossFactAdj)
-    result = np.minimum(result, np.tile(ng_app_man_n, NYrs))  # TODO: should eliminate the double tile
-    result = np.maximum(result, 0)
-    return np.reshape(result, (NYrs, 12))
+    result = tile(ng_app_man_n * NGAppNRate * (1 - NGPctSoilIncRate), NYrs) * ndarray.flatten(lossFactAdj)
+    result = minimum(result, tile(ng_app_man_n, NYrs))  # TODO: should eliminate the double tile
+    result = maximum(result, 0)
+    return reshape(result, (NYrs, 12))

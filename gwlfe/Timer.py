@@ -1,13 +1,13 @@
 import timeit
-import numpy as np
-from copy import deepcopy
-
+from numpy import median
+from numpy import mean
+from numpy import array
 
 def reject_outliers(data, m=2.):
-    d = np.abs(data - np.median(data))
-    mdev = np.median(d)
+    d = abs(data - median(data))
+    mdev = median(d)
     s = d / mdev if mdev else 0.
-    return np.mean(data[s < m])
+    return mean(data[s < m])
 
 
 def time_function(method):
@@ -20,7 +20,7 @@ def time_function(method):
         function_to_time = timeit.Timer(lambda: method(*args), setup=reset_scope)
         runs = function_to_time.repeat(number=1, repeat=100)
         print("300 loops of %r, average time per loop: %f, best: %f, worst: %f" % (
-            method.__name__, reject_outliers(np.array(runs)), np.min(runs), np.max(runs)))
+            method.__name__, reject_outliers(array(runs)), min(runs), max(runs)))
 
         result = method(*args, **kw)
         return result

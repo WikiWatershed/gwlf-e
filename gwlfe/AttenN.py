@@ -1,7 +1,7 @@
-import numpy as np
 # from Timer import time_function
-from Memoization import memoize
 from FlowDays import FlowDays
+from Memoization import memoize
+
 
 @memoize
 def AttenN(AttenFlowDist, AttenFlowVel, AttenLossRateN):

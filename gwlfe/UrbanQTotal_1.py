@@ -1,15 +1,17 @@
-import numpy as np
+from numpy import zeros
+
+from AreaTotal import AreaTotal
+from Memoization import memoize
+from UrbAreaTotal import UrbAreaTotal
+from UrbanQTotal import UrbanQTotal, UrbanQTotal_2
 # from Timer import time_function
 from Water import Water
-from UrbAreaTotal import UrbAreaTotal
-from AreaTotal import AreaTotal
-from UrbanQTotal import UrbanQTotal, UrbanQTotal_2
-from Memoization import memoize
+
 
 @memoize
 def UrbanQTotal_1(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
                   ISRR, ISRA):
-    result = np.zeros((NYrs, 12, 31))
+    result = zeros((NYrs, 12, 31))
     water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     urban_area_total = UrbAreaTotal(NRur, NUrb, Area)
     area_total = AreaTotal(NRur, NUrb, Area)

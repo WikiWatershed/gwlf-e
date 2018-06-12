@@ -1,9 +1,9 @@
-from gwlfe.AFOS.nonGrazingAnimals.Losses.NGLostBarnN import AvNGLostBarnNSum
-from gwlfe.AFOS.nonGrazingAnimals.Losses.NGLostBarnN import AvNGLostBarnNSum_2
 from gwlfe.AFOS.GrazingAnimals.Losses.GRLBN import GRLBN
 from gwlfe.AFOS.GrazingAnimals.Losses.GRLBN import GRLBN_2
 from gwlfe.AFOS.GrazingAnimals.Losses.GRStreamN import AvGRStreamN
 from gwlfe.AFOS.GrazingAnimals.Losses.GRStreamN import AvGRStreamN_2
+from gwlfe.AFOS.nonGrazingAnimals.Losses.NGLostBarnN import AvNGLostBarnNSum
+from gwlfe.AFOS.nonGrazingAnimals.Losses.NGLostBarnN import AvNGLostBarnNSum_2
 from gwlfe.Outputs.AvAnimalNSum.AvAnimalNSum import AvAnimalNSum
 from gwlfe.Outputs.AvAnimalNSum.AvAnimalNSum import AvAnimalNSum_2
 

@@ -1,4 +1,3 @@
-import numpy as np
 # from Timer import time_function
 from enums import YesOrNo
 

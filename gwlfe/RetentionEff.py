@@ -1,17 +1,19 @@
-import numpy as np
+from numpy import where
+from numpy import zeros
+
 # from Timer import time_function
 from Memoization import memoize
-from Water import Water
 from UrbanQTotal import UrbanQTotal
-from Water import Water_2
 from UrbanQTotal import UrbanQTotal_2
+from Water import Water
+from Water import Water_2
 
 
 # Precipitation.Precipitation(z.NYrs, z.DaysMonth, z.Prec)ize
 def RetentionEff(NYrs, DaysMonth, InitSnow_0, Temp, Prec, Qretention, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0,
                  Imper, ISRR, ISRA, PctAreaInfil):
     # result = 0
-    result = np.zeros((NYrs, 12, 31))
+    result = zeros((NYrs, 12, 31))
     water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     urbanqtotal = UrbanQTotal(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, Area, CNI_0, AntMoist_0, Grow_0, CNP_0,
                               Imper, ISRR,
@@ -36,16 +38,16 @@ def RetentionEff(NYrs, DaysMonth, InitSnow_0, Temp, Prec, Qretention, NRur, NUrb
 
 def RetentionEff_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, Qretention, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
                    CNP_0, Imper, ISRR, ISRA, PctAreaInfil):
-    result = np.zeros((NYrs, 12, 31))
+    result = zeros((NYrs, 12, 31))
     water = Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     urbanqtotal = UrbanQTotal_2(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, Area, CNI_0, AntMoist_0, Grow_0,
                                 CNP_0,
                                 Imper, ISRR, ISRA)
-    result[np.where((Temp > 0) & (water > 0.05) & (Qretention > 0) & (urbanqtotal > 0) & (
+    result[where((Temp > 0) & (water > 0.05) & (Qretention > 0) & (urbanqtotal > 0) & (
                 urbanqtotal <= Qretention * PctAreaInfil))] = 1
-    result[np.where((Temp > 0) & (water > 0.05) & (Qretention > 0) & (urbanqtotal > 0) & (
+    result[where((Temp > 0) & (water > 0.05) & (Qretention > 0) & (urbanqtotal > 0) & (
                 urbanqtotal > Qretention * PctAreaInfil))] = \
-        Qretention * PctAreaInfil / urbanqtotal[np.where(
+        Qretention * PctAreaInfil / urbanqtotal[where(
             (Temp > 0) & (water > 0.05) & (Qretention > 0) & (urbanqtotal > 0) & (
                         urbanqtotal > Qretention * PctAreaInfil))]
 
@@ -59,7 +61,7 @@ def RetentionEff_3(NYrs, DaysMonth, InitSnow_0, Temp, Prec, Qretention, NRur, NU
                                 CNP_0,
                                 Imper, ISRR, ISRA)
     try:
-        test = urbanqtotal[np.where((Temp > 0) & (water > 0.05) & (Qretention > 0) & (urbanqtotal > 0))][::-1][0]
+        test = urbanqtotal[where((Temp > 0) & (water > 0.05) & (Qretention > 0) & (urbanqtotal > 0))][::-1][0]
         if test <= Qretention * PctAreaInfil:
             return 1
         else:

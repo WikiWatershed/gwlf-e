@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
+from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
-from __future__ import division
 
 """
 Imported from AnnualMeans.bas
@@ -13,16 +13,13 @@ from MultiUse_Fxns import Precipitation
 from AvEvapoTrans import AvEvapoTrans_2
 from MultiUse_Fxns.PtSrcFlow import AvPtSrcFlow_2
 from AvStreamBankEros import AvStreamBankEros_2
-from StreamBankN_1 import StreamBankN_1_2
 from AvTileDrain import AvTileDrain_2
 from AvWithdrawal import AvWithdrawal_2
 from AvGroundWater import AvGroundWater_2
 from AvRunoff import AvRunoff_2
 from AvErosion import AvErosion_2
 from AvSedYield import AvSedYield_2
-import numpy as np
 from LuRunoff import LuRunoff_2
-from LuTotPhos import LuTotPhos
 
 log = logging.getLogger(__name__)
 

@@ -1,10 +1,14 @@
-import numpy as np
+from numpy import repeat
+from numpy import tile
+from numpy import where
+from numpy import zeros
+
 # from Timer import time_function
 from CNI import CNI, CNI_2
 from CNumImperv import CNumImperv, CNumImperv_2
+from Memoization import memoize
 from NLU import NLU
 from Water import Water, Water_2
-from Memoization import memoize
 
 
 @memoize
@@ -14,7 +18,7 @@ def CNumImpervReten(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, NRur, N
     c_num_imperv = CNumImperv(NYrs, NRur, NUrb, DaysMonth, InitSnow_0, Temp, Prec, CNI_0, Grow_0, AntMoist_0)
     nlu = NLU(NRur, NUrb)
     water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
-    result = np.zeros((NYrs, 12, 31, nlu))
+    result = zeros((NYrs, 12, 31, nlu))
     for Y in range(NYrs):
         for i in range(12):
             for j in range(DaysMonth[Y][i]):
@@ -32,13 +36,13 @@ def CNumImpervReten(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, NRur, N
 
 def CNumImpervReten_2(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, NRur, NUrb, CNI_0, Grow_0):
     cni = CNI_2(NRur, NUrb, CNI_0)
-    cni_1 = np.tile(cni[1][None, None, None, :], (NYrs, 12, 31, 1))
+    cni_1 = tile(cni[1][None, None, None, :], (NYrs, 12, 31, 1))
     c_num_imperv = CNumImperv_2(NYrs, NRur, NUrb, DaysMonth, InitSnow_0, Temp, Prec, CNI_0, Grow_0, AntMoist_0)
     nlu = NLU(NRur, NUrb)
-    water = np.repeat(Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)[:, :, :, None], nlu, axis=3)
-    result = np.zeros((NYrs, 12, 31, nlu))
-    TempE = np.repeat(Temp[:, :, :, None], nlu, axis=3)
-    result[np.where((TempE > 0) & (water >= 0.05) & (cni_1 > 0))] = 2540 / c_num_imperv[
-        np.where((TempE > 0) & (water >= 0.05) & (cni_1 > 0))] - 25.4
-    result[np.where(result < 0)] = 0
+    water = repeat(Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)[:, :, :, None], nlu, axis=3)
+    result = zeros((NYrs, 12, 31, nlu))
+    TempE = repeat(Temp[:, :, :, None], nlu, axis=3)
+    result[where((TempE > 0) & (water >= 0.05) & (cni_1 > 0))] = 2540 / c_num_imperv[
+        where((TempE > 0) & (water >= 0.05) & (cni_1 > 0))] - 25.4
+    result[where(result < 0)] = 0
     return result

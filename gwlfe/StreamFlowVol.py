@@ -1,9 +1,8 @@
-import numpy as np
 # from Timer import time_function
+from Memoization import memoize
 from StreamFlowLE import StreamFlowLE
 from StreamFlowLE import StreamFlowLE_2
 from TotAreaMeters import TotAreaMeters
-from Memoization import memoize
 
 
 @memoize
@@ -12,7 +11,7 @@ def StreamFlowVol(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI
                   , Qretention, PctAreaInfil, n25b, Landuse, TileDrainDensity, PointFlow, StreamWithdrawal,
                   GroundWithdrawal):
     # CALCULATE THE VOLUMETRIC STREAM Flow
-    result = np.zeros((NYrs, 12))
+    result = zeros((NYrs, 12))
     streamflowle = StreamFlowLE(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
                                 CNP_0, Imper,
                                 ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0, RecessionCoef,

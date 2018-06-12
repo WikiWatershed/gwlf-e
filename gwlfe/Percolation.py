@@ -1,9 +1,10 @@
-import numpy as np
+from numpy import zeros
+
 # from Timer import time_function
 from Infiltration import Infiltration
 from Infiltration import Infiltration_2
-from MultiUse_Fxns.ET import DailyET_2
 from Memoization import memoize
+from MultiUse_Fxns.ET import DailyET_2
 
 try:
     from Percolation_inner_compiled import Percolation_inner
@@ -15,8 +16,8 @@ except ImportError:
 @memoize
 def Percolation(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
                 ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap):
-    result = np.zeros((NYrs, 12, 31))
-    percolation = np.zeros((NYrs, 12, 31))
+    result = zeros((NYrs, 12, 31))
+    percolation = zeros((NYrs, 12, 31))
     infiltration = Infiltration(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
                                 CNP_0, Imper,
                                 ISRR, ISRA, CN)

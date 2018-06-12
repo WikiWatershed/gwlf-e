@@ -1,16 +1,17 @@
-import numpy as np
+from numpy import zeros
+
 # from Timer import time_function
 from Memoization import memoize
-from RurQRunoff import RurQRunoff
-from RurQRunoff import RurQRunoff_2
 from NConc import NConc
 from NConc import NConc_2
+from RurQRunoff import RurQRunoff
+from RurQRunoff import RurQRunoff_2
 
 
 @memoize
 def nRunoff(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb, CN, Grow_0, Area, NitrConc,
             ManNitr, ManuredAreas, FirstManureMonth, LastManureMonth, FirstManureMonth2, LastManureMonth2):
-    result = np.zeros((NYrs, 12,10))
+    result = zeros((NYrs, 12,10))
     rur_q_runoff = RurQRunoff(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb, CN, Grow_0)
     n_conc = NConc(NRur, NUrb, NitrConc, ManNitr, ManuredAreas, FirstManureMonth, LastManureMonth, FirstManureMonth2,
                    LastManureMonth2)

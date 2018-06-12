@@ -1,15 +1,17 @@
-import numpy as np
+from numpy import sum
+from numpy import zeros
+
 # from Timer import time_function
 from Memoization import memoize
-from Water import Water
-from Water import Water_2
 from RurEros import RurEros
 from RurEros import RurEros_2
+from Water import Water
+from Water import Water_2
 
 
 @memoize
 def Erosion(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef, NRur, KF, LS, C, P, Area):
-    result = np.zeros((NYrs, 12))
+    result = zeros((NYrs, 12))
     water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     rureros = RurEros(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef, NRur, KF, LS, C, P, Area)
     for Y in range(NYrs):
@@ -28,4 +30,4 @@ def Erosion_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef, NRur, KF, LS, C, P
     water = Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     rureros = RurEros_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef, NRur, KF, LS, C, P, Area)
     # return np.sum(np.where((Temp > 0) & (water > 0.01), np.sum(rureros, axis=3), 0), axis=2)
-    return np.sum(np.sum(rureros, axis=3), axis=2)
+    return sum(sum(rureros, axis=3), axis=2)

@@ -1,4 +1,9 @@
-import numpy as np
+from numpy import maximum
+from numpy import minimum
+from numpy import ndarray
+from numpy import reshape
+from numpy import tile
+from numpy import zeros
 
 from gwlfe.AFOS.GrazingAnimals.Loads.GRAppManN import GRAppManN
 from gwlfe.AFOS.GrazingAnimals.Loads.GRAppManN import GRAppManN_2
@@ -8,7 +13,7 @@ from gwlfe.MultiUse_Fxns.LossFactAdj import LossFactAdj_2
 
 def GRLostManN(NYrs, GRPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, GRAppNRate, Prec, DaysMonth,
                GRPctSoilIncRate):
-    result = np.zeros((NYrs, 12))
+    result = zeros((NYrs, 12))
     loss_fact_adj = LossFactAdj(NYrs, Prec, DaysMonth)
     gr_app_man_n = GRAppManN(GRPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN)
     for Y in range(NYrs):
@@ -25,8 +30,8 @@ def GRLostManN_2(NYrs, GRPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, An
                  GRPctSoilIncRate):
     lossFactAdj = LossFactAdj_2(Prec, DaysMonth)
     gr_app_man_n = GRAppManN_2(GRPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN)
-    result = (np.tile(gr_app_man_n, NYrs) * np.tile(GRAppNRate, NYrs) * np.ndarray.flatten(lossFactAdj) * np.tile(
+    result = (tile(gr_app_man_n, NYrs) * tile(GRAppNRate, NYrs) * ndarray.flatten(lossFactAdj) * tile(
         (1 - GRPctSoilIncRate), NYrs))
-    result = np.minimum(result, np.tile(gr_app_man_n, NYrs))
-    result = np.maximum(result, 0)
-    return np.reshape(result, (NYrs, 12))
+    result = minimum(result, tile(gr_app_man_n, NYrs))
+    result = maximum(result, 0)
+    return reshape(result, (NYrs, 12))

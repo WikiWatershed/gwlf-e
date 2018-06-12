@@ -1,8 +1,11 @@
-import numpy as np
-from gwlfe.Timer import time_function
+from numpy import average
+from numpy import float64
+from numpy import sum
+from numpy import zeros
+
 
 def Precipitation(NYrs, DaysMonth, Prec):#TODO: change internal "Precipitation" to "result"
-    Precipitation = np.zeros((NYrs,12))
+    Precipitation = zeros((NYrs,12))
     for Y in range(NYrs):
         for i in range(12):
             for j in range(DaysMonth[Y][i]):
@@ -10,8 +13,8 @@ def Precipitation(NYrs, DaysMonth, Prec):#TODO: change internal "Precipitation" 
     return Precipitation
 
 def Precipitation_2(Prec):
-    return np.sum(Prec, dtype=np.float64, axis=(2))
+    return sum(Prec, dtype=float64, axis=(2))
 
 
 def AvPrecipitation_2(Precipitation):
-    return np.average(Precipitation, axis=0)
+    return average(Precipitation, axis=0)

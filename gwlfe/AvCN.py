@@ -1,16 +1,10 @@
-import numpy as np
 # from Timer import time_function
 from AreaTotal import AreaTotal
-from UrbAreaTotal import UrbAreaTotal
-from UrbAreaTotal import UrbAreaTotal_2
-from RurAreaTotal import RurAreaTotal
-from RurAreaTotal import RurAreaTotal_2
-from AvCNUrb import AvCNUrb
-from AvCNUrb import AvCNUrb_2
 from AvCNRur import AvCNRur
-from AvCNRur import AvCNRur_2
+from AvCNUrb import AvCNUrb
 from Memoization import memoize
-from AreaTotal import AreaTotal_2
+from RurAreaTotal import RurAreaTotal
+from UrbAreaTotal import UrbAreaTotal
 
 
 @memoize

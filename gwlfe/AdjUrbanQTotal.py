@@ -1,14 +1,14 @@
-import numpy as np
 # from Timer import time_function
-from Water import Water
-from UrbanQTotal import UrbanQTotal
-from UrbAreaTotal import UrbAreaTotal
+from numpy import zeros
 from AreaTotal import AreaTotal
-from Memoization import memoize
-from Water import Water_2
-from UrbanQTotal import UrbanQTotal_2
-from UrbAreaTotal import UrbAreaTotal_2
 from AreaTotal import AreaTotal_2
+from Memoization import memoize
+from UrbAreaTotal import UrbAreaTotal
+from UrbAreaTotal import UrbAreaTotal_2
+from UrbanQTotal import UrbanQTotal
+from UrbanQTotal import UrbanQTotal_2
+from Water import Water
+from Water import Water_2
 
 try:
     from AdjUrbanQTotal_2_inner_compiled import AdjUrbanQTotal_2_inner
@@ -22,7 +22,7 @@ except ImportError:
 # @time_function
 def AdjUrbanQTotal(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
                    ISRR, ISRA, Qretention, PctAreaInfil):
-    result = np.zeros((NYrs, 12, 31))
+    result = zeros((NYrs, 12, 31))
     adj_urban_q_total = 0  # used because this is a buffered variable
     water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     urban_q_total = UrbanQTotal(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, Area, CNI_0, AntMoist_0, Grow_0,

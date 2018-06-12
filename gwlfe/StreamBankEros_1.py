@@ -1,14 +1,16 @@
-import numpy as np
+from numpy import maximum
+from numpy import zeros
+
+from Memoization import memoize
+from SEDFEN import SEDFEN
+from SEDFEN import SEDFEN_2
+from SEDSTAB import SEDSTAB
+from SEDSTAB import SEDSTAB_2
+from SURBBANK import SURBBANK
+from SURBBANK import SURBBANK_2
 # from Timer import time_function
 from StreamBankEros import StreamBankEros
 from StreamBankEros import StreamBankEros_2 as StreamBankEros_2_actual
-from SEDSTAB import SEDSTAB
-from SEDSTAB import SEDSTAB_2
-from SEDFEN import SEDFEN
-from SEDFEN import SEDFEN_2
-from SURBBANK import SURBBANK
-from SURBBANK import SURBBANK_2
-from Memoization import memoize
 
 
 @memoize
@@ -17,7 +19,7 @@ def StreamBankEros_1(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, 
                      Qretention, PctAreaInfil, n25b, Landuse, TileDrainDensity, PointFlow, StreamWithdrawal,
                      GroundWithdrawal, NumAnimals, AvgAnimalWt, StreamFlowVolAdj, SedAFactor_0, AvKF, AvSlope,
                      SedAAdjust, StreamLength, n42b, n46c, n85d, AgLength, n42, n45, n85, UrbBankStab):
-    result = np.zeros((NYrs, 12))
+    result = zeros((NYrs, 12))
     streambankeros = StreamBankEros(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
                                     Grow_0,
                                     CNP_0, Imper,
@@ -97,4 +99,4 @@ def StreamBankEros_1_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area
                           SeepCoef, Qretention, PctAreaInfil, n25b, Landuse, TileDrainDensity, PointFlow,
                           StreamWithdrawal, GroundWithdrawal, NumAnimals, AvgAnimalWt, StreamFlowVolAdj, SedAFactor_0,
                           AvKF, AvSlope, SedAAdjust, StreamLength, UrbBankStab, n42b, n85d)
-    return np.maximum(streambankeros - (sedstab + sedfen + surbbank), 0)
+    return maximum(streambankeros - (sedstab + sedfen + surbbank), 0)

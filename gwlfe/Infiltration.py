@@ -1,16 +1,18 @@
-import numpy as np
+from numpy import where
+from numpy import zeros
+
+from Memoization import memoize
 # from Timer import time_function
 from QTotal import QTotal
-from Water import Water
-from Memoization import memoize
 from QTotal import QTotal_2
+from Water import Water
 from Water import Water_2
 
 
 @memoize
 def Infiltration(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
                  ISRR, ISRA, CN):
-    result = np.zeros((NYrs, 12, 31))
+    result = zeros((NYrs, 12, 31))
     qtotal = QTotal(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
                     ISRR, ISRA, CN)
     water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
@@ -24,9 +26,9 @@ def Infiltration(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_
 
 def Infiltration_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
                  ISRR, ISRA, CN):
-    result = np.zeros((NYrs, 12, 31))
+    result = zeros((NYrs, 12, 31))
     qtotal = QTotal_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
                     ISRR, ISRA, CN)
     water = Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
-    result[np.where(qtotal < water)] = water[np.where(qtotal < water)] - qtotal[np.where(qtotal < water)]
+    result[where(qtotal < water)] = water[where(qtotal < water)] - qtotal[where(qtotal < water)]
     return result

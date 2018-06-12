@@ -1,20 +1,22 @@
-import numpy as np
+from numpy import where
+from numpy import zeros
+
 # from Timer import time_function
 from AdjUrbanQTotal import AdjUrbanQTotal
-from UrbAreaTotal import UrbAreaTotal
-from AreaTotal import AreaTotal
-from Water import Water
-from Memoization import memoize
 from AdjUrbanQTotal import AdjUrbanQTotal_2
-from UrbAreaTotal import UrbAreaTotal_2
+from AreaTotal import AreaTotal
 from AreaTotal import AreaTotal_2
+from Memoization import memoize
+from UrbAreaTotal import UrbAreaTotal
+from UrbAreaTotal import UrbAreaTotal_2
+from Water import Water
 from Water import Water_2
 
 
 @memoize
 def AdjUrbanQTotal_1(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0,
                      Imper, ISRR, ISRA, Qretention, PctAreaInfil):
-    result = np.zeros((NYrs, 12, 31))
+    result = zeros((NYrs, 12, 31))
     adj_urban_q_total = AdjUrbanQTotal(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
                                        Grow_0, CNP_0, Imper,
                                        ISRR, ISRA, Qretention, PctAreaInfil)
@@ -37,11 +39,11 @@ def AdjUrbanQTotal_1(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, 
 @memoize
 def AdjUrbanQTotal_1_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0,
                      Imper, ISRR, ISRA, Qretention, PctAreaInfil):
-    result = np.zeros((NYrs, 12, 31))
+    result = zeros((NYrs, 12, 31))
     adj_urban_q_total = AdjUrbanQTotal_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
                    ISRR, ISRA, Qretention, PctAreaInfil)
     urb_area_total = UrbAreaTotal_2(NRur,NUrb,Area)
     area_total = AreaTotal_2(Area)
     water = Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
-    result[np.where((Temp >0) & (water > 0.01))] = adj_urban_q_total[np.where((Temp >0) & (water > 0.01))] *  urb_area_total / area_total
+    result[where((Temp >0) & (water > 0.01))] = adj_urban_q_total[where((Temp >0) & (water > 0.01))] *  urb_area_total / area_total
     return result

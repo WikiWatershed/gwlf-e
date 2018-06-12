@@ -1,10 +1,13 @@
-import numpy as np
-# from Timer import time_function
+from numpy import where
+from numpy import zeros
 
 from Memoization import memoize
 
+
+# from Timer import time_function
+
 def Rain_inner(NYrs, DaysMonth, Temp, Prec):
-    result = np.zeros((NYrs, 12, 31))
+    result = zeros((NYrs, 12, 31))
     for Y in range(NYrs):
         for i in range(12):
             for j in range(DaysMonth[Y][i]):
@@ -22,4 +25,4 @@ def Rain(NYrs, DaysMonth, Temp, Prec):
 # @time_function
 # @jit(cache=True, nopython = True)
 def Rain_2(Temp, Prec):
-    return np.where(Temp <= 0,0,Prec )
+    return where(Temp <= 0,0,Prec )

@@ -1,10 +1,13 @@
-import numpy as np
-# from Timer import time_function
-from Memoization import memoize
-from Erosion import Erosion
-from Erosion import Erosion_2
+from numpy import cumsum
+from numpy import where
+from numpy import zeros
+
 from BSed import BSed
 from BSed import BSed_2
+from Erosion import Erosion
+from Erosion import Erosion_2
+# from Timer import time_function
+from Memoization import memoize
 from SedDelivRatio import SedDelivRatio
 from SedTrans import SedTrans
 from SedTrans import SedTrans_2
@@ -13,7 +16,7 @@ from SedTrans import SedTrans_2
 # @memoize
 def SedYield(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef, NRur, KF, LS, C, P, Area, NUrb, CNI_0, AntMoist_0, Grow_0,
              ISRR, ISRA, Qretention, PctAreaInfil, n25b, CN, CNP_0, Imper, SedDelivRatio_0):
-    result = np.zeros((NYrs, 12))
+    result = zeros((NYrs, 12))
     erosion = Erosion(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef, NRur, KF, LS, C, P, Area)
     bsed = BSed(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
                 ISRR, ISRA, Qretention, PctAreaInfil, n25b, CN)
@@ -38,7 +41,7 @@ def SedYield_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef, NRur, KF, LS, C, 
     seddelivratio = SedDelivRatio(SedDelivRatio_0)
     sedtrans = SedTrans_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0,
                           Imper, ISRR, ISRA, Qretention, PctAreaInfil, n25b, CN)
-    nonzero = np.where(bsed >0)
-    temp = np.zeros((NYrs,12))
+    nonzero = where(bsed >0)
+    temp = zeros((NYrs,12))
     temp[nonzero] = erosion[nonzero]/bsed[nonzero]
-    return seddelivratio * sedtrans * np.cumsum(temp, axis=1)
+    return seddelivratio * sedtrans * cumsum(temp, axis=1)

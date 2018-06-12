@@ -1,11 +1,12 @@
-import numpy as np
-from gwlfe.Timer import time_function
+from numpy import maximum
+from numpy import zeros
+
 from InitNgN import InitNgN
 from InitNgN import InitNgN_2
 
 
 def NGAccManAppN(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, NGPctManApp):
-    result = np.zeros((12,))
+    result = zeros((12,))
     init_ng_n = InitNgN(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN)
     for i in range(12):
         # For Non-Grazing
@@ -17,4 +18,4 @@ def NGAccManAppN(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, NGPctMa
 
 def NGAccManAppN_2(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, NGPctManApp):
     init_ng_n = InitNgN_2(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN)
-    return np.maximum((init_ng_n / 12) - (NGPctManApp * init_ng_n),0)
+    return maximum((init_ng_n / 12) - (NGPctManApp * init_ng_n),0)

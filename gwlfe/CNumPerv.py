@@ -1,14 +1,15 @@
-import numpy as np
+from numpy import zeros
+
+from AMC5 import AMC5, AMC5_yesterday
+from CNP import CNP, CNP_2
 # from Timer import time_function
 from DailyArrayConverter import get_value_for_yesterday
+from GrowFactor import GrowFactor
+from Melt import Melt
+from Melt_1 import Melt_1_2
+from Memoization import memoize
 from NLU import NLU
 from Water import Water, Water_2
-from CNP import CNP, CNP_2
-from Melt import Melt, Melt_2
-from Melt_1 import Melt_1_2
-from GrowFactor import GrowFactor
-from AMC5 import AMC5, AMC5_yesterday
-from Memoization import memoize
 
 try:
     from CNumPerv_2_inner_compiled import CNumPerv_2_inner
@@ -20,7 +21,7 @@ except ImportError:
 @memoize
 def CNumPerv(NYrs, DaysMonth, Temp, NRur, NUrb, CNP_0, InitSnow_0, Prec, Grow_0, AntMoist_0):
     nlu = NLU(NRur, NUrb)
-    result = np.zeros((NYrs, 12, 31, nlu))
+    result = zeros((NYrs, 12, 31, nlu))
     cnp = CNP(NRur, NUrb, CNP_0)
     water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     melt = Melt(NYrs, DaysMonth, Temp, InitSnow_0, Prec)
@@ -39,30 +40,26 @@ def CNumPerv(NYrs, DaysMonth, Temp, NRur, NUrb, CNP_0, InitSnow_0, Prec, Grow_0,
                                 if melt[Y][i][j] <= 0:
                                     if grow_factor[i] > 0:
                                         # Growing season
-                                        if get_value_for_yesterday(amc5, 0, Y, i, j, NYrs, DaysMonth) >= 5.33:
+                                        if get_value_for_yesterday(amc5, 0, Y, i, j, DaysMonth) >= 5.33:
                                             result[Y][i][j][l] = cnp[2][l]
-                                        elif get_value_for_yesterday(amc5, 0, Y, i, j, NYrs, DaysMonth) < 3.56:
+                                        elif get_value_for_yesterday(amc5, 0, Y, i, j, DaysMonth) < 3.56:
                                             result[Y][i][j][l] = cnp[0][l] + (
                                                     cnp[1][l] - cnp[0][l]) * \
-                                                                 get_value_for_yesterday(amc5, 0, Y, i, j, NYrs,
-                                                                                         DaysMonth) / 3.56
+                                                                 get_value_for_yesterday(amc5, 0, Y, i, j, DaysMonth) / 3.56
                                         else:
                                             result[Y][i][j][l] = cnp[1][l] + (cnp[2][l] - cnp[1][l]) * (
-                                                    get_value_for_yesterday(amc5, 0, Y, i, j, NYrs,
-                                                                            DaysMonth) - 3.56) / 1.77
+                                                    get_value_for_yesterday(amc5, 0, Y, i, j, DaysMonth) - 3.56) / 1.77
                                     else:
                                         # Dormant season
-                                        if get_value_for_yesterday(amc5, 0, Y, i, j, NYrs, DaysMonth) >= 2.79:
+                                        if get_value_for_yesterday(amc5, 0, Y, i, j, DaysMonth) >= 2.79:
                                             result[Y][i][j][l] = cnp[2][l]
-                                        elif get_value_for_yesterday(amc5, 0, Y, i, j, NYrs, DaysMonth) < 1.27:
+                                        elif get_value_for_yesterday(amc5, 0, Y, i, j, DaysMonth) < 1.27:
                                             result[Y][i][j][l] = cnp[0][l] + (
                                                     cnp[1][l] - cnp[0][l]) * \
-                                                                 get_value_for_yesterday(amc5, 0, Y, i, j, NYrs,
-                                                                                         DaysMonth) / 1.27
+                                                                 get_value_for_yesterday(amc5, 0, Y, i, j, DaysMonth) / 1.27
                                         else:
                                             result[Y][i][j][l] = cnp[1][l] + (cnp[2][l] - cnp[1][l]) * (
-                                                    get_value_for_yesterday(amc5, 0, Y, i, j, NYrs,
-                                                                            DaysMonth) - 1.27) / 1.52
+                                                    get_value_for_yesterday(amc5, 0, Y, i, j, DaysMonth) - 1.27) / 1.52
                                 else:
                                     result[Y][i][j][l] = cnp[2][l]
     return result

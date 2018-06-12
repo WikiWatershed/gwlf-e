@@ -1,15 +1,19 @@
-import numpy as np
-# from Timer import time_function
-from NLU import NLU
-from Water import Water, Water_2
+from numpy import repeat
+from numpy import tile
+from numpy import where
+from numpy import zeros
+
 from CNP import CNP, CNP_2
 from CNumPervReten import CNumPervReten, CNumPervReten_2
 from Memoization import memoize
+# from Timer import time_function
+from NLU import NLU
+from Water import Water, Water_2
 
 
 @memoize
 def QrunP(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, CNP_0, AntMoist_0, Grow_0):
-    result = np.zeros((NYrs, 12, 31, 16))  # TODO: should this be nlu?
+    result = zeros((NYrs, 12, 31, 16))  # TODO: should this be nlu?
     nlu = NLU(NRur, NUrb)
     water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     cnp = CNP(NRur, NUrb, CNP_0)
@@ -34,14 +38,14 @@ def QrunP(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, CNP_0, AntMoist_0
 @memoize
 def QrunP_2(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, CNP_0, AntMoist_0, Grow_0):
     nlu = NLU(NRur, NUrb)
-    result = np.zeros((NYrs, 12, 31, nlu))
-    water = np.repeat(Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)[:, :, :, None], nlu, axis=3)
-    TempE = np.repeat(Temp[:, :, :, None], nlu, axis=3)
+    result = zeros((NYrs, 12, 31, nlu))
+    water = repeat(Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)[:, :, :, None], nlu, axis=3)
+    TempE = repeat(Temp[:, :, :, None], nlu, axis=3)
     c_num_perv_reten = CNumPervReten_2(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, NRur, NUrb, CNP_0, Grow_0)
     c_num_perv_reten02 = 0.2 * c_num_perv_reten
     cnp = CNP_2(NRur, NUrb, CNP_0)
-    cnp_1 = np.tile(cnp[1][None, None, None, :], (NYrs, 12, 31, 1))
-    nonzero = np.where((TempE > 0) & (water >= 0.05) & (cnp_1 > 0) & (water >= c_num_perv_reten02))
+    cnp_1 = tile(cnp[1][None, None, None, :], (NYrs, 12, 31, 1))
+    nonzero = where((TempE > 0) & (water >= 0.05) & (cnp_1 > 0) & (water >= c_num_perv_reten02))
     result[nonzero] = (water[nonzero] - c_num_perv_reten02[nonzero]) ** 2 / (
             water[nonzero] + 0.8 * c_num_perv_reten[nonzero])
     return result

@@ -1,15 +1,16 @@
-import numpy as np
-from Timer import time_function
+from numpy import sum
+from numpy import zeros
+
 from Memoization import memoize
 from NLU import NLU
-from Water import Water
 from RurEros import RurEros
 from RurEros import RurEros_2
+from Water import Water
 
 
 @memoize
 def ErosWashoff(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Acoef, KF, LS, C, P, Area):
-    result = np.zeros((NYrs, 16, 12))
+    result = zeros((NYrs, 16, 12))
     nlu = NLU(NRur, NUrb)
     water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     rureros = RurEros(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef, NRur, KF, LS, C, P, Area)
@@ -29,4 +30,4 @@ def ErosWashoff(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Acoef, KF, 
 
 @memoize
 def ErosWashoff_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, Acoef, KF, LS, C, P, Area):
-    return np.sum(RurEros_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef, NRur, KF, LS, C, P, Area), axis=2)
+    return sum(RurEros_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef, NRur, KF, LS, C, P, Area), axis=2)

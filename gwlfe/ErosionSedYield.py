@@ -1,13 +1,10 @@
-import numpy as np
-from Timer import time_function
+from BSed import BSed
 from Memoization import memoize
-from Water import Water
 from RurEros import RurEros
 from SedDelivRatio import SedDelivRatio
-from BSed import BSed
 from SedTrans import SedTrans
 from StreamBankEros_1 import StreamBankEros_1
-from StreamBankEros_1 import StreamBankEros_1_2
+from Water import Water
 
 
 @memoize
@@ -17,8 +14,8 @@ def ErosionSedYield(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef, NRur, KF, LS
                     Landuse, TileDrainDensity, PointFlow, StreamWithdrawal, GroundWithdrawal,
                     NumAnimals, AvgAnimalWt, StreamFlowVolAdj, SedAFactor_0, AvKF, AvSlope, SedAAdjust, StreamLength,
                     n42b, n46c, n85d, AgLength, n42, n45, n85, UrbBankStab):
-    erosion = np.zeros((NYrs, 12))
-    sedyield = np.zeros((NYrs, 12))
+    erosion = zeros((NYrs, 12))
+    sedyield = zeros((NYrs, 12))
     water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     rureros = RurEros(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef, NRur, KF, LS, C, P, Area)
     bsed = BSed(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,

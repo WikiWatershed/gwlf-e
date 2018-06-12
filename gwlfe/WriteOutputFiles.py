@@ -1,38 +1,35 @@
 # -*- coding: utf-8 -*-
+from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
-from __future__ import division
 
 import logging
 
-import numpy as np
+from numpy import round
+from numpy import zeros
 
 import LoadReductions
-from enums import YesOrNo, LandUse
-from AvEvapoTrans import AvEvapoTrans
 from AreaTotal import AreaTotal_2
-from TotAEU import TotAEU_2
-from TotLAEU import TotLAEU
-from TotPAEU import TotPAEU_2
-from SedDelivRatio import SedDelivRatio
-from StreamBankNSum import StreamBankNSum_2
+from AttenN import AttenN
+from AvErosion import AvErosion_2
+from AvEvapoTrans import AvEvapoTrans
+from AvGroundWater import AvGroundWater_2
+from AvRunoff import AvRunoff_2
+from AvSedYield import AvSedYield
+from AvSedYield import AvSedYield_2
 from AvStreamBankNSum import AvStreamBankNSum_2
 from AvTileDrain import AvTileDrain_2
 from AvWithdrawal import AvWithdrawal_2
-from AvGroundWater import AvGroundWater_2
-from AvErosion import AvErosion_2
-from AvSedYield import AvSedYield_2
-from AvSedYield import AvSedYield
-from AvRunoff import AvRunoff_2
-from LuRunoff import LuRunoff
-from LuTotPhos import LuTotPhos
 from LuTotNitr_1 import LuTotNitr_1_2
-from RetentFactorN import RetentFactorN
-from AttenN import AttenN
 from MultiUse_Fxns.Constants import NPConvert
 from Outputs.AvAnimalNSum.AvAnimalNSum_1 import AvAnimalNSum_1_2
-from Outputs.AvAnimalNSum.N7b_1 import N7b_1
-
+from RetentFactorN import RetentFactorN
+from SedDelivRatio import SedDelivRatio
+from StreamBankNSum import StreamBankNSum_2
+from TotAEU import TotAEU_2
+from TotLAEU import TotLAEU
+from TotPAEU import TotPAEU_2
+from enums import YesOrNo, LandUse
 
 log = logging.getLogger(__name__)
 
@@ -63,7 +60,7 @@ def WriteOutput(z):
     n13t = 0
     n24t = 0
 
-    AreaSum = np.zeros(12)
+    AreaSum = zeros(12)
 
     # INSERT VALUES FOR BMP SCENARIO FILE FOR PREDICT APPLICATION
     for l in range(z.NLU):

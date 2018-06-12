@@ -1,10 +1,10 @@
-import numpy as np
-# from Timer import time_function
-from Memoization import memoize
-from StreamBankN import StreamBankN
-from StreamBankN import StreamBankN_2
+from numpy import zeros
+
 from AGSTRM import AGSTRM
 from AGSTRM import AGSTRM_2
+# from Timer import time_function
+from StreamBankN import StreamBankN
+from StreamBankN import StreamBankN_2
 
 
 def NFEN(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area,
@@ -15,7 +15,7 @@ def NFEN(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area,
          NumAnimals, AvgAnimalWt, StreamFlowVolAdj, SedAFactor_0, AvKF,
          AvSlope, SedAAdjust, StreamLength, AgLength,
          n42, SedNitr, BankNFrac, n45, n69):
-    result = np.zeros((NYrs, 12))
+    result = zeros((NYrs, 12))
     streambank_n = StreamBankN(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area,
                                CNI_0, AntMoist_0, Grow_0, CNP_0, Imper, ISRR, ISRA, CN,
                                UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0,
@@ -52,4 +52,4 @@ def NFEN_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area,
                                      AvSlope, SedAAdjust, StreamLength, SedNitr, BankNFrac)
         return (n45 / n42) * streambank_n * agstrm * n69
     else:
-        return np.zeros((NYrs, 12))
+        return zeros((NYrs, 12))

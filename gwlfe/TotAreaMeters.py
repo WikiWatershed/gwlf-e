@@ -1,5 +1,3 @@
-import numpy as np
-from Timer import time_function
 from AreaTotal import AreaTotal
 from Memoization import memoize
 

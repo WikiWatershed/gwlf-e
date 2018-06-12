@@ -1,6 +1,6 @@
-import numpy as np
 # from Timer import time_function
 from Memoization import memoize
+
 
 @memoize
 def RetentFactorN(ShedAreaDrainLake, RetentNLake):

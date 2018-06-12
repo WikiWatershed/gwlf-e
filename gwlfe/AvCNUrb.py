@@ -1,11 +1,10 @@
-import numpy as np
 # from Timer import time_function
-from NLU import NLU
 from CNI import CNI
 from CNP import CNP
+from Memoization import memoize
+from NLU import NLU
 from UrbAreaTotal import UrbAreaTotal
 
-from Memoization import memoize
 
 # @time_function
 @memoize
@@ -30,5 +29,5 @@ def AvCNUrb_2(NRur, NUrb, CNI_0, CNP_0, Imper, Area):
     cnp = CNP(NRur, NUrb, CNP_0)
     urbareatotal = UrbAreaTotal(NRur, NUrb, Area)
     temp = ((Imper* cni[1] + (1 - Imper) * cnp[1]) * Area / urbareatotal)[NRur:]
-    return np.sum(temp)
+    return sum(temp)
 

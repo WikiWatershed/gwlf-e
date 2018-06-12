@@ -1,15 +1,17 @@
-import numpy as np
+from numpy import sum
+from numpy import zeros
+
 # from Timer import time_function
 from Memoization import memoize
-from Water import Water
 from UrbanQTotal_1 import UrbanQTotal_1
 from UrbanQTotal_1 import UrbanQTotal_1_2
+from Water import Water
 
 
 @memoize
 def UrbanRunoff(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
                 ISRR, ISRA):
-    result = np.zeros((NYrs, 12))
+    result = zeros((NYrs, 12))
     water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     urbanqtotal_1 = UrbanQTotal_1(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
                                   CNP_0, Imper,
@@ -26,5 +28,5 @@ def UrbanRunoff(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Area, CNI_0
 
 def UrbanRunoff_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
                   CNP_0, Imper, ISRR, ISRA):
-    return np.sum(UrbanQTotal_1_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
+    return sum(UrbanQTotal_1_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
                                   CNP_0, Imper, ISRR, ISRA), axis=2)

@@ -1,13 +1,13 @@
 from numba.pycc import CC
-import numpy as np
+from numpy import zeros
 
 cc = CC('Percolation_inner_compiled')
 
 
 @cc.export('Percolation_inner', '(int64, float64, int32[:,::1], float64, float64[:,:,::1], float64[:,:,::1])')
 def Percolation_inner(NYrs, UnsatStor_0, DaysMonth, MaxWaterCap, infiltration, et):
-    result = np.zeros((NYrs, 12, 31))
-    percolation = np.zeros((NYrs, 12, 31))
+    result = zeros((NYrs, 12, 31))
+    percolation = zeros((NYrs, 12, 31))
     unsatstor_carryover = UnsatStor_0
     for Y in range(NYrs):
         for i in range(12):

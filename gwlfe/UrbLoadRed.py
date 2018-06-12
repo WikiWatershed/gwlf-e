@@ -1,18 +1,24 @@
-import numpy as np
-# from Timer import time_function
-from Memoization import memoize
-from Water import Water
-from NLU import NLU
-from Water import Water_2
+from numpy import zeros
+
 from AdjUrbanQTotal import AdjUrbanQTotal
 from AdjUrbanQTotal import AdjUrbanQTotal_2
-from UrbLoadRed_inner import UrbLoadRed_inner
+from NLU import NLU
+
+# from Timer import time_function
+from Water import Water
+from Water import Water_2
+
+try:
+    from UrbLoadRed_inner_compiled import UrbLoadRed_inner
+except ImportError:
+    print("Unable to import compiled UrbLoadRed_inner, using slower version")
+    from UrbLoadRed_inner import UrbLoadRed_inner
 
 
 # @memoize
 def UrbLoadRed(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0,
                Imper, ISRR, ISRA, Qretention, PctAreaInfil, Nqual, Storm, UrbBMPRed):
-    result = np.zeros((NYrs, 12, 31, 16, Nqual))
+    result = zeros((NYrs, 12, 31, 16, Nqual))
     water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     adjurbanqtotal = AdjUrbanQTotal(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
                                       Grow_0, CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil)
@@ -47,47 +53,47 @@ def UrbLoadRed_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Area, CNI_
         nlu = NLU(NRur, NUrb)
         return UrbLoadRed_inner(NYrs, DaysMonth, Temp, NRur, Nqual, Storm, UrbBMPRed, water, adjurbanqtotal, nlu)
     else:
-        return np.zeros((NYrs, 12, 31, 16, Nqual))
+        return zeros((NYrs, 12, 31, 16, Nqual))
 
-def UrbLoadRed_1(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0,
-                 Imper, ISRR, ISRA, Qretention, PctAreaInfil, Nqual, Storm, UrbBMPRed):
-    result = np.zeros((NYrs, 12, 31, 16, Nqual))
-    water = Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
-    adjurbanqtotal = AdjUrbanQTotal_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
-                                        Grow_0, CNP_0,
-                                        Imper, ISRR, ISRA, Qretention, PctAreaInfil)
-    np.repeat(Temp[:, :, :, None, None], NRur, axis=3)
-    Temp = np.tile(Temp[:, :, :, None, None], (1, 1, 1, 16, Nqual))
-    water = np.tile(water[:, :, :, None, None], (1, 1, 1, 16, Nqual))
-    adjurbanqtotal = np.tile(adjurbanqtotal[:, :, :, None, None], (1, 1, 1, 16, Nqual))
-    Storm = np.tile(np.array([Storm]), (1, 1, 1, 16, Nqual))
-    UrbBMPRed = np.tile(UrbBMPRed, (NYrs, 12, 31, 1, 1))
-    temp = (water / Storm) * UrbBMPRed
-    result[np.where((Temp > 0) & (water > 0.01) & (adjurbanqtotal > 0.001) & (Storm > 0))] = temp[
-        np.where((Temp > 0) & (water > 0.01) & (adjurbanqtotal > 0.001) & (Storm > 0))]
-    result[np.where((Temp > 0) & (water > 0.01) & (adjurbanqtotal > 0.001) & (water > Storm))] = UrbBMPRed[
-        np.where((Temp > 0) & (water > 0.01) & (adjurbanqtotal > 0.001) & (water > Storm))]
-    result[:, :, :, 0:NRur] = 0
-    return result
-
-def UrbLoadRed_3(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0,
-                 Imper, ISRR, ISRA, Qretention, PctAreaInfil, Nqual, Storm, UrbBMPRed):
-    if (Storm > 0):
-        result = np.zeros((NYrs, 12, 31, 16, Nqual))
-        nlu = NLU(NRur, NUrb)
-        temp = np.reshape(np.repeat(Temp, repeats=(nlu - NRur) * Nqual, axis=2),(NYrs, 12, 31, nlu - NRur, Nqual))
-        water = np.reshape(
-            np.repeat(Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec), repeats=(nlu - NRur) * Nqual, axis=2),
-            (NYrs, 12, 31, nlu - NRur, Nqual))
-        adjurbanqtotal = np.reshape(
-            np.repeat(AdjUrbanQTotal_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0,
-                                            AntMoist_0, Grow_0, CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil), repeats=(nlu - NRur) * Nqual, axis=2),
-            (NYrs, 12, 31, nlu - NRur, Nqual))
-
-        nonzero = np.where((temp > 0) & (water > 0.01) & (adjurbanqtotal > 0.001))
-        # minium takes care of the water > storm condition
-
-        result[nonzero] = np.minimum(water[nonzero] / Storm, 1) * UrbBMPRed
-        return result
-    else:
-        return np.zeros((NYrs, 12, 31, 16, Nqual))
+# def UrbLoadRed_1(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0,
+#                  Imper, ISRR, ISRA, Qretention, PctAreaInfil, Nqual, Storm, UrbBMPRed):
+#     result = zeros((NYrs, 12, 31, 16, Nqual))
+#     water = Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
+#     adjurbanqtotal = AdjUrbanQTotal_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
+#                                         Grow_0, CNP_0,
+#                                         Imper, ISRR, ISRA, Qretention, PctAreaInfil)
+#     repeat(Temp[:, :, :, None, None], NRur, axis=3)
+#     Temp = tile(Temp[:, :, :, None, None], (1, 1, 1, 16, Nqual))
+#     water = tile(water[:, :, :, None, None], (1, 1, 1, 16, Nqual))
+#     adjurbanqtotal = tile(adjurbanqtotal[:, :, :, None, None], (1, 1, 1, 16, Nqual))
+#     Storm = tile(array([Storm]), (1, 1, 1, 16, Nqual))
+#     UrbBMPRed = tile(UrbBMPRed, (NYrs, 12, 31, 1, 1))
+#     temp = (water / Storm) * UrbBMPRed
+#     result[where((Temp > 0) & (water > 0.01) & (adjurbanqtotal > 0.001) & (Storm > 0))] = temp[
+#         where((Temp > 0) & (water > 0.01) & (adjurbanqtotal > 0.001) & (Storm > 0))]
+#     result[where((Temp > 0) & (water > 0.01) & (adjurbanqtotal > 0.001) & (water > Storm))] = UrbBMPRed[
+#         where((Temp > 0) & (water > 0.01) & (adjurbanqtotal > 0.001) & (water > Storm))]
+#     result[:, :, :, 0:NRur] = 0
+#     return result
+#
+# def UrbLoadRed_3(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0,
+#                  Imper, ISRR, ISRA, Qretention, PctAreaInfil, Nqual, Storm, UrbBMPRed):
+#     if (Storm > 0):
+#         result = zeros((NYrs, 12, 31, 16, Nqual))
+#         nlu = NLU(NRur, NUrb)
+#         temp = reshape(repeat(Temp, repeats=(nlu - NRur) * Nqual, axis=2),(NYrs, 12, 31, nlu - NRur, Nqual))
+#         water = reshape(
+#             repeat(Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec), repeats=(nlu - NRur) * Nqual, axis=2),
+#             (NYrs, 12, 31, nlu - NRur, Nqual))
+#         adjurbanqtotal = reshape(
+#             repeat(AdjUrbanQTotal_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0,
+#                                             AntMoist_0, Grow_0, CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil), repeats=(nlu - NRur) * Nqual, axis=2),
+#             (NYrs, 12, 31, nlu - NRur, Nqual))
+#
+#         nonzero = where((temp > 0) & (water > 0.01) & (adjurbanqtotal > 0.001))
+#         # minium takes care of the water > storm condition
+#
+#         result[nonzero] = minimum(water[nonzero] / Storm, 1) * UrbBMPRed
+#         return result
+#     else:
+#         return zeros((NYrs, 12, 31, 16, Nqual))

@@ -1,12 +1,14 @@
-import numpy as np
+from numpy import where
+from numpy import zeros
+
 # from Timer import time_function
-from InitSnow import InitSnow, InitSnow_2
+from InitSnow import InitSnow
 from InitSnowYesterday import InitSnowYesterday
-from Memoization import memoize
+
 
 # @memoize
 def Melt(NYrs, DaysMonth, Temp, InitSnow_0, Prec):
-    result = np.zeros((NYrs, 12, 31))
+    result = zeros((NYrs, 12, 31))
     init_snow = InitSnow(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     init_snow_yesterday = InitSnow_0
     for Y in range(NYrs):
@@ -21,4 +23,4 @@ def Melt(NYrs, DaysMonth, Temp, InitSnow_0, Prec):
 
 def Melt_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec):
     init_snow_yesterday = InitSnowYesterday(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
-    return np.where((Temp>0) & (init_snow_yesterday > 0.001), 0.45 * Temp, 0)
+    return where((Temp>0) & (init_snow_yesterday > 0.001), 0.45 * Temp, 0)

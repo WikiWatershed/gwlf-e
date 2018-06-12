@@ -1,8 +1,10 @@
-import numpy as np
+from numpy import where
+from numpy import zeros
+
+from Memoization import memoize
 # from Timer import time_function
 from StreamFlow import StreamFlow
 from StreamFlow import StreamFlow_2
-from Memoization import memoize
 
 
 @memoize
@@ -10,7 +12,7 @@ def StreamFlowLE(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_
                  ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0, RecessionCoef, SeepCoef
                  , Qretention, PctAreaInfil, n25b, Landuse, TileDrainDensity, PointFlow, StreamWithdrawal,
                  GroundWithdrawal):
-    result = np.zeros((NYrs, 12))
+    result = zeros((NYrs, 12))
     streamflow = StreamFlow(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0,
                             Imper,
                             ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0, RecessionCoef,
@@ -32,4 +34,4 @@ def StreamFlowLE_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CN
                               Imper, ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0,
                               RecessionCoef, SeepCoef, Qretention, PctAreaInfil, n25b, Landuse, TileDrainDensity,
                               PointFlow, StreamWithdrawal, GroundWithdrawal)
-    return np.where(streamflow > 0, streamflow, 0)
+    return where(streamflow > 0, streamflow, 0)

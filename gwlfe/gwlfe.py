@@ -12,9 +12,9 @@ Imported from GWLF-E.frm
 
 import logging
 
-import numpy as np
+from numpy import zeros
+from numpy import seterr
 
-from .enums import GrowFlag
 import ReadGwlfDataFile
 import PrelimCalculations
 import AFOS_old
@@ -43,7 +43,7 @@ def run(z):
 
     # Raise exception instead of printing a warning for floating point
     # overflow, underflow, and division by 0 errors.
-    np.seterr(all='raise')
+    seterr(all='raise')
 
     # MODEL CALCULATIONS FOR EACH YEAR OF ANALYSIS - WATER BALANCE,
     # NUTRIENTS AND SEDIMENT LOADS
@@ -87,13 +87,13 @@ def run(z):
 
     for Y in range(z.NYrs):
         # Initialize monthly septic system variables
-        z.MonthPondNitr = np.zeros(12)
-        z.MonthPondPhos = np.zeros(12)
-        z.MonthNormNitr = np.zeros(12)
-        z.MonthShortNitr = np.zeros(12)
-        z.MonthShortPhos = np.zeros(12)
-        z.MonthDischargeNitr = np.zeros(12)
-        z.MonthDischargePhos = np.zeros(12)
+        z.MonthPondNitr = zeros(12)
+        z.MonthPondPhos = zeros(12)
+        z.MonthNormNitr = zeros(12)
+        z.MonthShortNitr = zeros(12)
+        z.MonthShortPhos = zeros(12)
+        z.MonthDischargeNitr = zeros(12)
+        z.MonthDischargePhos = zeros(12)
 
         # FOR EACH MONTH...
         for i in range(12):

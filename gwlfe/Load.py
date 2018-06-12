@@ -1,18 +1,23 @@
-import numpy as np
+from numpy import repeat
+from numpy import sum
+from numpy import where
+from numpy import zeros
+
 # from Timer import time_function
 from Memoization import memoize
-from Water import Water
 from NetDisLoad import NetDisLoad
-from NetSolidLoad import NetSolidLoad
-from Water import Water_2
 from NetDisLoad import NetDisLoad_2
+from NetSolidLoad import NetSolidLoad
 from NetSolidLoad import NetSolidLoad_2
+from Water import Water
+from Water import Water_2
+
 
 @memoize
 def Load(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
                         Grow_0, CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil, Nqual, LoadRateImp,
                         SweepFrac, UrbSweepFrac, LoadRatePerv, Storm, UrbBMPRed, DisFract, FilterWidth, PctStrmBuf):
-    result = np.zeros((NYrs, 12, 3))
+    result = zeros((NYrs, 12, 3))
     water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
 
     netdisload = NetDisLoad(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
@@ -37,15 +42,15 @@ def Load(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMo
 def Load_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
                    Grow_0, CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil, Nqual, LoadRateImp,
                    LoadRatePerv, Storm, UrbBMPRed, DisFract, FilterWidth, PctStrmBuf):
-    water = np.repeat(Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)[:, :, :, None], Nqual, axis=3)
-    temp = np.repeat(Temp[:, :, :, None], Nqual, axis=3)
+    water = repeat(Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)[:, :, :, None], Nqual, axis=3)
+    temp = repeat(Temp[:, :, :, None], Nqual, axis=3)
     netdisload = NetDisLoad_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
                               Grow_0, CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil, Nqual, LoadRateImp,
                               LoadRatePerv, Storm, UrbBMPRed, DisFract, FilterWidth, PctStrmBuf)
     netsolidload = NetSolidLoad_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
                    Grow_0, CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil, Nqual, LoadRateImp,
                    LoadRatePerv, Storm, UrbBMPRed, DisFract, FilterWidth, PctStrmBuf)
-    result = np.where((temp > 0 ) & (water > 0.01), netdisload + netsolidload, 0 )
-    result = np.sum(result, axis =2)
+    result = where((temp > 0 ) & (water > 0.01), netdisload + netsolidload, 0 )
+    result = sum(result, axis =2)
     result[result<0] = 0
     return result

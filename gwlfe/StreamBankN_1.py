@@ -1,14 +1,16 @@
-import numpy as np
+from numpy import maximum
+from numpy import zeros
+
 # from Timer import time_function
 from Memoization import memoize
-from StreamBankN import StreamBankN
-from StreamBankN import StreamBankN_2
-from NSTAB import NSTAB
-from NSTAB import NSTAB_2
 from NFEN import NFEN
 from NFEN import NFEN_2
+from NSTAB import NSTAB
+from NSTAB import NSTAB_2
 from NURBBANK import NURBBANK
 from NURBBANK import NURBBANK_2
+from StreamBankN import StreamBankN
+from StreamBankN import StreamBankN_2
 
 
 @memoize
@@ -20,7 +22,7 @@ def StreamBankN_1(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area,
                     NumAnimals, AvgAnimalWt, StreamFlowVolAdj, SedAFactor_0, AvKF,
                     AvSlope, SedAAdjust, StreamLength, n42b, AgLength,
                     UrbBankStab, SedNitr, BankNFrac, n69c, n45, n69, n46c, n42):
-    result = np.zeros((NYrs, 12))
+    result = zeros((NYrs, 12))
     streambank_n = StreamBankN(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area,
                                CNI_0, AntMoist_0, Grow_0, CNP_0, Imper, ISRR, ISRA, CN,
                                UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0,
@@ -100,4 +102,4 @@ def StreamBankN_1_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area,
                NumAnimals, AvgAnimalWt, StreamFlowVolAdj, SedAFactor_0, AvKF,
                AvSlope, SedAAdjust, StreamLength, n42b, UrbBankStab, SedNitr, BankNFrac, n69c)
 
-    return np.maximum(streambank_n - (nstab + nfen + nurbbank), 0)
+    return maximum(streambank_n - (nstab + nfen + nurbbank), 0)

@@ -1,11 +1,9 @@
-import numpy as np
-from gwlfe.Timer import time_function
 from InitGrN import InitGrN
 from InitGrN import InitGrN_2
 
 
 def GRAppManN(GRPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN):
-    result = np.zeros((12,))
+    result = zeros((12,))
     init_gr_n = InitGrN(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN)
     for i in range(12):
         result[i] = GRPctManApp[i] * init_gr_n

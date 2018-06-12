@@ -1,14 +1,19 @@
-import numpy as np
+from numpy import maximum
+from numpy import repeat
+from numpy import reshape
+from numpy import sum
+from numpy import where
+from numpy import zeros
 
 from gwlfe.AFOS.nonGrazingAnimals.Loads.NGInitBarnN import NGInitBarnN
 from gwlfe.AFOS.nonGrazingAnimals.Loads.NGInitBarnN import NGInitBarnN_2
 from gwlfe.MultiUse_Fxns.LossFactAdj import LossFactAdj
 from gwlfe.MultiUse_Fxns.LossFactAdj import LossFactAdj_2
-from gwlfe.Timer import time_function
+
 
 def NGLostBarnN(NYrs, NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, NGBarnNRate, Prec,
                 DaysMonth, AWMSNgPct, NgAWMSCoeffN, RunContPct, RunConCoeffN):
-    result = np.zeros((NYrs, 12))
+    result = zeros((NYrs, 12))
     loss_fact_adj = LossFactAdj(NYrs, Prec, DaysMonth)
     ng_init_barn_n = NGInitBarnN(NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN)
     for Y in range(NYrs):
@@ -25,21 +30,21 @@ def NGLostBarnN(NYrs, NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, Ani
 def NGLostBarnN_2(NYrs, NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, NGBarnNRate, Prec,
                   DaysMonth, AWMSNgPct, NgAWMSCoeffN, RunContPct, RunConCoeffN):
     loss_fact_adj = LossFactAdj_2(Prec, DaysMonth)
-    ng_init_barn_n = np.reshape(
-        np.repeat(NGInitBarnN_2(NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN), repeats=NYrs,
+    ng_init_barn_n = reshape(
+        repeat(NGInitBarnN_2(NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN), repeats=NYrs,
                   axis=0), (NYrs, 12))
 
     temp = NGBarnNRate * loss_fact_adj * (1 - AWMSNgPct * NgAWMSCoeffN + RunContPct * RunConCoeffN)
     # result would be less than the subexpression if the number that is subtracted is bigger than the one added
-    adjusted = np.where(temp < 1)
+    adjusted = where(temp < 1)
     result = ng_init_barn_n
     result[adjusted] = ng_init_barn_n[adjusted] * temp[adjusted]
-    return np.maximum(result, 0)
+    return maximum(result, 0)
 
 #TODO: this needs to be split into it's own function
 def AvNGLostBarnN(NYrs, NGPctManApp, GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN, NGBarnNRate,
                   Prec, DaysMonth, AWMSNgPct, NgAWMSCoeffN, RunContPct, RunConCoeffN):
-    result = np.zeros((12,))
+    result = zeros((12,))
     ng_lost_barn_n = NGLostBarnN(NYrs, NGPctManApp, GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN, NGBarnNRate,
                                  Prec, DaysMonth, AWMSNgPct, NgAWMSCoeffN, RunContPct, RunConCoeffN)
     for Y in range(NYrs):
@@ -50,7 +55,7 @@ def AvNGLostBarnN(NYrs, NGPctManApp, GrazingAnimal, NumAnimals, AvgAnimalWt, Ani
 
 def AvNGLostBarnN_2(NYrs, NGPctManApp, GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN, NGBarnNRate,
                   Prec, DaysMonth, AWMSNgPct, NgAWMSCoeffN, RunContPct, RunConCoeffN):
-    return np.sum(NGLostBarnN_2(NYrs, NGPctManApp, GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN, NGBarnNRate,
+    return sum(NGLostBarnN_2(NYrs, NGPctManApp, GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN, NGBarnNRate,
                                  Prec, DaysMonth, AWMSNgPct, NgAWMSCoeffN, RunContPct, RunConCoeffN),axis=0)/NYrs
 
 
@@ -64,13 +69,13 @@ def AvNGLostBarnNSum(NYrs, NGPctManApp, GrazingAnimal, NumAnimals, AvgAnimalWt, 
 
 def AvNGLostBarnNSum_2(NYrs, NGPctManApp, GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN, NGBarnNRate,
                      Prec, DaysMonth, AWMSNgPct, NgAWMSCoeffN, RunContPct, RunConCoeffN):
-    return np.sum(AvNGLostBarnN_2(NYrs, NGPctManApp, GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN,
+    return sum(AvNGLostBarnN_2(NYrs, NGPctManApp, GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN,
                                       NGBarnNRate, Prec, DaysMonth, AWMSNgPct, NgAWMSCoeffN, RunContPct, RunConCoeffN))
 
 
 def NGLostBarnNSum(NYrs, NGPctManApp, GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN, NGBarnNRate, Prec,
                    DaysMonth, AWMSNgPct, NgAWMSCoeffN, RunContPct, RunConCoeffN):
-    result = np.zeros((NYrs,))
+    result = zeros((NYrs,))
     ng_lost_barn_n = NGLostBarnN(NYrs, NGPctManApp, GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN, NGBarnNRate,
                                  Prec,
                                  DaysMonth, AWMSNgPct, NgAWMSCoeffN, RunContPct, RunConCoeffN)

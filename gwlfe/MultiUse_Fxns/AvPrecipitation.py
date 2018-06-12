@@ -1,7 +1,3 @@
-import numpy as np
-from gwlfe.Timer import time_function
-
-
 # def AvPrecipitation(NYrs, Precipitation):
 #     result = np.zeros((12,))
 #     for Y in range(NYrs):

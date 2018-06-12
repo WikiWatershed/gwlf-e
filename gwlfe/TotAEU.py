@@ -1,6 +1,4 @@
-import numpy as np
 # from Timer import time_function
-from Memoization import memoize
 
 
 def TotAEU(NumAnimals, AvgAnimalWt):
@@ -19,4 +17,4 @@ def TotAEU(NumAnimals, AvgAnimalWt):
 def TotAEU_2(NumAnimals, AvgAnimalWt):
     aeu = NumAnimals * AvgAnimalWt / 1000
     aeu[2:4] /= 2
-    return np.sum(aeu)
+    return sum(aeu)

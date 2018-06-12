@@ -1,16 +1,19 @@
-import numpy as np
-# from Timer import time_function
-from Water import Water
-from Qrun import Qrun, Qrun_2
-from RurAreaTotal import RurAreaTotal
-from Retention import Retention
+from numpy import sum
+from numpy import zeros
+
 from AreaTotal import AreaTotal
 from Memoization import memoize
+from Qrun import Qrun, Qrun_2
+from Retention import Retention
+from RurAreaTotal import RurAreaTotal
+# from Timer import time_function
+from Water import Water
+
 
 # @time_function
 @memoize
 def RuralQTotal(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, CN, NUrb, AntMoist_0, Grow_0, Area):
-    result = np.zeros((NYrs, 12, 31))
+    result = zeros((NYrs, 12, 31))
     water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     q_run = Qrun(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, CN, AntMoist_0, Grow_0)
     rur_area_total = RurAreaTotal(NRur, Area)
@@ -35,9 +38,9 @@ def RuralQTotal(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, CN, NUrb, AntMois
 
 @memoize
 def RuralQTotal_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, CN, NUrb, AntMoist_0, Grow_0, Area):
-    result = np.zeros((NYrs, 12, 31))
+    result = zeros((NYrs, 12, 31))
     q_run = Qrun_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, CN, AntMoist_0, Grow_0)
     area_total = AreaTotal(NRur, NUrb, Area)
     qrun_area = q_run * Area
-    result = np.sum(qrun_area, axis=3)/area_total
+    result = sum(qrun_area, axis=3)/area_total
     return result

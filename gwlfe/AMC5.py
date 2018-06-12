@@ -1,8 +1,10 @@
-import numpy as np
+import copy
+
+from numpy import zeros
+
+from Memoization import memoize
 # from Timer import time_function
 from Water import Water, Water_2
-import copy
-from Memoization import memoize
 
 try:
     from AMC5_yesterday_inner_compiled import AMC5_yesterday_inner
@@ -14,7 +16,7 @@ except ImportError:
 # AMC5_yesterday returns the same value as yesterday(AMC5) and faster than any other version
 @memoize
 def AMC5(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0):
-    result = np.zeros((NYrs, 12, 31))
+    result = zeros((NYrs, 12, 31))
     water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     AMC5 = 0
     AntMoist = copy.deepcopy(AntMoist_0)
@@ -59,8 +61,8 @@ def AMC5(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0):
 
 
 def AMC5_1(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0):
-    result = np.zeros((NYrs, 12, 31))
-    AntMoist1 = np.zeros((5,))
+    result = zeros((NYrs, 12, 31))
+    AntMoist1 = zeros((5,))
     water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     AMC5 = 0
     for k in range(5):

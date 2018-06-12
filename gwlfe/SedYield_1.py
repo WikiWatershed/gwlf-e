@@ -1,10 +1,9 @@
-import numpy as np
 # from Timer import time_function
 from Memoization import memoize
-from StreamBankEros_1 import StreamBankEros_1
-from StreamBankEros_1 import StreamBankEros_1_2
 from SedYield import SedYield
 from SedYield import SedYield_2
+from StreamBankEros_1 import StreamBankEros_1
+from StreamBankEros_1 import StreamBankEros_1_2
 
 
 @memoize
@@ -14,7 +13,7 @@ def SedYield_1(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0,
                StreamWithdrawal, GroundWithdrawal, NumAnimals, AvgAnimalWt, StreamFlowVolAdj, SedAFactor_0,
                AvKF, AvSlope, SedAAdjust, StreamLength, n42b, n46c, n85d, AgLength, n42, n45, n85, UrbBankStab,
                Acoef, KF, LS, C, P, SedDelivRatio_0):
-    result = np.zeros((NYrs, 12))
+    result = zeros((NYrs, 12))
     sedyield = SedYield(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef, NRur, KF, LS, C, P, Area, NUrb, CNI_0,
                         AntMoist_0, Grow_0,
                         ISRR, ISRA, Qretention, PctAreaInfil, n25b, CN, CNP_0, Imper, SedDelivRatio_0)

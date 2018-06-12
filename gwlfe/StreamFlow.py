@@ -1,18 +1,18 @@
-import numpy as np
+from numpy import zeros
+
 # from Timer import time_function
 from Flow import Flow
-from Flow import Flow_2
-from Runoff import Runoff
-from Runoff import Runoff_2
-from GroundWatLE_1 import GroundWatLE_1_2
 from GroundWatLE_1 import GroundWatLE_1
+from GroundWatLE_1 import GroundWatLE_1_2
+from Memoization import memoize
 from MultiUse_Fxns.PtSrcFlow import PtSrcFlow
 from MultiUse_Fxns.PtSrcFlow import PtSrcFlow_2
+from Runoff import Runoff
+from Runoff import Runoff_2
 from TileDrain import TileDrain
 from TileDrain import TileDrain_2
 from Withdrawal import Withdrawal
 from Withdrawal import Withdrawal_2
-from Memoization import memoize
 
 
 @memoize
@@ -20,7 +20,7 @@ def StreamFlow(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0,
                ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0, RecessionCoef, SeepCoef
                , Qretention, PctAreaInfil, n25b, Landuse, TileDrainDensity, PointFlow, StreamWithdrawal,
                GroundWithdrawal):
-    result = np.zeros((NYrs, 12))
+    result = zeros((NYrs, 12))
     flow = Flow(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
                 ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0, RecessionCoef, SeepCoef)
     runoff = Runoff(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,

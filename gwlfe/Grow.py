@@ -1,6 +1,4 @@
-import numpy as np
 # from Timer import time_function
-from Memoization import memoize
 from enums import GROWING_SEASON
 
 

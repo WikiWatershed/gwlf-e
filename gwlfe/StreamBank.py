@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
+from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
-from __future__ import division
 
 """
 Imported from StreamBank.bas
@@ -13,7 +13,6 @@ from TileDrain import TileDrain_2
 from StreamBankEros_1 import StreamBankEros_1_2
 from AGSTRM import AGSTRM_2
 from StreamBankN_1 import StreamBankN_1_2
-from StreamBankNSum import StreamBankNSum
 from Outputs.AvAnimalNSum.AnimalN import AnimalN_2
 from StreamBankEros import StreamBankEros_2
 

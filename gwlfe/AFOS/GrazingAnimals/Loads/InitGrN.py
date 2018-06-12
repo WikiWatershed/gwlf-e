@@ -1,9 +1,9 @@
-import numpy as np
-from gwlfe.Timer import time_function
-from gwlfe.enums import YesOrNo
+from numpy import sum
+
 from GRLoadN import GRLoadN
 from GRLoadN import GRLoadN_2
 from gwlfe.GrazingAnimal import GrazingAnimal
+from gwlfe.enums import YesOrNo
 
 
 def InitGrN(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN):
@@ -19,4 +19,4 @@ def InitGrN(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN):
 
 
 def InitGrN_2(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN):
-    return np.sum(GRLoadN_2(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN))
+    return sum(GRLoadN_2(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN))

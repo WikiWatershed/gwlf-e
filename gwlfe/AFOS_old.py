@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
+from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
-from __future__ import division
+
+from MultiUse_Fxns.LossFactAdj import LossFactAdj_2
 from StreamFlow_1 import StreamFlow_1_2
 from TotAreaMeters import TotAreaMeters
 from UrbRunoffLiter import UrbRunoffLiter_2
-from MultiUse_Fxns.LossFactAdj import LossFactAdj_2
 
 """
 Imported from AFOS.bas

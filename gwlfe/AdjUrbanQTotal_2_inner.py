@@ -1,5 +1,5 @@
-import numpy as np
 from numba.pycc import CC
+from numpy import zeros
 
 cc = CC('AdjUrbanQTotal_2_inner_compiled')
 
@@ -8,7 +8,7 @@ cc = CC('AdjUrbanQTotal_2_inner_compiled')
            '(int64, int32[:,::1], float64[:,:,::1], float64, float64, float64[:,:,::1], float64[:,:,::1], float64, float64)')
 def AdjUrbanQTotal_2_inner(NYrs, DaysMonth, Temp, Qretention, PctAreaInfil, water, urban_q_total, urb_area_total,
                            area_total):
-    result = np.zeros((NYrs, 12, 31))
+    result = zeros((NYrs, 12, 31))
     adj_urban_q_total = 0
     for Y in range(NYrs):
         for i in range(12):

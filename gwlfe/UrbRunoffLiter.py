@@ -1,17 +1,18 @@
-import numpy as np
+from numpy import zeros
+
 # from Timer import time_function
 from Memoization import memoize
-from Water import Water
 from UrbAreaTotal import UrbAreaTotal
 from UrbAreaTotal import UrbAreaTotal_2
 from UrbanRunoff import UrbanRunoff
 from UrbanRunoff import UrbanRunoff_2
+from Water import Water
 
 
 @memoize
 def UrbRunoffLiter(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
                    ISRR, ISRA):
-    result = np.zeros((NYrs, 12))
+    result = zeros((NYrs, 12))
     water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     urbareatotal = UrbAreaTotal(NRur, NUrb, Area)
     urbanrunoff = UrbanRunoff(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,

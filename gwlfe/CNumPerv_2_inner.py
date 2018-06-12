@@ -1,5 +1,5 @@
 from numba.pycc import CC
-import numpy as np
+from numpy import zeros
 # from numba import jit
 
 cc = CC('CNumPerv_2_inner_compiled')
@@ -7,7 +7,7 @@ cc = CC('CNumPerv_2_inner_compiled')
 @cc.export('CNumPerv_2_inner', '(int64, int64[:,::1], float64[:,:,::1], int64, int64, float64[:,::1], float64[:,:,::1], float64[:,:,::1], float64[::1], float64[:,:,::1])')
 # @jit(nopython=True)
 def CNumPerv_2_inner(NYrs, DaysMonth, Temp, NRur, nlu, cnp, water, melt, grow_factor, amc5):
-    result = np.zeros((NYrs, 12, 31, nlu))
+    result = zeros((NYrs, 12, 31, nlu))
     for Y in range(NYrs):
         for i in range(12):
             for j in range(DaysMonth[Y][i]):

@@ -1,10 +1,14 @@
-import numpy as np
+from numpy import repeat
+from numpy import tile
+from numpy import where
+from numpy import zeros
+
 # from Timer import time_function
 from CNP import CNP, CNP_2
 from CNumPerv import CNumPerv, CNumPerv_2
+from Memoization import memoize
 from NLU import NLU
 from Water import Water, Water_2
-from Memoization import memoize
 
 
 @memoize
@@ -13,7 +17,7 @@ def CNumPervReten(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, NRur, NUr
     c_num_perv = CNumPerv(NYrs, DaysMonth, Temp, NRur, NUrb, CNP_0, InitSnow_0, Prec, Grow_0, AntMoist_0)
     nlu = NLU(NRur, NUrb)
     water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
-    result = np.zeros((NYrs, 12, 31, nlu))
+    result = zeros((NYrs, 12, 31, nlu))
     for Y in range(NYrs):
         for i in range(12):
             for j in range(DaysMonth[Y][i]):
@@ -31,13 +35,13 @@ def CNumPervReten(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, NRur, NUr
 
 def CNumPervReten_2(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, NRur, NUrb, CNP_0, Grow_0):
     nlu = NLU(NRur, NUrb)
-    result = np.zeros((NYrs, 12, 31, nlu))
+    result = zeros((NYrs, 12, 31, nlu))
     c_num_perv = CNumPerv_2(NYrs, DaysMonth, Temp, NRur, NUrb, CNP_0, InitSnow_0, Prec, Grow_0, AntMoist_0)
     cnp = CNP_2(NRur, NUrb, CNP_0)
-    cnp_1 = np.tile(cnp[1][None, None, None, :], (NYrs, 12, 31, 1))
-    water = np.repeat(Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)[:, :, :, None], nlu, axis=3)
-    Temp = np.repeat(Temp[:, :, :, None], nlu, axis=3)
-    result[np.where((Temp > 0) & (water >= 0.05) & (cnp_1 > 0))] = 2540 / c_num_perv[
-        np.where((Temp > 0) & (water >= 0.05) & (cnp_1 > 0))] - 25.4
-    result[np.where(result < 0)] = 0
+    cnp_1 = tile(cnp[1][None, None, None, :], (NYrs, 12, 31, 1))
+    water = repeat(Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)[:, :, :, None], nlu, axis=3)
+    Temp = repeat(Temp[:, :, :, None], nlu, axis=3)
+    result[where((Temp > 0) & (water >= 0.05) & (cnp_1 > 0))] = 2540 / c_num_perv[
+        where((Temp > 0) & (water >= 0.05) & (cnp_1 > 0))] - 25.4
+    result[where(result < 0)] = 0
     return result

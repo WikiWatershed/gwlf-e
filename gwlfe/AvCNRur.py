@@ -1,8 +1,7 @@
-import numpy as np
 # from Timer import time_function
+from Memoization import memoize
 from RurAreaTotal import RurAreaTotal
 from RurAreaTotal import RurAreaTotal_2
-from Memoization import memoize
 
 
 @memoize
@@ -19,6 +18,6 @@ def AvCNRur(NRur, Area, CN):
 def AvCNRur_2(NRur, Area, CN):
     rurareatotal = RurAreaTotal_2(NRur, Area)
     if (rurareatotal > 0):
-        return np.sum(CN * Area / rurareatotal)
+        return sum(CN * Area / rurareatotal)
     else:
         return 0

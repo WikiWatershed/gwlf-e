@@ -1,13 +1,15 @@
-import numpy as np
+from numpy import zeros
+
 # from Timer import time_function
 from InitSnow import InitSnow
 from Melt import Melt
 from Memoization import memoize
 
+
 # Not used in other calculations
 @memoize
 def MeltPest(NYrs, DaysMonth, InitSnow_0, Temp, Prec):
-    result = np.zeros((NYrs, 12, 31))
+    result = zeros((NYrs, 12, 31))
     init_snow = InitSnow(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     init_snow_yesterday = InitSnow_0
     melt = Melt(NYrs, DaysMonth, Temp, InitSnow_0, Prec)

@@ -1,12 +1,15 @@
-import numpy as np
+from numpy import repeat
+from numpy import reshape
+from numpy import zeros
+
+
 # from Timer import time_function
-from Memoization import memoize
 
 
 # @memoize
 
 def Withdrawal(NYrs, StreamWithdrawal, GroundWithdrawal):
-    result = np.zeros((NYrs, 12))
+    result = zeros((NYrs, 12))
     for Y in range(NYrs):
         for i in range(12):
             result[Y][i] = (result[Y][i] + StreamWithdrawal[i] + GroundWithdrawal[i])
@@ -14,4 +17,4 @@ def Withdrawal(NYrs, StreamWithdrawal, GroundWithdrawal):
 
 
 def Withdrawal_2(NYrs, StreamWithdrawal, GroundWithdrawal):
-    return np.reshape(np.repeat(StreamWithdrawal + GroundWithdrawal, NYrs), (NYrs, 12))
+    return reshape(repeat(StreamWithdrawal + GroundWithdrawal, NYrs), (NYrs, 12))

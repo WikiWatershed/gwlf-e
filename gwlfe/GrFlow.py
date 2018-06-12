@@ -1,17 +1,16 @@
-import numpy as np
 # from Timer import time_function
-from Percolation import Percolation
-from Percolation import Percolation_2
 from DeepSeep import DeepSeep_inner
 from Memoization import memoize
+from Percolation import Percolation
+from Percolation import Percolation_2
 
 
 @memoize
 def GrFlow(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
            ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0, RecessionCoef, SeepCoef):
-    result = np.zeros((NYrs, 12, 31))
-    deepseep = np.zeros((NYrs, 12, 31))
-    satstor = np.zeros((NYrs, 12, 31))
+    result = zeros((NYrs, 12, 31))
+    deepseep = zeros((NYrs, 12, 31))
+    satstor = zeros((NYrs, 12, 31))
     percolation = Percolation(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0,
                               Imper, ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap)
     satstor_carryover = SatStor_0

@@ -1,9 +1,7 @@
-import numpy as np
 # from Timer import time_function
 from AreaTotal import AreaTotal
-from TotLAEU import TotLAEU
-from Memoization import memoize
 from AreaTotal import AreaTotal_2
+from TotLAEU import TotLAEU
 
 
 def AEU(NumAnimals, AvgAnimalWt, NRur, NUrb, Area):

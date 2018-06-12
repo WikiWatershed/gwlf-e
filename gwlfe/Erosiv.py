@@ -1,14 +1,17 @@
-import numpy as np
+from numpy import where
+from numpy import zeros
+
 # from Timer import time_function
 from InitSnow import InitSnow
 from InitSnowYesterday import InitSnowYesterday
-from Rain import Rain, Rain_2
 from Melt_1 import Melt_1, Melt_1_2
 from Memoization import memoize
+from Rain import Rain, Rain_2
+
 
 @memoize
 def Erosiv(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef):
-    result = np.zeros((NYrs, 12, 31))
+    result = zeros((NYrs, 12, 31))
     init_snow = InitSnow(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     init_snow_yesterday = InitSnow_0
     rain = Rain(NYrs, DaysMonth, Temp, Prec)
@@ -28,11 +31,11 @@ def Erosiv(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef):
     return result
 
 def Erosiv_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef):
-    result = np.zeros((NYrs, 12, 31))
+    result = zeros((NYrs, 12, 31))
     rain = Rain_2(Temp, Prec)
     init_snow_yesterday = InitSnowYesterday(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     melt_1 = Melt_1_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     erosiv = 6.46*Acoef.reshape((12,1)) *rain **1.81
-    result[np.where((Temp>0) & (init_snow_yesterday > 0.001) & (rain > 0 ) & (init_snow_yesterday - melt_1 < 0.001))] = erosiv[np.where((Temp>0) & (init_snow_yesterday > 0.001) & (rain > 0 ) & (init_snow_yesterday - melt_1 < 0.001))]
-    result[np.where((Temp>0) & (init_snow_yesterday <= 0.001) & (rain > 0 ))] =erosiv[np.where((Temp>0) & (init_snow_yesterday <= 0.001) & (rain > 0 ))]
+    result[where((Temp>0) & (init_snow_yesterday > 0.001) & (rain > 0 ) & (init_snow_yesterday - melt_1 < 0.001))] = erosiv[where((Temp>0) & (init_snow_yesterday > 0.001) & (rain > 0 ) & (init_snow_yesterday - melt_1 < 0.001))]
+    result[where((Temp>0) & (init_snow_yesterday <= 0.001) & (rain > 0 ))] =erosiv[where((Temp>0) & (init_snow_yesterday <= 0.001) & (rain > 0 ))]
     return result

@@ -1,6 +1,6 @@
-import numpy as np
 # from Timer import time_function
 from Memoization import memoize
+from numpy import zeros
 
 try:
     from InitSnow_2_inner_compiled import InitSnow_2_inner
@@ -11,7 +11,7 @@ except ImportError:
 
 # @memoize
 def InitSnow(NYrs, DaysMonth, InitSnow_0, Temp, Prec):
-    result = np.zeros((NYrs, 12, 31))
+    result = zeros((NYrs, 12, 31))
     yesterday = InitSnow_0
     for Y in range(NYrs):
         for i in range(12):

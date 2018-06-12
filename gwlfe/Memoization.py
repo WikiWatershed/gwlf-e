@@ -1,5 +1,6 @@
 import hashlib
-import numpy as np
+
+from numpy import ndarray
 
 
 # without
@@ -18,7 +19,7 @@ def memoize_with_args(f):
         def __call__(self, *args):
             args_string = f.__name__
             for arg in args:
-                if (isinstance(arg, np.ndarray)):
+                if (isinstance(arg, ndarray)):
                     args_string += hashlib.sha1(arg).hexdigest() + ","
                 else:
                     args_string += hashlib.sha1(str(arg)).hexdigest() + ","

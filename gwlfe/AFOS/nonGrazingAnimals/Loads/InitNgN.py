@@ -1,10 +1,7 @@
-import numpy as np
-from gwlfe.Timer import time_function
-from gwlfe.enums import YesOrNo
 from NGLoadN import NGLoadN
 from NGLoadN import NGLoadN_2
 from gwlfe.GrazingAnimal import GrazingAnimal
-from gwlfe.GrazingAnimal import GrazingAnimal_2
+from gwlfe.enums import YesOrNo
 
 
 def InitNgN(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN):
@@ -19,4 +16,4 @@ def InitNgN(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN):
 
 def InitNgN_2(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN):
     ng_load_n = NGLoadN_2(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN)
-    return np.sum(ng_load_n)
+    return sum(ng_load_n)

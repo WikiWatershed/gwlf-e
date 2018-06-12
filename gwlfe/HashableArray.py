@@ -1,9 +1,12 @@
-import numpy as np
 from random import randint
 
-class HashableArray(np.ndarray):
+from numpy import asarray
+from numpy import ndarray
+
+
+class HashableArray(ndarray):
     def __new__(cls, input_array):
-        obj = np.asarray(input_array).view(cls)
+        obj = asarray(input_array).view(cls)
         obj.hash = randint(100, 999)
         return obj
 

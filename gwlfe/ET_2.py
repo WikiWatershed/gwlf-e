@@ -1,16 +1,15 @@
-import numpy as np
-from Timer import time_function
-from Infiltration import Infiltration
+from numpy import zeros
+
 from Infiltration import Infiltration_2
-from MultiUse_Fxns.ET import DailyET_2
 from Memoization import memoize
+from MultiUse_Fxns.ET import DailyET_2
 from UnsatStor import UnsatStor_inner
 
 
 @memoize
 def ET_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
          ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap):
-    result = np.zeros((NYrs, 12, 31))
+    result = zeros((NYrs, 12, 31))
     infiltration = Infiltration_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
                                   CNP_0, Imper, ISRR, ISRA, CN)
     unsatstor_carryover = UnsatStor_0

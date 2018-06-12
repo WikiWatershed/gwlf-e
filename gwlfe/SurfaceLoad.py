@@ -1,24 +1,29 @@
-import numpy as np
-# from Timer import time_function
-from Memoization import memoize
-from Water import Water
-from Water import Water_2
+from numpy import maximum
+from numpy import repeat
+from numpy import reshape
+from numpy import where
+from numpy import zeros
+
 from AdjUrbanQTotal import AdjUrbanQTotal
 from AdjUrbanQTotal import AdjUrbanQTotal_2
+from LU_1 import LU_1
+# from Timer import time_function
+from Memoization import memoize
 from NLU import NLU
+from UrbLoadRed import UrbLoadRed
+from UrbLoadRed import UrbLoadRed_2
 from WashImperv import WashImperv
 from WashImperv import WashImperv_2
 from WashPerv import WashPerv
 from WashPerv import WashPerv_2
-from LU_1 import LU_1
-from UrbLoadRed import UrbLoadRed
-from UrbLoadRed import UrbLoadRed_2
+from Water import Water
+from Water import Water_2
 
 
 @memoize
 def SurfaceLoad(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0,
                 Imper, ISRR, ISRA, Qretention, PctAreaInfil, Nqual, LoadRateImp, LoadRatePerv, Storm, UrbBMPRed):
-    result = np.zeros((NYrs, 12, 31, 16, Nqual))
+    result = zeros((NYrs, 12, 31, 16, Nqual))
     water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     adjurbanqtotal = AdjUrbanQTotal(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
                                         Grow_0, CNP_0,
@@ -64,20 +69,20 @@ def SurfaceLoad_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Area, CNI
                   Imper, ISRR, ISRA, Qretention, PctAreaInfil, Nqual, LoadRateImp,
                   LoadRatePerv, Storm, UrbBMPRed):
     nlu = NLU(NRur, NUrb)
-    result = np.zeros((NYrs, 12, 31, nlu - NRur, Nqual))
+    result = zeros((NYrs, 12, 31, nlu - NRur, Nqual))
     water = Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     adjurbanqtotal = AdjUrbanQTotal_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
                                           Grow_0, CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil)
     # print(np.where((Temp > 0) & (water > 0.01) & (adjurbanqtotal_1 > 0.001)).shape)
-    nonzeroday = np.where((Temp > 0) & (water > 0.01) & (adjurbanqtotal > 0.001))
-    washimperv = np.reshape(
-        np.repeat(
+    nonzeroday = where((Temp > 0) & (water > 0.01) & (adjurbanqtotal > 0.001))
+    washimperv = reshape(
+        repeat(
             WashImperv_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, CNI_0, AntMoist_0, Grow_0, NRur, NUrb)[:, :, :,
             NRur:],
             repeats=Nqual,
             axis=3), (NYrs, 12, 31, nlu - NRur, Nqual))
-    washperv = np.reshape(
-        np.repeat(
+    washperv = reshape(
+        repeat(
             WashPerv_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, CNP_0, AntMoist_0, Grow_0, NRur, NUrb)[:, :, :, NRur:],
             repeats=Nqual,
             axis=3), (NYrs, 12, 31, nlu - NRur, Nqual))
@@ -86,10 +91,10 @@ def SurfaceLoad_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Area, CNI
                               Imper, ISRR, ISRA, Qretention, PctAreaInfil, Nqual, Storm, UrbBMPRed)[:, :, :, NRur:]
 
     # area = np.reshape(np.repeat(Area, repeats=NYrs * 12 * 31), (NYrs, 12, 31, nlu))[NRur:]
-    temp = np.reshape(np.repeat(Imper[NRur:] * (1 - ISRR) * (1 - ISRA), repeats=Nqual, axis=0), (-1, Nqual))
+    temp = reshape(repeat(Imper[NRur:] * (1 - ISRR) * (1 - ISRA), repeats=Nqual, axis=0), (-1, Nqual))
     # print((washimperv * LoadRateImp).shape)
     # making an assumption that Area cannot be negative. Therefor where area = 0 result will be <= 0 and will be set to zero before returned (eliminating an if)
     result[nonzeroday] = (washimperv[nonzeroday] * LoadRateImp[NRur:] * temp +
-                          washperv[nonzeroday] * LoadRatePerv[NRur:] * (1 - temp)) * np.reshape(
-        np.repeat(Area[NRur:], repeats=Nqual, axis=0), (nlu - NRur, Nqual)) - urbloadred[nonzeroday]
-    return np.maximum(result, 0)
+                          washperv[nonzeroday] * LoadRatePerv[NRur:] * (1 - temp)) * reshape(
+        repeat(Area[NRur:], repeats=Nqual, axis=0), (nlu - NRur, Nqual)) - urbloadred[nonzeroday]
+    return maximum(result, 0)

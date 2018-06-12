@@ -1,10 +1,8 @@
-import numpy as np
 # from Timer import time_function
-from StreamBankEros import StreamBankEros
-from StreamBankEros import StreamBankEros_2
 from AGSTRM import AGSTRM
 from AGSTRM import AGSTRM_2
-from Memoization import memoize
+from StreamBankEros import StreamBankEros
+from StreamBankEros import StreamBankEros_2
 
 
 # @memoize
@@ -16,7 +14,7 @@ def SEDFEN(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, Ant
            StreamWithdrawal, GroundWithdrawal
            , NumAnimals, AvgAnimalWt, StreamFlowVolAdj, SedAFactor_0, AvKF, AvSlope,
            SedAAdjust, StreamLength, AgLength, n42, n45, n85):
-    result = np.zeros((NYrs, 12))
+    result = zeros((NYrs, 12))
     streambankeros = StreamBankEros(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
                                     CNP_0, Imper,
                                     ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0,
@@ -48,4 +46,4 @@ def SEDFEN_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, A
     if n42 > 0:
         return (n45 / n42) * streambankeros * agstrm * n85
     else:
-        return np.zeros((NYrs, 12))
+        return zeros((NYrs, 12))

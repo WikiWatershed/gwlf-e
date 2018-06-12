@@ -1,12 +1,13 @@
-import numpy as np
-from gwlfe.Timer import time_function
-from gwlfe.enums import YesOrNo
-from gwlfe.MultiUse_Fxns.Constants import NAnimals
+from numpy import zeros
+
 from gwlfe.GrazingAnimal import GrazingAnimal
 from gwlfe.GrazingAnimal import GrazingAnimal_2
+from gwlfe.MultiUse_Fxns.Constants import NAnimals
+from gwlfe.enums import YesOrNo
+
 
 def GRLoadN(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN):
-    result = np.zeros((NAnimals,))
+    result = zeros((NAnimals,))
     grazing_animal = GrazingAnimal(GrazingAnimal_0)
     for a in range(9):
         if grazing_animal[a] is YesOrNo.NO:

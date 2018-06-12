@@ -1,11 +1,11 @@
-import numpy as np
+from numpy import sum
 
 from gwlfe.AFOS.GrazingAnimals.Loads.GrazingN import GrazingN
 from gwlfe.AFOS.GrazingAnimals.Loads.GrazingN import GrazingN_2
 
 
 def GRStreamN(PctStreams, PctGrazing, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN):
-    result = np.zeros((12,))
+    result = zeros((12,))
     grazing_n = GrazingN(PctGrazing, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN)
     for i in range(12):
         result[i] = PctStreams[i] * grazing_n[i]
@@ -25,4 +25,4 @@ def AvGRStreamN(PctStreams, PctGrazing, GrazingAnimal, NumAnimals, AvgAnimalWt, 
 
 
 def AvGRStreamN_2(PctStreams, PctGrazing, GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN):
-    return np.sum(GRStreamN_2(PctStreams, PctGrazing, GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN))
+    return sum(GRStreamN_2(PctStreams, PctGrazing, GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN))
