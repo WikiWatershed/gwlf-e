@@ -6,7 +6,7 @@ cc = CC('WashImperv_inner_compiled')
 
 
 @cc.export('WashImperv_inner',
-           '(int64, int32[:,::1], float64[:,:,::1], int64, int64, float64[:,:,::1], float64[:,:,:,::1])')
+           '(int64, int64[:,::1], float64[:,:,::1], int64, int64, float64[:,:,::1], float64[:,:,:,::1])')
 def WashImperv_inner(NYrs, DaysMonth, Temp, NRur, nlu, water, qruni):
     result = zeros((NYrs, 12, 31, 16))
     impervaccum = zeros(16)

@@ -47,6 +47,4 @@ def WashPerv_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, CNP_0, AntMoist_0, Grow_
     nlu = NLU(NRur, NUrb)
     water = Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     qrunp = QrunP_2(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, CNP_0, AntMoist_0, Grow_0)
-    # WashPerv_inner(NYrs, DaysMonth, Temp, NRur, nlu, water, qrunp)
-    # print(WashPerv_inner.inspect_types())
     return WashPerv_inner(NYrs, DaysMonth, Temp, NRur, nlu, water, qrunp)

@@ -51,7 +51,7 @@ def Percolation_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI
 
     #   NYrs = arg(0, name=NYrs)  :: int64
     #   UnsatStor_0 = arg(1, name=UnsatStor_0)  :: float64
-    #   DaysMonth = arg(2, name=DaysMonth)  :: array(int32, 2d, C)
+    #   DaysMonth = arg(2, name=DaysMonth)  :: array(int64, 2d, C)
     #   MaxWaterCap = arg(3, name=MaxWaterCap)  :: float64
     #   infiltration = arg(4, name=infiltration)  :: array(float64, 3d, C)
     #   et = arg(5, name=et)  :: array(float64, 3d, C)

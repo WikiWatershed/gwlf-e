@@ -7,7 +7,7 @@ cc = CC('WashPerv_inner_compiled')
 
 
 @cc.export('WashPerv_inner',
-           '(int64, int32[:,::1], float64[:,:,::1], int64, int64, float64[:,:,::1], float64[:,:,:,::1])')
+           '(int64, int64[:,::1], float64[:,:,::1], int64, int64, float64[:,:,::1], float64[:,:,:,::1])')
 def WashPerv_inner(NYrs, DaysMonth, Temp, NRur, nlu, water, qrunp):
     washperv = zeros((NYrs, 12, 31, 16))
     pervaccum = zeros(16)  # TODO: why is this here?
