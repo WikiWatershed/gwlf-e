@@ -12,7 +12,7 @@ import LoadReductions
 from AreaTotal import AreaTotal_2
 from AttenN import AttenN
 from AvErosion import AvErosion_2
-from AvEvapoTrans import AvEvapoTrans
+from AvEvapoTrans import AvEvapoTrans_2
 from AvGroundWater import AvGroundWater_2
 from AvRunoff import AvRunoff_2
 from AvSedYield import AvSedYield
@@ -997,7 +997,7 @@ def WriteOutput(z):
     output['MeanFlowPerSecond'] = MeanFlowPS
 
     # Equivalent to lines 965 - 988 of source
-    av_evapo_trans = AvEvapoTrans(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
+    av_evapo_trans = AvEvapoTrans_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
                                   z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV,
                                   z.PcntET, z.DayHrs,
                                   z.MaxWaterCap)  # TODO: once all of the monthly variables have been extracted, rewrite how this works
