@@ -1,5 +1,5 @@
 import numpy as np
-from Timer import time_function
+# from Timer import time_function
 from Erosiv import Erosiv
 from Erosiv import Erosiv_2
 from Memoization import memoize

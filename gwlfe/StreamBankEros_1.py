@@ -1,5 +1,5 @@
 import numpy as np
-from Timer import time_function
+# from Timer import time_function
 from StreamBankEros import StreamBankEros
 from StreamBankEros import StreamBankEros_2 as StreamBankEros_2_actual
 from SEDSTAB import SEDSTAB

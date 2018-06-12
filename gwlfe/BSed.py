@@ -1,5 +1,5 @@
 import numpy as np
-from Timer import time_function
+# from Timer import time_function
 from Memoization import memoize
 from SedTrans import SedTrans
 from SedTrans import SedTrans_2

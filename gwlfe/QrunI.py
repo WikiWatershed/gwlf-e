@@ -1,5 +1,5 @@
 import numpy as np
-from Timer import time_function
+# from Timer import time_function
 from NLU import NLU
 from Water import Water, Water_2
 from CNI import CNI, CNI_2

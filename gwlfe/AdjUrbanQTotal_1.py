@@ -1,5 +1,5 @@
 import numpy as np
-from Timer import time_function
+# from Timer import time_function
 from AdjUrbanQTotal import AdjUrbanQTotal
 from UrbAreaTotal import UrbAreaTotal
 from AreaTotal import AreaTotal

@@ -1,5 +1,5 @@
 import numpy as np
-from Timer import time_function
+# from Timer import time_function
 from enums import GROWING_SEASON
 from enums import GrowFlag
 from Grow import Grow

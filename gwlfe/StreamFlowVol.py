@@ -1,5 +1,5 @@
 import numpy as np
-from Timer import time_function
+# from Timer import time_function
 from StreamFlowLE import StreamFlowLE
 from StreamFlowLE import StreamFlowLE_2
 from TotAreaMeters import TotAreaMeters

@@ -1,5 +1,5 @@
 import numpy as np
-from Timer import time_function
+# from Timer import time_function
 from GroundWatLE import GroundWatLE
 from GroundWatLE import GroundWatLE_2
 from AreaTotal import AreaTotal

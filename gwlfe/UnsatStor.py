@@ -2,7 +2,7 @@ import numpy as np
 from Timer import time_function
 from Infiltration import Infiltration
 from Infiltration import Infiltration_2
-from ET import DailyET_2
+from MultiUse_Fxns.ET import DailyET_2
 from Memoization import memoize
 
 try:

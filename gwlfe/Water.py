@@ -1,5 +1,5 @@
 import numpy as np
-from Timer import time_function
+# from Timer import time_function
 from Melt_1 import Melt_1, Melt_1_2
 from Rain import Rain, Rain_2
 from Memoization import memoize

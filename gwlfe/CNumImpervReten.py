@@ -1,5 +1,5 @@
 import numpy as np
-from Timer import time_function
+# from Timer import time_function
 from CNI import CNI, CNI_2
 from CNumImperv import CNumImperv, CNumImperv_2
 from NLU import NLU

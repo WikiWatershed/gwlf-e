@@ -1,5 +1,5 @@
 import numpy as np
-from Timer import time_function
+# from Timer import time_function
 from LE import LE
 from LE import LE_2
 from Memoization import memoize

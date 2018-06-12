@@ -1,7 +1,7 @@
 from Memoization import memoize
 from Memoization import memoize_with_args
 from Memoization import memoize2
-from Timer import time_function
+# from Timer import time_function
 from time import sleep
 import numpy as np
 

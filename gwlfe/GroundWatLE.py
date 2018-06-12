@@ -1,5 +1,5 @@
 import numpy as np
-from Timer import time_function
+# from Timer import time_function
 from GrFlow import GrFlow
 from GrFlow import GrFlow_2
 from Memoization import memoize

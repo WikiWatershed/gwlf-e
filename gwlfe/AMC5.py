@@ -1,5 +1,5 @@
 import numpy as np
-from Timer import time_function
+# from Timer import time_function
 from Water import Water, Water_2
 import copy
 from Memoization import memoize

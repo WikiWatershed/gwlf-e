@@ -1,5 +1,5 @@
 import numpy as np
-from Timer import time_function
+# from Timer import time_function
 from Memoization import memoize
 from StreamBankN import StreamBankN
 from StreamBankN import StreamBankN_2

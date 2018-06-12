@@ -1,5 +1,5 @@
 import numpy as np
-from Timer import time_function
+# from Timer import time_function
 from RurAreaTotal import RurAreaTotal
 from RurAreaTotal import RurAreaTotal_2
 from Memoization import memoize

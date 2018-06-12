@@ -1,5 +1,5 @@
 import numpy as np
-from Timer import time_function
+# from Timer import time_function
 from Memoization import memoize
 from nRunoff import nRunoff
 from nRunoff import nRunoff_2

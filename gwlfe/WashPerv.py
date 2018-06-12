@@ -1,5 +1,5 @@
 import numpy as np
-from Timer import time_function
+# from Timer import time_function
 import math
 from Memoization import memoize
 from NLU import NLU

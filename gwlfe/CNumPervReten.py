@@ -1,5 +1,5 @@
 import numpy as np
-from Timer import time_function
+# from Timer import time_function
 from CNP import CNP, CNP_2
 from CNumPerv import CNumPerv, CNumPerv_2
 from NLU import NLU

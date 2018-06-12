@@ -1,5 +1,5 @@
 import numpy as np
-from Timer import time_function
+# from Timer import time_function
 from QTotal import QTotal
 from QTotal import QTotal_2
 from GrFlow import GrFlow

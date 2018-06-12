@@ -1,5 +1,5 @@
 import numpy as np
-from Timer import time_function
+# from Timer import time_function
 from QTotal import QTotal
 from Water import Water
 from Memoization import memoize

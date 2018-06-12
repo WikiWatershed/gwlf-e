@@ -1,5 +1,5 @@
 import numpy as np
-from Timer import time_function
+# from Timer import time_function
 from enums import LandUse as LandUseNames
 from Memoization import memoize
 

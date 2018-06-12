@@ -1,5 +1,5 @@
 import numpy as np
-from Timer import time_function
+# from Timer import time_function
 from InitSnow import InitSnow
 from Melt import Melt
 from Memoization import memoize

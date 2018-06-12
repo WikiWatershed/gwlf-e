@@ -1,9 +1,10 @@
 from numba.pycc import CC
 import numpy as np
+from numba import jit
 
 cc = CC('CNum_inner_compiled')
 
-@cc.export('CNum_inner','(int64,int32[:,::1],float64[:,:,::1],float64[::1],int64,float64[:,:,::1],float64[:,::1],float64[:,:,::1],boolean[::1],float64[:,:,::1])')
+@cc.export('CNum_inner','(int64, int64[:,::1],float64[:,:,::1],float64[::1],int64,float64[:,:,::1],float64[:,::1],float64[:,:,::1],boolean[::1],float64[:,:,::1])')
 def CNum_inner(NYrs, DaysMonth, Temp, CN, NRur, melt_pest, newcn, amc5, grow_factor, water):
     result = np.zeros((NYrs, 12, 31, NRur))  # TODO: should we just generalize to NLU?
     for Y in range(NYrs):

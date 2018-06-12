@@ -1,5 +1,5 @@
 import numpy as np
-from Timer import time_function
+# from Timer import time_function
 from Water import Water
 from Retention import Retention
 from enums import LandUse
