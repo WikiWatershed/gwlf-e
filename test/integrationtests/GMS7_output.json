@@ -12,7 +12,7 @@
             "AvStreamFlow": 0.30208108211350754
         }, 
         {
-            "AvEvapoTrans": 0.8093928100552952, 
+            "AvEvapoTrans": 0.8093928100552953, 
             "AvTileDrain": 0.0, 
             "AvPrecipitation": 1.6086666666666671, 
             "AvRunoff": 0.21353876609930428, 
@@ -52,7 +52,7 @@
             "AvStreamFlow": 0.8240262156451398
         }, 
         {
-            "AvEvapoTrans": 8.873892085486858, 
+            "AvEvapoTrans": 8.873892085486856, 
             "AvTileDrain": 0.0, 
             "AvPrecipitation": 6.427046666666668, 
             "AvRunoff": 0.11387939710549726, 
@@ -62,7 +62,7 @@
             "AvStreamFlow": 0.19689069550869015
         }, 
         {
-            "AvEvapoTrans": 4.290381930667013, 
+            "AvEvapoTrans": 4.290381930667014, 
             "AvTileDrain": 0.0, 
             "AvPrecipitation": 3.4467799999999995, 
             "AvRunoff": 0.008392626639758136, 
@@ -138,28 +138,28 @@
             "Source": "Total Loads", 
             "TotalN": 395.76371574160845, 
             "TotalP": 90.84223269440648, 
-            "Sediment": 25296.046959259693, 
+            "Sediment": 25296.04695925969, 
             "Unit": "kg"
         }, 
         {
             "Source": "Loading Rates", 
             "TotalN": 0.2130166939779366, 
             "TotalP": 0.04889511421196322, 
-            "Sediment": 13.615397469863659, 
+            "Sediment": 13.615397469863657, 
             "Unit": "kg/ha"
         }, 
         {
             "Source": "Mean Annual Concentration", 
             "TotalN": 0.7461649947358252, 
             "TotalP": 0.1712721287579271, 
-            "Sediment": 47.69266103847826, 
+            "Sediment": 47.692661038478256, 
             "Unit": "mg/l"
         }, 
         {
             "Source": "Mean Low-Flow Concentration", 
-            "TotalN": 1.6854621334867126, 
-            "TotalP": 0.4648063148050313, 
-            "Sediment": 57.0878851342062, 
+            "TotalN": 1.6854621334865718, 
+            "TotalP": 0.4648063148049687, 
+            "Sediment": 57.087885133987136, 
             "Unit": "mg/l"
         }
     ], 
@@ -192,7 +192,7 @@
             "Source": "Open Land", 
             "TotalN": 132.72237029586734, 
             "TotalP": 22.48986115427047, 
-            "Sediment": 18194.55702193821
+            "Sediment": 18194.557021938206
         }, 
         {
             "Source": "Barren Areas", 

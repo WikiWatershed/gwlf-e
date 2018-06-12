@@ -37,13 +37,13 @@ def NetDisLoad(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0,
                     pass
     return result
 
-
+@memoize
 def NetDisLoad_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
                  Grow_0, CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil, Nqual, LoadRateImp,
                  LoadRatePerv, Storm, UrbBMPRed, DisFract, FilterWidth, PctStrmBuf):
     # nlu = NLU(NRur, NUrb)
     result = np.zeros((NYrs, 12, 31, Nqual))
-    water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
+    water = Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     adjurbanqtotal = AdjUrbanQTotal_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
                                           Grow_0, CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil)
     dissurfaceload = DisSurfLoad_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, Nqual, NRur, NUrb, Area, CNI_0, AntMoist_0,

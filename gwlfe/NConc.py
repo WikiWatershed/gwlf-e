@@ -19,11 +19,13 @@ def NConc(NRur, NUrb, NitrConc, ManNitr, ManuredAreas, FirstManureMonth, LastMan
 
 def NConc_2(NRur, NUrb, NitrConc, ManNitr, ManuredAreas, FirstManureMonth, LastManureMonth, FirstManureMonth2,
             LastManureMonth2):
-    if (FirstManureMonth < 0 and FirstManureMonth2 < 0 and LastManureMonth < 0 and LastManureMonth2 < 0):
-        return np.reshape(np.repeat(NitrConc[None, :], repeats=12, axis=0), (12, -1))
+    if (FirstManureMonth < 0 or FirstManureMonth2 < 0 or LastManureMonth < 0 or LastManureMonth2 < 0):
+        # return np.reshape(np.repeat(NitrConc[None, :], repeats=12, axis=0), (12, -1))
+        return np.repeat(NitrConc[None,:],12,axis = 0)
+
     else:
         nlu = NLU(NRur, NUrb)
-        result = np.reshape(np.repeat(NitrConc, repeats=12, axis=0), (12, nlu))
-        result[FirstManureMonth:LastManureMonth, :ManuredAreas] = ManNitr
-        result[FirstManureMonth2:LastManureMonth2, :ManuredAreas] = ManNitr
+        result = np.repeat(NitrConc[None,:],12, axis =0)
+        result[FirstManureMonth:LastManureMonth+1, :ManuredAreas] = ManNitr
+        result[FirstManureMonth2:LastManureMonth2+1, :ManuredAreas] = ManNitr
         return result

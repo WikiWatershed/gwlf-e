@@ -2,7 +2,7 @@
 from __future__ import print_function
 from __future__ import unicode_literals
 from __future__ import division
-from StreamFlow import StreamFlow_2
+from StreamFlow_1 import StreamFlow_1_2
 from TotAreaMeters import TotAreaMeters
 from UrbRunoffLiter import UrbRunoffLiter_2
 from MultiUse_Fxns.LossFactAdj import LossFactAdj_2
@@ -227,16 +227,8 @@ def AnimalOperations(z, Y):
                              + z.WildOrgs[Y][i]
                              + z.AnimalFC[Y][i])
 
-        z.CMStream[Y][i] = (StreamFlow_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area,
-                                         z.CNI_0,
-                                         z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
-                                         z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap,
-                                         z.SatStor_0,
-                                         z.RecessionCoef, z.SeepCoef
-                                         , z.Qretention, z.PctAreaInfil, z.n25b, z.Landuse, z.TileDrainDensity,
-                                         z.PointFlow,
-                                         z.StreamWithdrawal,
-                                         z.GroundWithdrawal)[Y][i] / 100) * TotAreaMeters(z.NRur, z.NUrb, z.Area)
+        z.CMStream[Y][i] = (StreamFlow_1_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
+                z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0, z.RecessionCoef, z.SeepCoef)[Y][i] / 100) * TotAreaMeters(z.NRur, z.NUrb, z.Area)
 
         if z.CMStream[Y][i] > 0:
             z.OrgConc[Y][i] = (z.TotalOrgs[Y][i] / (z.CMStream[Y][i] * 1000)) / 10

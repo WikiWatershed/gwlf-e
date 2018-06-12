@@ -4,9 +4,10 @@ from Flow import Flow
 from Flow import Flow_2
 from Runoff import Runoff
 from Runoff import Runoff_2
-from GroundWatLE_2 import GroundWatLE_2
-from PtSrcFlow import PtSrcFlow
-from PtSrcFlow import PtSrcFlow_2
+from GroundWatLE_1 import GroundWatLE_1_2
+from GroundWatLE_1 import GroundWatLE_1
+from MultiUse_Fxns.PtSrcFlow import PtSrcFlow
+from MultiUse_Fxns.PtSrcFlow import PtSrcFlow_2
 from TileDrain import TileDrain
 from TileDrain import TileDrain_2
 from Withdrawal import Withdrawal
@@ -24,7 +25,7 @@ def StreamFlow(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0,
                 ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0, RecessionCoef, SeepCoef)
     runoff = Runoff(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
                     ISRR, ISRA, Qretention, PctAreaInfil, n25b, CN, Landuse, TileDrainDensity)
-    groundwatle_2 = GroundWatLE_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
+    groundwatle_2 = GroundWatLE_1(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
                                   CNP_0, Imper,
                                   ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0,
                                   RecessionCoef, SeepCoef, Landuse, TileDrainDensity)
@@ -52,7 +53,7 @@ def StreamFlow_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_
                  GroundWithdrawal):
     runoff = Runoff_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
                       ISRR, ISRA, Qretention, PctAreaInfil, n25b, CN, Landuse, TileDrainDensity)
-    groundwatle_2 = GroundWatLE_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
+    groundwatle_2 = GroundWatLE_1_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
                                   CNP_0, Imper, ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0,
                                   RecessionCoef, SeepCoef, Landuse, TileDrainDensity)
     ptsrcflow = PtSrcFlow_2(NYrs, PointFlow)

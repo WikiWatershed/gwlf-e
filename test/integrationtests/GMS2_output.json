@@ -15,14 +15,14 @@
             "AvEvapoTrans": 0.8790971306096889, 
             "AvTileDrain": 0.0, 
             "AvPrecipitation": 7.248736666666666, 
-            "AvRunoff": 2.4496565184595696, 
+            "AvRunoff": 2.449656518459569, 
             "AvGroundWater": 4.309527583214896, 
             "AvPtSrcFlow": 6.903774122647051, 
             "AvWithdrawal": 0.0, 
             "AvStreamFlow": 13.662958224321518
         }, 
         {
-            "AvEvapoTrans": 2.550028798850363, 
+            "AvEvapoTrans": 2.5500287988503625, 
             "AvTileDrain": 0.0, 
             "AvPrecipitation": 8.751993333333333, 
             "AvRunoff": 2.367774623397854, 
@@ -92,7 +92,7 @@
             "AvStreamFlow": 8.88263930150137
         }, 
         {
-            "AvEvapoTrans": 3.8454502572367177, 
+            "AvEvapoTrans": 3.845450257236718, 
             "AvTileDrain": 0.0, 
             "AvPrecipitation": 6.980766666666668, 
             "AvRunoff": 1.012248087829482, 
@@ -203,7 +203,7 @@
         {
             "Source": "Low-Density Mixed", 
             "TotalN": 5530.114155962533, 
-            "TotalP": 615.2328984794673, 
+            "TotalP": 615.2328984794672, 
             "Sediment": 200107.4070183567
         }, 
         {

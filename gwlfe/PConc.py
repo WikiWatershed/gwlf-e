@@ -20,11 +20,11 @@ def PConc(NRur, NUrb, PhosConc, ManPhos, ManuredAreas, FirstManureMonth, LastMan
 
 def PConc_2(NRur, NUrb, PhosConc, ManPhos, ManuredAreas, FirstManureMonth, LastManureMonth, FirstManureMonth2,
           LastManureMonth2):
-    if(FirstManureMonth < 0 and FirstManureMonth2 < 0 and LastManureMonth < 0 and LastManureMonth2 < 0):
-        return np.reshape(np.repeat(PhosConc[None,:], repeats=12, axis=0), (12, -1))
+    if(FirstManureMonth < 0 or FirstManureMonth2 < 0 or LastManureMonth < 0 or LastManureMonth2 < 0):
+        return np.repeat(PhosConc[None, :], 12, axis=0)
     else:
         nlu = NLU(NRur, NUrb)
-        result = np.reshape(np.repeat(PhosConc, repeats=12, axis=0), (12, nlu))
-        result[FirstManureMonth:LastManureMonth, :ManuredAreas] = ManPhos
-        result[FirstManureMonth2:LastManureMonth2, :ManuredAreas] = ManPhos
+        result = np.repeat(PhosConc[None, :], 12, axis=0)
+        result[FirstManureMonth:LastManureMonth+1, :ManuredAreas] = ManPhos
+        result[FirstManureMonth2:LastManureMonth2+1, :ManuredAreas] = ManPhos
         return result

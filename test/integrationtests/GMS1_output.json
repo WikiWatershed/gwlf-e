@@ -82,17 +82,17 @@
             "AvStreamFlow": 1.097561727688185
         }, 
         {
-            "AvEvapoTrans": 5.500003363058706, 
+            "AvEvapoTrans": 5.500003363058705, 
             "AvTileDrain": 0.0, 
             "AvPrecipitation": 8.694420000000001, 
             "AvRunoff": 0.7871518164911494, 
-            "AvGroundWater": 0.335836497375213, 
+            "AvGroundWater": 0.3358364973752129, 
             "AvPtSrcFlow": 0.0, 
             "AvWithdrawal": 0.0, 
             "AvStreamFlow": 1.1229883138663623
         }, 
         {
-            "AvEvapoTrans": 3.9669393577363032, 
+            "AvEvapoTrans": 3.966939357736303, 
             "AvTileDrain": 0.0, 
             "AvPrecipitation": 6.980766666666668, 
             "AvRunoff": 0.9437303467417731, 
@@ -185,7 +185,7 @@
         {
             "Source": "Wetlands", 
             "TotalN": 15.463549654738097, 
-            "TotalP": 0.8738181190298611, 
+            "TotalP": 0.8738181190298612, 
             "Sediment": 97.38138541857057
         }, 
         {

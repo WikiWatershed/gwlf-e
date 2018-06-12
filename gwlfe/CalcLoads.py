@@ -14,7 +14,7 @@ import numpy as np
 # log = logging.getLogger(__name__)
 
 from AreaTotal import AreaTotal_2
-from GroundWatLE_2 import GroundWatLE_2
+from GroundWatLE_1 import GroundWatLE_1_2
 from TileDrain import TileDrain_2
 from TotAreaMeters import TotAreaMeters
 from SedDelivRatio import SedDelivRatio
@@ -54,7 +54,7 @@ def CalculateLoads(z, Y):
     for i in range(12):
         # Calculate landuse runoff for rural areas
         GroundWatLETotal += \
-            GroundWatLE_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
+            GroundWatLE_1_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
                           z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
                           z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap,
                           z.SatStor_0, z.RecessionCoef, z.SeepCoef,
@@ -178,14 +178,14 @@ def CalculateLoads(z, Y):
 
         # ADD GROUNDWATER, POINT SOURCES,
         z.GroundNitr[Y][i] = 0.1 * z.GrNitrConc * \
-                             GroundWatLE_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area,
+                             GroundWatLE_1_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area,
                                            z.CNI_0,
                                            z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
                                            z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap,
                                            z.SatStor_0, z.RecessionCoef, z.SeepCoef,
                                            z.Landuse, z.TileDrainDensity)[Y][i] * AreaTotal_2(z.Area)
         z.GroundPhos[Y][i] = 0.1 * z.GrPhosConc * \
-                             GroundWatLE_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area,
+                             GroundWatLE_1_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area,
                                            z.CNI_0,
                                            z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
                                            z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap,
@@ -201,7 +201,7 @@ def CalculateLoads(z, Y):
             GroundWatLETotal[Y] = 0.0001
 
         z.MonthNormNitr[i] = AnNormNitr * \
-                             GroundWatLE_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area,
+                             GroundWatLE_1_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area,
                                            z.CNI_0,
                                            z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
                                            z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap,
