@@ -3,7 +3,6 @@ from numpy import zeros
 from AdjUrbanQTotal import AdjUrbanQTotal
 from AdjUrbanQTotal import AdjUrbanQTotal_2
 from NLU import NLU
-
 # from Timer import time_function
 from Water import Water
 from Water import Water_2

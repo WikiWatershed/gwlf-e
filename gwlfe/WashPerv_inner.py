@@ -2,6 +2,7 @@ import math
 
 from numba.pycc import CC
 from numpy import zeros
+from numpy import exp
 
 cc = CC('WashPerv_inner_compiled')
 

@@ -2,7 +2,7 @@ from numpy import zeros
 
 from AMC5 import AMC5, AMC5_yesterday
 # from Timer import time_function
-from DailyArrayConverter import get_value_for_yesterday
+# from DailyArrayConverter import get_value_for_yesterday
 from GrowFactor import GrowFactor
 from GrowFactor import GrowFactor_2
 from Melt import Melt

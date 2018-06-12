@@ -1,4 +1,6 @@
 import math
+from numpy import zeros
+from numpy import exp
 
 from numba.pycc import CC
 

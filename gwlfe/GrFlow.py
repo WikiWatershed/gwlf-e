@@ -1,6 +1,4 @@
 # from Timer import time_function
-from Percolation import Percolation
-from Percolation import Percolation_2
 from Memoization import memoize
 from Percolation import Percolation
 from Percolation import Percolation_2

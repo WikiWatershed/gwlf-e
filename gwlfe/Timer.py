@@ -1,7 +1,9 @@
 import timeit
-from numpy import median
-from numpy import mean
+
 from numpy import array
+from numpy import mean
+from numpy import median
+
 
 def reject_outliers(data, m=2.):
     d = abs(data - median(data))

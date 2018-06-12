@@ -1,5 +1,6 @@
 # from Timer import time_function
 from numpy import zeros
+
 from AreaTotal import AreaTotal
 from AreaTotal import AreaTotal_2
 from Memoization import memoize

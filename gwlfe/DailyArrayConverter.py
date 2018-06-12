@@ -1,11 +1,11 @@
-import numpy.ma as ma
-from numpy import ravel
-from numpy import zeros
-from numpy import array
-from numpy import ones
-from numpy import r_
-from numpy import where
 import random
+
+import numpy.ma as ma
+from numpy import array
+from numpy import r_
+from numpy import ravel
+from numpy import where
+from numpy import zeros
 
 leap_year = [False, False, False, False, False, False, False, False, False, False, False, False, False, False, False,
              False, False, False, False, False, False, False, False, False, False, False, False, False, False, False,

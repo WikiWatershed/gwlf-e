@@ -1,6 +1,7 @@
 # from Timer import time_function
-from Memoization import memoize
 from numpy import zeros
+
+from Memoization import memoize
 
 try:
     from InitSnow_2_inner_compiled import InitSnow_2_inner
