@@ -1,4 +1,6 @@
 # from Timer import time_function
+from numpy import zeros
+from numpy import sum
 from StreamBankN_1 import StreamBankN_1
 from StreamBankN_1 import StreamBankN_1_2
 

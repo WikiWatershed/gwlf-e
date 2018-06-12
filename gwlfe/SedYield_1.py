@@ -1,4 +1,6 @@
 # from Timer import time_function
+from numpy import zeros
+
 from Memoization import memoize
 from SedYield import SedYield
 from SedYield import SedYield_2
@@ -31,6 +33,7 @@ def SedYield_1(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0,
             result[Y][i] = sedyield[Y][i] + streambankeros_2[Y][i] / 1000
     return result
 
+
 @memoize
 def SedYield_1_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
                  Grow_0, CNP_0, Imper, ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0,
@@ -41,10 +44,10 @@ def SedYield_1_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_
     return SedYield_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef, NRur, KF, LS, C, P, Area, NUrb, CNI_0, AntMoist_0,
                       Grow_0, ISRR, ISRA, Qretention, PctAreaInfil, n25b, CN, CNP_0, Imper,
                       SedDelivRatio_0) + StreamBankEros_1_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area,
-                                                          CNI_0, AntMoist_0, Grow_0, CNP_0, Imper, ISRR, ISRA, CN,
-                                                          UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0,
-                                                          RecessionCoef, SeepCoef, Qretention, PctAreaInfil, n25b,
-                                                          Landuse, TileDrainDensity, PointFlow, StreamWithdrawal,
-                                                          GroundWithdrawal, NumAnimals, AvgAnimalWt, StreamFlowVolAdj,
-                                                          SedAFactor_0, AvKF, AvSlope, SedAAdjust, StreamLength, n42b,
-                                                          n46c, n85d, AgLength, n42, n45, n85, UrbBankStab) / 1000
+                                                            CNI_0, AntMoist_0, Grow_0, CNP_0, Imper, ISRR, ISRA, CN,
+                                                            UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0,
+                                                            RecessionCoef, SeepCoef, Qretention, PctAreaInfil, n25b,
+                                                            Landuse, TileDrainDensity, PointFlow, StreamWithdrawal,
+                                                            GroundWithdrawal, NumAnimals, AvgAnimalWt, StreamFlowVolAdj,
+                                                            SedAFactor_0, AvKF, AvSlope, SedAAdjust, StreamLength, n42b,
+                                                            n46c, n85d, AgLength, n42, n45, n85, UrbBankStab) / 1000

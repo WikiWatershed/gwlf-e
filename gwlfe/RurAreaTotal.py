@@ -1,4 +1,5 @@
 # from Timer import time_function
+from numpy import sum
 from Memoization import memoize
 
 

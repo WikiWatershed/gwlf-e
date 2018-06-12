@@ -3,6 +3,7 @@ from Memoization import memoize
 from StreamFlowLE import StreamFlowLE
 from StreamFlowLE import StreamFlowLE_2
 from TotAreaMeters import TotAreaMeters
+from numpy import zeros
 
 
 @memoize

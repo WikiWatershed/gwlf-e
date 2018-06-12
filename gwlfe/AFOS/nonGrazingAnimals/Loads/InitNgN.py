@@ -1,3 +1,5 @@
+from numpy import sum
+
 from NGLoadN import NGLoadN
 from NGLoadN import NGLoadN_2
 from gwlfe.GrazingAnimal import GrazingAnimal

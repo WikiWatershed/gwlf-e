@@ -4,6 +4,7 @@ from mock import patch
 import numpy as np
 from gwlfe import Parser
 from gwlfe import AvStreamBankNSum
+from numpy import zeros
 
 
 class TestAvStreamBankNSum(unittest.TestCase):

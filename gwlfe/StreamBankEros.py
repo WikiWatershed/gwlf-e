@@ -2,6 +2,7 @@
 from LE import LE
 from LE import LE_2
 from Memoization import memoize
+from numpy import zeros
 
 
 @memoize

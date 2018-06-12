@@ -1,6 +1,7 @@
 # from Timer import time_function
 from Memoization import memoize
 from NLU import NLU
+from numpy import sum
 
 
 # @time_function

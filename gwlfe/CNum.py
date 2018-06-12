@@ -2,7 +2,7 @@ from numpy import zeros
 
 from AMC5 import AMC5, AMC5_yesterday
 # from Timer import time_function
-# from DailyArrayConverter import get_value_for_yesterday
+from DailyArrayConverter import get_value_for_yesterday
 from GrowFactor import GrowFactor
 from GrowFactor import GrowFactor_2
 from Melt import Melt
@@ -37,26 +37,26 @@ def CNum(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, CN, NRur, NUrb, Gr
                             if melt[Y][i][j] <= 0:
                                 if grow_factor[i] > 0:
                                     # growing season
-                                    if get_value_for_yesterday(amc5, 0, Y, i, j, DaysMonth) >= 5.33:
+                                    if get_value_for_yesterday(amc5, 0, Y, i, j, NYrs, DaysMonth) >= 5.33:
                                         result[Y][i][j][l] = new_cn[2][l]
-                                    elif get_value_for_yesterday(amc5, 0, Y, i, j, DaysMonth) < 3.56:
+                                    elif get_value_for_yesterday(amc5, 0, Y, i, j, NYrs, DaysMonth) < 3.56:
                                         result[Y][i][j][l] = new_cn[0][l] + (
                                                 CN[l] - new_cn[0][l]) * get_value_for_yesterday(amc5, 0, Y, i, j,
-                                                                                                DaysMonth) / 3.56
+                                                                                                NYrs, DaysMonth) / 3.56
                                     else:
                                         result[Y][i][j][l] = CN[l] + (new_cn[2][l] - CN[l]) * (
-                                                get_value_for_yesterday(amc5, 0, Y, i, j, DaysMonth) - 3.56) / 1.77
+                                                get_value_for_yesterday(amc5, 0, Y, i, j, NYrs, DaysMonth) - 3.56) / 1.77
                                 else:
                                     # dormant season
-                                    if get_value_for_yesterday(amc5, 0, Y, i, j, DaysMonth) >= 2.79:
+                                    if get_value_for_yesterday(amc5, 0, Y, i, j, NYrs, DaysMonth) >= 2.79:
                                         result[Y][i][j][l] = new_cn[2][l]
-                                    elif get_value_for_yesterday(amc5, 0, Y, i, j, DaysMonth) < 1.27:
+                                    elif get_value_for_yesterday(amc5, 0, Y, i, j, NYrs, DaysMonth) < 1.27:
                                         result[Y][i][j][l] = new_cn[0][l] + (
                                                 CN[l] - new_cn[0][l]) * get_value_for_yesterday(amc5, 0, Y, i, j,
-                                                                                                DaysMonth) / 1.27
+                                                                                                NYrs, DaysMonth) / 1.27
                                     else:
                                         result[Y][i][j][l] = CN[l] + (new_cn[2][l] - CN[l]) * (
-                                                get_value_for_yesterday(amc5, 0, Y, i, j, DaysMonth) - 1.27) / 1.52
+                                                get_value_for_yesterday(amc5, 0, Y, i, j, NYrs, DaysMonth) - 1.27) / 1.52
                             else:
                                 result[Y][i][j][l] = new_cn[2][l]
                         # result[Y][i][j][l] = CNum

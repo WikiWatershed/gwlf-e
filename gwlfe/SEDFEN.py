@@ -3,7 +3,7 @@ from AGSTRM import AGSTRM
 from AGSTRM import AGSTRM_2
 from StreamBankEros import StreamBankEros
 from StreamBankEros import StreamBankEros_2
-
+from numpy import zeros
 
 # @memoize
 def SEDFEN(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,

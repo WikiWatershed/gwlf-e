@@ -7,6 +7,8 @@ from QrunP import QrunP
 from QrunP import QrunP_2
 from Water import Water
 from Water import Water_2
+from numpy import zeros
+from numpy import exp
 
 try:
     from WashPerv_inner_compiled import WashPerv_inner

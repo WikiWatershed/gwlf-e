@@ -1,4 +1,4 @@
-# from Timer import time_function
+from numpy import sum
 
 
 def TotLAEU(NumAnimals, AvgAnimalWt):

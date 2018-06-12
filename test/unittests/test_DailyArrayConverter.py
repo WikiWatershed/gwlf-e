@@ -14,5 +14,5 @@ class TestDailyArrayConverter(unittest.TestCase):
     def test_get_value_from_yesterday(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            DailyArrayConverter.get_value_for_yesterday(z.Perc, 0, 0, 0, 0, z.DaysMonth),
+            DailyArrayConverter.get_value_for_yesterday(z.Perc, 0, 0, 0, 0, z.NYrs, z.DaysMonth),
             [], decimal=7)

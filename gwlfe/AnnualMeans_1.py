@@ -1,5 +1,5 @@
 # from Timer import time_function
-
+from numpy import sum
 
 @time_function
 def old_way(z):

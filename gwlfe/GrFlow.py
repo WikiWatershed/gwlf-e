@@ -1,4 +1,5 @@
 # from Timer import time_function
+from numpy import zeros
 from Memoization import memoize
 from Percolation import Percolation
 from Percolation import Percolation_2

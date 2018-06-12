@@ -1,4 +1,5 @@
 # from Timer import time_function
+from numpy import sum
 from CNI import CNI
 from CNP import CNP
 from Memoization import memoize
@@ -23,8 +24,6 @@ def AvCNUrb(NRur, NUrb, CNI_0, CNP_0, Imper, Area):
 # Tried, slower than original.
 # @time_function
 def AvCNUrb_2(NRur, NUrb, CNI_0, CNP_0, Imper, Area):
-    result = 0
-    nlu = NLU(NRur, NUrb)
     cni = CNI(NRur, NUrb, CNI_0)
     cnp = CNP(NRur, NUrb, CNP_0)
     urbareatotal = UrbAreaTotal(NRur, NUrb, Area)

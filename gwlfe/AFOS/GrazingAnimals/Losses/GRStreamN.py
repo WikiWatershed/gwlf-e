@@ -1,4 +1,5 @@
 from numpy import sum
+from numpy import zeros
 
 from gwlfe.AFOS.GrazingAnimals.Loads.GrazingN import GrazingN
 from gwlfe.AFOS.GrazingAnimals.Loads.GrazingN import GrazingN_2
