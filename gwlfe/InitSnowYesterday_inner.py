@@ -4,7 +4,7 @@ from numba.pycc import CC
 cc = CC('InitSnowYesterday_inner_compiled')
 
 
-@cc.export('InitSnowYesterday_inner', '(int64, int32[:,::1], int64, float64[:,:,::1], float64[:,:,::1])')
+@cc.export('InitSnowYesterday_inner', '(int64, int64[:,::1], int64, float64[:,:,::1], float64[:,:,::1])')
 def InitSnowYesterday_inner(NYrs, DaysMonth, InitSnow_0, Temp, Prec):
     result_yesterday = np.zeros((NYrs, 12, 31))
     yesterday = InitSnow_0

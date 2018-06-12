@@ -2,8 +2,13 @@ import numpy as np
 # from Timer import time_function
 from Percolation import Percolation
 from Percolation import Percolation_2
-from DeepSeep import DeepSeep_inner
 from Memoization import memoize
+
+try:
+    from DeepSeep_inner_compiled import DeepSeep_inner
+except ImportError:
+    print("Unable to import compiled DeepSeep_inner, using slower version")
+    from DeepSeep_inner import DeepSeep_inner
 
 
 @memoize
@@ -48,5 +53,4 @@ def GrFlow_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, A
     percolation = Percolation_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
                                 CNP_0,
                                 Imper, ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap)
-
     return DeepSeep_inner(NYrs, SatStor_0, DaysMonth, RecessionCoef, SeepCoef, percolation)[1]

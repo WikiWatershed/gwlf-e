@@ -4,7 +4,7 @@ import numpy as np
 cc = CC('Percolation_inner_compiled')
 
 
-@cc.export('Percolation_inner', '(int64, float64, int32[:,::1], float64, float64[:,:,::1], float64[:,:,::1])')
+@cc.export('Percolation_inner', '(int64, float64, int64[:,::1], float64, float64[:,:,::1], float64[:,:,::1])')
 def Percolation_inner(NYrs, UnsatStor_0, DaysMonth, MaxWaterCap, infiltration, et):
     result = np.zeros((NYrs, 12, 31))
     percolation = np.zeros((NYrs, 12, 31))

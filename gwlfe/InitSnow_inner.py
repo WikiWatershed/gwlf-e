@@ -3,7 +3,7 @@ import numpy as np
 
 cc = CC('InitSnow_2_inner_compiled')
 
-@cc.export('InitSnow_2_inner', '(int64, int32[:,::1], int64, float64[:,:,::1], float64[:,:,::1])')
+@cc.export('InitSnow_2_inner', '(int64, int64[:,::1], int64, float64[:,:,::1], float64[:,:,::1])')
 def InitSnow_2_inner(NYrs, DaysMonth, InitSnow_0, Temp, Prec):
     result = np.zeros((NYrs, 12, 31))
     yesterday = InitSnow_0

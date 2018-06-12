@@ -4,7 +4,13 @@ from Infiltration import Infiltration
 from Infiltration import Infiltration_2
 from MultiUse_Fxns.ET import DailyET_2
 from Memoization import memoize
-from UnsatStor import UnsatStor_inner
+
+try:
+    from UnsatStor_inner_compiled import UnsatStor_inner
+except ImportError:
+    print("Unable to import compiled UnsatStor_inner, using slower version")
+    from UnsatStor_inner import UnsatStor_inner
+
 
 
 @memoize
