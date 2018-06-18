@@ -25,6 +25,8 @@ from LuDisLoad import LuDisLoad_f
 from LuErosion import LuErosion_f
 from nRunoff import nRunoff_f
 from pRunoff import pRunoff_f
+from DisLoad import DisLoad_f
+from Load import Load_f
 
 
 def CalculateLoads(z, Y):
@@ -167,10 +169,18 @@ def CalculateLoads(z, Y):
                                               z.Storm, z.UrbBMPRed,
                                               z.FilterWidth, z.PctStrmBuf)[Y, :, 2] / z.NYrs) / 1000 / 2
 
-        z.DisNitr[Y][i] += z.DisLoad[Y][i][0]
-        z.DisPhos[Y][i] += z.DisLoad[Y][i][1]
-        z.TotNitr[Y][i] += z.Load[Y][i][0]
-        z.TotPhos[Y][i] += z.Load[Y][i][1]
+        z.DisNitr[Y][i] += DisLoad_f(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0,
+                 z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.Qretention, z.PctAreaInfil, z.Nqual, z.LoadRateImp,
+                 z.LoadRatePerv, z.Storm, z.UrbBMPRed, z.DisFract, z.FilterWidth, z.PctStrmBuf)[Y][i][0]
+        z.DisPhos[Y][i] += DisLoad_f(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0,
+                 z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.Qretention, z.PctAreaInfil, z.Nqual, z.LoadRateImp,
+                 z.LoadRatePerv, z.Storm, z.UrbBMPRed, z.DisFract, z.FilterWidth, z.PctStrmBuf)[Y][i][1]
+        z.TotNitr[Y][i] += Load_f(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0,
+                    z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.Qretention, z.PctAreaInfil, z.Nqual, z.LoadRateImp,
+                    z.LoadRatePerv, z.Storm, z.UrbBMPRed, z.DisFract, z.FilterWidth, z.PctStrmBuf)[Y][i][0]
+        z.TotPhos[Y][i] += Load_f(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0,
+                    z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.Qretention, z.PctAreaInfil, z.Nqual, z.LoadRateImp,
+                    z.LoadRatePerv, z.Storm, z.UrbBMPRed, z.DisFract, z.FilterWidth, z.PctStrmBuf)[Y][i][1]
 
         # ADD UPLAND N and P LOADS
         z.UplandN[Y][i] = z.TotNitr[Y][i]

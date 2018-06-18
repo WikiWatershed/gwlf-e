@@ -30,6 +30,7 @@ from TotAEU import TotAEU_f
 from TotLAEU import TotLAEU
 from TotPAEU import TotPAEU_f
 from enums import YesOrNo, LandUse
+from LuTotPhos import LuTotPhos_f
 
 log = logging.getLogger(__name__)
 
@@ -562,7 +563,12 @@ def WriteOutput(z):
                     1 - AttenN(z.AttenFlowDist, z.AttenFlowVel, z.AttenLossRateN))))
             # z.LuTotNitr_1[y][l] = round((z.LuTotNitr[y][l] * z.RetentFactorN * (1 - z.AttenN)))
             z.LuDisPhos[y][l] = round((z.LuDisPhos[y][l] * z.RetentFactorP * (1 - z.AttenP)))
-            z.LuTotPhos_1[y][l] = round((z.LuTotPhos[y][l] * z.RetentFactorP * (1 - z.AttenP)))
+            z.LuTotPhos_1[y][l] = round((LuTotPhos_f(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.NRur, z.NUrb, z.CN,
+                                z.Grow_0, z.Area, z.PhosConc, z.ManPhos, z.ManuredAreas, z.FirstManureMonth,
+                                z.LastManureMonth, z.FirstManureMonth2, z.LastManureMonth2, z.SedDelivRatio_0, z.KF,
+                                z.LS, z.C, z.P, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.Qretention, z.PctAreaInfil, z.Nqual,
+                                z.LoadRateImp, z.LoadRatePerv, z.Storm, z.UrbBMPRed, z.FilterWidth, z.PctStrmBuf,
+                                z.Acoef, z.SedPhos, z.CNI_0)[y][l] * z.RetentFactorP * (1 - z.AttenP)))
 
             if z.Landuse[l] is LandUse.HAY_PAST:
                 z.n2 = z.LuSedYield[y][l]
@@ -789,7 +795,7 @@ def WriteOutput(z):
         #                   z.KF, z.LS, z.C, z.P, z.SedNitr, z.Acoef, z.ShedAreaDrainLake, z.RetentNLake,
         #                   z.AttenFlowDist, z.AttenFlowVel, z.AttenLossRateN)[y]
 
-        z.LuTotNitr_f[y] = \
+        z.LuTotNitr_2[y] = \
             LuTotNitr_1_f(z.NYrs, z.NRur, z.NUrb, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.CN,
                           z.Grow_0,
                           z.Area, z.NitrConc, z.ManNitr, z.ManuredAreas, z.FirstManureMonth, z.LastManureMonth,
@@ -802,63 +808,63 @@ def WriteOutput(z):
         for l in range(z.NLU):
             if z.Landuse[l] is LandUse.HAY_PAST:
                 z.LuSedYield[y][l] = z.n2
-                z.LuTotNitr_f[y][l] = z.n6
+                z.LuTotNitr_2[y][l] = z.n6
                 z.LuTotPhos_1[y][l] = z.n13
                 z.LuDisNitr[y][l] = z.n6dn
                 z.LuDisPhos[y][l] = z.n13dp
 
-                if z.LuDisNitr[y][l] > z.LuTotNitr_f[y][l]:
-                    z.LuDisNitr[y][l] = z.LuTotNitr_f[y][l]
+                if z.LuDisNitr[y][l] > z.LuTotNitr_2[y][l]:
+                    z.LuDisNitr[y][l] = z.LuTotNitr_2[y][l]
                 if z.LuDisPhos[y][l] > z.LuTotPhos_1[y][l]:
                     z.LuDisPhos[y][l] = z.LuTotPhos_1[y][l]
             elif z.Landuse[l] is LandUse.CROPLAND:
                 if z.LuDisNitr[y][l] > 0:
-                    z.LuDisNitr[y][l] = z.LuDisNitr[y][l] * z.n5 / z.LuTotNitr_f[y][l]
+                    z.LuDisNitr[y][l] = z.LuDisNitr[y][l] * z.n5 / z.LuTotNitr_2[y][l]
                 if z.LuDisPhos[y][l] > 0:
                     z.LuDisPhos[y][l] = z.LuDisPhos[y][l] * z.n12 / z.LuTotPhos_1[y][l]
 
                 z.LuSedYield[y][l] = z.n1
-                z.LuTotNitr_f[y][l] = z.n5
+                z.LuTotNitr_2[y][l] = z.n5
                 z.LuTotPhos_1[y][l] = z.n12
                 z.LuDisNitr[y][l] = z.n5dn
                 z.LuDisPhos[y][l] = z.n12dp
             elif z.Landuse[l] is LandUse.UNPAVED_ROAD:
                 z.LuSedYield[y][l] = z.n2d
-                z.LuTotNitr_f[y][l] = z.n6d
+                z.LuTotNitr_2[y][l] = z.n6d
                 z.LuTotPhos_1[y][l] = z.n13d
                 z.LuDisNitr[y][l] = z.n6ddn
                 z.LuDisPhos[y][l] = z.n13ddp
 
-                if z.LuDisNitr[y][l] > z.LuTotNitr_f[y][l]:
-                    z.LuDisNitr[y][l] = z.LuTotNitr_f[y][l]
+                if z.LuDisNitr[y][l] > z.LuTotNitr_2[y][l]:
+                    z.LuDisNitr[y][l] = z.LuTotNitr_2[y][l]
                 if z.LuDisPhos[y][l] > z.LuTotPhos_1[y][l]:
                     z.LuDisPhos[y][l] = z.LuTotPhos_1[y][l]
 
             if z.n24b > 0 and z.Landuse[l] in [LandUse.LD_MIXED, LandUse.LD_RESIDENTIAL]:
                 z.LuSedYield[y][l] = z.n2c * z.Area[l] / z.n24b
-                z.LuTotNitr_f[y][l] = z.n6c * z.Area[l] / z.n24b
+                z.LuTotNitr_2[y][l] = z.n6c * z.Area[l] / z.n24b
                 z.LuTotPhos_1[y][l] = z.n13c * z.Area[l] / z.n24b
                 z.LuDisNitr[y][l] = z.n6cdn * z.Area[l] / z.n24b
                 z.LuDisPhos[y][l] = z.n13cdp * z.Area[l] / z.n24b
 
-                if z.LuDisNitr[y][l] > z.LuTotNitr_f[y][l]:
-                    z.LuDisNitr[y][l] = z.LuTotNitr_f[y][l]
+                if z.LuDisNitr[y][l] > z.LuTotNitr_2[y][l]:
+                    z.LuDisNitr[y][l] = z.LuTotNitr_2[y][l]
                 if z.LuDisPhos[y][l] > z.LuTotPhos_1[y][l]:
                     z.LuDisPhos[y][l] = z.LuTotPhos_1[y][l]
             elif z.n23b > 0 and z.Landuse[l] in [LandUse.MD_MIXED, LandUse.HD_MIXED,
                                                  LandUse.MD_RESIDENTIAL, LandUse.HD_RESIDENTIAL]:
                 z.LuSedYield[y][l] = z.n2b * z.Area[l] / z.n23b
-                z.LuTotNitr_f[y][l] = z.n6b * z.Area[l] / z.n23b
+                z.LuTotNitr_2[y][l] = z.n6b * z.Area[l] / z.n23b
                 z.LuTotPhos_1[y][l] = z.n13b * z.Area[l] / z.n23b
                 z.LuDisNitr[y][l] = z.n6bdn * z.Area[l] / z.n23b
                 z.LuDisPhos[y][l] = z.n13bdp * z.Area[l] / z.n23b
 
-                if z.LuDisNitr[y][l] > z.LuTotNitr_f[y][l]:
-                    z.LuDisNitr[y][l] = z.LuTotNitr_f[y][l]
+                if z.LuDisNitr[y][l] > z.LuTotNitr_2[y][l]:
+                    z.LuDisNitr[y][l] = z.LuTotNitr_2[y][l]
                 if z.LuDisPhos[y][l] > z.LuTotPhos_1[y][l]:
                     z.LuDisPhos[y][l] = z.LuTotPhos_1[y][l]
-            if z.LuDisNitr[y][l] > z.LuTotNitr_f[y][l]:
-                z.LuDisNitr[y][l] = z.LuTotNitr_f[y][l]
+            if z.LuDisNitr[y][l] > z.LuTotNitr_2[y][l]:
+                z.LuDisNitr[y][l] = z.LuTotNitr_2[y][l]
             if z.LuDisPhos[y][l] > z.LuTotPhos_1[y][l]:
                 z.LuDisPhos[y][l] = z.LuTotPhos_1[y][l]
 

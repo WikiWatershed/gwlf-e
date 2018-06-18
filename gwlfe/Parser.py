@@ -286,8 +286,8 @@ class GmsReader(object):
         # TODO: Remove DimYrs
         z.DimYrs = z.WxYrs
 
-        z.Load = zeros((z.DimYrs, 12, 3))
-        z.DisLoad = zeros((z.DimYrs, 12, 3))
+        # z.Load = zeros((z.DimYrs, 12, 3))
+        # z.DisLoad = zeros((z.DimYrs, 12, 3))
         # z.LuLoad = np.zeros((z.DimYrs, 16, 3))
         # z.LuDisLoad = np.zeros((z.DimYrs, 16, 3))
         z.UplandN = zeros((z.DimYrs, 12))
@@ -382,10 +382,10 @@ class GmsReader(object):
         z.TotPhos = zeros((z.DimYrs, 12))
         z.LuSedYield = zeros((z.DimYrs, 16))
         z.LuDisNitr = zeros((z.DimYrs, 16))
-        z.LuTotNitr = zeros((z.DimYrs, 16))
-        z.LuTotNitr_f = zeros((z.DimYrs, 16))
+        # z.LuTotNitr = zeros((z.DimYrs, 16))
+        z.LuTotNitr_2 = zeros((z.DimYrs, 16))
         z.LuDisPhos = zeros((z.DimYrs, 16))
-        z.LuTotPhos = zeros((z.DimYrs, 16))
+        # z.LuTotPhos = zeros((z.DimYrs, 16))
         z.LuTotPhos_1 = zeros((z.DimYrs, 16))
         z.SepticNitr = zeros(z.DimYrs)
         z.SepticPhos = zeros(z.DimYrs)

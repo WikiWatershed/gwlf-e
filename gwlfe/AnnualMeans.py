@@ -20,6 +20,8 @@ from AvRunoff import AvRunoff_f
 from AvErosion import AvErosion_f
 from AvSedYield import AvSedYield_f
 from LuRunoff import LuRunoff_f
+from LuTotPhos import LuTotPhos_f
+from LuTotNitr import LuTotNitr_f
 
 log = logging.getLogger(__name__)
 
@@ -85,16 +87,34 @@ def CalculateAnnualMeanLoads(z, Y):
                        z.AntMoist_0, z.Grow_0, z.Imper, z.ISRR, z.ISRA, z.CN)[Y][l] / z.NYrs
         z.AvLuSedYield[l] += z.LuSedYield[Y][l] / z.NYrs
         z.AvLuDisNitr[l] += z.LuDisNitr[Y][l] / z.NYrs
-        z.AvLuTotNitr[l] += z.LuTotNitr[Y][l] / z.NYrs
+        z.AvLuTotNitr[l] += LuTotNitr_f(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.NRur, z.NUrb, z.CN, z.Grow_0,
+                                       z.Area, z.NitrConc, z.ManNitr, z.ManuredAreas, z.FirstManureMonth, z.LastManureMonth,
+                                       z.FirstManureMonth2, z.LastManureMonth2, z.SedDelivRatio_0, z.KF, z.LS, z.C, z.P, z.SedNitr, z.CNP_0, z.Imper, z.ISRR, z.ISRA,
+                                       z.Qretention, z.PctAreaInfil, z.LoadRateImp, z.LoadRatePerv, z.Storm, z.UrbBMPRed, z.FilterWidth, z.PctStrmBuf, z.Acoef,
+                                       z.CNI_0, z.Nqual)[Y][l] / z.NYrs
         z.AvLuDisPhos[l] += z.LuDisPhos[Y][l] / z.NYrs
-        z.AvLuTotPhos[l] += z.LuTotPhos[Y][l] / z.NYrs
+        z.AvLuTotPhos[l] += LuTotPhos_f(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.NRur, z.NUrb, z.CN,
+                                z.Grow_0, z.Area, z.PhosConc, z.ManPhos, z.ManuredAreas, z.FirstManureMonth,
+                                z.LastManureMonth, z.FirstManureMonth2, z.LastManureMonth2, z.SedDelivRatio_0, z.KF,
+                                z.LS, z.C, z.P, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.Qretention, z.PctAreaInfil, z.Nqual,
+                                z.LoadRateImp, z.LoadRatePerv, z.Storm, z.UrbBMPRed, z.FilterWidth, z.PctStrmBuf,
+                                z.Acoef, z.SedPhos, z.CNI_0)[Y][l] / z.NYrs
 
     for l in range(z.NRur, z.NLU):
         z.AvLuRunoff[l] += \
             LuRunoff_f(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.NRur, z.NUrb, z.CNI_0, z.CNP_0,
                        z.AntMoist_0, z.Grow_0, z.Imper, z.ISRR, z.ISRA, z.CN)[Y][l] / z.NYrs
-        z.AvLuTotNitr[l] += z.LuTotNitr[Y][l] / z.NYrs
-        z.AvLuTotPhos[l] += z.LuTotPhos[Y][l] / z.NYrs
+        z.AvLuTotNitr[l] += LuTotNitr_f(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.NRur, z.NUrb, z.CN, z.Grow_0,
+                                       z.Area, z.NitrConc, z.ManNitr, z.ManuredAreas, z.FirstManureMonth, z.LastManureMonth,
+                                       z.FirstManureMonth2, z.LastManureMonth2, z.SedDelivRatio_0, z.KF, z.LS, z.C, z.P, z.SedNitr, z.CNP_0, z.Imper, z.ISRR, z.ISRA,
+                                       z.Qretention, z.PctAreaInfil, z.LoadRateImp, z.LoadRatePerv, z.Storm, z.UrbBMPRed, z.FilterWidth, z.PctStrmBuf, z.Acoef,
+                                       z.CNI_0, z.Nqual)[Y][l] / z.NYrs
+        z.AvLuTotPhos[l] += LuTotPhos_f(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.NRur, z.NUrb, z.CN,
+                                z.Grow_0, z.Area, z.PhosConc, z.ManPhos, z.ManuredAreas, z.FirstManureMonth,
+                                z.LastManureMonth, z.FirstManureMonth2, z.LastManureMonth2, z.SedDelivRatio_0, z.KF,
+                                z.LS, z.C, z.P, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.Qretention, z.PctAreaInfil, z.Nqual,
+                                z.LoadRateImp, z.LoadRatePerv, z.Storm, z.UrbBMPRed, z.FilterWidth, z.PctStrmBuf,
+                                z.Acoef, z.SedPhos, z.CNI_0)[Y][l] / z.NYrs
         z.AvLuDisNitr[l] += z.LuDisNitr[Y][l] / z.NYrs
         z.AvLuDisPhos[l] += z.LuDisPhos[Y][l] / z.NYrs
         z.AvLuSedYield[l] += z.LuSedYield[Y][l] / z.NYrs
