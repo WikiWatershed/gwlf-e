@@ -18,3 +18,4 @@ __pycache__/
 .tox
 .cache
 .eggs
+**.DS_Store
