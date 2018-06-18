@@ -41,16 +41,11 @@ def LuTotPhos(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb, C
                 result[Y][l] += lu_load[Y][l][1] / NYrs / 2
     return result
 
+@memoize
 def LuTotPhos_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb, CN, Grow_0, Area, PhosConc, ManPhos,
               ManuredAreas, FirstManureMonth, LastManureMonth, FirstManureMonth2, LastManureMonth2, SedDelivRatio_0, KF,
               LS, C, P, CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil, Nqual, LoadRateImp, LoadRatePerv, Storm,
               UrbBMPRed, FilterWidth, PctStrmBuf, Acoef, SedPhos, CNI_0):
-    # p_runoff = np.reshape(
-    #     np.repeat(np.sum(
-    #         pRunoff(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb, CN, Grow_0, Area, PhosConc,
-    #                   ManuredAreas,
-    #                   FirstManureMonth, LastManureMonth, ManPhos, FirstManureMonth2, LastManureMonth2), axis=1),
-    #         repeats=10), (NYrs, 10))
     p_runoff = sum(pRunoff_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb, CN, Grow_0, Area, PhosConc,
                        ManuredAreas, FirstManureMonth, LastManureMonth, ManPhos, FirstManureMonth2,
                        LastManureMonth2), axis=1)

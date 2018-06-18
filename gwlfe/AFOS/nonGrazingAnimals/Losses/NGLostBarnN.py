@@ -28,6 +28,7 @@ def NGLostBarnN(NYrs, NGPctManApp, GrazingAnimal_0_0, NumAnimals, AvgAnimalWt, A
                 result[Y][i] = 0
     return result
 
+@memoize
 def NGLostBarnN_f(NYrs, NGPctManApp, GrazingAnimal_0_0, NumAnimals, AvgAnimalWt, AnimalDailyN, NGBarnNRate, Prec,
                   DaysMonth, AWMSNgPct, NgAWMSCoeffN, RunContPct, RunConCoeffN):
     loss_fact_adj = LossFactAdj_f(Prec, DaysMonth)
