@@ -14,6 +14,6 @@ class TestGRAccManAppN(unittest.TestCase):
         z = self.z
         np.testing.assert_array_almost_equal(
             GRAccManAppN.GRAccManAppN(z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN, z.GRPctManApp,
-                                      z.PctGrazing),
+                                      z.PctGrazing)[None,:],
             GRAccManAppN.GRAccManAppN_f(z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN, z.GRPctManApp,
                                         z.PctGrazing), decimal=7)

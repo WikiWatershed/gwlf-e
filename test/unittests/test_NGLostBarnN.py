@@ -23,12 +23,13 @@ class TestNGLostBarnN(unittest.TestCase):
                                       z.RunContPct, z.RunConCoeffN),
             decimal=7)
 
-    @skip("not ready")
     def test_AvNGLostBarnN(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            NGLostBarnN.AvNGLostBarnN_f(),
-            NGLostBarnN.AvNGLostBarnN(), decimal=7)
+            NGLostBarnN.AvNGLostBarnN_f(z.NYrs, z.NGPctManApp, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN, z.NGBarnNRate,
+                  z.Prec, z.DaysMonth, z.AWMSNgPct, z.NgAWMSCoeffN, z.RunContPct, z.RunConCoeffN),
+            NGLostBarnN.AvNGLostBarnN(z.NYrs, z.NGPctManApp, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN, z.NGBarnNRate,
+                  z.Prec, z.DaysMonth, z.AWMSNgPct, z.NgAWMSCoeffN, z.RunContPct, z.RunConCoeffN), decimal=7)
 
     def test_AvNGLostBarnNSum(self):
         z = self.z
@@ -39,10 +40,3 @@ class TestNGLostBarnN(unittest.TestCase):
             NGLostBarnN.AvNGLostBarnNSum(z.NYrs, z.NGPctManApp, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt,
                                          z.AnimalDailyN, z.NGBarnNRate, z.Prec, z.DaysMonth, z.AWMSNgPct,
                                          z.NgAWMSCoeffN, z.RunContPct, z.RunConCoeffN), decimal=7)
-
-    @skip("not ready")
-    def test_NGLostBarnNSum(self):
-        z = self.z
-        np.testing.assert_array_almost_equal(
-            NGLostBarnN.NGLostBarnNSum_f(),
-            NGLostBarnN.NGLostBarnNSum(), decimal=7)

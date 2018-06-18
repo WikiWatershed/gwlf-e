@@ -1,6 +1,8 @@
+from numpy import zeros
+
 from Precipitation import Precipitation
 from Precipitation import Precipitation_f
-from ..Memoization import memoize
+from gwlfe.Memoization import memoize
 
 
 def LossFactAdj(NYrs, Prec, DaysMonth):

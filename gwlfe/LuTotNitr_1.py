@@ -31,21 +31,11 @@ def LuTotNitr_1(NYrs, NRur, NUrb, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0,
 
 
 @memoize
-# def LuTotNitr_1_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb, CN, Grow_0, Area, NitrConc, ManNitr,
-#                   ManuredAreas, FirstManureMonth, LastManureMonth, FirstManureMonth2, LastManureMonth2, SedDelivRatio_0,
-#                   KF, LS, C, P, SedNitr, Acoef, ShedAreaDrainLake, RetentNLake, AttenFlowDist, AttenFlowVel,
-#                   AttenLossRateN):
 def LuTotNitr_1_f(NYrs, NRur, NUrb, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, CN, Grow_0,
                 Area, NitrConc, ManNitr, ManuredAreas, FirstManureMonth, LastManureMonth,
                 FirstManureMonth2, LastManureMonth2, SedDelivRatio_0, KF, LS, C, P, SedNitr, CNP_0, Imper, ISRR, ISRA,
                 Qretention, PctAreaInfil, LoadRateImp, LoadRatePerv, Storm, UrbBMPRed, FilterWidth, PctStrmBuf, Acoef,
                 CNI_0, Nqual, ShedAreaDrainLake, RetentNLake, AttenFlowDist, AttenFlowVel, AttenLossRateN):
-
-    nlu = NLU(NRur, NUrb)
-    # result = zeros((NYrs, nlu))
-    # lu_tot_nitr = LuTotNitr_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb, CN, Grow_0,
-    #                           Area, NitrConc, ManNitr, ManuredAreas, FirstManureMonth, LastManureMonth,
-    #                           FirstManureMonth2, LastManureMonth2, SedDelivRatio_0, KF, LS, C, P, SedNitr, Acoef)
     lu_tot_nitr = LuTotNitr_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb, CN, Grow_0,
               Area, NitrConc, ManNitr, ManuredAreas, FirstManureMonth, LastManureMonth,
               FirstManureMonth2, LastManureMonth2, SedDelivRatio_0, KF, LS, C, P, SedNitr, CNP_0, Imper, ISRR, ISRA,

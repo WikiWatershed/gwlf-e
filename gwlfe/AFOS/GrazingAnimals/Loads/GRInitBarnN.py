@@ -1,3 +1,5 @@
+from numpy import zeros
+
 from GRAppManN import GRAppManN
 from GRAppManN import GRAppManN_f
 from gwlfe.Memoization import memoize

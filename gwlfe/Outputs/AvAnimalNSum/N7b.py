@@ -12,27 +12,27 @@ from gwlfe.BMPs.AgAnimal.NRUNCON import NRUNCON
 from gwlfe.BMPs.AgAnimal.NRUNCON import NRUNCON_f
 
 
-def N7b(NYrs, Grazinganimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, NGAppNRate, NGPctSoilIncRate, GRAppNRate,
+def N7b(NYrs, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, NGAppNRate, NGPctSoilIncRate, GRAppNRate,
         GRPctSoilIncRate, GrazingNRate, GRPctManApp, PctGrazing, GRBarnNRate,
         Prec, DaysMonth, AWMSGrPct, GrAWMSCoeffN, RunContPct, RunConCoeffN, n41b, n85h, NGPctManApp, AWMSNgPct,
         NGBarnNRate, NgAWMSCoeffN, n41d, n85j, n41f, n85l, PctStreams, n42, n45, n69, n43, n64):
-    av_animal_n_sum = AvAnimalNSum(NYrs, NGPctManApp, Grazinganimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN,
+    av_animal_n_sum = AvAnimalNSum(NYrs, NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN,
                                    NGAppNRate,
                                    Prec, DaysMonth,
                                    NGPctSoilIncRate, GRPctManApp, GRAppNRate, GRPctSoilIncRate, NGBarnNRate, AWMSNgPct,
                                    NgAWMSCoeffN,
                                    RunContPct, RunConCoeffN, PctGrazing, GRBarnNRate, AWMSGrPct, GrAWMSCoeffN,
                                    PctStreams, GrazingNRate)
-    nawmsl = NAWMSL(NYrs, Grazinganimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, GRPctManApp, PctGrazing, GRBarnNRate,
+    nawmsl = NAWMSL(NYrs, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, GRPctManApp, PctGrazing, GRBarnNRate,
                     Prec, DaysMonth, AWMSGrPct, GrAWMSCoeffN, RunContPct, RunConCoeffN, n41b, n85h)
-    nawmsp = NAWMSP(NYrs, NGPctManApp, Grazinganimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, NGBarnNRate,
+    nawmsp = NAWMSP(NYrs, NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, NGBarnNRate,
                     Prec, DaysMonth, AWMSNgPct, NgAWMSCoeffN, RunContPct, RunConCoeffN, n41d, n85j)
-    nruncon = NRUNCON(NYrs, Grazinganimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, GRPctManApp, PctGrazing,
+    nruncon = NRUNCON(NYrs, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, GRPctManApp, PctGrazing,
                       GRBarnNRate,
                       Prec, DaysMonth, AWMSGrPct, GrAWMSCoeffN, RunContPct, RunConCoeffN, NGPctManApp, NGBarnNRate,
                       AWMSNgPct, NgAWMSCoeffN, n41f, n85l)
-    nfencing = NFENCING(PctStreams, PctGrazing, Grazinganimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, n42, n45, n69)
-    nagbuffer = NAGBUFFER(n42, n43, n64, NYrs, NGPctManApp, Grazinganimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN,
+    nfencing = NFENCING(PctStreams, PctGrazing, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, n42, n45, n69)
+    nagbuffer = NAGBUFFER(n42, n43, n64, NYrs, NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN,
                           NGBarnNRate, Prec, DaysMonth, AWMSNgPct, NgAWMSCoeffN, RunContPct, RunConCoeffN, GRPctManApp,
                           PctGrazing, GRBarnNRate, AWMSGrPct, GrAWMSCoeffN, PctStreams, NGAppNRate, NGPctSoilIncRate,
                           GRAppNRate, GRPctSoilIncRate, GrazingNRate)
@@ -40,24 +40,24 @@ def N7b(NYrs, Grazinganimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, NGAppNRate
     return result
 
 
-def N7b_f(NYrs, Grazinganimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, NGAppNRate, NGPctSoilIncRate, GRAppNRate,
+def N7b_f(NYrs, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, NGAppNRate, NGPctSoilIncRate, GRAppNRate,
           GRPctSoilIncRate, GrazingNRate, GRPctManApp, PctGrazing, GRBarnNRate,
           Prec, DaysMonth, AWMSGrPct, GrAWMSCoeffN, RunContPct, RunConCoeffN, n41b, n85h, NGPctManApp, AWMSNgPct,
           NGBarnNRate, NgAWMSCoeffN, n41d, n85j, n41f, n85l, PctStreams, n42, n45, n69, n43, n64):
-    av_animal_n_sum = AvAnimalNSum_f(NYrs, NGPctManApp, Grazinganimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN,
+    av_animal_n_sum = AvAnimalNSum_f(NYrs, NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN,
                                      NGAppNRate, Prec, DaysMonth, NGPctSoilIncRate, GRPctManApp, GRAppNRate,
                                      GRPctSoilIncRate, NGBarnNRate, AWMSNgPct, NgAWMSCoeffN, RunContPct, RunConCoeffN,
                                      PctGrazing, GRBarnNRate, AWMSGrPct, GrAWMSCoeffN, PctStreams, GrazingNRate)
-    nawmsl = NAWMSL_f(NYrs, Grazinganimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, GRPctManApp, PctGrazing, GRBarnNRate,
+    nawmsl = NAWMSL_f(NYrs, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, GRPctManApp, PctGrazing, GRBarnNRate,
                     Prec, DaysMonth, AWMSGrPct, GrAWMSCoeffN, RunContPct, RunConCoeffN, n41b, n85h)
-    nawmsp = NAWMSP_f(NYrs, NGPctManApp, Grazinganimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, NGBarnNRate,
+    nawmsp = NAWMSP_f(NYrs, NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, NGBarnNRate,
                     Prec, DaysMonth, AWMSNgPct, NgAWMSCoeffN, RunContPct, RunConCoeffN, n41d, n85j)
-    nruncon = NRUNCON_f(NYrs, Grazinganimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, GRPctManApp, PctGrazing,
+    nruncon = NRUNCON_f(NYrs, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, GRPctManApp, PctGrazing,
                       GRBarnNRate,
                       Prec, DaysMonth, AWMSGrPct, GrAWMSCoeffN, RunContPct, RunConCoeffN, NGPctManApp, NGBarnNRate,
                       AWMSNgPct, NgAWMSCoeffN, n41f, n85l)
-    nfencing = NFENCING_f(PctStreams, PctGrazing, Grazinganimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, n42, n45, n69)
-    nagbuffer = NAGBUFFER_f(n42, n43, n64, NYrs, NGPctManApp, Grazinganimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN,
+    nfencing = NFENCING_f(PctStreams, PctGrazing, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, n42, n45, n69)
+    nagbuffer = NAGBUFFER_f(n42, n43, n64, NYrs, NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN,
                           NGBarnNRate, Prec, DaysMonth, AWMSNgPct, NgAWMSCoeffN, RunContPct, RunConCoeffN, GRPctManApp,
                           PctGrazing, GRBarnNRate, AWMSGrPct, GrAWMSCoeffN, PctStreams, NGAppNRate, NGPctSoilIncRate,
                           GRAppNRate, GRPctSoilIncRate, GrazingNRate)

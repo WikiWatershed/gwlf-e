@@ -19,5 +19,8 @@ def DeepSeep_inner(NYrs, SatStor_0, DaysMonth, RecessionCoef, SeepCoef, percolat
                 satstor[Y][i][j] = satstor[Y][i][j] + percolation[Y][i][j] - grflow[Y][i][j] - deepseep[Y][i][j]
                 if satstor[Y][i][j] < 0:
                     satstor[Y][i][j] = 0
+                # if(satstor[Y][i][j] < 1e-300):
+                #     satstor_carryover = 0
+                # else:
                 satstor_carryover = satstor[Y][i][j]
     return deepseep, grflow, satstor
