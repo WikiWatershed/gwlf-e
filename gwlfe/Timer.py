@@ -1,13 +1,30 @@
 import timeit
-import numpy as np
+
+from numpy import array
+from numpy import mean
+from numpy import median
+
+
+def reject_outliers(data, m=2.):
+    d = abs(data - median(data))
+    mdev = median(d)
+    s = d / mdev if mdev else 0.
+    return mean(data[s < m])
+
 
 def time_function(method):
-   def timed(*args, **kw):
-       """return the result of the function as well as timing results for it"""
-       function_to_time = timeit.Timer(lambda: method(*args))
-       runs = function_to_time.repeat(number=3,repeat=100)
-       print("300 loops of %r, average time per loop: %f, best: %f, worst: %f"%(method.__name__,np.average(runs)/3,np.min(runs)/3,np.max(runs)/3))
-       result = method(*args, **kw)
-       return result
+    def timed(*args, **kw):
+        """return the result of the function as well as timing results for it"""
 
-   return timed
+        def reset_scope():
+            method.result = {}  # for memoized functions
+
+        function_to_time = timeit.Timer(lambda: method(*args), setup=reset_scope)
+        runs = function_to_time.repeat(number=1, repeat=100)
+        print("300 loops of %r, average time per loop: %f, best: %f, worst: %f" % (
+            method.__name__, reject_outliers(array(runs)), min(runs), max(runs)))
+
+        result = method(*args, **kw)
+        return result
+
+    return timed

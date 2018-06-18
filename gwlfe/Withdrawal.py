@@ -1,29 +1,21 @@
-import numpy as np
-from Timer import time_function
+from numpy import repeat
+from numpy import reshape
+from numpy import zeros
+from Memoization import memoize
 
+
+# from Timer import time_function
+
+
+# @memoize
 
 def Withdrawal(NYrs, StreamWithdrawal, GroundWithdrawal):
-    result = np.zeros((NYrs, 12))
+    result = zeros((NYrs, 12))
     for Y in range(NYrs):
         for i in range(12):
             result[Y][i] = (result[Y][i] + StreamWithdrawal[i] + GroundWithdrawal[i])
     return result
 
-
-def Withdrawal_2(NYrs, StreamWithdrawal, GroundWithdrawal):
-    # Appears the same for every year by month
-    result = np.add(StreamWithdrawal, GroundWithdrawal)
-    return np.repeat(result[:, None], NYrs, axis=1).T
-
-
-def AvWithdrawal(NYrs, Withdrawal):
-    result = np.zeros((12,))
-    for Y in range(NYrs):
-        for i in range(12):
-            result[i] += Withdrawal[Y][i] / NYrs
-    return result
-
-
-def AvWithdrawal_2(StreamWithdrawal, GroundWithdrawal):
-    # I am not sure this is necessary as every year will be equal based on the definition of Withdraw
-    return np.add(StreamWithdrawal, GroundWithdrawal)
+@memoize
+def Withdrawal_f(NYrs, StreamWithdrawal, GroundWithdrawal):
+    return reshape(repeat(StreamWithdrawal + GroundWithdrawal, NYrs), (NYrs, 12))
