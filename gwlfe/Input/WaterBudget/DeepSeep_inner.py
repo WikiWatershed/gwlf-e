@@ -1,10 +1,10 @@
 from numpy import zeros
-# from numba.pycc import CC
+from numba.pycc import CC
 
-# cc = CC('DeepSeep_inner_compiled')
+cc = CC('DeepSeep_inner_compiled')
 
 
-# @cc.export('DeepSeep_inner', '(int64, float64, int64[:,::1], float64, float64, float64[:,:,::1])')
+@cc.export('DeepSeep_inner', '(int64, float64, int64[:,::1], float64, float64, float64[:,:,::1])')
 def DeepSeep_inner(NYrs, SatStor_0, DaysMonth, RecessionCoef, SeepCoef, percolation):
     deepseep = zeros((NYrs, 12, 31))
     grflow = zeros((NYrs, 12, 31))

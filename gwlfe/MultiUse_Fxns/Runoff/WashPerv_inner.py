@@ -1,14 +1,14 @@
 import math
 
-# from numba.pycc import CC
+from numba.pycc import CC
 from numpy import zeros
 from numpy import exp
 
-# cc = CC('WashPerv_inner_compiled')
+cc = CC('WashPerv_inner_compiled')
 
 
-# @cc.export('WashPerv_inner',
-#            '(int64, int64[:,::1], float64[:,:,::1], int64, int64, float64[:,:,::1], float64[:,:,:,::1])')
+@cc.export('WashPerv_inner',
+           '(int64, int64[:,::1], float64[:,:,::1], int64, int64, float64[:,:,::1], float64[:,:,:,::1])')
 def WashPerv_inner(NYrs, DaysMonth, Temp, NRur, nlu, water, qrunp):
     washperv = zeros((NYrs, 12, 31, 16))
     pervaccum = zeros(16)  # TODO: why is this here?

@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe.AttenN import AttenN
+from gwlfe.MultiUse_Fxns.AttenN import AttenN
 
 
 class TestAttenN(VariableUnitTest):

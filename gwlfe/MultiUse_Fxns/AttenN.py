@@ -1,6 +1,6 @@
 # from Timer import time_function
-from Input.WaterBudget.FlowDays import FlowDays
-from Memoization import memoize
+from gwlfe.Input.WaterBudget.FlowDays import FlowDays
+from gwlfe.Memoization import memoize
 
 
 @memoize

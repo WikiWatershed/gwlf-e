@@ -1,7 +1,7 @@
 from numpy import round
 from numpy import zeros
 
-from gwlfe.AttenN import AttenN
+from gwlfe.MultiUse_Fxns.AttenN import AttenN
 from gwlfe.Output.Loading.LuTotNitr import LuTotNitr
 from gwlfe.Output.Loading.LuTotNitr import LuTotNitr_f
 # from Timer import time_function

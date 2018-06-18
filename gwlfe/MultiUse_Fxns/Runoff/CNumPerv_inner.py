@@ -1,10 +1,10 @@
-# from numba.pycc import CC
+from numba.pycc import CC
 from numpy import zeros
 # from numba import jit
 
-# cc = CC('CNumPerv_inner_compiled')
+cc = CC('CNumPerv_inner_compiled')
 
-# @cc.export('CNumPerv_inner', '(int64, int64[:,::1], float64[:,:,::1], int64, int64, float64[:,::1], float64[:,:,::1], float64[:,:,::1], float64[::1], float64[:,:,::1])')
+@cc.export('CNumPerv_inner', '(int64, int64[:,::1], float64[:,:,::1], int64, int64, float64[:,::1], float64[:,:,::1], float64[:,:,::1], float64[::1], float64[:,:,::1])')
 # @jit(nopython=True)
 def CNumPerv_inner(NYrs, DaysMonth, Temp, NRur, nlu, cnp, water, melt, grow_factor, amc5):
     result = zeros((NYrs, 12, 31, nlu))

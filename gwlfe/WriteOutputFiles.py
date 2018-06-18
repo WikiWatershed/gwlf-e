@@ -10,7 +10,7 @@ from numpy import zeros
 
 import LoadReductions
 from Input.LandUse.AreaTotal import AreaTotal_f
-from AttenN import AttenN
+from MultiUse_Fxns.AttenN import AttenN
 from MultiUse_Fxns.Erosion.AvErosion import AvErosion_f
 from Input.WaterBudget.AvEvapoTrans import AvEvapoTrans_f
 from Input.WaterBudget.AvGroundWater import AvGroundWater_f

@@ -1,10 +1,10 @@
-# from numba.pycc import CC
+from numba.pycc import CC
 from numpy import zeros
 
-# cc = CC('AdjUrbanQTotal_inner_compiled')
+cc = CC('AdjUrbanQTotal_inner_compiled')
 
-# @cc.export('AdjUrbanQTotal_inner',
-#            '(int64, int64[:,::1], float64[:,:,::1], float64, float64, float64[:,:,::1], float64[:,:,::1], float64, float64)')
+@cc.export('AdjUrbanQTotal_inner',
+           '(int64, int64[:,::1], float64[:,:,::1], float64, float64, float64[:,:,::1], float64[:,:,::1], float64, float64)')
 def AdjUrbanQTotal_inner(NYrs, DaysMonth, Temp, Qretention, PctAreaInfil, water, urban_q_total, urb_area_total,
                            area_total):
     result = zeros((NYrs, 12, 31))
