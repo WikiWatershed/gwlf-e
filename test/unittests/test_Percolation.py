@@ -1,15 +1,10 @@
-import unittest
-from unittest import skip
-from mock import patch
 import numpy as np
-from gwlfe import Parser
+
+from VariableUnittest import VariableUnitTest
 from gwlfe import Percolation
 
 
-class TestPercolation(unittest.TestCase):
-    def setUp(self):
-        input_file = open('unittests/input_4.gms', 'r')
-        self.z = Parser.GmsReader(input_file).read()
+class TestPercolation(VariableUnitTest):
 
     def test_Percolation_ground_truth(self):
         z = self.z

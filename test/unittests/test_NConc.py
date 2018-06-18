@@ -1,12 +1,11 @@
-import unittest
-
 import numpy as np
 
+from VariableUnittest import VariableUnitTest
 from gwlfe import NConc
 from gwlfe import Parser
 
 
-class TestNConc(unittest.TestCase):
+class TestNConc(VariableUnitTest):
     def setUp(self):
         input_file = open('integrationtests/test1.gms', 'r')
         self.z = Parser.GmsReader(input_file).read()

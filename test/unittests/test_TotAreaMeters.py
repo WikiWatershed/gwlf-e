@@ -1,19 +1,10 @@
-import unittest
-from unittest import skip
-from mock import patch
-import numpy as np
-from gwlfe import Parser
-from gwlfe import TotAreaMeters
+from VariableUnittest import VariableUnitTest
 
 
-class TestTotAreaMeters(unittest.TestCase):
-    def setUp(self):
-        input_file = open('unittests/input_4.gms', 'r')
-        self.z = Parser.GmsReader(input_file).read()
-
+class TestTotAreaMeters(VariableUnitTest):
 
     def test_TotAreaMeters(self):
-        pass #no need to vectorize
+        pass  # no need to vectorize
         # z = self.z
         # np.testing.assert_array_almost_equal(
         #     TotAreaMeters.TotAreaMeters_f(),

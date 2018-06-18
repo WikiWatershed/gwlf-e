@@ -1,16 +1,11 @@
-import unittest
-from unittest import skip
-from mock import patch
 import numpy as np
-from gwlfe import Parser
+
+from VariableUnittest import VariableUnitTest
 from gwlfe.AFOS.GrazingAnimals.Losses.GRLostBarnN import GRLostBarnN
 from gwlfe.AFOS.GrazingAnimals.Losses.GRLostBarnN import GRLostBarnN_f
 
 
-class TestGRLostBarnN(unittest.TestCase):
-    def setUp(self):
-        input_file = open('input_4.gms', 'r')
-        self.z = Parser.GmsReader(input_file).read()
+class TestGRLostBarnN(VariableUnitTest):
 
     def test_GRLostBarnN(self):
         z = self.z

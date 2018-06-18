@@ -1,16 +1,14 @@
-import unittest
-from unittest import skip
-from mock import patch
 import numpy as np
-from gwlfe import Parser
+
+from VariableUnittest import VariableUnitTest
 from gwlfe import AvCNRur
+from gwlfe import Parser
 
 
-class TestAvCNRur(unittest.TestCase):
+class TestAvCNRur(VariableUnitTest):
     def setUp(self):
         input_file = open('unittests/input_4.gms', 'r')
         self.z = Parser.GmsReader(input_file).read()
-
 
     def test_AvCNRur(self):
         z = self.z

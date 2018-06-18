@@ -1,12 +1,11 @@
-import unittest
-from unittest import skip
-from mock import patch
 import numpy as np
+
+from VariableUnittest import VariableUnitTest
 from gwlfe import Parser
 from gwlfe import QrunP
 
 
-class TestQrunP(unittest.TestCase):
+class TestQrunP(VariableUnitTest):
     def setUp(self):
         input_file = open('unittests/input_4.gms', 'r')
         self.z = Parser.GmsReader(input_file).read()

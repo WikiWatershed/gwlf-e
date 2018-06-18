@@ -1,15 +1,10 @@
-import unittest
-
 import numpy as np
 
-from gwlfe import Parser
+from VariableUnittest import VariableUnitTest
 from gwlfe.AFOS.nonGrazingAnimals.Loads import NGAccManAppN
 
 
-class TestNGAccManAppN(unittest.TestCase):
-    def setUp(self):
-        input_file = open('input_4.gms', 'r')
-        self.z = Parser.GmsReader(input_file).read()
+class TestNGAccManAppN(VariableUnitTest):
 
     def test_NGAccManAppN(self):
         z = self.z

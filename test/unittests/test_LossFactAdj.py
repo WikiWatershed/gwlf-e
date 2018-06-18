@@ -1,13 +1,10 @@
-import unittest
 import numpy as np
-from gwlfe import Parser
+
+from VariableUnittest import VariableUnitTest
 from gwlfe.MultiUse_Fxns import LossFactAdj
 
 
-class TestLossFactAdj(unittest.TestCase):
-    def setUp(self):
-        input_file = open('input_4.gms', 'r')
-        self.z = Parser.GmsReader(input_file).read()
+class TestLossFactAdj(VariableUnitTest):
 
     def test_LossFactAdj(self):
         z = self.z

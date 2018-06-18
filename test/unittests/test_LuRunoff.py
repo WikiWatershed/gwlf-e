@@ -1,15 +1,10 @@
-import unittest
-from unittest import skip
-from mock import patch
 import numpy as np
-from gwlfe import Parser
+
+from VariableUnittest import VariableUnitTest
 from gwlfe import LuRunoff
 
 
-class TestLuRunoff(unittest.TestCase):
-    def setUp(self):
-        input_file = open('unittests/input_4.gms', 'r')
-        self.z = Parser.GmsReader(input_file).read()
+class TestLuRunoff(VariableUnitTest):
 
     def test_LuRunoff(self):
         z = self.z

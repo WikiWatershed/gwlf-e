@@ -1,15 +1,10 @@
-import unittest
-from unittest import skip
 import numpy as np
-from gwlfe import Parser
+
+from VariableUnittest import VariableUnitTest
 from gwlfe.MultiUse_Fxns import Precipitation
 
 
-class TestPrecipitation(unittest.TestCase):
-    def setUp(self):
-        input_file = open('unittests/input_4.gms', 'r')
-        self.z = Parser.GmsReader(input_file).read()
-
+class TestPrecipitation(VariableUnitTest):
 
     def test_Precipitation(self):
         z = self.z
@@ -17,4 +12,3 @@ class TestPrecipitation(unittest.TestCase):
         temp = Precipitation.Precipitation(z.NYrs, z.DaysMonth, z.Prec)
         np.testing.assert_array_almost_equal(Precipitation.Precipitation_f(z.Prec),
                                              Precipitation.Precipitation(z.NYrs, z.DaysMonth, z.Prec), decimal=7)
-

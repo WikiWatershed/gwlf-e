@@ -1,12 +1,7 @@
-import unittest
-from unittest import skip
-from mock import patch
-import numpy as np
-from gwlfe import Parser
-from gwlfe import DeepSeep
+from VariableUnittest import VariableUnitTest
 
 
-class TestDeepSeep(unittest.TestCase):
+class TestDeepSeep(VariableUnitTest):
     def setUp(self):
         pass
     #     input_file = open('unittests/input_4.gms', 'r')

@@ -1,18 +1,13 @@
-import unittest
-from unittest import skip
-from mock import patch
 import numpy as np
-from gwlfe import Parser
+
+from VariableUnittest import VariableUnitTest
 from gwlfe import Melt_1
 
 
 # from gwlfe import MeltPest
 
 
-class TestMelt_1(unittest.TestCase):
-    def setUp(self):
-        input_file = open('unittests/input_4.gms', 'r')
-        self.z = Parser.GmsReader(input_file).read()
+class TestMelt_1(VariableUnitTest):
 
     def test_Melt_1(self):
         z = self.z

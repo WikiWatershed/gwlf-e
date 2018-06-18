@@ -1,12 +1,11 @@
-import unittest
-from unittest import skip
-from mock import patch
 import numpy as np
+
+from VariableUnittest import VariableUnitTest
 from gwlfe import Parser
 from gwlfe import nRunoff
 
 
-class TestnRunoff(unittest.TestCase):
+class TestnRunoff(VariableUnitTest):
     def setUp(self):
         input_file = open('integrationtests/test1.gms', 'r')
         self.z = Parser.GmsReader(input_file).read()

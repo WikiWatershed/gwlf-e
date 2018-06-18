@@ -1,19 +1,7 @@
-import unittest
-from unittest import skip
-from mock import patch
-import numpy as np
-from gwlfe import Parser
-from gwlfe import UncontrolledQ
+from VariableUnittest import VariableUnitTest
 
 
-class TestUncontrolledQ(unittest.TestCase):
-    def setUp(self):
-        input_file = open('unittests/input_4.gms', 'r')
-        self.z = Parser.GmsReader(input_file).read()
-    #
-    #
-    # def test_UncontrolledQ(self):
-    #     z = self.z
-    #     np.testing.assert_array_almost_equal(
-    #         UncontrolledQ.UncontrolledQ_f(),
-    #         UncontrolledQ.UncontrolledQ(), decimal=7)
+class TestUncontrolledQ(VariableUnitTest):
+
+    def test_UncontrolledQ(self):
+        pass

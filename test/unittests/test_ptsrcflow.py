@@ -1,14 +1,10 @@
-import unittest
-from unittest import skip
 import numpy as np
-from gwlfe import Parser
+
+from VariableUnittest import VariableUnitTest
 from gwlfe.MultiUse_Fxns import PtSrcFlow
 
 
-class TestPrecipitation(unittest.TestCase):
-    def setUp(self):
-        input_file = open('unittests/input_4.gms', 'r')
-        self.z = Parser.GmsReader(input_file).read()
+class TestPrecipitation(VariableUnitTest):
 
     def test_PtSrcFlow(self):
         z = self.z

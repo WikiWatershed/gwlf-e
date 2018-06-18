@@ -1,15 +1,11 @@
-import unittest
-from unittest import skip
-from mock import patch
 import numpy as np
-from gwlfe import Parser
+
+from VariableUnittest import VariableUnitTest
 from gwlfe import AdjQTotal
 
 
-class TestAdjQTotal(unittest.TestCase):
-    def setUp(self):
-        input_file = open('unittests/input_4.gms', 'r')
-        self.z = Parser.GmsReader(input_file).read()
+class TestAdjQTotal(VariableUnitTest):
+
 
 
     def test_AdjQTotal(self):

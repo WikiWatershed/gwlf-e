@@ -1,16 +1,10 @@
-import unittest
-from unittest import skip
-
 import numpy as np
 
-from gwlfe import Parser
+from VariableUnittest import VariableUnitTest
 from gwlfe.Outputs.AvAnimalNSum import N7b
 
 
-class Testn7b(unittest.TestCase):
-    def setUp(self):
-        input_file = open('input_4.gms', 'r')
-        self.z = Parser.GmsReader(input_file).read()
+class Testn7b(VariableUnitTest):
 
     def test_n7b(self):
         z = self.z

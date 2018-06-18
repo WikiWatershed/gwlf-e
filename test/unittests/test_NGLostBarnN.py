@@ -1,16 +1,10 @@
-import unittest
-from unittest import skip
-
 import numpy as np
 
-from gwlfe import Parser
+from VariableUnittest import VariableUnitTest
 from gwlfe.AFOS.nonGrazingAnimals.Losses import NGLostBarnN
 
 
-class TestNGLostBarnN(unittest.TestCase):
-    def setUp(self):
-        input_file = open('input_4.gms', 'r')
-        self.z = Parser.GmsReader(input_file).read()
+class TestNGLostBarnN(VariableUnitTest):
 
     def test_NGLostBarnN(self):
         z = self.z
@@ -26,10 +20,13 @@ class TestNGLostBarnN(unittest.TestCase):
     def test_AvNGLostBarnN(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            NGLostBarnN.AvNGLostBarnN_f(z.NYrs, z.NGPctManApp, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN, z.NGBarnNRate,
-                  z.Prec, z.DaysMonth, z.AWMSNgPct, z.NgAWMSCoeffN, z.RunContPct, z.RunConCoeffN),
-            NGLostBarnN.AvNGLostBarnN(z.NYrs, z.NGPctManApp, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN, z.NGBarnNRate,
-                  z.Prec, z.DaysMonth, z.AWMSNgPct, z.NgAWMSCoeffN, z.RunContPct, z.RunConCoeffN), decimal=7)
+            NGLostBarnN.AvNGLostBarnN_f(z.NYrs, z.NGPctManApp, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt,
+                                        z.AnimalDailyN, z.NGBarnNRate,
+                                        z.Prec, z.DaysMonth, z.AWMSNgPct, z.NgAWMSCoeffN, z.RunContPct, z.RunConCoeffN),
+            NGLostBarnN.AvNGLostBarnN(z.NYrs, z.NGPctManApp, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt,
+                                      z.AnimalDailyN, z.NGBarnNRate,
+                                      z.Prec, z.DaysMonth, z.AWMSNgPct, z.NgAWMSCoeffN, z.RunContPct, z.RunConCoeffN),
+            decimal=7)
 
     def test_AvNGLostBarnNSum(self):
         z = self.z

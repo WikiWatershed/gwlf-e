@@ -1,15 +1,10 @@
-import unittest
-from unittest import skip
-from mock import patch
 import numpy as np
-from gwlfe import Parser
+
+from VariableUnittest import VariableUnitTest
 from gwlfe import SurfaceLoad
 
 
-class TestSurfaceLoad(unittest.TestCase):
-    def setUp(self):
-        input_file = open('input_4.gms', 'r')
-        self.z = Parser.GmsReader(input_file).read()
+class TestSurfaceLoad(VariableUnitTest):
 
     def test_SurfaceLoad(self):
         z = self.z
