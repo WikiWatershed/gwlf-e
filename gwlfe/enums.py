@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
+from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
-from __future__ import division
 
+
+# from numba import jit
 
 class YesOrNo(object):
     NO = '<No>'
@@ -54,7 +56,7 @@ class ETflag(object):
             return 1
         raise ValueError('Unexpected value: ' + str(value))
 
-
+GROWING_SEASON = '<Growing season>'
 class GrowFlag(object):
     NON_GROWING_SEASON = '<Non-growing season>'
     GROWING_SEASON = '<Growing season>'
@@ -69,6 +71,7 @@ class GrowFlag(object):
         raise ValueError('Unexpected value: ' + str(value))
 
     @classmethod
+    # @jit(cache=True, nopython=True)
     def intval(cls, value):
         if value == cls.NON_GROWING_SEASON:
             return 0

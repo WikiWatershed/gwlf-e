@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
+from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
-from __future__ import division
 
 """
 Initialize variables and perfom some preliminary calculations.
@@ -10,15 +10,52 @@ Imported from ReadAllDataFiles.bas
 """
 
 import logging
-
+from FlowDays import FlowDays
 from .enums import SweepType, YesOrNo
 from . import PrelimQualCalculations
 
-
 log = logging.getLogger(__name__)
+
+from AFOS.GrazingAnimals.Loads.GrazingN import GrazingN_f
+from AFOS.GrazingAnimals.Losses.GRStreamN import GRStreamN_f
+from AFOS.GrazingAnimals.Loads.GRAccManAppN import GRAccManAppN_f
+from AFOS.nonGrazingAnimals.Loads.NGAppManN import NGAppManN_f
+from AFOS.nonGrazingAnimals.Losses.NGLostBarnN import NGLostBarnN_f
+from AFOS.GrazingAnimals.Losses.GRLostBarnN import GRLostBarnN_f
+from AFOS.GrazingAnimals.Losses.GRLostManN import GRLostManN_f
+from AFOS.nonGrazingAnimals.Losses.NGLostManN import NGLostManN_f
+from AFOS.GrazingAnimals.Losses.GRLossN import GRLossN_f
+from GrazingAnimal import GrazingAnimal
 
 
 def ReadAllData(z):
+    z.GrazingN = GrazingN_f(z.PctGrazing, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN)
+    # z.GRInitBarnN = GRInitBarnN.GRInitBarnN(z.InitGrN, z.GRPctManApp, z.PctGrazing)
+    z.GRStreamN = GRStreamN_f(z.PctStreams, z.PctGrazing, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt,
+                              z.AnimalDailyN)
+    z.GRAccManAppN = GRAccManAppN_f(z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN, z.GRPctManApp,
+                                    z.PctGrazing)
+    z.NGAppManN = NGAppManN_f(z.NGPctManApp, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN)
+    z.NGLostBarnN = NGLostBarnN_f(z.NYrs, z.NGPctManApp, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN,
+                                  z.NGBarnNRate, z.Prec,
+                                  z.DaysMonth, z.AWMSNgPct, z.NgAWMSCoeffN, z.RunContPct, z.RunConCoeffN)
+
+    z.GRLostBarnN = GRLostBarnN_f(z.NYrs, z.Prec, z.DaysMonth, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt,
+                                  z.AnimalDailyN, z.GRPctManApp, z.PctGrazing, z.GRBarnNRate, z.AWMSGrPct,
+                                  z.GrAWMSCoeffN, z.RunContPct, z.RunConCoeffN)
+
+    z.GRLostManN = GRLostManN_f(z.NYrs, z.GRPctManApp, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN,
+                                z.GRAppNRate,
+                                z.Prec, z.DaysMonth, z.GRPctSoilIncRate)
+
+    z.NGLostManN = NGLostManN_f(z.NYrs, z.NGPctManApp, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN,
+                                z.NGAppNRate,
+                                z.Prec, z.DaysMonth, z.NGPctSoilIncRate)
+
+    z.GRLossN = GRLossN_f(z.NYrs, z.PctStreams, z.PctGrazing, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt,
+                          z.AnimalDailyN,
+                          z.GrazingNRate, z.Prec, z.DaysMonth)
+
     # If RunQual output is requested, then redim RunQual values
     PrelimQualCalculations.ReDimRunQualVars()
 
@@ -26,41 +63,6 @@ def ReadAllData(z):
 
     for i in range(12):
         z.AnnDayHrs += z.DayHrs[i]
-
-    for l in range(z.NRur):
-        z.AreaTotal += z.Area[l]
-        z.RurAreaTotal += z.Area[l]
-
-    for l in range(z.NRur, z.NLU):
-        z.AreaTotal += z.Area[l]
-        z.UrbAreaTotal += z.Area[l]
-
-    z.TotAreaMeters = z.AreaTotal * 10000
-
-    # Get the area weighted average CN for rural areas
-    z.AvCNRur = 0
-    for l in range(z.NRur):
-        # Calculate average area weighted CN and KF
-        z.AvCNRur += (z.CN[l] * z.Area[l] / z.RurAreaTotal) \
-            if z.RurAreaTotal > 0 else 0
-
-    # Get the area weighted average CN for urban areas
-    z.AvCNUrb = 0
-    for l in range(z.NRur, z.NLU):
-        # Calculate average area-weighted CN for urban areas
-        if z.UrbAreaTotal > 0:
-            z.AvCNUrb += ((z.Imper[l] * z.CNI[1][l]
-                          + (1 - z.Imper[l]) * z.CNP[1][l])
-                          * z.Area[l] / z.UrbAreaTotal)
-
-    # Calculate the average CN and percent urban area
-    if z.AreaTotal == 0:
-        z.AvCN = 0
-        z.PcntUrbanArea = 0
-    else:
-        z.AvCN = ((z.AvCNRur * z.RurAreaTotal / z.AreaTotal) +
-                  (z.AvCNUrb * z.UrbAreaTotal / z.AreaTotal))
-        z.PcntUrbanArea = z.UrbAreaTotal / z.AreaTotal
 
     if z.SepticFlag is YesOrNo.YES:
         for i in range(12):
@@ -94,52 +96,38 @@ def ReadAllData(z):
             raise ValueError('Invalid value for SweepType')
 
     # Get the Animal values
-    z.InitGrN = 0
+    # z.InitGrN = 0
     z.InitGrP = 0
     z.InitGrFC = 0
-    z.InitNgN = 0
+    # z.InitNgN = 0
     z.InitNgP = 0
     z.InitNgFC = 0
 
     for a in range(9):
-        if z.GrazingAnimal[a] is YesOrNo.NO:
-            z.NGLoadN[a] = (z.NumAnimals[a] * z.AvgAnimalWt[a] / 1000) * z.AnimalDailyN[a] * 365
+        if GrazingAnimal(z.GrazingAnimal_0)[a] is YesOrNo.NO:
+            # z.NGLoadN[a] = (z.NumAnimals[a] * z.AvgAnimalWt[a] / 1000) * z.AnimalDailyN[a] * 365
             z.NGLoadP[a] = (z.NumAnimals[a] * z.AvgAnimalWt[a] / 1000) * z.AnimalDailyP[a] * 365
             z.NGLoadFC[a] = (z.NumAnimals[a] * z.AvgAnimalWt[a] / 1000) * z.FCOrgsPerDay[a] * 365
-            z.InitNgN += z.NGLoadN[a]
+            # z.InitNgN += z.NGLoadN[a]
             z.InitNgP += z.NGLoadP[a]
             z.InitNgFC += z.NGLoadFC[a]
-        elif z.GrazingAnimal[a] is YesOrNo.YES:
-            z.GRLoadN[a] = (z.NumAnimals[a] * z.AvgAnimalWt[a] / 1000) * z.AnimalDailyN[a] * 365
+        elif GrazingAnimal(z.GrazingAnimal_0)[a] is YesOrNo.YES:
+            # z.GRLoadNStorage[a] = (z.NumAnimals[a] * z.AvgAnimalWt[a] / 1000) * z.AnimalDailyN[a] * 365
             z.GRLoadP[a] = (z.NumAnimals[a] * z.AvgAnimalWt[a] / 1000) * z.AnimalDailyP[a] * 365
             z.GRLoadFC[a] = (z.NumAnimals[a] * z.AvgAnimalWt[a] / 1000) * z.FCOrgsPerDay[a] * 365
-            z.InitGrN += z.GRLoadN[a]
+            # z.InitGrN += z.GRLoadN[a]
             z.InitGrP += z.GRLoadP[a]
             z.InitGrFC += z.GRLoadFC[a]
         else:
             raise ValueError('Unexpected value for GrazingAnimal')
 
-    # Obtain AEU for each farm animal
-    z.AEU1 = ((z.NumAnimals[2] / 2) * (z.AvgAnimalWt[2]) / 1000) + ((z.NumAnimals[3] / 2) * (z.AvgAnimalWt[3]) / 1000)
-    z.AEU2 = (z.NumAnimals[7] * z.AvgAnimalWt[7]) / 1000
-    z.AEU3 = (z.NumAnimals[5] * z.AvgAnimalWt[5]) / 1000
-    z.AEU4 = (z.NumAnimals[4] * z.AvgAnimalWt[4]) / 1000
-    z.AEU5 = (z.NumAnimals[6] * z.AvgAnimalWt[6]) / 1000
-    z.AEU6 = (z.NumAnimals[0] * z.AvgAnimalWt[0]) / 1000
-    z.AEU7 = (z.NumAnimals[1] * z.AvgAnimalWt[1]) / 1000
-
-    # Get the total AEU, Total livestock and poultry AEU
-    z.TotAEU = z.AEU1 + z.AEU2 + z.AEU3 + z.AEU4 + z.AEU5 + z.AEU6 + z.AEU7
-    z.TotLAEU = z.AEU3 + z.AEU4 + z.AEU5 + z.AEU6 + z.AEU7
-    z.TotPAEU = z.AEU1 + z.AEU2
-
     # Get the Non-Grazing Animal Worksheet values
     for i in range(12):
         # For Non-Grazing
-        z.NGAccManAppN[i] += (z.InitNgN / 12) - (z.NGPctManApp[i] * z.InitNgN)
+        # z.NGAccManAppN[i] += (z.InitNgN / 12) - (z.NGPctManApp[i] * z.InitNgN)
 
-        if z.NGAccManAppN[i] < 0:
-            z.NGAccManAppN[i] = 0
+        # if z.NGAccManAppN[i] < 0:
+        #     z.NGAccManAppN[i] = 0
 
         z.NGAccManAppP[i] += (z.InitNgP / 12) - (z.NGPctManApp[i] * z.InitNgP)
 
@@ -151,11 +139,11 @@ def ReadAllData(z):
         if z.NGAccManAppFC[i] < 0:
             z.NGAccManAppFC[i] = 0
 
-        z.NGAppManN[i] = z.NGPctManApp[i] * z.InitNgN
-        z.NGInitBarnN[i] = z.NGAccManAppN[i] - z.NGAppManN[i]
-
-        if z.NGInitBarnN[i] < 0:
-            z.NGInitBarnN[i] = 0
+        # z.NGAppManN[i] = z.NGPctManApp[i] * z.InitNgN
+        # z.NGInitBarnN[i] = z.NGAccManAppN[i] - z.NGAppManN[i]
+        #
+        # if z.NGInitBarnN[i] < 0:
+        #     z.NGInitBarnN[i] = 0
 
         z.NGAppManP[i] = z.NGPctManApp[i] * z.InitNgP
         z.NGInitBarnP[i] = z.NGAccManAppP[i] - z.NGAppManP[i]
@@ -170,24 +158,27 @@ def ReadAllData(z):
             z.NGInitBarnFC[i] = 0
 
     # Read the Grazing Animal Worksheet values
+
     for i in range(12):
-        z.GrazingN[i] = z.PctGrazing[i] * (z.InitGrN / 12)
+        # z.GrazingN[i] = z.PctGrazing[i] * (z.InitGrN / 12)
         z.GrazingP[i] = z.PctGrazing[i] * (z.InitGrP / 12)
         z.GrazingFC[i] = z.PctGrazing[i] * (z.InitGrFC / 12)
 
-        z.GRStreamN[i] = z.PctStreams[i] * z.GrazingN[i]
+        # z.GRStreamN[i] = z.PctStreams[i] * z.GrazingN[i]
         z.GRStreamP[i] = z.PctStreams[i] * z.GrazingP[i]
         z.GRStreamFC[i] = z.PctStreams[i] * z.GrazingFC[i]
 
         # Get the annual sum for FC
         z.AvGRStreamFC += z.GRStreamFC[i]
-        z.AvGRStreamN += z.GRStreamN[i]
+        # z.AvGRStreamN += z.GRStreamN[i]
         z.AvGRStreamP += z.GRStreamP[i]
 
-        z.GRAccManAppN[i] = (z.GRAccManAppN[i] + (z.InitGrN / 12)
-                             - (z.GRPctManApp[i] * z.InitGrN) - z.GrazingN[i])
-        if z.GRAccManAppN[i] < 0:
-            z.GRAccManAppN[i] = 0
+        # print("old",z.GRAccManAppN[i])
+        # print((z.GRAccManAppN[i] + (z.InitGrN / 12) - (z.GRPctManApp[i] * z.InitGrN) - z.GrazingN[i]))
+        # z.GRAccManAppN[i] = (z.GRAccManAppN[i] + (z.InitGrN / 12)
+        #                      - (z.GRPctManApp[i] * z.InitGrN) - z.GrazingN[i])
+        # if z.GRAccManAppN[i] < 0:
+        #     z.GRAccManAppN[i] = 0
 
         z.GRAccManAppP[i] = (z.GRAccManAppP[i] + (z.InitGrP / 12)
                              - (z.GRPctManApp[i] * z.InitGrP) - z.GrazingP[i])
@@ -199,10 +190,10 @@ def ReadAllData(z):
         if z.GRAccManAppFC[i] < 0:
             z.GRAccManAppFC[i] = 0
 
-        z.GRAppManN[i] = z.GRPctManApp[i] * z.InitGrN
-        z.GRInitBarnN[i] = z.GRAccManAppN[i] - z.GRAppManN[i]
-        if z.GRInitBarnN[i] < 0:
-            z.GRInitBarnN[i] = 0
+        # z.GRAppManN[i] = z.GRPctManApp[i] * z.InitGrN
+        # z.GRInitBarnN[i] = z.GRAccManAppN[i] - z.GRAppManN[i]
+        # if z.GRInitBarnN[i] < 0:
+        #     z.GRInitBarnN[i] = 0
 
         z.GRAppManP[i] = z.GRPctManApp[i] * z.InitGrP
         z.GRInitBarnP[i] = z.GRAccManAppP[i] - z.GRAppManP[i]
@@ -214,33 +205,10 @@ def ReadAllData(z):
         if z.GRInitBarnFC[i] < 0:
             z.GRInitBarnFC[i] = 0
 
-    # Recalculate AEU using the TotAEU from the animal file and the total area of the basin in Acres
-    if z.TotLAEU > 0 and z.AreaTotal > 0:
-        z.AEU = z.TotLAEU / (z.AreaTotal * 2.471)
-    else:
-        z.AEU = 0
-
-    # Recalculate Sed A Factor using updated AEU value based on animal data
-    z.SedAFactor = ((0.00467 * z.PcntUrbanArea) +
-                    (0.000863 * z.AEU) +
-                    (0.000001 * z.AvCN) +
-                    (0.000425 * z.AvKF) +
-                    (0.000001 * z.AvSlope) - 0.000036) * z.SedAAdjust
-
-    if z.SedAFactor < 0.00001:
-        z.SedAFactor = 0.00001
-
-    if z.AttenFlowDist > 0 and z.AttenFlowVel > 0:
-        z.FlowDays = z.AttenFlowDist / (z.AttenFlowVel * 24)
-    else:
-        z.FlowDays = 0
-
-    z.AttenN = z.FlowDays * z.AttenLossRateN
-    z.AttenP = z.FlowDays * z.AttenLossRateP
-    z.AttenTSS = z.FlowDays * z.AttenLossRateTSS
-    z.AttenPath = z.FlowDays * z.AttenLossRatePath
+    z.AttenP = FlowDays(z.AttenFlowDist, z.AttenFlowVel) * z.AttenLossRateP
+    z.AttenTSS = FlowDays(z.AttenFlowDist, z.AttenFlowVel) * z.AttenLossRateTSS
+    z.AttenPath = FlowDays(z.AttenFlowDist, z.AttenFlowVel) * z.AttenLossRatePath
 
     # Calculate retention coefficients
-    z.RetentFactorN = (1 - (z.ShedAreaDrainLake * z.RetentNLake))
     z.RetentFactorP = (1 - (z.ShedAreaDrainLake * z.RetentPLake))
     z.RetentFactorSed = (1 - (z.ShedAreaDrainLake * z.RetentSedLake))
