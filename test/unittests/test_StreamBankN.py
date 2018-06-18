@@ -2,7 +2,7 @@ import numpy as np
 
 from VariableUnittest import VariableUnitTest
 from gwlfe import Parser
-from gwlfe import StreamBankN
+from gwlfe.Output.Loading import StreamBankN
 
 
 class TestStreamBankN(VariableUnitTest):

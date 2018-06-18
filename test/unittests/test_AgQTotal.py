@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import AgQTotal
+from MultiUse_Fxns.Discharge import AgQTotal
 
 
 class TestAgQTotal(VariableUnitTest):

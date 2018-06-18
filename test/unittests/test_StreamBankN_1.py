@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import StreamBankN_1
+from gwlfe.Output.Loading import StreamBankN_1
 
 
 class TestStreamBankN_1(VariableUnitTest):

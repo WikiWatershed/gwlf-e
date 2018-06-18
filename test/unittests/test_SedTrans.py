@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import SedTrans
+from gwlfe.MultiUse_Fxns.Erosion import SedTrans
 
 
 class TestSedTrans(VariableUnitTest):

@@ -1,8 +1,7 @@
 from numpy import zeros
 
-from gwlfe.Memoization import memoize
-from gwlfe.GrazingAnimal import GrazingAnimal
-from gwlfe.GrazingAnimal import GrazingAnimal_f
+from gwlfe.Input.Animals.GrazingAnimal import GrazingAnimal
+from gwlfe.Input.Animals.GrazingAnimal import GrazingAnimal_f
 from gwlfe.MultiUse_Fxns.Constants import NAnimals
 from gwlfe.enums import YesOrNo
 

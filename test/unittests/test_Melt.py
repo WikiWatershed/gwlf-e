@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import Melt
+from gwlfe.Input.WaterBudget import Melt
 
 
 class TestMelt(VariableUnitTest):

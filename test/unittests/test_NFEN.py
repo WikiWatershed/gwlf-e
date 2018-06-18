@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import NFEN
+from gwlfe.BMPs.AgAnimal import NFEN
 
 
 class TestNFEN(VariableUnitTest):

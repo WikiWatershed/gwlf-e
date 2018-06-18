@@ -3,7 +3,7 @@ from numpy import sum
 from GRLoadN import GRLoadN
 from GRLoadN import GRLoadN_f
 from gwlfe.Memoization import memoize
-from gwlfe.GrazingAnimal import GrazingAnimal
+from gwlfe.Input.Animals.GrazingAnimal import GrazingAnimal
 from gwlfe.enums import YesOrNo
 
 

@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import GroundWatLE
+from gwlfe.Input.WaterBudget import GroundWatLE
 
 
 class TestGroundWatLE(VariableUnitTest):

@@ -1,5 +1,5 @@
 # from Timer import time_function
-from FlowDays import FlowDays
+from Input.WaterBudget.FlowDays import FlowDays
 from Memoization import memoize
 
 

@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import GrowFactor
+from gwlfe.Input.WaterBudget import GrowFactor
 
 
 class TestGrowFactor(VariableUnitTest):

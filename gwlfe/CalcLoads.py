@@ -13,20 +13,20 @@ from numpy import zeros
 
 # log = logging.getLogger(__name__)
 
-from AreaTotal import AreaTotal_f
-from GroundWatLE_1 import GroundWatLE_1_f
-from TileDrain import TileDrain_f
-from TotAreaMeters import TotAreaMeters
-from SedDelivRatio import SedDelivRatio
-from Erosion_1 import Erosion_1_f
-from SedYield import SedYield_f
-from LuLoad import LuLoad_f
-from LuDisLoad import LuDisLoad_f
-from LuErosion import LuErosion_f
-from nRunoff import nRunoff_f
-from pRunoff import pRunoff_f
-from DisLoad import DisLoad_f
-from Load import Load_f
+from Input.LandUse.AreaTotal import AreaTotal_f
+from Input.WaterBudget.GroundWatLE_1 import GroundWatLE_1_f
+from Input.LandUse.Ag.TileDrain import TileDrain_f
+from Input.LandUse.TotAreaMeters import TotAreaMeters
+from MultiUse_Fxns.Erosion.SedDelivRatio import SedDelivRatio
+from MultiUse_Fxns.Erosion.Erosion_1 import Erosion_1_f
+from Output.Loading.SedYield import SedYield_f
+from Output.Loading.LuLoad import LuLoad_f
+from Output.Loading.LuDisLoad import LuDisLoad_f
+from MultiUse_Fxns.Erosion.LuErosion import LuErosion_f
+from MultiUse_Fxns.Runoff.nRunoff import nRunoff_f
+from MultiUse_Fxns.Runoff.pRunoff import pRunoff_f
+from Output.Loading.DisLoad import DisLoad_f
+from Output.Loading.Load import Load_f
 
 
 def CalculateLoads(z, Y):

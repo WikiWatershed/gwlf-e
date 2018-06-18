@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import NConc
+from gwlfe.Output.Loading import NConc
 from gwlfe import Parser
 
 

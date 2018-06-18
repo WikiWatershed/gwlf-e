@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import LuTotPhos
+from gwlfe.Output.Loading import LuTotPhos
 
 
 class TestLuTotPhos(VariableUnitTest):

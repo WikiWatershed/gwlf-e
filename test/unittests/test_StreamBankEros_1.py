@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import StreamBankEros_1
+from gwlfe.Output.Loading import StreamBankEros_1
 
 
 class TestStreamBankEros_1(VariableUnitTest):

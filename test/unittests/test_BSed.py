@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import BSed
+from gwlfe.MultiUse_Fxns.Erosion import BSed
 
 
 class TestBSed(VariableUnitTest):

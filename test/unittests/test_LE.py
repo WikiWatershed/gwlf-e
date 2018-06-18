@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import LE
+from gwlfe.MultiUse_Fxns.Erosion import LE
 
 
 class TestLE(VariableUnitTest):

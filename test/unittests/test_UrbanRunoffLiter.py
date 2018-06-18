@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import UrbRunoffLiter
+from gwlfe.MultiUse_Fxns.Runoff import UrbRunoffLiter
 
 
 class TestUrbanRunoffLiter(VariableUnitTest):

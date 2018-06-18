@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import CNI
+from gwlfe.MultiUse_Fxns.Runoff import CNI
 
 
 class TestCNI(VariableUnitTest):

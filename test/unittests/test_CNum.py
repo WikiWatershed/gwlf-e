@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import CNum
+from gwlfe.MultiUse_Fxns.Runoff import CNum
 
 
 class TestCNum(VariableUnitTest):

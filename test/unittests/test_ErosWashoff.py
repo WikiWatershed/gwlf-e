@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import ErosWashoff
+from gwlfe.MultiUse_Fxns.Erosion import ErosWashoff
 
 
 class TestErosWashoff(VariableUnitTest):

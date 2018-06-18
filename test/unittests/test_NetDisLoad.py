@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import NetDisLoad
+from gwlfe.Output.Loading import NetDisLoad
 
 
 class TestNetDisLoad(VariableUnitTest):

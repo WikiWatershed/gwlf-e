@@ -1,7 +1,7 @@
 import unittest
 import numpy as np
 from gwlfe import Parser
-from gwlfe import Withdrawal
+from gwlfe.Input.WaterBudget import Withdrawal
 
 
 class TestWithdrawal(unittest.TestCase):

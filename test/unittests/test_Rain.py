@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import Rain
+from gwlfe.Input.WaterBudget import Rain
 
 
 class TestRain(VariableUnitTest):

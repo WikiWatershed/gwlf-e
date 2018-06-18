@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import Erosiv
+from gwlfe.MultiUse_Fxns.Erosion import Erosiv
 
 
 class TestErosiv(VariableUnitTest):

@@ -5,21 +5,21 @@ from os import path
 
 from setuptools import setup, find_packages
 
-from gwlfe.AMC5_yesterday_inner import cc as amc5ycc
+from gwlfe.Input.WaterBudget.AMC5_yesterday_inner import cc as amc5ycc
 # Added to fix error.
 # See http://stackoverflow.com/questions/9352656/python-assertionerror-when-running-nose-tests-with-coverage  # NOQA
-from gwlfe.AdjUrbanQTotal_inner import cc as adjcc  # TODO: use full length names
-from gwlfe.CNumImperv_inner import cc as cnicc
-from gwlfe.CNumPerv_inner import cc as cnpcc
-from gwlfe.CNum_inner import cc as cncc
-from gwlfe.DeepSeep_inner import cc as dscc
-from gwlfe.InitSnowYesterday_inner import cc as isycc
-from gwlfe.InitSnow_inner import cc as iscc
-from gwlfe.Percolation_inner import cc as pcc
-from gwlfe.UnsatStor_inner import cc as usscc
-from gwlfe.UrbLoadRed_inner import cc as ulrcc
-from gwlfe.WashImperv_inner import cc as wipcc
-from gwlfe.WashPerv_inner import cc as wpcc
+from MultiUse_Fxns.Discharge.AdjUrbanQTotal_inner import cc as adjcc  # TODO: use full length names
+from gwlfe.MultiUse_Fxns.Runoff.CNumImperv_inner import cc as cnicc
+from gwlfe.MultiUse_Fxns.Runoff.CNumPerv_inner import cc as cnpcc
+from gwlfe.MultiUse_Fxns.Runoff.CNum_inner import cc as cncc
+from Input.WaterBudget.DeepSeep_inner import cc as dscc
+from gwlfe.Input.WaterBudget.InitSnowYesterday_inner import cc as isycc
+from gwlfe.Input.WaterBudget.InitSnow_inner import cc as iscc
+from gwlfe.Input.WaterBudget.Percolation_inner import cc as pcc
+from gwlfe.Input.WaterBudget.UnsatStor_inner import cc as usscc
+from gwlfe.BMPs.Stream.UrbLoadRed_inner import cc as ulrcc
+from gwlfe.MultiUse_Fxns.Runoff.WashImperv_inner import cc as wipcc
+from gwlfe.MultiUse_Fxns.Runoff.WashPerv_inner import cc as wpcc
 
 # Get the long description from DESCRIPTION.rst
 with open(path.join(path.abspath(path.dirname(__file__)),

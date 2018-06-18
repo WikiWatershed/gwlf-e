@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import AvStreamBankNSum
+from gwlfe.MultiUse_Fxns.Erosion import AvStreamBankNSum
 
 
 class TestAvStreamBankNSum(VariableUnitTest):

@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import AMC5
+from gwlfe.Input.WaterBudget import AMC5
 from gwlfe import DailyArrayConverter
 
 

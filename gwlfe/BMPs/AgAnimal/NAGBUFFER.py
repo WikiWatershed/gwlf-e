@@ -4,8 +4,8 @@ from gwlfe.AFOS.GrazingAnimals.Losses.GRStreamN import AvGRStreamN
 from gwlfe.AFOS.GrazingAnimals.Losses.GRStreamN import AvGRStreamN_f
 from gwlfe.AFOS.nonGrazingAnimals.Losses.NGLostBarnN import AvNGLostBarnNSum
 from gwlfe.AFOS.nonGrazingAnimals.Losses.NGLostBarnN import AvNGLostBarnNSum_f
-from gwlfe.Outputs.AvAnimalNSum.AvAnimalNSum import AvAnimalNSum
-from gwlfe.Outputs.AvAnimalNSum.AvAnimalNSum import AvAnimalNSum_f
+from gwlfe.Output.AvAnimalNSum.AvAnimalNSum import AvAnimalNSum
+from gwlfe.Output.AvAnimalNSum.AvAnimalNSum import AvAnimalNSum_f
 
 
 def NAGBUFFER(n42, n43, n64, NYrs, NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, NGBarnNRate,

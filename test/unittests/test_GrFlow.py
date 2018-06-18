@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import GrFlow
+from gwlfe.Input.WaterBudget import GrFlow
 
 
 class TestGrFlow(VariableUnitTest):

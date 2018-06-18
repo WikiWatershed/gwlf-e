@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import LuErosion
+from gwlfe.MultiUse_Fxns.Erosion import LuErosion
 
 
 class TestLuErosion(VariableUnitTest):

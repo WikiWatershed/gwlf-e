@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import RurEros
+from gwlfe.MultiUse_Fxns.Erosion import RurEros
 
 
 class TestRurEros(VariableUnitTest):

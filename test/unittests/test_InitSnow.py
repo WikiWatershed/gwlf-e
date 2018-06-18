@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import InitSnow
+from gwlfe.Input.WaterBudget import InitSnow
 
 
 class TestInitSnow(VariableUnitTest):

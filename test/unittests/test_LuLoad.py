@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import LuLoad
+from gwlfe.Output.Loading import LuLoad
 
 
 class TestLuLoad(VariableUnitTest):

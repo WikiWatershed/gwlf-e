@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import FilterEff
+from gwlfe.BMPs.Stream import FilterEff
 
 
 class TestFilterEff(VariableUnitTest):

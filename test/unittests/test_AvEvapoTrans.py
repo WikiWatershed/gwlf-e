@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import AvEvapoTrans
+from gwlfe.Input.WaterBudget import AvEvapoTrans
 
 
 class TestAvEvapoTrans(VariableUnitTest):

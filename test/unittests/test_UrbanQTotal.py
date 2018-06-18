@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import UrbanQTotal
+from gwlfe.MultiUse_Fxns.Discharge import UrbanQTotal
 
 
 class TestUrbanQTotal(VariableUnitTest):

@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import DailyFlow
+from gwlfe.MultiUse_Fxns.Discharge import DailyFlow
 
 
 class TestDailyFlow(VariableUnitTest):

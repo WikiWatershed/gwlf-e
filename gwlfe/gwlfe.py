@@ -22,17 +22,13 @@ import CalcLoads
 import StreamBank
 import AnnualMeans
 import WriteOutputFiles
-from InitSnow import InitSnow_f
-from GrowFactor import GrowFactor_f
-from TotAreaMeters import TotAreaMeters
-from AvTileDrain import AvTileDrain_f
-from AvWithdrawal import AvWithdrawal_f
-from AvGroundWater import AvGroundWater_f
-from AvRunoff import AvRunoff_f
-from LuTotNitr import LuTotNitr_f
-from LuTotPhos import LuTotPhos_f
-from Load import Load_f
-from DisLoad import DisLoad_f
+from Input.WaterBudget.InitSnow import InitSnow_f
+from Input.WaterBudget.GrowFactor import GrowFactor_f
+from Input.LandUse.TotAreaMeters import TotAreaMeters
+from Input.LandUse.Ag.AvTileDrain import AvTileDrain_f
+from Input.WaterBudget.AvWithdrawal import AvWithdrawal_f
+from Input.WaterBudget.AvGroundWater import AvGroundWater_f
+from MultiUse_Fxns.Runoff.AvRunoff import AvRunoff_f
 
 log = logging.getLogger(__name__)
 

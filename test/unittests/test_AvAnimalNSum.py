@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe.Outputs.AvAnimalNSum import AvAnimalNSum
+from gwlfe.Output.AvAnimalNSum import AvAnimalNSum
 
 
 class TestAvAnimalNSum(VariableUnitTest):

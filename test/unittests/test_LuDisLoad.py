@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import LuDisLoad
+from gwlfe.Output.Loading import LuDisLoad
 
 
 class TestLuDisLoad(VariableUnitTest):

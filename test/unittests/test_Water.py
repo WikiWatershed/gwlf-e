@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import Water
+from gwlfe.Input.WaterBudget import Water
 
 
 class TestWater(VariableUnitTest):

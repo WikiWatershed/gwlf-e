@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import SEDFEN
+from gwlfe.BMPs.Stream import SEDFEN
 
 
 class TestSEDFEN(VariableUnitTest):

@@ -2,7 +2,7 @@ import numpy as np
 
 from VariableUnittest import VariableUnitTest
 from gwlfe import Parser
-from gwlfe import SEDSTAB
+from gwlfe.BMPs.Stream import SEDSTAB
 
 
 class TestSEDSTAB(VariableUnitTest):

@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import Withdrawal
+from gwlfe.Input.WaterBudget import Withdrawal
 
 
 class TestWithdrawal(VariableUnitTest):

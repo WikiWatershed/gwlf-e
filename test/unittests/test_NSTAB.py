@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import NSTAB
+from gwlfe.BMPs.Stream import NSTAB
 
 
 class TestNSTAB(VariableUnitTest):

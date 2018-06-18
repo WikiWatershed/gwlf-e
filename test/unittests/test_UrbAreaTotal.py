@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import UrbAreaTotal
+from gwlfe.Input.LandUse.Urb import UrbAreaTotal
 
 
 class TestUrbAreaTotal(VariableUnitTest):

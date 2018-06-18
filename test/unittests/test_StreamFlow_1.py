@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import StreamFlow_1
+from gwlfe.MultiUse_Fxns.Discharge import StreamFlow_1
 
 
 class TestStreamFlow_1(VariableUnitTest):

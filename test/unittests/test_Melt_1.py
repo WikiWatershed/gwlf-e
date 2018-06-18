@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import Melt_1
+from gwlfe.Input.WaterBudget import Melt_1
 
 
 # from gwlfe import MeltPest

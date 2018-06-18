@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import TotLAEU
+from gwlfe.Input.Animals import TotLAEU
 
 
 class TestTotLAEU(VariableUnitTest):

@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import AvTileDrain
+from gwlfe.Input.LandUse.Ag import AvTileDrain
 
 
 class TestAvTileDrain(VariableUnitTest):

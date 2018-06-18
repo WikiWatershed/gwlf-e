@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import CNumPerv
+from gwlfe.MultiUse_Fxns.Runoff import CNumPerv
 
 
 class TestCNumPerv(VariableUnitTest):

@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import UrbLoadRed
+from gwlfe.BMPs.Stream import UrbLoadRed
 
 
 class TestUrbLoadRed(VariableUnitTest):

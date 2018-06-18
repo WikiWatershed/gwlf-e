@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import AvCNRur
+from gwlfe.MultiUse_Fxns.Runoff import AvCNRur
 from gwlfe import Parser
 
 

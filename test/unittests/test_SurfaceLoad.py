@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import SurfaceLoad
+from gwlfe.Output.Loading import SurfaceLoad
 
 
 class TestSurfaceLoad(VariableUnitTest):

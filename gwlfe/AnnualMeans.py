@@ -9,19 +9,19 @@ Imported from AnnualMeans.bas
 
 import logging
 # from Precipitation import AvPrecipitation_f
-from MultiUse_Fxns import Precipitation
-from AvEvapoTrans import AvEvapoTrans_f
+from Input.WaterBudget import Precipitation
+from Input.WaterBudget.AvEvapoTrans import AvEvapoTrans_f
 from MultiUse_Fxns.PtSrcFlow import AvPtSrcFlow_f
-from AvStreamBankEros import AvStreamBankEros_f
-from AvTileDrain import AvTileDrain_f
-from AvWithdrawal import AvWithdrawal_f
-from AvGroundWater import AvGroundWater_f
-from AvRunoff import AvRunoff_f
-from AvErosion import AvErosion_f
-from AvSedYield import AvSedYield_f
-from LuRunoff import LuRunoff_f
-from LuTotPhos import LuTotPhos_f
-from LuTotNitr import LuTotNitr_f
+from MultiUse_Fxns.Erosion.AvStreamBankEros import AvStreamBankEros_f
+from Input.LandUse.Ag.AvTileDrain import AvTileDrain_f
+from Input.WaterBudget.AvWithdrawal import AvWithdrawal_f
+from Input.WaterBudget.AvGroundWater import AvGroundWater_f
+from MultiUse_Fxns.Runoff.AvRunoff import AvRunoff_f
+from MultiUse_Fxns.Erosion.AvErosion import AvErosion_f
+from MultiUse_Fxns.Erosion.AvSedYield import AvSedYield_f
+from MultiUse_Fxns.Runoff.LuRunoff import LuRunoff_f
+from Output.Loading.LuTotPhos import LuTotPhos_f
+from Output.Loading.LuTotNitr import LuTotNitr_f
 
 log = logging.getLogger(__name__)
 

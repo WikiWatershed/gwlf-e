@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe.MultiUse_Fxns import ET
+from gwlfe.Input.WaterBudget import ET
 
 
 class TestET(VariableUnitTest):

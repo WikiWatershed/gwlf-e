@@ -1,7 +1,7 @@
 from numpy import zeros
 
-from Precipitation import Precipitation
-from Precipitation import Precipitation_f
+from gwlfe.Input.WaterBudget.Precipitation import Precipitation
+from gwlfe.Input.WaterBudget.Precipitation import Precipitation_f
 from gwlfe.Memoization import memoize
 
 

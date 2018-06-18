@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import Percolation
+from gwlfe.Input.WaterBudget import Percolation
 
 
 class TestPercolation(VariableUnitTest):

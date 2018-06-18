@@ -2,7 +2,7 @@ from numpy import sum
 
 from NGLoadN import NGLoadN
 from NGLoadN import NGLoadN_f
-from gwlfe.GrazingAnimal import GrazingAnimal
+from gwlfe.Input.Animals.GrazingAnimal import GrazingAnimal
 from gwlfe.enums import YesOrNo
 from gwlfe.Memoization import memoize
 

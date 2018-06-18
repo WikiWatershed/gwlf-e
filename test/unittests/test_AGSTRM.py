@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import AGSTRM
+from gwlfe.Input.LandUse.Ag import AGSTRM
 
 
 class TestAGSTRM(VariableUnitTest):

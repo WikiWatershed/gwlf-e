@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import QrunI
+from gwlfe.MultiUse_Fxns.Runoff import QrunI
 
 
 class TestQRunI(VariableUnitTest):

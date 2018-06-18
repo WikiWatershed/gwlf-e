@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import WashImperv
+from gwlfe.MultiUse_Fxns.Runoff import WashImperv
 
 
 class TestWashImperv(VariableUnitTest):

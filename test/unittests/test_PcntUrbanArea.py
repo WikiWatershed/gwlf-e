@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import PcntUrbanArea
+from gwlfe.Input.LandUse.Urb import PcntUrbanArea
 
 
 class TestPcntUrbanArea(VariableUnitTest):

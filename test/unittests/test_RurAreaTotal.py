@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import RurAreaTotal
+from gwlfe.Input.LandUse import RurAreaTotal
 
 
 class TestRurAreaTotal(VariableUnitTest):

@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import Infiltration
+from gwlfe.Input.WaterBudget import Infiltration
 
 
 class TestInfiltration(VariableUnitTest):

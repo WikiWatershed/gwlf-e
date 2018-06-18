@@ -10,7 +10,7 @@ Imported from ReadAllDataFiles.bas
 """
 
 import logging
-from FlowDays import FlowDays
+from Input.WaterBudget.FlowDays import FlowDays
 from .enums import SweepType, YesOrNo
 from . import PrelimQualCalculations
 
@@ -25,7 +25,7 @@ from AFOS.GrazingAnimals.Losses.GRLostBarnN import GRLostBarnN_f
 from AFOS.GrazingAnimals.Losses.GRLostManN import GRLostManN_f
 from AFOS.nonGrazingAnimals.Losses.NGLostManN import NGLostManN_f
 from AFOS.GrazingAnimals.Losses.GRLossN import GRLossN_f
-from GrazingAnimal import GrazingAnimal
+from Input.Animals.GrazingAnimal import GrazingAnimal
 
 
 def ReadAllData(z):

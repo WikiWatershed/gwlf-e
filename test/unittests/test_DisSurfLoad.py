@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import DisSurfLoad
+from gwlfe.Output.Loading import DisSurfLoad
 
 
 class TestDisSurfLoad(VariableUnitTest):

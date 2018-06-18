@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import LuTotNitr
+from gwlfe.Output.Loading import LuTotNitr
 
 
 class TestLuTotNitr(VariableUnitTest):

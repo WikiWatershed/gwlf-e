@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import NURBBANK
+from gwlfe.BMPs.Stream import NURBBANK
 
 
 class TestNURBBANK(VariableUnitTest):

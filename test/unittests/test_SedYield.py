@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import SedYield
+from gwlfe.Output.Loading import SedYield
 
 
 class TestSedYield(VariableUnitTest):

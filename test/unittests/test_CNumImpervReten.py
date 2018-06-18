@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import CNumImpervReten
+from gwlfe.MultiUse_Fxns.Runoff import CNumImpervReten
 
 
 class TestCNumImpervReten(VariableUnitTest):

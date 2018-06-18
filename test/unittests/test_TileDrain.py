@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import TileDrain
+from gwlfe.Input.LandUse.Ag import TileDrain
 
 
 class TestTileDrain(VariableUnitTest):

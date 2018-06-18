@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import DayRunoff
+from gwlfe.MultiUse_Fxns.Runoff import DayRunoff
 
 
 class TestDayRunoff(VariableUnitTest):

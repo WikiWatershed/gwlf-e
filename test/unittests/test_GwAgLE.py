@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import GwAgLE
+from gwlfe.Input.LandUse.Ag import GwAgLE
 
 
 class TestGwAgLE(VariableUnitTest):

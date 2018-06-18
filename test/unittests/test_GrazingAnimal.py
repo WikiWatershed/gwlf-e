@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import GrazingAnimal
+from gwlfe.Input.Animals import GrazingAnimal
 from gwlfe.enums import YesOrNo
 
 

@@ -9,28 +9,28 @@ from numpy import round
 from numpy import zeros
 
 import LoadReductions
-from AreaTotal import AreaTotal_f
+from Input.LandUse.AreaTotal import AreaTotal_f
 from AttenN import AttenN
-from AvErosion import AvErosion_f
-from AvEvapoTrans import AvEvapoTrans_f
-from AvGroundWater import AvGroundWater_f
-from AvRunoff import AvRunoff_f
-from AvSedYield import AvSedYield
-from AvSedYield import AvSedYield_f
-from AvStreamBankNSum import AvStreamBankNSum_f
-from AvTileDrain import AvTileDrain_f
-from AvWithdrawal import AvWithdrawal_f
-from LuTotNitr_1 import LuTotNitr_1_f
+from MultiUse_Fxns.Erosion.AvErosion import AvErosion_f
+from Input.WaterBudget.AvEvapoTrans import AvEvapoTrans_f
+from Input.WaterBudget.AvGroundWater import AvGroundWater_f
+from MultiUse_Fxns.Runoff.AvRunoff import AvRunoff_f
+from MultiUse_Fxns.Erosion.AvSedYield import AvSedYield
+from MultiUse_Fxns.Erosion.AvSedYield import AvSedYield_f
+from MultiUse_Fxns.Erosion.AvStreamBankNSum import AvStreamBankNSum_f
+from Input.LandUse.Ag.AvTileDrain import AvTileDrain_f
+from Input.WaterBudget.AvWithdrawal import AvWithdrawal_f
+from Output.Loading.LuTotNitr_1 import LuTotNitr_1_f
 from MultiUse_Fxns.Constants import NPConvert
-from Outputs.AvAnimalNSum.AvAnimalNSum_1 import AvAnimalNSum_1_f
-from RetentFactorN import RetentFactorN
-from SedDelivRatio import SedDelivRatio
-from StreamBankNSum import StreamBankNSum_f
-from TotAEU import TotAEU_f
-from TotLAEU import TotLAEU
-from TotPAEU import TotPAEU_f
+from Output.AvAnimalNSum.AvAnimalNSum_1 import AvAnimalNSum_1_f
+from MultiUse_Fxns.Runoff.RetentFactorN import RetentFactorN
+from MultiUse_Fxns.Erosion.SedDelivRatio import SedDelivRatio
+from Output.Loading.StreamBankNSum import StreamBankNSum_f
+from Input.Animals.TotAEU import TotAEU_f
+from Input.Animals.TotLAEU import TotLAEU
+from Input.Animals.TotPAEU import TotPAEU_f
 from enums import YesOrNo, LandUse
-from LuTotPhos import LuTotPhos_f
+from Output.Loading.LuTotPhos import LuTotPhos_f
 
 log = logging.getLogger(__name__)
 

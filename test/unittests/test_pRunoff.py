@@ -2,7 +2,7 @@ import numpy as np
 
 from VariableUnittest import VariableUnitTest
 from gwlfe import Parser
-from gwlfe import pRunoff
+from gwlfe.MultiUse_Fxns.Runoff import pRunoff
 
 
 class TestpRunoff(VariableUnitTest):

@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import SURBBANK
+from gwlfe.BMPs.Stream import SURBBANK
 
 
 class TestSURBBANK(VariableUnitTest):
