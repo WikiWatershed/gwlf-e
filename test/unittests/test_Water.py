@@ -21,5 +21,5 @@ class TestWater(unittest.TestCase):
     def test_Water(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            Water.Water_2(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec),
+            Water.Water_f(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec),
             Water.Water(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec), decimal=7)

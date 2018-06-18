@@ -16,43 +16,43 @@ from . import PrelimQualCalculations
 
 log = logging.getLogger(__name__)
 
-from AFOS.GrazingAnimals.Loads.GrazingN import GrazingN_2
-from AFOS.GrazingAnimals.Losses.GRStreamN import GRStreamN_2
-from AFOS.GrazingAnimals.Loads.GRAccManAppN import GRAccManAppN_2
-from AFOS.nonGrazingAnimals.Loads.NGAppManN import NGAppManN_2
-from AFOS.nonGrazingAnimals.Losses.NGLostBarnN import NGLostBarnN_2
-from AFOS.GrazingAnimals.Losses.GRLostBarnN import GRLostBarnN_2
-from AFOS.GrazingAnimals.Losses.GRLostManN import GRLostManN_2
-from AFOS.nonGrazingAnimals.Losses.NGLostManN import NGLostManN_2
-from AFOS.GrazingAnimals.Losses.GRLossN import GRLossN_2
+from AFOS.GrazingAnimals.Loads.GrazingN import GrazingN_f
+from AFOS.GrazingAnimals.Losses.GRStreamN import GRStreamN_f
+from AFOS.GrazingAnimals.Loads.GRAccManAppN import GRAccManAppN_f
+from AFOS.nonGrazingAnimals.Loads.NGAppManN import NGAppManN_f
+from AFOS.nonGrazingAnimals.Losses.NGLostBarnN import NGLostBarnN_f
+from AFOS.GrazingAnimals.Losses.GRLostBarnN import GRLostBarnN_f
+from AFOS.GrazingAnimals.Losses.GRLostManN import GRLostManN_f
+from AFOS.nonGrazingAnimals.Losses.NGLostManN import NGLostManN_f
+from AFOS.GrazingAnimals.Losses.GRLossN import GRLossN_f
 from GrazingAnimal import GrazingAnimal
 
 
 def ReadAllData(z):
-    z.GrazingN = GrazingN_2(z.PctGrazing, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN)
+    z.GrazingN = GrazingN_f(z.PctGrazing, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN)
     # z.GRInitBarnN = GRInitBarnN.GRInitBarnN(z.InitGrN, z.GRPctManApp, z.PctGrazing)
-    z.GRStreamN = GRStreamN_2(z.PctStreams, z.PctGrazing, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt,
+    z.GRStreamN = GRStreamN_f(z.PctStreams, z.PctGrazing, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt,
                               z.AnimalDailyN)
-    z.GRAccManAppN = GRAccManAppN_2(z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN, z.GRPctManApp,
+    z.GRAccManAppN = GRAccManAppN_f(z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN, z.GRPctManApp,
                                     z.PctGrazing)
-    z.NGAppManN = NGAppManN_2(z.NGPctManApp, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN)
-    z.NGLostBarnN = NGLostBarnN_2(z.NYrs, z.NGPctManApp, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN,
+    z.NGAppManN = NGAppManN_f(z.NGPctManApp, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN)
+    z.NGLostBarnN = NGLostBarnN_f(z.NYrs, z.NGPctManApp, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN,
                                   z.NGBarnNRate, z.Prec,
                                   z.DaysMonth, z.AWMSNgPct, z.NgAWMSCoeffN, z.RunContPct, z.RunConCoeffN)
 
-    z.GRLostBarnN = GRLostBarnN_2(z.NYrs, z.Prec, z.DaysMonth, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt,
+    z.GRLostBarnN = GRLostBarnN_f(z.NYrs, z.Prec, z.DaysMonth, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt,
                                   z.AnimalDailyN, z.GRPctManApp, z.PctGrazing, z.GRBarnNRate, z.AWMSGrPct,
                                   z.GrAWMSCoeffN, z.RunContPct, z.RunConCoeffN)
 
-    z.GRLostManN = GRLostManN_2(z.NYrs, z.GRPctManApp, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN,
+    z.GRLostManN = GRLostManN_f(z.NYrs, z.GRPctManApp, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN,
                                 z.GRAppNRate,
                                 z.Prec, z.DaysMonth, z.GRPctSoilIncRate)
 
-    z.NGLostManN = NGLostManN_2(z.NYrs, z.NGPctManApp, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN,
+    z.NGLostManN = NGLostManN_f(z.NYrs, z.NGPctManApp, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN,
                                 z.NGAppNRate,
                                 z.Prec, z.DaysMonth, z.NGPctSoilIncRate)
 
-    z.GRLossN = GRLossN_2(z.NYrs, z.PctStreams, z.PctGrazing, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt,
+    z.GRLossN = GRLossN_f(z.NYrs, z.PctStreams, z.PctGrazing, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt,
                           z.AnimalDailyN,
                           z.GrazingNRate, z.Prec, z.DaysMonth)
 

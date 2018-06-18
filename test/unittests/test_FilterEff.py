@@ -15,5 +15,5 @@ class TestFilterEff(unittest.TestCase):
     def test_FilterEff(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            FilterEff.FilterEff_2(z.FilterWidth),
+            FilterEff.FilterEff_f(z.FilterWidth),
             FilterEff.FilterEff(z.FilterWidth), decimal=7)

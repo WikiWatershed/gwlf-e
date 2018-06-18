@@ -2,7 +2,7 @@
 from numpy import sum
 from Memoization import memoize
 from RurAreaTotal import RurAreaTotal
-from RurAreaTotal import RurAreaTotal_2
+from RurAreaTotal import RurAreaTotal_f
 
 
 @memoize
@@ -16,8 +16,8 @@ def AvCNRur(NRur, Area, CN):
     return result
 
 
-def AvCNRur_2(NRur, Area, CN):
-    rurareatotal = RurAreaTotal_2(NRur, Area)
+def AvCNRur_f(NRur, Area, CN):
+    rurareatotal = RurAreaTotal_f(NRur, Area)
     if (rurareatotal > 0):
         return sum(CN * Area / rurareatotal)
     else:

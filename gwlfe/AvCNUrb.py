@@ -23,7 +23,7 @@ def AvCNUrb(NRur, NUrb, CNI_0, CNP_0, Imper, Area):
 
 # Tried, slower than original.
 # @time_function
-def AvCNUrb_2(NRur, NUrb, CNI_0, CNP_0, Imper, Area):
+def AvCNUrb_f(NRur, NUrb, CNI_0, CNP_0, Imper, Area):
     cni = CNI(NRur, NUrb, CNI_0)
     cnp = CNP(NRur, NUrb, CNP_0)
     urbareatotal = UrbAreaTotal(NRur, NUrb, Area)

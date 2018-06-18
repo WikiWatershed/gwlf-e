@@ -7,5 +7,5 @@ from Memoization import memoize
 def AttenN(AttenFlowDist, AttenFlowVel, AttenLossRateN):
     return FlowDays(AttenFlowDist, AttenFlowVel) * AttenLossRateN
 
-# def AttenN_2():
+# def AttenN_f():
 #     pass

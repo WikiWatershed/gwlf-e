@@ -8,18 +8,18 @@ Imported from AnnualMeans.bas
 """
 
 import logging
-# from Precipitation import AvPrecipitation_2
+# from Precipitation import AvPrecipitation_f
 from MultiUse_Fxns import Precipitation
-from AvEvapoTrans import AvEvapoTrans_2
-from MultiUse_Fxns.PtSrcFlow import AvPtSrcFlow_2
-from AvStreamBankEros import AvStreamBankEros_2
-from AvTileDrain import AvTileDrain_2
-from AvWithdrawal import AvWithdrawal_2
-from AvGroundWater import AvGroundWater_2
-from AvRunoff import AvRunoff_2
-from AvErosion import AvErosion_2
-from AvSedYield import AvSedYield_2
-from LuRunoff import LuRunoff_2
+from AvEvapoTrans import AvEvapoTrans_f
+from MultiUse_Fxns.PtSrcFlow import AvPtSrcFlow_f
+from AvStreamBankEros import AvStreamBankEros_f
+from AvTileDrain import AvTileDrain_f
+from AvWithdrawal import AvWithdrawal_f
+from AvGroundWater import AvGroundWater_f
+from AvRunoff import AvRunoff_f
+from AvErosion import AvErosion_f
+from AvSedYield import AvSedYield_f
+from LuRunoff import LuRunoff_f
 
 log = logging.getLogger(__name__)
 
@@ -31,13 +31,13 @@ def CalculateAnnualMeanLoads(z, Y):
 
     # Add the Stream Bank Erosion to sediment yield
     # for i in range(12):
-    #     z.SedYield[Y][i] += z.StreamBankEros_2[Y][i] / 1000
+    #     z.SedYield[Y][i] += z.StreamBankEros_f[Y][i] / 1000
 
     z.CalendarYr = z.WxYrBeg + (Y - 1)
 
     # CALCULATE ANNUAL MEANS FOR STREAM BANK AND TILE DRAINAGE VALUES
     # z.AvPtSrcFlow = AvPtSrcFlow(z.NYrs,z.PtSrcFlow)
-    z.AvPtSrcFlow = AvPtSrcFlow_2(z.PointFlow)
+    z.AvPtSrcFlow = AvPtSrcFlow_f(z.PointFlow)
     for i in range(12):
         z.AvStreamBankP[i] += z.StreamBankP[Y][i] / z.NYrs
         z.AvTileDrainN[i] += z.TileDrainN[Y][i] / z.NYrs
@@ -45,8 +45,8 @@ def CalculateAnnualMeanLoads(z, Y):
         z.AvTileDrainSed[i] += z.TileDrainSed[Y][i] / z.NYrs
 
     # COMPUTE ANNUAL MEANS
-    # z.AvPrecipitation = AvPrecipitation_2(z.Prec)
-    z.AvPrecipitation = Precipitation.AvPrecipitation_2(Precipitation.Precipitation_2(z.Prec))
+    # z.AvPrecipitation = AvPrecipitation_f(z.Prec)
+    z.AvPrecipitation = Precipitation.AvPrecipitation_f(Precipitation.Precipitation_f(z.Prec))
     for i in range(12):
         z.AvDisNitr[i] += z.DisNitr[Y][i] / z.NYrs
         z.AvTotNitr[i] += z.TotNitr[Y][i] / z.NYrs
@@ -78,10 +78,10 @@ def CalculateAnnualMeanLoads(z, Y):
     # Average loads for each landuse
     for l in range(z.NRur):
         z.AvLuRunoff[l] += \
-            LuRunoff_2(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.NRur, z.NUrb, z.CNI_0, z.CNP_0,
+            LuRunoff_f(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.NRur, z.NUrb, z.CNI_0, z.CNP_0,
                        z.AntMoist_0, z.Grow_0, z.Imper, z.ISRR, z.ISRA, z.CN)[Y][l] / z.NYrs
         z.AvLuErosion[l] += \
-            LuRunoff_2(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.NRur, z.NUrb, z.CNI_0, z.CNP_0,
+            LuRunoff_f(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.NRur, z.NUrb, z.CNI_0, z.CNP_0,
                        z.AntMoist_0, z.Grow_0, z.Imper, z.ISRR, z.ISRA, z.CN)[Y][l] / z.NYrs
         z.AvLuSedYield[l] += z.LuSedYield[Y][l] / z.NYrs
         z.AvLuDisNitr[l] += z.LuDisNitr[Y][l] / z.NYrs
@@ -91,7 +91,7 @@ def CalculateAnnualMeanLoads(z, Y):
 
     for l in range(z.NRur, z.NLU):
         z.AvLuRunoff[l] += \
-            LuRunoff_2(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.NRur, z.NUrb, z.CNI_0, z.CNP_0,
+            LuRunoff_f(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.NRur, z.NUrb, z.CNI_0, z.CNP_0,
                        z.AntMoist_0, z.Grow_0, z.Imper, z.ISRR, z.ISRA, z.CN)[Y][l] / z.NYrs
         z.AvLuTotNitr[l] += z.LuTotNitr[Y][l] / z.NYrs
         z.AvLuTotPhos[l] += z.LuTotPhos[Y][l] / z.NYrs
@@ -100,7 +100,7 @@ def CalculateAnnualMeanLoads(z, Y):
         z.AvLuSedYield[l] += z.LuSedYield[Y][l] / z.NYrs
 
     z.AvStreamBankErosSum = sum(
-        AvStreamBankEros_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
+        AvStreamBankEros_f(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
                            z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV,
                            z.PcntET,
                            z.DayHrs, z.MaxWaterCap, z.SatStor_0, z.RecessionCoef, z.SeepCoef, z.Qretention,
@@ -111,38 +111,38 @@ def CalculateAnnualMeanLoads(z, Y):
     # z.AvStreamBankNSum = sum(z.AvStreamBankN)
     z.AvStreamBankPSum = sum(z.AvStreamBankP)
     z.AvPtSrcFlowSum = sum(z.AvPtSrcFlow)
-    z.AvTileDrainSum = sum(AvTileDrain_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area,
+    z.AvTileDrainSum = sum(AvTileDrain_f(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area,
                                          z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
                                          z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap,
                                          z.SatStor_0, z.RecessionCoef, z.SeepCoef,
                                          z.Landuse, z.TileDrainDensity))
-    z.AvWithdrawalSum = sum(AvWithdrawal_2(z.NYrs, z.StreamWithdrawal, z.GroundWithdrawal))
+    z.AvWithdrawalSum = sum(AvWithdrawal_f(z.NYrs, z.StreamWithdrawal, z.GroundWithdrawal))
     z.AvTileDrainNSum = sum(z.AvTileDrainN)
     z.AvTileDrainPSum = sum(z.AvTileDrainP)
     z.AvTileDrainSedSum = sum(z.AvTileDrainSed)
     # z.AvPrecipitationSum = sum(z.AvPrecipitation)
     z.AvEvapoTransSum = sum(
-        AvEvapoTrans_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0,
+        AvEvapoTrans_f(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0,
                        z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs,
                        z.MaxWaterCap))
     z.AvGroundWaterSum = sum(
-        AvGroundWater_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
+        AvGroundWater_f(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
                         z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET,
                         z.DayHrs, z.MaxWaterCap,
                         z.SatStor_0, z.RecessionCoef, z.SeepCoef, z.Landuse, z.TileDrainDensity))
-    z.AvRunoffSum = sum(AvRunoff_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
+    z.AvRunoffSum = sum(AvRunoff_f(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
                                    z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.Qretention,
                                    z.PctAreaInfil,
                                    z.n25b, z.CN, z.Landuse, z.TileDrainDensity))
     z.AvErosionSum = sum(
-        AvErosion_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0,
+        AvErosion_f(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0,
                                   z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap,
                                   z.SatStor_0, z.RecessionCoef, z.SeepCoef, z.Qretention, z.PctAreaInfil, z.n25b, z.Landuse, z.TileDrainDensity, z.PointFlow,
                                   z.StreamWithdrawal, z.GroundWithdrawal, z.NumAnimals, z.AvgAnimalWt, z.StreamFlowVolAdj, z.SedAFactor_0,
                                   z.AvKF, z.AvSlope, z.SedAAdjust, z.StreamLength, z.n42b, z.n46c, z.n85d, z.AgLength, z.n42, z.n45, z.n85, z.UrbBankStab,
                                   z.SedDelivRatio_0, z.Acoef, z.KF, z.LS, z.C, z.P))
     z.AvSedYieldSum = sum(
-        AvSedYield_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
+        AvSedYield_f(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
                      z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV,
                      z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0, z.RecessionCoef, z.SeepCoef,
                      z.Qretention, z.PctAreaInfil, z.n25b, z.Landuse, z.TileDrainDensity, z.PointFlow,

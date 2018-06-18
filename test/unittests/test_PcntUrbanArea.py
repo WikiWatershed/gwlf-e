@@ -14,5 +14,5 @@ class TestPcntUrbanArea(unittest.TestCase):
     def test_PcntUrbanArea(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            PcntUrbanArea.PcntUrbanArea_2(z.NRur, z.NUrb, z.Area),
+            PcntUrbanArea.PcntUrbanArea_f(z.NRur, z.NUrb, z.Area),
             PcntUrbanArea.PcntUrbanArea(z.NRur, z.NUrb, z.Area), decimal=7)

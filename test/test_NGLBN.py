@@ -14,5 +14,5 @@ class TestNGLBN(unittest.TestCase):
     def test_NGLBN(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            NGLBN.NGLBN_2(),
+            NGLBN.NGLBN_f(),
             NGLBN.NGLBN(), decimal=7)

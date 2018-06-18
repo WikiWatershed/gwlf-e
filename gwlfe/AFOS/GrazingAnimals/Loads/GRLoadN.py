@@ -1,7 +1,8 @@
 from numpy import zeros
 
+from gwlfe.Memoization import memoize
 from gwlfe.GrazingAnimal import GrazingAnimal
-from gwlfe.GrazingAnimal import GrazingAnimal_2
+from gwlfe.GrazingAnimal import GrazingAnimal_f
 from gwlfe.MultiUse_Fxns.Constants import NAnimals
 from gwlfe.enums import YesOrNo
 
@@ -17,6 +18,6 @@ def GRLoadN(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN):
     return result
 
 
-def GRLoadN_2(GrazingAnimal_0,NumAnimals,AvgAnimalWt,AnimalDailyN):
-    grazing_animals = GrazingAnimal_2(GrazingAnimal_0)
+def GRLoadN_f(GrazingAnimal_0,NumAnimals,AvgAnimalWt,AnimalDailyN):
+    grazing_animals = GrazingAnimal_f(GrazingAnimal_0)
     return (NumAnimals[grazing_animals] * AvgAnimalWt[grazing_animals] / 1000) * AnimalDailyN[grazing_animals] * 365

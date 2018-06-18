@@ -3,12 +3,12 @@ from numpy import tile
 from numpy import where
 from numpy import zeros
 
-from CNP import CNP, CNP_2
-from CNumPervReten import CNumPervReten, CNumPervReten_2
+from CNP import CNP, CNP_f
+from CNumPervReten import CNumPervReten, CNumPervReten_f
 from Memoization import memoize
 # from Timer import time_function
 from NLU import NLU
-from Water import Water, Water_2
+from Water import Water, Water_f
 
 
 @memoize
@@ -36,14 +36,14 @@ def QrunP(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, CNP_0, AntMoist_0
 
 
 @memoize
-def QrunP_2(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, CNP_0, AntMoist_0, Grow_0):
+def QrunP_f(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, CNP_0, AntMoist_0, Grow_0):
     nlu = NLU(NRur, NUrb)
     result = zeros((NYrs, 12, 31, nlu))
-    water = repeat(Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)[:, :, :, None], nlu, axis=3)
+    water = repeat(Water_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec)[:, :, :, None], nlu, axis=3)
     TempE = repeat(Temp[:, :, :, None], nlu, axis=3)
-    c_num_perv_reten = CNumPervReten_2(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, NRur, NUrb, CNP_0, Grow_0)
+    c_num_perv_reten = CNumPervReten_f(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, NRur, NUrb, CNP_0, Grow_0)
     c_num_perv_reten02 = 0.2 * c_num_perv_reten
-    cnp = CNP_2(NRur, NUrb, CNP_0)
+    cnp = CNP_f(NRur, NUrb, CNP_0)
     cnp_1 = tile(cnp[1][None, None, None, :], (NYrs, 12, 31, 1))
     nonzero = where((TempE > 0) & (water >= 0.05) & (cnp_1 > 0) & (water >= c_num_perv_reten02))
     result[nonzero] = (water[nonzero] - c_num_perv_reten02[nonzero]) ** 2 / (

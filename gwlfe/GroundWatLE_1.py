@@ -2,11 +2,11 @@ from numpy import maximum
 from numpy import zeros
 
 from GroundWatLE import GroundWatLE
-from GroundWatLE import GroundWatLE_2
+from GroundWatLE import GroundWatLE_f
 from Memoization import memoize
 # from Timer import time_function
 from TileDrainGW import TileDrainGW
-from TileDrainGW import TileDrainGW_2
+from TileDrainGW import TileDrainGW_f
 
 
 @memoize
@@ -29,16 +29,16 @@ def GroundWatLE_1(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI
     return result
 
 @memoize
-def GroundWatLE_1_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
+def GroundWatLE_1_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
                   ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0, RecessionCoef, SeepCoef,
                   Landuse, TileDrainDensity):
     result = zeros((NYrs, 12))
-    tiledraingw = TileDrainGW_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
+    tiledraingw = TileDrainGW_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
                                 CNP_0,
                                 Imper, ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0,
                                 RecessionCoef,
                                 SeepCoef, Landuse, TileDrainDensity)
-    grounwatle = GroundWatLE_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
+    grounwatle = GroundWatLE_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
                                         Grow_0,
                                         CNP_0, Imper,
                                         ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0,

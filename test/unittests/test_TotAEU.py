@@ -16,5 +16,5 @@ class TestTotAEU(unittest.TestCase):
     def test_TotAEU(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            TotAEU.TotAEU_2(z.NumAnimals, z.AvgAnimalWt),
+            TotAEU.TotAEU_f(z.NumAnimals, z.AvgAnimalWt),
             TotAEU.TotAEU(z.NumAnimals, z.AvgAnimalWt), decimal=7)

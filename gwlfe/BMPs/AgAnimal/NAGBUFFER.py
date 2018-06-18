@@ -1,11 +1,11 @@
 from gwlfe.AFOS.GrazingAnimals.Losses.GRLBN import GRLBN
-from gwlfe.AFOS.GrazingAnimals.Losses.GRLBN import GRLBN_2
+from gwlfe.AFOS.GrazingAnimals.Losses.GRLBN import GRLBN_f
 from gwlfe.AFOS.GrazingAnimals.Losses.GRStreamN import AvGRStreamN
-from gwlfe.AFOS.GrazingAnimals.Losses.GRStreamN import AvGRStreamN_2
+from gwlfe.AFOS.GrazingAnimals.Losses.GRStreamN import AvGRStreamN_f
 from gwlfe.AFOS.nonGrazingAnimals.Losses.NGLostBarnN import AvNGLostBarnNSum
-from gwlfe.AFOS.nonGrazingAnimals.Losses.NGLostBarnN import AvNGLostBarnNSum_2
+from gwlfe.AFOS.nonGrazingAnimals.Losses.NGLostBarnN import AvNGLostBarnNSum_f
 from gwlfe.Outputs.AvAnimalNSum.AvAnimalNSum import AvAnimalNSum
-from gwlfe.Outputs.AvAnimalNSum.AvAnimalNSum import AvAnimalNSum_2
+from gwlfe.Outputs.AvAnimalNSum.AvAnimalNSum import AvAnimalNSum_f
 
 
 def NAGBUFFER(n42, n43, n64, NYrs, NGPctManApp, GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN, NGBarnNRate,
@@ -28,17 +28,17 @@ def NAGBUFFER(n42, n43, n64, NYrs, NGPctManApp, GrazingAnimal, NumAnimals, AvgAn
     return result
 
 
-def NAGBUFFER_2(n42, n43, n64, NYrs, NGPctManApp, GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN, NGBarnNRate,
+def NAGBUFFER_f(n42, n43, n64, NYrs, NGPctManApp, GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN, NGBarnNRate,
               Prec, DaysMonth, AWMSNgPct, NgAWMSCoeffN, RunContPct, RunConCoeffN, GRPctManApp, PctGrazing, GRBarnNRate,
               AWMSGrPct, GrAWMSCoeffN, PctStreams, NGAppNRate, NGPctSoilIncRate, GRAppNRate, GRPctSoilIncRate,
               GrazingNRate):
     if n42 > 0:
-        nglbn = AvNGLostBarnNSum_2(NYrs, NGPctManApp, GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN, NGBarnNRate,
+        nglbn = AvNGLostBarnNSum_f(NYrs, NGPctManApp, GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN, NGBarnNRate,
                                  Prec, DaysMonth, AWMSNgPct, NgAWMSCoeffN, RunContPct, RunConCoeffN)
-        grlbn = GRLBN_2(NYrs, GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN, GRPctManApp, PctGrazing, GRBarnNRate,
+        grlbn = GRLBN_f(NYrs, GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN, GRPctManApp, PctGrazing, GRBarnNRate,
                       Prec, DaysMonth, AWMSGrPct, GrAWMSCoeffN, RunContPct, RunConCoeffN)
-        grsn = AvGRStreamN_2(PctStreams, PctGrazing, GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN)
-        av_animal_n_sum = AvAnimalNSum_2(NYrs, NGPctManApp, GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN, NGAppNRate,
+        grsn = AvGRStreamN_f(PctStreams, PctGrazing, GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN)
+        av_animal_n_sum = AvAnimalNSum_f(NYrs, NGPctManApp, GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN, NGAppNRate,
                                        Prec, DaysMonth, NGPctSoilIncRate, GRPctManApp, GRAppNRate, GRPctSoilIncRate,
                                        NGBarnNRate, AWMSNgPct, NgAWMSCoeffN, RunContPct, RunConCoeffN, PctGrazing,
                                        GRBarnNRate, AWMSGrPct, GrAWMSCoeffN, PctStreams, GrazingNRate)

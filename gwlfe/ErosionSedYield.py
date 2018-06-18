@@ -24,7 +24,7 @@ def ErosionSedYield(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef, NRur, KF, LS
     sedtrans = SedTrans(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0,
                         Imper,
                         ISRR, ISRA, Qretention, PctAreaInfil, n25b, CN)
-    streambankeros_2 = StreamBankEros_1(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
+    streambankeros_f = StreamBankEros_1(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
                                         Grow_0, CNP_0, Imper, ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs,
                                         MaxWaterCap, SatStor_0, RecessionCoef, SeepCoef, Qretention, PctAreaInfil, n25b,
                                         Landuse, TileDrainDensity, PointFlow, StreamWithdrawal, GroundWithdrawal
@@ -45,12 +45,12 @@ def ErosionSedYield(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef, NRur, KF, LS
             sedyield[Y][i] = seddelivratio * sedtrans[Y][i] * sedyield[Y][i]
             # TODO These are now used to calculate: SedYieldTotal, ErosionTotal, TotalNitr, and TotalPhos
         for i in range(12):
-            sedyield[Y][i] += streambankeros_2[Y][i] / 1000
+            sedyield[Y][i] += streambankeros_f[Y][i] / 1000
             if seddelivratio > 0 and erosion[Y][i] < sedyield[Y][i]:
                 erosion[Y][i] = sedyield[Y][i] / seddelivratio
             # TODO Now calculated is: AvSedYield, ErosSum, and AvErosion
     pass
 
 
-def ErosionSedYield_2():
+def ErosionSedYield_f():
     pass

@@ -20,7 +20,7 @@ def NewCN(NRur, NUrb, CN):
 # @time_function
 # @jit(cache=True, nopython = True)
 @memoize
-def NewCN_2(NRur, NUrb, CN):
+def NewCN_f(NRur, NUrb, CN):
     nlu = NLU(NRur, NUrb)
     result = zeros((3, nlu))
     result[0,:] = CN / (2.334 - 0.01334 * CN)

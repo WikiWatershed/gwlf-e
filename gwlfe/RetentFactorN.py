@@ -6,5 +6,5 @@ from Memoization import memoize
 def RetentFactorN(ShedAreaDrainLake, RetentNLake):
     return (1 - (ShedAreaDrainLake * RetentNLake))
 
-# def RetentFactorN_2():
+# def RetentFactorN_f():
 #     pass

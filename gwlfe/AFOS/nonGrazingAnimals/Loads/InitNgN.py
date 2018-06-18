@@ -1,9 +1,10 @@
 from numpy import sum
 
 from NGLoadN import NGLoadN
-from NGLoadN import NGLoadN_2
+from NGLoadN import NGLoadN_f
 from gwlfe.GrazingAnimal import GrazingAnimal
 from gwlfe.enums import YesOrNo
+from gwlfe.Memoization import memoize
 
 
 def InitNgN(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN):
@@ -15,7 +16,7 @@ def InitNgN(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN):
             result += ng_load_n[a]
     return result
 
-
-def InitNgN_2(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN):
-    ng_load_n = NGLoadN_2(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN)
+@memoize
+def InitNgN_f(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN):
+    ng_load_n = NGLoadN_f(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN)
     return sum(ng_load_n)

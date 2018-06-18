@@ -3,10 +3,10 @@ from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
 
-from MultiUse_Fxns.LossFactAdj import LossFactAdj_2
-from StreamFlow_1 import StreamFlow_1_2
+from MultiUse_Fxns.LossFactAdj import LossFactAdj_f
+from StreamFlow_1 import StreamFlow_1_f
 from TotAreaMeters import TotAreaMeters
-from UrbRunoffLiter import UrbRunoffLiter_2
+from UrbRunoffLiter import UrbRunoffLiter_f
 
 """
 Imported from AFOS.bas
@@ -30,7 +30,7 @@ def AnimalOperations(z, Y):
         # if z.NGLostManN[Y][i] < 0:
         #     z.NGLostManN[Y][i] = 0
 
-        z.NGLostManP[Y][i] = (z.NGAppManP[i] * z.NGAppPRate[i] * LossFactAdj_2(z.Prec, z.DaysMonth)[Y][i]
+        z.NGLostManP[Y][i] = (z.NGAppManP[i] * z.NGAppPRate[i] * LossFactAdj_f(z.Prec, z.DaysMonth)[Y][i]
                               * (1 - z.NGPctSoilIncRate[i]))
 
         if z.NGLostManP[Y][i] > z.NGAppManP[i]:
@@ -38,7 +38,7 @@ def AnimalOperations(z, Y):
         if z.NGLostManP[Y][i] < 0:
             z.NGLostManP[Y][i] = 0
 
-        z.NGLostManFC[Y][i] = (z.NGAppManFC[i] * z.NGAppFCRate[i] * LossFactAdj_2(z.Prec, z.DaysMonth)[Y][i]
+        z.NGLostManFC[Y][i] = (z.NGAppManFC[i] * z.NGAppFCRate[i] * LossFactAdj_f(z.Prec, z.DaysMonth)[Y][i]
                                * (1 - z.NGPctSoilIncRate[i]))
 
         if z.NGLostManFC[Y][i] > z.NGAppManFC[i]:
@@ -57,10 +57,10 @@ def AnimalOperations(z, Y):
         # if z.NGLostBarnN[Y][i] < 0:
         #     z.NGLostBarnN[Y][i] = 0
 
-        z.NGLostBarnP[Y][i] = (z.NGInitBarnP[i] * z.NGBarnPRate[i] * LossFactAdj_2(z.Prec, z.DaysMonth)[Y][i]
-                               - z.NGInitBarnP[i] * z.NGBarnPRate[i] * LossFactAdj_2(z.Prec, z.DaysMonth)[Y][
+        z.NGLostBarnP[Y][i] = (z.NGInitBarnP[i] * z.NGBarnPRate[i] * LossFactAdj_f(z.Prec, z.DaysMonth)[Y][i]
+                               - z.NGInitBarnP[i] * z.NGBarnPRate[i] * LossFactAdj_f(z.Prec, z.DaysMonth)[Y][
                                    i] * z.AWMSNgPct * z.NgAWMSCoeffP
-                               + z.NGInitBarnP[i] * z.NGBarnPRate[i] * LossFactAdj_2(z.Prec, z.DaysMonth)[Y][
+                               + z.NGInitBarnP[i] * z.NGBarnPRate[i] * LossFactAdj_f(z.Prec, z.DaysMonth)[Y][
                                    i] * z.RunContPct * z.RunConCoeffP)
 
         if z.NGLostBarnP[Y][i] > z.NGInitBarnP[i]:
@@ -68,10 +68,10 @@ def AnimalOperations(z, Y):
         if z.NGLostBarnP[Y][i] < 0:
             z.NGLostBarnP[Y][i] = 0
 
-        z.NGLostBarnFC[Y][i] = (z.NGInitBarnFC[i] * z.NGBarnFCRate[i] * LossFactAdj_2(z.Prec, z.DaysMonth)[Y][i]
-                                - z.NGInitBarnFC[i] * z.NGBarnFCRate[i] * LossFactAdj_2(z.Prec, z.DaysMonth)[Y][
+        z.NGLostBarnFC[Y][i] = (z.NGInitBarnFC[i] * z.NGBarnFCRate[i] * LossFactAdj_f(z.Prec, z.DaysMonth)[Y][i]
+                                - z.NGInitBarnFC[i] * z.NGBarnFCRate[i] * LossFactAdj_f(z.Prec, z.DaysMonth)[Y][
                                     i] * z.AWMSNgPct * z.NgAWMSCoeffP
-                                + z.NGInitBarnFC[i] * z.NGBarnFCRate[i] * LossFactAdj_2(z.Prec, z.DaysMonth)[Y][
+                                + z.NGInitBarnFC[i] * z.NGBarnFCRate[i] * LossFactAdj_f(z.Prec, z.DaysMonth)[Y][
                                     i] * z.RunContPct * z.RunConCoeffP)
 
         if z.NGLostBarnFC[Y][i] > z.NGInitBarnFC[i]:
@@ -88,7 +88,7 @@ def AnimalOperations(z, Y):
         # if z.GRLostManN[Y][i] < 0:
         #     z.GRLostManN[Y][i] = 0
 
-        z.GRLostManP[Y][i] = (z.GRAppManP[i] * z.GRAppPRate[i] * LossFactAdj_2(z.Prec, z.DaysMonth)[Y][i]
+        z.GRLostManP[Y][i] = (z.GRAppManP[i] * z.GRAppPRate[i] * LossFactAdj_f(z.Prec, z.DaysMonth)[Y][i]
                               * (1 - z.GRPctSoilIncRate[i]))
 
         if z.GRLostManP[Y][i] > z.GRAppManP[i]:
@@ -96,7 +96,7 @@ def AnimalOperations(z, Y):
         if z.GRLostManP[Y][i] < 0:
             z.GRLostManP[Y][i] = 0
 
-        z.GRLostManFC[Y][i] = (z.GRAppManFC[i] * z.GRAppFCRate[i] * LossFactAdj_2(z.Prec, z.DaysMonth)[Y][i]
+        z.GRLostManFC[Y][i] = (z.GRAppManFC[i] * z.GRAppFCRate[i] * LossFactAdj_f(z.Prec, z.DaysMonth)[Y][i]
                                * (1 - z.GRPctSoilIncRate[i]))
 
         if z.GRLostManFC[Y][i] > z.GRAppManFC[i]:
@@ -115,10 +115,10 @@ def AnimalOperations(z, Y):
         # if z.GRLostBarnN[Y][i] < 0:
         #     z.GRLostBarnN[Y][i] = 0
 
-        z.GRLostBarnP[Y][i] = (z.GRInitBarnP[i] * z.GRBarnPRate[i] * LossFactAdj_2(z.Prec, z.DaysMonth)[Y][i]
-                               - z.GRInitBarnP[i] * z.GRBarnPRate[i] * LossFactAdj_2(z.Prec, z.DaysMonth)[Y][
+        z.GRLostBarnP[Y][i] = (z.GRInitBarnP[i] * z.GRBarnPRate[i] * LossFactAdj_f(z.Prec, z.DaysMonth)[Y][i]
+                               - z.GRInitBarnP[i] * z.GRBarnPRate[i] * LossFactAdj_f(z.Prec, z.DaysMonth)[Y][
                                    i] * z.AWMSGrPct * z.GrAWMSCoeffP
-                               + z.GRInitBarnP[i] * z.GRBarnPRate[i] * LossFactAdj_2(z.Prec, z.DaysMonth)[Y][
+                               + z.GRInitBarnP[i] * z.GRBarnPRate[i] * LossFactAdj_f(z.Prec, z.DaysMonth)[Y][
                                    i] * z.RunContPct * z.RunConCoeffP)
 
         if z.GRLostBarnP[Y][i] > z.GRInitBarnP[i]:
@@ -126,10 +126,10 @@ def AnimalOperations(z, Y):
         if z.GRLostBarnP[Y][i] < 0:
             z.GRLostBarnP[Y][i] = 0
 
-        z.GRLostBarnFC[Y][i] = (z.GRInitBarnFC[i] * z.GRBarnFCRate[i] * LossFactAdj_2(z.Prec, z.DaysMonth)[Y][i]
-                                - z.GRInitBarnFC[i] * z.GRBarnFCRate[i] * LossFactAdj_2(z.Prec, z.DaysMonth)[Y][
+        z.GRLostBarnFC[Y][i] = (z.GRInitBarnFC[i] * z.GRBarnFCRate[i] * LossFactAdj_f(z.Prec, z.DaysMonth)[Y][i]
+                                - z.GRInitBarnFC[i] * z.GRBarnFCRate[i] * LossFactAdj_f(z.Prec, z.DaysMonth)[Y][
                                     i] * z.AWMSGrPct * z.GrAWMSCoeffP
-                                + z.GRInitBarnFC[i] * z.GRBarnFCRate[i] * LossFactAdj_2(z.Prec, z.DaysMonth)[Y][
+                                + z.GRInitBarnFC[i] * z.GRBarnFCRate[i] * LossFactAdj_f(z.Prec, z.DaysMonth)[Y][
                                     i] * z.RunContPct * z.RunConCoeffP)
 
         if z.GRLostBarnFC[Y][i] > z.GRInitBarnFC[i]:
@@ -146,7 +146,7 @@ def AnimalOperations(z, Y):
         #     z.GRLossN[Y][i] = 0
 
         z.GRLossP[Y][i] = ((z.GrazingP[i] - z.GRStreamP[i])
-                           * z.GrazingPRate[i] * LossFactAdj_2(z.Prec, z.DaysMonth)[Y][i])
+                           * z.GrazingPRate[i] * LossFactAdj_f(z.Prec, z.DaysMonth)[Y][i])
 
         if z.GRLossP[Y][i] > (z.GrazingP[i] - z.GRStreamP[i]):
             z.GRLossP[Y][i] = (z.GrazingP[i] - z.GRStreamP[i])
@@ -154,7 +154,7 @@ def AnimalOperations(z, Y):
             z.GRLossP[Y][i] = 0
 
         z.GRLossFC[Y][i] = ((z.GrazingFC[i] - z.GRStreamFC[i])
-                            * z.GrazingFCRate[i] * LossFactAdj_2(z.Prec, z.DaysMonth)[Y][i])
+                            * z.GrazingFCRate[i] * LossFactAdj_f(z.Prec, z.DaysMonth)[Y][i])
 
         if z.GRLossFC[Y][i] > (z.GrazingFC[i] - z.GRStreamFC[i]):
             z.GRLossFC[Y][i] = (z.GrazingFC[i] - z.GRStreamFC[i])
@@ -198,7 +198,7 @@ def AnimalOperations(z, Y):
                           * z.SepticFailure
                           * (1 - z.InstreamDieoff))
 
-        if LossFactAdj_2(z.Prec, z.DaysMonth)[Y][i] * (1 - z.WuDieoff) > 1:
+        if LossFactAdj_f(z.Prec, z.DaysMonth)[Y][i] * (1 - z.WuDieoff) > 1:
             z.UrbOrgs[Y][i] = (z.UrbRunoffLiter[Y][i]
                                * (z.UrbEMC * 10)
                                * (1 - z.InstreamDieoff))
@@ -209,7 +209,7 @@ def AnimalOperations(z, Y):
                                 * (1 - z.InstreamDieoff))
         else:
             z.UrbOrgs[Y][i] = (
-                    UrbRunoffLiter_2(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.NRur, z.NUrb, z.Area,
+                    UrbRunoffLiter_f(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.NRur, z.NUrb, z.Area,
                                      z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA)[Y][i]
                                * (z.UrbEMC * 10)
                                * (1 - z.WuDieoff)
@@ -228,7 +228,7 @@ def AnimalOperations(z, Y):
                              + z.WildOrgs[Y][i]
                              + z.AnimalFC[Y][i])
 
-        z.CMStream[Y][i] = (StreamFlow_1_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
+        z.CMStream[Y][i] = (StreamFlow_1_f(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
                 z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0, z.RecessionCoef, z.SeepCoef)[Y][i] / 100) * TotAreaMeters(z.NRur, z.NUrb, z.Area)
 
         if z.CMStream[Y][i] > 0:

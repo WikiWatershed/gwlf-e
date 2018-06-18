@@ -3,11 +3,11 @@ from numpy import tile
 from numpy import where
 from numpy import zeros
 
-from CNum import CNum, CNum_2
+from CNum import CNum, CNum_f
 from Memoization import memoize
 # from Timer import time_function
 from NLU import NLU
-from Water import Water, Water_2
+from Water import Water, Water_f
 
 
 @memoize
@@ -28,12 +28,12 @@ def Retention(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, NRur, NUrb, C
     return result
 
 @memoize
-def Retention_2(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, NRur, NUrb, CN, Grow_0):
+def Retention_f(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, NRur, NUrb, CN, Grow_0):
     nlu = NLU(NRur, NUrb)
     result = zeros((NYrs, 12, 31, nlu))
-    c_num = CNum_2(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, CN, NRur, NUrb, Grow_0)
+    c_num = CNum_f(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, CN, NRur, NUrb, Grow_0)
     cnrur = tile(CN[:NRur][None, None, None, :], (NYrs, 12, 31, 1))
-    water = repeat(Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)[:,:,:,None],NRur, axis=3 )
+    water = repeat(Water_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec)[:,:,:,None],NRur, axis=3 )
     TempE = repeat(Temp[:, :, :, None], NRur, axis=3)
     result[where((TempE>0) & (water > 0.01) & (cnrur > 0))] = 2540 / c_num[where((TempE>0) & (water > 0.01) & (cnrur>0))] - 25.4
     result[where(result<0)] = 0

@@ -13,7 +13,7 @@ def PtSrcFlow(NYrs, PointFlow):
     return result
 
 
-def PtSrcFlow_2(NYrs, PointFlow):
+def PtSrcFlow_f(NYrs, PointFlow):
     return repeat(PointFlow[:, None], NYrs, axis=1).T
 
 
@@ -24,6 +24,6 @@ def AvPtSrcFlow(NYrs, PtSrcFlow):
             result[i] += PtSrcFlow[Y][i] / NYrs
     return result
 
-
-def AvPtSrcFlow_2(PointFlow):
+@memoize
+def AvPtSrcFlow_f(PointFlow):
     return PointFlow

@@ -16,5 +16,5 @@ class TestAvCNUrb(unittest.TestCase):
     def test_AvCNUrb(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            AvCNUrb.AvCNUrb_2(z.NRur, z.NUrb, z.CNI_0, z.CNP_0, z.Imper, z.Area),
+            AvCNUrb.AvCNUrb_f(z.NRur, z.NUrb, z.CNI_0, z.CNP_0, z.Imper, z.Area),
             AvCNUrb.AvCNUrb(z.NRur, z.NUrb, z.CNI_0, z.CNP_0, z.Imper, z.Area), decimal=7)

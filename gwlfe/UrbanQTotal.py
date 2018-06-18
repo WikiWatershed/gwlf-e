@@ -6,8 +6,8 @@ from LU import LU
 from Memoization import memoize
 # from Timer import time_function
 from NLU import NLU
-from QrunI import QrunI, QrunI_2
-from QrunP import QrunP, QrunP_2
+from QrunI import QrunI, QrunI_f
+from QrunP import QrunP, QrunP_f
 from UrbAreaTotal import UrbAreaTotal
 from Water import Water
 
@@ -42,12 +42,12 @@ def UrbanQTotal(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, Area, CNI_0
 
 # @time_function
 @memoize
-def UrbanQTotal_2(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper, ISRR,
+def UrbanQTotal_f(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper, ISRR,
                 ISRA):
     result = zeros((NYrs, 12, 31))
     urb_area_total = UrbAreaTotal(NRur, NUrb, Area)
-    qrun_i = QrunI_2(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, CNI_0, AntMoist_0, Grow_0)
-    qrun_p = QrunP_2(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, CNP_0, AntMoist_0, Grow_0)
+    qrun_i = QrunI_f(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, CNI_0, AntMoist_0, Grow_0)
+    qrun_p = QrunP_f(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, CNP_0, AntMoist_0, Grow_0)
     z= zeros((10,))
     ISRR = hstack((z,ISRR))
     ISRA = hstack((z,ISRA))

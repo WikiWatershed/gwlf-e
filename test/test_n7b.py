@@ -14,5 +14,5 @@ class Testn7b(unittest.TestCase):
     def test_n7b(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            N7b.n7b_2(),
+            N7b.n7b_f(),
             N7b.N7b(), decimal=7)

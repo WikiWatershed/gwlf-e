@@ -14,5 +14,5 @@ class TestNAWMSP(unittest.TestCase):
     def test_NAWMSP(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            NAWMSP.NAWMSP_2(),
+            NAWMSP.NAWMSP_f(),
             NAWMSP.NAWMSP(), decimal=7)

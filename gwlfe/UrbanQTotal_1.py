@@ -3,7 +3,7 @@ from numpy import zeros
 from AreaTotal import AreaTotal
 from Memoization import memoize
 from UrbAreaTotal import UrbAreaTotal
-from UrbanQTotal import UrbanQTotal, UrbanQTotal_2
+from UrbanQTotal import UrbanQTotal, UrbanQTotal_f
 # from Timer import time_function
 from Water import Water
 
@@ -28,10 +28,10 @@ def UrbanQTotal_1(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI
     return result
 
 @memoize
-def UrbanQTotal_1_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
+def UrbanQTotal_1_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
                   ISRR, ISRA):
     urban_area_total = UrbAreaTotal(NRur, NUrb, Area)
     area_total = AreaTotal(NRur, NUrb, Area)
-    urban_q_total = UrbanQTotal_2(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, Area, CNI_0, AntMoist_0, Grow_0,
+    urban_q_total = UrbanQTotal_f(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, Area, CNI_0, AntMoist_0, Grow_0,
                                 CNP_0, Imper, ISRR, ISRA)
     return urban_q_total * urban_area_total / area_total

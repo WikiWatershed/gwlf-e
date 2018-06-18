@@ -5,19 +5,19 @@ from numpy import where
 from numpy import zeros
 
 from AdjUrbanQTotal import AdjUrbanQTotal
-from AdjUrbanQTotal import AdjUrbanQTotal_2
+from AdjUrbanQTotal import AdjUrbanQTotal_f
 from LU_1 import LU_1
 # from Timer import time_function
 from Memoization import memoize
 from NLU import NLU
 from UrbLoadRed import UrbLoadRed
-from UrbLoadRed import UrbLoadRed_2
+from UrbLoadRed import UrbLoadRed_f
 from WashImperv import WashImperv
-from WashImperv import WashImperv_2
+from WashImperv import WashImperv_f
 from WashPerv import WashPerv
-from WashPerv import WashPerv_2
+from WashPerv import WashPerv_f
 from Water import Water
-from Water import Water_2
+from Water import Water_f
 
 
 @memoize
@@ -65,28 +65,28 @@ def SurfaceLoad(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Area, CNI_0
     return result
 
 @memoize
-def SurfaceLoad_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0,
+def SurfaceLoad_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0,
                   Imper, ISRR, ISRA, Qretention, PctAreaInfil, Nqual, LoadRateImp,
                   LoadRatePerv, Storm, UrbBMPRed):
     nlu = NLU(NRur, NUrb)
     result = zeros((NYrs, 12, 31, nlu - NRur, Nqual))
-    water = Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
-    adjurbanqtotal = AdjUrbanQTotal_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
+    water = Water_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
+    adjurbanqtotal = AdjUrbanQTotal_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
                                           Grow_0, CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil)
     # print(np.where((Temp > 0) & (water > 0.01) & (adjurbanqtotal_1 > 0.001)).shape)
     nonzeroday = where((Temp > 0) & (water > 0.01) & (adjurbanqtotal > 0.001))
     washimperv = reshape(
         repeat(
-            WashImperv_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, CNI_0, AntMoist_0, Grow_0, NRur, NUrb)[:, :, :,
+            WashImperv_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec, CNI_0, AntMoist_0, Grow_0, NRur, NUrb)[:, :, :,
             NRur:],
             repeats=Nqual,
             axis=3), (NYrs, 12, 31, nlu - NRur, Nqual))
     washperv = reshape(
         repeat(
-            WashPerv_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, CNP_0, AntMoist_0, Grow_0, NRur, NUrb)[:, :, :, NRur:],
+            WashPerv_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec, CNP_0, AntMoist_0, Grow_0, NRur, NUrb)[:, :, :, NRur:],
             repeats=Nqual,
             axis=3), (NYrs, 12, 31, nlu - NRur, Nqual))
-    urbloadred = UrbLoadRed_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
+    urbloadred = UrbLoadRed_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
                               CNP_0,
                               Imper, ISRR, ISRA, Qretention, PctAreaInfil, Nqual, Storm, UrbBMPRed)[:, :, :, NRur:]
 

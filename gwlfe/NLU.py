@@ -6,5 +6,5 @@ def NLU(NRur, NUrb):
     return NRur + NUrb
 
 
-# def NLU_2():
+# def NLU_f():
 #     pass

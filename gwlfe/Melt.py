@@ -21,6 +21,6 @@ def Melt(NYrs, DaysMonth, Temp, InitSnow_0, Prec):
                 init_snow_yesterday = init_snow[Y][i][j]
     return result
 
-def Melt_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec):
+def Melt_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec):
     init_snow_yesterday = InitSnowYesterday(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     return where((Temp>0) & (init_snow_yesterday > 0.001), 0.45 * Temp, 0)

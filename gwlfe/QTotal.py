@@ -3,12 +3,12 @@ from numpy import zeros
 
 from Memoization import memoize
 from RuralQTotal import RuralQTotal
-from RuralQTotal import RuralQTotal_2
+from RuralQTotal import RuralQTotal_f
 # from Timer import time_function
 from UrbanQTotal_1 import UrbanQTotal_1
-from UrbanQTotal_1 import UrbanQTotal_1_2
+from UrbanQTotal_1 import UrbanQTotal_1_f
 from Water import Water
-from Water import Water_2
+from Water import Water_f
 
 
 @memoize
@@ -29,13 +29,13 @@ def QTotal(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, Ant
 
 
 @memoize
-def QTotal_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
+def QTotal_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
              ISRR, ISRA, CN):
     result = zeros((NYrs, 12, 31))
-    urban_q_total_1 = UrbanQTotal_1_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
+    urban_q_total_1 = UrbanQTotal_1_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
                                       Grow_0, CNP_0, Imper, ISRR, ISRA)
-    rural_q_total = RuralQTotal_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, CN, NUrb, AntMoist_0, Grow_0, Area)
-    water = Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
+    rural_q_total = RuralQTotal_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, CN, NUrb, AntMoist_0, Grow_0, Area)
+    water = Water_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     result[where((Temp > 0) & (water > 0))] = urban_q_total_1[where((Temp > 0) & (water > 0))] + rural_q_total[
         where((Temp > 0) & (water > 0))]
 

@@ -1,6 +1,6 @@
 # from Timer import time_function
 from AreaTotal import AreaTotal
-from AreaTotal import AreaTotal_2
+from AreaTotal import AreaTotal_f
 from TotLAEU import TotLAEU
 
 
@@ -16,8 +16,8 @@ def AEU(NumAnimals, AvgAnimalWt, NRur, NUrb, Area):
     return result
 
 
-def AEU_2(NumAnimals, AvgAnimalWt, Area):
-    areatotal = AreaTotal_2(Area)
+def AEU_f(NumAnimals, AvgAnimalWt, Area):
+    areatotal = AreaTotal_f(Area)
     totLAEU = TotLAEU(NumAnimals, AvgAnimalWt)
     if totLAEU > 0 and areatotal > 0:
         return totLAEU / (areatotal * 2.471)

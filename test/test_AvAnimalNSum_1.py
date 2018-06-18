@@ -14,5 +14,5 @@ class TestAvAnimalNSum_1(unittest.TestCase):
     def test_AvAnimalNSum_1(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            AvAnimalNSum_1.AvAnimalNSum_1_2(),
+            AvAnimalNSum_1.AvAnimalNSum_1_f(),
             AvAnimalNSum_1.AvAnimalNSum_1(), decimal=7)

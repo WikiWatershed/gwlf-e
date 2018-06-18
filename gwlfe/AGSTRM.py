@@ -8,8 +8,8 @@ def AGSTRM(AgLength, StreamLength):
     result = AgLength / StreamLength if StreamLength > 0 else 0
     return result
 
-
-def AGSTRM_2(AgLength, StreamLength):
+@memoize
+def AGSTRM_f(AgLength, StreamLength):
     if(StreamLength > 0):
         return AgLength / StreamLength
     else:

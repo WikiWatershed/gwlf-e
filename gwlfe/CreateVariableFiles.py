@@ -15,7 +15,7 @@ else:
                     "def %s():\n"
                     "    pass\n"
                     "\n\n"
-                    "def %s_2():\n"
+                    "def %s_f():\n"
                     "    pass\n"%(variable_name,variable_name)
                    )
 
@@ -41,5 +41,5 @@ else:
                     "    def test_{variable}(self):\n"
                     "        z = self.z\n"
                     "        np.testing.assert_array_almost_equal(\n"
-                    "            {variable}.{variable}_2(),\n"
+                    "            {variable}.{variable}_f(),\n"
                     "            {variable}.{variable}(), decimal=7)".format(variable=variable_name))

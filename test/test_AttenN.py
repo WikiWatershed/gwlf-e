@@ -16,5 +16,5 @@ class TestAttenN(unittest.TestCase):
     # def test_AttenN(self):
     #     z = self.z
     #     np.testing.assert_array_almost_equal(
-    #         AttenN.AttenN_2(),
+    #         AttenN.AttenN_f(),
     #         AttenN.AttenN(), decimal=7)

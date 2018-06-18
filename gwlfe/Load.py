@@ -6,11 +6,11 @@ from numpy import zeros
 # from Timer import time_function
 from Memoization import memoize
 from NetDisLoad import NetDisLoad
-from NetDisLoad import NetDisLoad_2
+from NetDisLoad import NetDisLoad_f
 from NetSolidLoad import NetSolidLoad
-from NetSolidLoad import NetSolidLoad_2
+from NetSolidLoad import NetSolidLoad_f
 from Water import Water
-from Water import Water_2
+from Water import Water_f
 
 
 @memoize
@@ -39,15 +39,15 @@ def Load(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMo
     return result
 
 
-def Load_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
+def Load_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
                    Grow_0, CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil, Nqual, LoadRateImp,
                    LoadRatePerv, Storm, UrbBMPRed, DisFract, FilterWidth, PctStrmBuf):
-    water = repeat(Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)[:, :, :, None], Nqual, axis=3)
+    water = repeat(Water_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec)[:, :, :, None], Nqual, axis=3)
     temp = repeat(Temp[:, :, :, None], Nqual, axis=3)
-    netdisload = NetDisLoad_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
+    netdisload = NetDisLoad_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
                               Grow_0, CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil, Nqual, LoadRateImp,
                               LoadRatePerv, Storm, UrbBMPRed, DisFract, FilterWidth, PctStrmBuf)
-    netsolidload = NetSolidLoad_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
+    netsolidload = NetSolidLoad_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
                    Grow_0, CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil, Nqual, LoadRateImp,
                    LoadRatePerv, Storm, UrbBMPRed, DisFract, FilterWidth, PctStrmBuf)
     result = where((temp > 0 ) & (water > 0.01), netdisload + netsolidload, 0 )

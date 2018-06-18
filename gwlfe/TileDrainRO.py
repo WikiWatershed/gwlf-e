@@ -2,7 +2,7 @@ from numpy import zeros
 
 # from Timer import time_function
 from AgRunoff import AgRunoff
-from AgRunoff import AgRunoff_2
+from AgRunoff import AgRunoff_f
 from Memoization import memoize
 
 
@@ -20,6 +20,6 @@ def TileDrainRO(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, CN, AntMoist_0, N
 
 # @time_function
 @memoize
-def TileDrainRO_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, CN, AntMoist_0, NUrb, Grow_0, Landuse, Area,
+def TileDrainRO_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, CN, AntMoist_0, NUrb, Grow_0, Landuse, Area,
                 TileDrainDensity):
-    return AgRunoff_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, CN, AntMoist_0, NUrb, Grow_0, Landuse, Area) * TileDrainDensity
+    return AgRunoff_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, CN, AntMoist_0, NUrb, Grow_0, Landuse, Area) * TileDrainDensity

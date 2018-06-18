@@ -16,5 +16,5 @@ class TestGRLostManN(unittest.TestCase):
         np.testing.assert_array_almost_equal(
             GRLostManN.GRLostManN(z.NYrs, z.GRPctManApp, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN,
                                   z.GRAppNRate, z.Prec, z.DaysMonth, z.GRPctSoilIncRate),
-            GRLostManN.GRLostManN_2(z.NYrs, z.GRPctManApp, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt,
+            GRLostManN.GRLostManN_f(z.NYrs, z.GRPctManApp, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt,
                                     z.AnimalDailyN, z.GRAppNRate, z.Prec, z.DaysMonth, z.GRPctSoilIncRate), decimal=7)

@@ -5,10 +5,11 @@ from numpy import reshape
 from numpy import tile
 from numpy import zeros
 
+from gwlfe.Memoization import memoize
 from gwlfe.AFOS.nonGrazingAnimals.Loads.NGAppManN import NGAppManN
-from gwlfe.AFOS.nonGrazingAnimals.Loads.NGAppManN import NGAppManN_2
+from gwlfe.AFOS.nonGrazingAnimals.Loads.NGAppManN import NGAppManN_f
 from gwlfe.MultiUse_Fxns.LossFactAdj import LossFactAdj
-from gwlfe.MultiUse_Fxns.LossFactAdj import LossFactAdj_2
+from gwlfe.MultiUse_Fxns.LossFactAdj import LossFactAdj_f
 
 
 def NGLostManN(NYrs, NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, NGAppNRate, Prec, DaysMonth,
@@ -27,11 +28,11 @@ def NGLostManN(NYrs, NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, Anim
                 result[Y][i] = 0
     return result
 
-
-def NGLostManN_2(NYrs, NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, NGAppNRate, Prec, DaysMonth,
+@memoize
+def NGLostManN_f(NYrs, NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, NGAppNRate, Prec, DaysMonth,
                  NGPctSoilIncRate):
-    lossFactAdj = LossFactAdj_2(Prec, DaysMonth)
-    ng_app_man_n = NGAppManN_2(NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN)
+    lossFactAdj = LossFactAdj_f(Prec, DaysMonth)
+    ng_app_man_n = NGAppManN_f(NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN)
     result = tile(ng_app_man_n * NGAppNRate * (1 - NGPctSoilIncRate), NYrs) * ndarray.flatten(lossFactAdj)
     result = minimum(result, tile(ng_app_man_n, NYrs))  # TODO: should eliminate the double tile
     result = maximum(result, 0)

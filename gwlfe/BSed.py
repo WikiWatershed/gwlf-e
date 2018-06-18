@@ -4,7 +4,7 @@ from numpy import zeros
 
 # from Timer import time_function
 from SedTrans import SedTrans
-from SedTrans import SedTrans_2
+from SedTrans import SedTrans_f
 
 
 def BSed(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
@@ -20,8 +20,8 @@ def BSed(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMo
                 result[Y][i] = result[Y][i] + sedtrans[Y][m]
     return result
 
-def BSed_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
+def BSed_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
            ISRR, ISRA, Qretention, PctAreaInfil, n25b, CN):
-    sedtrans = SedTrans_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0,
+    sedtrans = SedTrans_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0,
                         Imper, ISRR, ISRA, Qretention, PctAreaInfil, n25b, CN)
     return flip(cumsum(flip(sedtrans, axis=1), axis=1), axis=1)

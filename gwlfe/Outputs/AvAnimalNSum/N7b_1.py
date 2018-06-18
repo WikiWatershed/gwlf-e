@@ -13,5 +13,5 @@ def N7b_1(NYrs, GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN, NGAppNRate
     return result
 
 
-def N7b_1_2():
+def N7b_1_f():
     pass

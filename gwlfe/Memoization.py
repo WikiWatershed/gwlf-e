@@ -58,7 +58,7 @@ def memodict(f):
     return memodict().__getitem__
 
 
-# def memoize(f):
+# def memoize(f): #use this function to disable memoization
 #     return f
 
 def memoize(f):
@@ -75,27 +75,3 @@ def memoize(f):
             return self.result
 
     return memodict(f)
-
-# def memoize(f):
-#     class memodict():
-#         def __init__(self, f):
-#             self.f = f
-#             self.result = None
-#             self.__name__ = f.__name__
-#
-#         def __call__(self, *args):
-#             return self.f(*args)
-#
-#     return memodict(f)
-
-# def memoize_list(f):
-#     """ Memoization decorator for functions taking one or more arguments. """
-#     class memodict(dict):
-#         def __init__(self, f):
-#             self.f = f
-#         def __call__(self):
-#             return self[args]
-#         def __missing__(self, key):
-#             ret = self[key] = self.f(*key)
-#             return ret
-#     return memodict(f)

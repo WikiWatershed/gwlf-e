@@ -2,7 +2,7 @@ from numpy import where
 from numpy import zeros
 
 from gwlfe.GrazingAnimal import GrazingAnimal
-from gwlfe.GrazingAnimal import GrazingAnimal_2
+from gwlfe.GrazingAnimal import GrazingAnimal_f
 from gwlfe.enums import YesOrNo
 
 
@@ -15,7 +15,7 @@ def NGLoadN(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN):
     return result
 
 
-def NGLoadN_2(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN):
-    grazing_animal = GrazingAnimal_2(GrazingAnimal_0)
+def NGLoadN_f(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN):
+    grazing_animal = GrazingAnimal_f(GrazingAnimal_0)
     grazing_mask = where(~grazing_animal)
     return (NumAnimals[grazing_mask] * AvgAnimalWt[grazing_mask] / 1000) * AnimalDailyN[grazing_mask] * 365

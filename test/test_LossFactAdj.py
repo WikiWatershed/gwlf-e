@@ -13,4 +13,4 @@ class TestLossFactAdj(unittest.TestCase):
         z = self.z
         np.testing.assert_array_almost_equal(
             LossFactAdj.LossFactAdj(z.NYrs, z.Prec, z.DaysMonth),
-            LossFactAdj.LossFactAdj_2(z.Prec, z.DaysMonth), decimal=7)
+            LossFactAdj.LossFactAdj_f(z.Prec, z.DaysMonth), decimal=7)

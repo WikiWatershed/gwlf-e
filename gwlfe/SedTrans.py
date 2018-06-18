@@ -4,11 +4,11 @@ from numpy import where
 from numpy import zeros
 
 from AdjQTotal import AdjQTotal
-from AdjQTotal import AdjQTotal_2
+from AdjQTotal import AdjQTotal_f
 # from Timer import time_function
 from Memoization import memoize
 from Water import Water
-from Water import Water_2
+from Water import Water_f
 
 
 @memoize
@@ -29,10 +29,10 @@ def SedTrans(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, A
     return result
 
 @memoize
-def SedTrans_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
+def SedTrans_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
                ISRR, ISRA, Qretention, PctAreaInfil, n25b, CN):
-    water = Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
-    adjqtotal = AdjQTotal_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0,
+    water = Water_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
+    adjqtotal = AdjQTotal_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0,
                           Imper, ISRR, ISRA, Qretention, PctAreaInfil, n25b, CN)
 
     return sum(where(logical_and(Temp > 0, water > 0.01), adjqtotal ** 1.67, 0), axis=2)

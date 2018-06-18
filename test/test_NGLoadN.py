@@ -13,5 +13,5 @@ class TestNGLoadN(unittest.TestCase):
     def test_NGLoadN(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            NGLoadN.NGLoadN_2(z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN),
+            NGLoadN.NGLoadN_f(z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN),
             NGLoadN.NGLoadN(z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN), decimal=7)

@@ -6,9 +6,9 @@ from numpy import zeros
 from Memoization import memoize
 from NLU import NLU
 from RurQRunoff import RurQRunoff
-from RurQRunoff import RurQRunoff_2
+from RurQRunoff import RurQRunoff_f
 from UrbQRunoff import UrbQRunoff
-from UrbQRunoff import UrbQRunoff_2
+from UrbQRunoff import UrbQRunoff_f
 
 
 def LuRunoff(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, CNI_0, CNP_0,
@@ -30,10 +30,10 @@ def LuRunoff(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, CNI_0, CNP_0,
     return result
 
 @memoize
-def LuRunoff_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, CNI_0, CNP_0,
+def LuRunoff_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, CNI_0, CNP_0,
                AntMoist_0, Grow_0, Imper, ISRR, ISRA, CN):
     return hstack(
-        (sum(RurQRunoff_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb, CN, Grow_0), axis=1),
-         sum(UrbQRunoff_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, CNI_0, CNP_0,
+        (sum(RurQRunoff_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb, CN, Grow_0), axis=1),
+         sum(UrbQRunoff_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, CNI_0, CNP_0,
                              AntMoist_0, Grow_0, Imper, ISRR, ISRA), axis=1),
          ))

@@ -14,5 +14,5 @@ class TestNRUNCON(unittest.TestCase):
     def test_NRUNCON(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            NRUNCON.NRUNCON_2(),
+            NRUNCON.NRUNCON_f(),
             NRUNCON.NRUNCON(), decimal=7)

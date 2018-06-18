@@ -6,5 +6,5 @@ def Grow(Grow_0):
     return Grow_0
 
 
-def Grow_2(Grow_0):
+def Grow_f(Grow_0):
     return Grow_0 == GROWING_SEASON

@@ -16,5 +16,5 @@
 #     def test_ErosionSedYield(self):
 #         z = self.z
 #         np.testing.assert_array_almost_equal(
-#             ErosionSedYield.ErosionSedYield_2(),
+#             ErosionSedYield.ErosionSedYield_f(),
 #             ErosionSedYield.ErosionSedYield(), decimal=7)

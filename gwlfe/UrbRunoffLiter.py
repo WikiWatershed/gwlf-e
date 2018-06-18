@@ -3,9 +3,9 @@ from numpy import zeros
 # from Timer import time_function
 from Memoization import memoize
 from UrbAreaTotal import UrbAreaTotal
-from UrbAreaTotal import UrbAreaTotal_2
+from UrbAreaTotal import UrbAreaTotal_f
 from UrbanRunoff import UrbanRunoff
-from UrbanRunoff import UrbanRunoff_2
+from UrbanRunoff import UrbanRunoff_f
 from Water import Water
 
 
@@ -29,9 +29,9 @@ def UrbRunoffLiter(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Area, CN
 
 
 @memoize
-def UrbRunoffLiter_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
+def UrbRunoffLiter_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
                      CNP_0, Imper, ISRR, ISRA):
-    urbareatotal = UrbAreaTotal_2(NRur, NUrb, Area)
-    urbanrunoff = UrbanRunoff_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
+    urbareatotal = UrbAreaTotal_f(NRur, NUrb, Area)
+    urbanrunoff = UrbanRunoff_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
                                 CNP_0, Imper, ISRR, ISRA)
     return urbanrunoff / 100 * urbareatotal * 10000 * 1000

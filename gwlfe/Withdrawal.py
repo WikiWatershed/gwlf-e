@@ -1,6 +1,7 @@
 from numpy import repeat
 from numpy import reshape
 from numpy import zeros
+from Memoization import memoize
 
 
 # from Timer import time_function
@@ -15,6 +16,6 @@ def Withdrawal(NYrs, StreamWithdrawal, GroundWithdrawal):
             result[Y][i] = (result[Y][i] + StreamWithdrawal[i] + GroundWithdrawal[i])
     return result
 
-
-def Withdrawal_2(NYrs, StreamWithdrawal, GroundWithdrawal):
+@memoize
+def Withdrawal_f(NYrs, StreamWithdrawal, GroundWithdrawal):
     return reshape(repeat(StreamWithdrawal + GroundWithdrawal, NYrs), (NYrs, 12))

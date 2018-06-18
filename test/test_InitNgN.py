@@ -13,5 +13,5 @@ class TestInitNgN(unittest.TestCase):
     def test_InitNgN(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            InitNgN.InitNgN_2(z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN),
+            InitNgN.InitNgN_f(z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN),
             InitNgN.InitNgN(z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN), decimal=7)

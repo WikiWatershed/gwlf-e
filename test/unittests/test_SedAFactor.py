@@ -15,7 +15,7 @@ class TestSedAFactor(unittest.TestCase):
         pass
         # z = self.z
         # np.testing.assert_array_almost_equal(
-        #     SedAFactor.SedAFactor_2(z.NumAnimals, z.AvgAnimalWt, z.NRur, z.NUrb, z.CNI_0, z.CNP_0, z.CN, z.Imper,
+        #     SedAFactor.SedAFactor_f(z.NumAnimals, z.AvgAnimalWt, z.NRur, z.NUrb, z.CNI_0, z.CNP_0, z.CN, z.Imper,
         #                             z.Area, z.SedAFactor_0, z.AvKF, z.AvSlope, z.SedAAdjust),
         #     SedAFactor.SedAFactor(z.NumAnimals, z.AvgAnimalWt, z.NRur, z.NUrb, z.CNI_0, z.CNP_0, z.CN, z.Imper,
         #                             z.Area, z.SedAFactor_0, z.AvKF, z.AvSlope, z.SedAAdjust), decimal=7)

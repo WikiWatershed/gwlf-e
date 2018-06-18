@@ -4,9 +4,9 @@ from numpy import zeros
 # from Timer import time_function
 from Memoization import memoize
 from UrbanQTotal import UrbanQTotal
-from UrbanQTotal import UrbanQTotal_2
+from UrbanQTotal import UrbanQTotal_f
 from Water import Water
-from Water import Water_2
+from Water import Water_f
 
 
 # Precipitation.Precipitation(z.NYrs, z.DaysMonth, z.Prec)ize
@@ -35,12 +35,12 @@ def RetentionEff(NYrs, DaysMonth, InitSnow_0, Temp, Prec, Qretention, NRur, NUrb
                     pass
     return result
 
-
-def RetentionEff_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, Qretention, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
+@memoize
+def RetentionEff_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec, Qretention, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
                    CNP_0, Imper, ISRR, ISRA, PctAreaInfil):
     result = zeros((NYrs, 12, 31))
-    water = Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
-    urbanqtotal = UrbanQTotal_2(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, Area, CNI_0, AntMoist_0, Grow_0,
+    water = Water_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
+    urbanqtotal = UrbanQTotal_f(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, Area, CNI_0, AntMoist_0, Grow_0,
                                 CNP_0,
                                 Imper, ISRR, ISRA)
     result[where((Temp > 0) & (water > 0.05) & (Qretention > 0) & (urbanqtotal > 0) & (
@@ -56,8 +56,8 @@ def RetentionEff_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, Qretention, NRur, NU
 @memoize
 def RetentionEff_3(NYrs, DaysMonth, InitSnow_0, Temp, Prec, Qretention, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
                    CNP_0, Imper, ISRR, ISRA, PctAreaInfil):
-    water = Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
-    urbanqtotal = UrbanQTotal_2(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, Area, CNI_0, AntMoist_0, Grow_0,
+    water = Water_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
+    urbanqtotal = UrbanQTotal_f(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, Area, CNI_0, AntMoist_0, Grow_0,
                                 CNP_0,
                                 Imper, ISRR, ISRA)
     try:

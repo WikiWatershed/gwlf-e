@@ -2,20 +2,20 @@
 from numpy import zeros
 
 from AreaTotal import AreaTotal
-from AreaTotal import AreaTotal_2
+from AreaTotal import AreaTotal_f
 from Memoization import memoize
 from UrbAreaTotal import UrbAreaTotal
-from UrbAreaTotal import UrbAreaTotal_2
+from UrbAreaTotal import UrbAreaTotal_f
 from UrbanQTotal import UrbanQTotal
-from UrbanQTotal import UrbanQTotal_2
+from UrbanQTotal import UrbanQTotal_f
 from Water import Water
-from Water import Water_2
+from Water import Water_f
 
 try:
-    from AdjUrbanQTotal_2_inner_compiled import AdjUrbanQTotal_2_inner
+    from AdjUrbanQTotal_inner_compiled import AdjUrbanQTotal_inner
 except ImportError:
-    print("Unable to import compiled AdjUrbanQTotal_2_inner, using slower version")
-    from AdjUrbanQTotal_2_inner import AdjUrbanQTotal_2_inner
+    print("Unable to import compiled AdjUrbanQTotal_inner, using slower version")
+    from AdjUrbanQTotal_inner import AdjUrbanQTotal_inner
 
 
 # @time_function
@@ -57,18 +57,18 @@ def AdjUrbanQTotal(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CN
 
 
 @memoize
-def AdjUrbanQTotal_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
+def AdjUrbanQTotal_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
                      ISRR, ISRA, Qretention, PctAreaInfil):
-    water = Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
-    urban_q_total = UrbanQTotal_2(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, Area, CNI_0, AntMoist_0, Grow_0,
+    water = Water_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
+    urban_q_total = UrbanQTotal_f(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, Area, CNI_0, AntMoist_0, Grow_0,
                                   CNP_0, Imper, ISRR, ISRA)
-    urb_area_total = UrbAreaTotal_2(NRur, NUrb, Area)
-    area_total = AreaTotal_2(Area)
-    return AdjUrbanQTotal_2_inner(NYrs, DaysMonth, Temp, Qretention, PctAreaInfil, water, urban_q_total, urb_area_total,
+    urb_area_total = UrbAreaTotal_f(NRur, NUrb, Area)
+    area_total = AreaTotal_f(Area)
+    return AdjUrbanQTotal_inner(NYrs, DaysMonth, Temp, Qretention, PctAreaInfil, water, urban_q_total, urb_area_total,
                                   area_total)
 
 # @jit
-# def AdjUrbanQTotal_2_inner(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
+# def AdjUrbanQTotal_f_inner(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
 #                    ISRR, ISRA, Qretention, PctAreaInfil,water,urban_q_total,urb_area_total,area_total):
 #     result = np.zeros((NYrs, 12, 31))
 #     adj_urban_q_total = 0

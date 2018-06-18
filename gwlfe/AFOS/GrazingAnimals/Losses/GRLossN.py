@@ -3,12 +3,13 @@ from numpy import reshape
 from numpy import where
 from numpy import zeros
 
+from gwlfe.Memoization import memoize
 from GRStreamN import GRStreamN
-from GRStreamN import GRStreamN_2
+from GRStreamN import GRStreamN_f
 from gwlfe.AFOS.GrazingAnimals.Loads.GrazingN import GrazingN
-from gwlfe.AFOS.GrazingAnimals.Loads.GrazingN import GrazingN_2
+from gwlfe.AFOS.GrazingAnimals.Loads.GrazingN import GrazingN_f
 from gwlfe.MultiUse_Fxns.LossFactAdj import LossFactAdj
-from gwlfe.MultiUse_Fxns.LossFactAdj import LossFactAdj_2
+from gwlfe.MultiUse_Fxns.LossFactAdj import LossFactAdj_f
 
 
 def GRLossN(NYrs, PctStreams, PctGrazing, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, GrazingNRate, Prec,
@@ -26,17 +27,17 @@ def GRLossN(NYrs, PctStreams, PctGrazing, GrazingAnimal_0, NumAnimals, AvgAnimal
                 result[Y][i] = 0
     return result
 
-
-def GRLossN_2(NYrs, PctStreams, PctGrazing, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, GrazingNRate, Prec,
+@memoize
+def GRLossN_f(NYrs, PctStreams, PctGrazing, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, GrazingNRate, Prec,
               DaysMonth):
     grazing_n = reshape(
-        repeat(GrazingN_2(PctGrazing, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN), repeats=NYrs, axis=0),
+        repeat(GrazingN_f(PctGrazing, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN), repeats=NYrs, axis=0),
         (NYrs, 12))
     gr_stream_n = reshape(
-        repeat(GRStreamN_2(PctStreams, PctGrazing, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN),
+        repeat(GRStreamN_f(PctStreams, PctGrazing, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN),
                   repeats=NYrs, axis=0),
         (NYrs, 12))
-    loss_face_adj = LossFactAdj_2(Prec, DaysMonth)
+    loss_face_adj = LossFactAdj_f(Prec, DaysMonth)
     result = grazing_n - gr_stream_n
     adjusted = where(GrazingNRate * loss_face_adj < 1)
     result[adjusted] = result[adjusted] * (GrazingNRate * loss_face_adj)[adjusted]

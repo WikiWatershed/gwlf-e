@@ -25,7 +25,7 @@ class TestErosion(unittest.TestCase):
     def test_Erosion(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            Erosion.Erosion_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.Acoef, z.NRur, z.KF, z.LS, z.C, z.P,
+            Erosion.Erosion_f(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.Acoef, z.NRur, z.KF, z.LS, z.C, z.P,
                               z.Area),
             Erosion.Erosion(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.Acoef, z.NRur, z.KF, z.LS, z.C, z.P,
                             z.Area), decimal=7)

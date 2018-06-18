@@ -14,5 +14,5 @@ class TestGRLBN(unittest.TestCase):
     def test_GRLBN(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            GRLBN.GRLBN_2(),
+            GRLBN.GRLBN_f(),
             GRLBN.GRLBN(), decimal=7)

@@ -14,5 +14,5 @@ class TestNFENCING(unittest.TestCase):
     def test_NFENCING(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            NFENCING.NFENCING_2(),
+            NFENCING.NFENCING_f(),
             NFENCING.NFENCING(), decimal=7)

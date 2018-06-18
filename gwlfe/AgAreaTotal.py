@@ -18,7 +18,7 @@ def AgAreaTotal(NRur, Landuse, Area):
 
 # vectorization is slower
 # @time_function
-# def AgAreaTotal_2(Landuse, Area):
+# def AgAreaTotal_f(Landuse, Area):
 #     return Area[Landuse == LandUseNames.CROPLAND] + \
 #            Area[Landuse == LandUseNames.HAY_PAST] + \
 #            Area[Landuse == LandUseNames.TURFGRASS]

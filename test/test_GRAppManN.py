@@ -13,4 +13,4 @@ class TestGrAppManN(unittest.TestCase):
     def test_GrAppManN(self):
         z = self.z
         np.testing.assert_array_almost_equal(GRAppManN.GRAppManN(z.GRPctManApp, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN),
-                                             GRAppManN.GRAppManN_2(z.GRPctManApp, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN), decimal=7)
+                                             GRAppManN.GRAppManN_f(z.GRPctManApp, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN), decimal=7)

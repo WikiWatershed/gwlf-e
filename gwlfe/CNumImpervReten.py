@@ -4,11 +4,11 @@ from numpy import where
 from numpy import zeros
 
 # from Timer import time_function
-from CNI import CNI, CNI_2
-from CNumImperv import CNumImperv, CNumImperv_2
+from CNI import CNI, CNI_f
+from CNumImperv import CNumImperv, CNumImperv_f
 from Memoization import memoize
 from NLU import NLU
-from Water import Water, Water_2
+from Water import Water, Water_f
 
 
 @memoize
@@ -34,12 +34,12 @@ def CNumImpervReten(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, NRur, N
     return result
 
 
-def CNumImpervReten_2(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, NRur, NUrb, CNI_0, Grow_0):
-    cni = CNI_2(NRur, NUrb, CNI_0)
+def CNumImpervReten_f(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, NRur, NUrb, CNI_0, Grow_0):
+    cni = CNI_f(NRur, NUrb, CNI_0)
     cni_1 = tile(cni[1][None, None, None, :], (NYrs, 12, 31, 1))
-    c_num_imperv = CNumImperv_2(NYrs, NRur, NUrb, DaysMonth, InitSnow_0, Temp, Prec, CNI_0, Grow_0, AntMoist_0)
+    c_num_imperv = CNumImperv_f(NYrs, NRur, NUrb, DaysMonth, InitSnow_0, Temp, Prec, CNI_0, Grow_0, AntMoist_0)
     nlu = NLU(NRur, NUrb)
-    water = repeat(Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)[:, :, :, None], nlu, axis=3)
+    water = repeat(Water_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec)[:, :, :, None], nlu, axis=3)
     result = zeros((NYrs, 12, 31, nlu))
     TempE = repeat(Temp[:, :, :, None], nlu, axis=3)
     result[where((TempE > 0) & (water >= 0.05) & (cni_1 > 0))] = 2540 / c_num_imperv[

@@ -1,5 +1,5 @@
 from Precipitation import Precipitation
-from Precipitation import Precipitation_2
+from Precipitation import Precipitation_f
 from ..Memoization import memoize
 
 
@@ -12,5 +12,5 @@ def LossFactAdj(NYrs, Prec, DaysMonth):
     return result
 
 @memoize
-def LossFactAdj_2(Prec, DaysMonth):
-    return Precipitation_2(Prec) / DaysMonth / 0.3301
+def LossFactAdj_f(Prec, DaysMonth):
+    return Precipitation_f(Prec) / DaysMonth / 0.3301

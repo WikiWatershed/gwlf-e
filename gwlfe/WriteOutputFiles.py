@@ -9,26 +9,26 @@ from numpy import round
 from numpy import zeros
 
 import LoadReductions
-from AreaTotal import AreaTotal_2
+from AreaTotal import AreaTotal_f
 from AttenN import AttenN
-from AvErosion import AvErosion_2
-from AvEvapoTrans import AvEvapoTrans_2
-from AvGroundWater import AvGroundWater_2
-from AvRunoff import AvRunoff_2
+from AvErosion import AvErosion_f
+from AvEvapoTrans import AvEvapoTrans_f
+from AvGroundWater import AvGroundWater_f
+from AvRunoff import AvRunoff_f
 from AvSedYield import AvSedYield
-from AvSedYield import AvSedYield_2
-from AvStreamBankNSum import AvStreamBankNSum_2
-from AvTileDrain import AvTileDrain_2
-from AvWithdrawal import AvWithdrawal_2
-from LuTotNitr_1 import LuTotNitr_1_2
+from AvSedYield import AvSedYield_f
+from AvStreamBankNSum import AvStreamBankNSum_f
+from AvTileDrain import AvTileDrain_f
+from AvWithdrawal import AvWithdrawal_f
+from LuTotNitr_1 import LuTotNitr_1_f
 from MultiUse_Fxns.Constants import NPConvert
-from Outputs.AvAnimalNSum.AvAnimalNSum_1 import AvAnimalNSum_1_2
+from Outputs.AvAnimalNSum.AvAnimalNSum_1 import AvAnimalNSum_1_f
 from RetentFactorN import RetentFactorN
 from SedDelivRatio import SedDelivRatio
-from StreamBankNSum import StreamBankNSum_2
-from TotAEU import TotAEU_2
+from StreamBankNSum import StreamBankNSum_f
+from TotAEU import TotAEU_f
 from TotLAEU import TotLAEU
-from TotPAEU import TotPAEU_2
+from TotPAEU import TotPAEU_f
 from enums import YesOrNo, LandUse
 
 log = logging.getLogger(__name__)
@@ -191,7 +191,7 @@ def WriteOutput(z):
     z.n149 = z.AvWildOrgsSum
 
     # FARM ANIMAL LOADS
-    # z.n7b_2 = z.AvAnimalNSum
+    # z.n7b_f = z.AvAnimalNSum
     z.n14b = z.AvAnimalPSum
 
     # XXX: These are not used in our port.
@@ -200,12 +200,12 @@ def WriteOutput(z):
 
     # Get the AEUs
     z.n41j = round(TotLAEU(z.NumAnimals, z.AvgAnimalWt))
-    z.n41k = round(TotPAEU_2(z.NumAnimals, z.AvgAnimalWt))
-    z.n41l = round(TotAEU_2(z.NumAnimals, z.AvgAnimalWt))
+    z.n41k = round(TotPAEU_f(z.NumAnimals, z.AvgAnimalWt))
+    z.n41l = round(TotAEU_f(z.NumAnimals, z.AvgAnimalWt))
 
     # CONVERT AVERAGE STREAM BANK ERIOSION, N AND P TO ENGLISH UNITS
     z.n4 = round(z.AvStreamBankErosSum * z.RetentFactorSed * (1 - z.AttenTSS) * SedConvert)
-    z.n8 = round(AvStreamBankNSum_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
+    z.n8 = round(AvStreamBankNSum_f(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
                                     z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
                                     z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap,
                                     z.SatStor_0, z.RecessionCoef, z.SeepCoef,
@@ -271,7 +271,7 @@ def WriteOutput(z):
     z.GRLBP = z.GRLBP * NPConvert
     z.NGLBP = z.NGLBP * NPConvert
     z.NGLManP = z.NGLManP * NPConvert
-    # z.GRSN_2 = z.AvGRStreamN * NPConvert
+    # z.GRSN_f = z.AvGRStreamN * NPConvert
     z.GRSP = z.AvGRStreamP * NPConvert
 
     # RESET GWLF OUTPUT VALUES FOR RURAL LANDUSE TO REDUCED LOADS AND CONVERT SCENARIO VALUES
@@ -393,7 +393,7 @@ def WriteOutput(z):
     # TotalAreaAc = 0
 
     # FORMAT VALUES FOR PREDICT SCENARIO FILE
-    z.n22 = round(AreaTotal_2(z.Area), 0)
+    z.n22 = round(AreaTotal_f(z.Area), 0)
 
     # COMPLETE CALCULATING THE TOTAL SOURCE LOADS FOR SEDIMENT, N AND P
     AvTotalSed = (AvTotalSed + (((z.AvStreamBankErosSum / 1000) +
@@ -418,14 +418,14 @@ def WriteOutput(z):
 
     for i in range(12):
         AvMonEros = AvMonEros + \
-                    AvErosion_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0,
+                    AvErosion_f(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0,
                                   z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap,
                                   z.SatStor_0, z.RecessionCoef, z.SeepCoef, z.Qretention, z.PctAreaInfil, z.n25b, z.Landuse, z.TileDrainDensity, z.PointFlow,
                                   z.StreamWithdrawal, z.GroundWithdrawal, z.NumAnimals, z.AvgAnimalWt, z.StreamFlowVolAdj, z.SedAFactor_0,
                                   z.AvKF, z.AvSlope, z.SedAAdjust, z.StreamLength, z.n42b, z.n46c, z.n85d, z.AgLength, z.n42, z.n45, z.n85, z.UrbBankStab,
                                   z.SedDelivRatio_0, z.Acoef, z.KF, z.LS, z.C, z.P)[i]
         AvMonSed = AvMonSed + (
-                AvSedYield_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
+                AvSedYield_f(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
                              z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV,
                              z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0, z.RecessionCoef, z.SeepCoef,
                              z.Qretention, z.PctAreaInfil, z.n25b, z.Landuse, z.TileDrainDensity, z.PointFlow,
@@ -530,12 +530,12 @@ def WriteOutput(z):
     # AvOtherLuNitr = 0
     AvOtherLuPhos = 0
 
-    # lu_tot_nitr_1 = LuTotNitr_1_2(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.NRur, z.NUrb,
+    # lu_tot_nitr_1 = LuTotNitr_1_f(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.NRur, z.NUrb,
     #               z.CN, z.Grow_0, z.Area, z.NitrConc, z.ManNitr, z.ManuredAreas, z.FirstManureMonth,
     #               z.LastManureMonth, z.FirstManureMonth2, z.LastManureMonth2, z.SedDelivRatio_0,
     #               z.KF, z.LS, z.C, z.P, z.SedNitr, z.Acoef, z.ShedAreaDrainLake, z.RetentNLake,
     #               z.AttenFlowDist, z.AttenFlowVel, z.AttenLossRateN)
-    lu_tot_nitr_1 = LuTotNitr_1_2(z.NYrs, z.NRur, z.NUrb, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.CN, z.Grow_0,
+    lu_tot_nitr_1 = LuTotNitr_1_f(z.NYrs, z.NRur, z.NUrb, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.CN, z.Grow_0,
                                   z.Area, z.NitrConc, z.ManNitr, z.ManuredAreas, z.FirstManureMonth, z.LastManureMonth,
                                   z.FirstManureMonth2, z.LastManureMonth2, z.SedDelivRatio_0, z.KF, z.LS, z.C, z.P, z.SedNitr, z.CNP_0, z.Imper, z.ISRR, z.ISRA,
                                   z.Qretention, z.PctAreaInfil, z.LoadRateImp, z.LoadRatePerv, z.Storm, z.UrbBMPRed, z.FilterWidth, z.PctStrmBuf, z.Acoef,
@@ -566,13 +566,13 @@ def WriteOutput(z):
 
             if z.Landuse[l] is LandUse.HAY_PAST:
                 z.n2 = z.LuSedYield[y][l]
-                # z.n6 = LuTotNitr_1_2(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.NRur, z.NUrb,
+                # z.n6 = LuTotNitr_1_f(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.NRur, z.NUrb,
                 #                      z.CN, z.Grow_0, z.Area, z.NitrConc, z.ManNitr, z.ManuredAreas, z.FirstManureMonth,
                 #                      z.LastManureMonth, z.FirstManureMonth2, z.LastManureMonth2, z.SedDelivRatio_0,
                 #                      z.KF, z.LS, z.C, z.P, z.SedNitr, z.Acoef, z.ShedAreaDrainLake, z.RetentNLake,
                 #                      z.AttenFlowDist, z.AttenFlowVel, z.AttenLossRateN)[y][l]
 
-                z.n6 = LuTotNitr_1_2(z.NYrs, z.NRur, z.NUrb, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.CN,
+                z.n6 = LuTotNitr_1_f(z.NYrs, z.NRur, z.NUrb, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.CN,
                               z.Grow_0,
                               z.Area, z.NitrConc, z.ManNitr, z.ManuredAreas, z.FirstManureMonth, z.LastManureMonth,
                               z.FirstManureMonth2, z.LastManureMonth2, z.SedDelivRatio_0, z.KF, z.LS, z.C, z.P,
@@ -586,12 +586,12 @@ def WriteOutput(z):
                 z.n13dp = z.LuDisPhos[y][l]
             elif z.Landuse[l] is LandUse.CROPLAND:
                 z.n1 = z.LuSedYield[y][l]
-                # z.n5 = LuTotNitr_1_2(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.NRur, z.NUrb,
+                # z.n5 = LuTotNitr_1_f(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.NRur, z.NUrb,
                 #                      z.CN, z.Grow_0, z.Area, z.NitrConc, z.ManNitr, z.ManuredAreas, z.FirstManureMonth,
                 #                      z.LastManureMonth, z.FirstManureMonth2, z.LastManureMonth2, z.SedDelivRatio_0,
                 #                      z.KF, z.LS, z.C, z.P, z.SedNitr, z.Acoef, z.ShedAreaDrainLake, z.RetentNLake,
                 #                      z.AttenFlowDist, z.AttenFlowVel, z.AttenLossRateN)[y][l]
-                z.n5 = LuTotNitr_1_2(z.NYrs, z.NRur, z.NUrb, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.CN,
+                z.n5 = LuTotNitr_1_f(z.NYrs, z.NRur, z.NUrb, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.CN,
                               z.Grow_0,
                               z.Area, z.NitrConc, z.ManNitr, z.ManuredAreas, z.FirstManureMonth, z.LastManureMonth,
                               z.FirstManureMonth2, z.LastManureMonth2, z.SedDelivRatio_0, z.KF, z.LS, z.C, z.P,
@@ -605,13 +605,13 @@ def WriteOutput(z):
                 z.n12dp = z.LuDisPhos[y][l]
             elif z.Landuse[l] is LandUse.UNPAVED_ROAD:
                 z.n2d = z.LuSedYield[y][l]
-                # z.n6d = LuTotNitr_1_2(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.NRur, z.NUrb,
+                # z.n6d = LuTotNitr_1_f(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.NRur, z.NUrb,
                 #                       z.CN, z.Grow_0, z.Area, z.NitrConc, z.ManNitr, z.ManuredAreas, z.FirstManureMonth,
                 #                       z.LastManureMonth, z.FirstManureMonth2, z.LastManureMonth2, z.SedDelivRatio_0,
                 #                       z.KF, z.LS, z.C, z.P, z.SedNitr, z.Acoef, z.ShedAreaDrainLake, z.RetentNLake,
                 #                       z.AttenFlowDist, z.AttenFlowVel, z.AttenLossRateN)[y][l]
 
-                z.n6d = LuTotNitr_1_2(z.NYrs, z.NRur, z.NUrb, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.CN,
+                z.n6d = LuTotNitr_1_f(z.NYrs, z.NRur, z.NUrb, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.CN,
                               z.Grow_0,
                               z.Area, z.NitrConc, z.ManNitr, z.ManuredAreas, z.FirstManureMonth, z.LastManureMonth,
                               z.FirstManureMonth2, z.LastManureMonth2, z.SedDelivRatio_0, z.KF, z.LS, z.C, z.P,
@@ -625,12 +625,12 @@ def WriteOutput(z):
                 z.n13ddp = z.LuDisPhos[y][l]
             elif z.Landuse[l] is LandUse.TURFGRASS:
                 z.n2t = z.LuSedYield[y][l]
-                # z.n6t = LuTotNitr_1_2(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.NRur, z.NUrb,
+                # z.n6t = LuTotNitr_1_f(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.NRur, z.NUrb,
                 #                       z.CN, z.Grow_0, z.Area, z.NitrConc, z.ManNitr, z.ManuredAreas, z.FirstManureMonth,
                 #                       z.LastManureMonth, z.FirstManureMonth2, z.LastManureMonth2, z.SedDelivRatio_0,
                 #                       z.KF, z.LS, z.C, z.P, z.SedNitr, z.Acoef, z.ShedAreaDrainLake, z.RetentNLake,
                 #                       z.AttenFlowDist, z.AttenFlowVel, z.AttenLossRateN)[y][l]
-                z.n6t = LuTotNitr_1_2(z.NYrs, z.NRur, z.NUrb, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.CN,
+                z.n6t = LuTotNitr_1_f(z.NYrs, z.NRur, z.NUrb, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.CN,
                               z.Grow_0,
                               z.Area, z.NitrConc, z.ManNitr, z.ManuredAreas, z.FirstManureMonth, z.LastManureMonth,
                               z.FirstManureMonth2, z.LastManureMonth2, z.SedDelivRatio_0, z.KF, z.LS, z.C, z.P,
@@ -643,7 +643,7 @@ def WriteOutput(z):
             else:
                 AvOtherLuSed = AvOtherLuSed + z.LuSedYield[y][l]
                 # AvOtherLuNitr = AvOtherLuNitr + \
-                #                 LuTotNitr_1_2(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.NRur,
+                #                 LuTotNitr_1_f(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.NRur,
                 #                               z.NUrb, z.CN, z.Grow_0, z.Area, z.NitrConc, z.ManNitr, z.ManuredAreas,
                 #                               z.FirstManureMonth, z.LastManureMonth, z.FirstManureMonth2,
                 #                               z.LastManureMonth2, z.SedDelivRatio_0, z.KF, z.LS, z.C, z.P, z.SedNitr,
@@ -655,7 +655,7 @@ def WriteOutput(z):
             if z.Landuse[l] in [LandUse.LD_MIXED, LandUse.LD_RESIDENTIAL]:
                 z.n2c = z.n2c + z.LuSedYield[y][l]
                 z.n6c = z.n6c +\
-                        LuTotNitr_1_2(z.NYrs, z.NRur, z.NUrb, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.CN,
+                        LuTotNitr_1_f(z.NYrs, z.NRur, z.NUrb, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.CN,
                               z.Grow_0,
                               z.Area, z.NitrConc, z.ManNitr, z.ManuredAreas, z.FirstManureMonth, z.LastManureMonth,
                               z.FirstManureMonth2, z.LastManureMonth2, z.SedDelivRatio_0, z.KF, z.LS, z.C, z.P,
@@ -664,7 +664,7 @@ def WriteOutput(z):
                               z.FilterWidth, z.PctStrmBuf, z.Acoef,
                               z.CNI_0, z.Nqual, z.ShedAreaDrainLake, z.RetentNLake, z.AttenFlowDist, z.AttenFlowVel,
                               z.AttenLossRateN)[y][l]
-                        # LuTotNitr_1_2(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.NRur, z.NUrb,
+                        # LuTotNitr_1_f(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.NRur, z.NUrb,
                         #               z.CN, z.Grow_0, z.Area, z.NitrConc, z.ManNitr, z.ManuredAreas, z.FirstManureMonth,
                         #               z.LastManureMonth, z.FirstManureMonth2, z.LastManureMonth2, z.SedDelivRatio_0,
                         #               z.KF, z.LS, z.C, z.P, z.SedNitr, z.Acoef, z.ShedAreaDrainLake, z.RetentNLake,
@@ -676,7 +676,7 @@ def WriteOutput(z):
                                   LandUse.MD_RESIDENTIAL, LandUse.HD_RESIDENTIAL]:
                 z.n2b = z.n2b + z.LuSedYield[y][l]
                 z.n6b = z.n6b + \
-                        LuTotNitr_1_2(z.NYrs, z.NRur, z.NUrb, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.CN,
+                        LuTotNitr_1_f(z.NYrs, z.NRur, z.NUrb, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.CN,
                               z.Grow_0,
                               z.Area, z.NitrConc, z.ManNitr, z.ManuredAreas, z.FirstManureMonth, z.LastManureMonth,
                               z.FirstManureMonth2, z.LastManureMonth2, z.SedDelivRatio_0, z.KF, z.LS, z.C, z.P,
@@ -686,7 +686,7 @@ def WriteOutput(z):
                               z.CNI_0, z.Nqual, z.ShedAreaDrainLake, z.RetentNLake, z.AttenFlowDist, z.AttenFlowVel,
                               z.AttenLossRateN)[y][l]
 
-                        # LuTotNitr_1_2(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.NRur, z.NUrb,
+                        # LuTotNitr_1_f(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.NRur, z.NUrb,
                         #               z.CN, z.Grow_0, z.Area, z.NitrConc, z.ManNitr, z.ManuredAreas, z.FirstManureMonth,
                         #               z.LastManureMonth, z.FirstManureMonth2, z.LastManureMonth2, z.SedDelivRatio_0,
                         #               z.KF, z.LS, z.C, z.P, z.SedNitr, z.Acoef, z.ShedAreaDrainLake, z.RetentNLake,
@@ -730,7 +730,7 @@ def WriteOutput(z):
 
         # CONVERT AVERAGE STREAM BANK ERIOSION, N AND P TO ENGLISH UNITS
         z.n4 = round((z.StreamBankErosSum[y] * z.RetentFactorSed * (1 - z.AttenTSS) * SedConvert))
-        z.n8 = round((StreamBankNSum_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area,
+        z.n8 = round((StreamBankNSum_f(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area,
                                        z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN,
                                        z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0,
                                        z.RecessionCoef, z.SeepCoef, z.Qretention, z.PctAreaInfil, z.n25b, z.Landuse,
@@ -782,15 +782,15 @@ def WriteOutput(z):
         z.TotDisPhos = 0
         z.TotTotPhos = 0
         z.TotSedyield = 0
-        # z.LuTotNitr_2[y] = \
-        #     LuTotNitr_1_2(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.NRur, z.NUrb,
+        # z.LuTotNitr_f[y] = \
+        #     LuTotNitr_1_f(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.NRur, z.NUrb,
         #                   z.CN, z.Grow_0, z.Area, z.NitrConc, z.ManNitr, z.ManuredAreas, z.FirstManureMonth,
         #                   z.LastManureMonth, z.FirstManureMonth2, z.LastManureMonth2, z.SedDelivRatio_0,
         #                   z.KF, z.LS, z.C, z.P, z.SedNitr, z.Acoef, z.ShedAreaDrainLake, z.RetentNLake,
         #                   z.AttenFlowDist, z.AttenFlowVel, z.AttenLossRateN)[y]
 
-        z.LuTotNitr_2[y] = \
-            LuTotNitr_1_2(z.NYrs, z.NRur, z.NUrb, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.CN,
+        z.LuTotNitr_f[y] = \
+            LuTotNitr_1_f(z.NYrs, z.NRur, z.NUrb, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.CN,
                           z.Grow_0,
                           z.Area, z.NitrConc, z.ManNitr, z.ManuredAreas, z.FirstManureMonth, z.LastManureMonth,
                           z.FirstManureMonth2, z.LastManureMonth2, z.SedDelivRatio_0, z.KF, z.LS, z.C, z.P,
@@ -802,63 +802,63 @@ def WriteOutput(z):
         for l in range(z.NLU):
             if z.Landuse[l] is LandUse.HAY_PAST:
                 z.LuSedYield[y][l] = z.n2
-                z.LuTotNitr_2[y][l] = z.n6
+                z.LuTotNitr_f[y][l] = z.n6
                 z.LuTotPhos_1[y][l] = z.n13
                 z.LuDisNitr[y][l] = z.n6dn
                 z.LuDisPhos[y][l] = z.n13dp
 
-                if z.LuDisNitr[y][l] > z.LuTotNitr_2[y][l]:
-                    z.LuDisNitr[y][l] = z.LuTotNitr_2[y][l]
+                if z.LuDisNitr[y][l] > z.LuTotNitr_f[y][l]:
+                    z.LuDisNitr[y][l] = z.LuTotNitr_f[y][l]
                 if z.LuDisPhos[y][l] > z.LuTotPhos_1[y][l]:
                     z.LuDisPhos[y][l] = z.LuTotPhos_1[y][l]
             elif z.Landuse[l] is LandUse.CROPLAND:
                 if z.LuDisNitr[y][l] > 0:
-                    z.LuDisNitr[y][l] = z.LuDisNitr[y][l] * z.n5 / z.LuTotNitr_2[y][l]
+                    z.LuDisNitr[y][l] = z.LuDisNitr[y][l] * z.n5 / z.LuTotNitr_f[y][l]
                 if z.LuDisPhos[y][l] > 0:
                     z.LuDisPhos[y][l] = z.LuDisPhos[y][l] * z.n12 / z.LuTotPhos_1[y][l]
 
                 z.LuSedYield[y][l] = z.n1
-                z.LuTotNitr_2[y][l] = z.n5
+                z.LuTotNitr_f[y][l] = z.n5
                 z.LuTotPhos_1[y][l] = z.n12
                 z.LuDisNitr[y][l] = z.n5dn
                 z.LuDisPhos[y][l] = z.n12dp
             elif z.Landuse[l] is LandUse.UNPAVED_ROAD:
                 z.LuSedYield[y][l] = z.n2d
-                z.LuTotNitr_2[y][l] = z.n6d
+                z.LuTotNitr_f[y][l] = z.n6d
                 z.LuTotPhos_1[y][l] = z.n13d
                 z.LuDisNitr[y][l] = z.n6ddn
                 z.LuDisPhos[y][l] = z.n13ddp
 
-                if z.LuDisNitr[y][l] > z.LuTotNitr_2[y][l]:
-                    z.LuDisNitr[y][l] = z.LuTotNitr_2[y][l]
+                if z.LuDisNitr[y][l] > z.LuTotNitr_f[y][l]:
+                    z.LuDisNitr[y][l] = z.LuTotNitr_f[y][l]
                 if z.LuDisPhos[y][l] > z.LuTotPhos_1[y][l]:
                     z.LuDisPhos[y][l] = z.LuTotPhos_1[y][l]
 
             if z.n24b > 0 and z.Landuse[l] in [LandUse.LD_MIXED, LandUse.LD_RESIDENTIAL]:
                 z.LuSedYield[y][l] = z.n2c * z.Area[l] / z.n24b
-                z.LuTotNitr_2[y][l] = z.n6c * z.Area[l] / z.n24b
+                z.LuTotNitr_f[y][l] = z.n6c * z.Area[l] / z.n24b
                 z.LuTotPhos_1[y][l] = z.n13c * z.Area[l] / z.n24b
                 z.LuDisNitr[y][l] = z.n6cdn * z.Area[l] / z.n24b
                 z.LuDisPhos[y][l] = z.n13cdp * z.Area[l] / z.n24b
 
-                if z.LuDisNitr[y][l] > z.LuTotNitr_2[y][l]:
-                    z.LuDisNitr[y][l] = z.LuTotNitr_2[y][l]
+                if z.LuDisNitr[y][l] > z.LuTotNitr_f[y][l]:
+                    z.LuDisNitr[y][l] = z.LuTotNitr_f[y][l]
                 if z.LuDisPhos[y][l] > z.LuTotPhos_1[y][l]:
                     z.LuDisPhos[y][l] = z.LuTotPhos_1[y][l]
             elif z.n23b > 0 and z.Landuse[l] in [LandUse.MD_MIXED, LandUse.HD_MIXED,
                                                  LandUse.MD_RESIDENTIAL, LandUse.HD_RESIDENTIAL]:
                 z.LuSedYield[y][l] = z.n2b * z.Area[l] / z.n23b
-                z.LuTotNitr_2[y][l] = z.n6b * z.Area[l] / z.n23b
+                z.LuTotNitr_f[y][l] = z.n6b * z.Area[l] / z.n23b
                 z.LuTotPhos_1[y][l] = z.n13b * z.Area[l] / z.n23b
                 z.LuDisNitr[y][l] = z.n6bdn * z.Area[l] / z.n23b
                 z.LuDisPhos[y][l] = z.n13bdp * z.Area[l] / z.n23b
 
-                if z.LuDisNitr[y][l] > z.LuTotNitr_2[y][l]:
-                    z.LuDisNitr[y][l] = z.LuTotNitr_2[y][l]
+                if z.LuDisNitr[y][l] > z.LuTotNitr_f[y][l]:
+                    z.LuDisNitr[y][l] = z.LuTotNitr_f[y][l]
                 if z.LuDisPhos[y][l] > z.LuTotPhos_1[y][l]:
                     z.LuDisPhos[y][l] = z.LuTotPhos_1[y][l]
-            if z.LuDisNitr[y][l] > z.LuTotNitr_2[y][l]:
-                z.LuDisNitr[y][l] = z.LuTotNitr_2[y][l]
+            if z.LuDisNitr[y][l] > z.LuTotNitr_f[y][l]:
+                z.LuDisNitr[y][l] = z.LuTotNitr_f[y][l]
             if z.LuDisPhos[y][l] > z.LuTotPhos_1[y][l]:
                 z.LuDisPhos[y][l] = z.LuTotPhos_1[y][l]
 
@@ -908,7 +908,7 @@ def WriteOutput(z):
     # kg
     SumNitr = sum(z.AvLuTotNitr[l] for l in sources)
     SumNitr += z.AvStreamBankNSum
-    SumNitr += AvAnimalNSum_1_2(z.NYrs, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN, z.NGAppNRate,
+    SumNitr += AvAnimalNSum_1_f(z.NYrs, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN, z.NGAppNRate,
                               z.NGPctSoilIncRate, z.GRAppNRate, z.GRPctSoilIncRate, z.GrazingNRate, z.GRPctManApp,
                               z.PctGrazing, z.GRBarnNRate,
                               z.Prec, z.DaysMonth, z.AWMSGrPct, z.GrAWMSCoeffN, z.RunContPct, z.RunConCoeffN, z.n41b,
@@ -997,22 +997,22 @@ def WriteOutput(z):
     output['MeanFlowPerSecond'] = MeanFlowPS
 
     # Equivalent to lines 965 - 988 of source
-    av_evapo_trans = AvEvapoTrans_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
+    av_evapo_trans = AvEvapoTrans_f(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
                                   z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV,
                                   z.PcntET, z.DayHrs,
                                   z.MaxWaterCap)  # TODO: once all of the monthly variables have been extracted, rewrite how this works
-    av_tile_drain = AvTileDrain_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area,
+    av_tile_drain = AvTileDrain_f(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area,
                                   z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
                                   z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap,
                                   z.SatStor_0, z.RecessionCoef, z.SeepCoef,
                                   z.Landuse, z.TileDrainDensity)
-    av_withdrawal = AvWithdrawal_2(z.NYrs, z.StreamWithdrawal, z.GroundWithdrawal)
-    av_ground_water = AvGroundWater_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area,
+    av_withdrawal = AvWithdrawal_f(z.NYrs, z.StreamWithdrawal, z.GroundWithdrawal)
+    av_ground_water = AvGroundWater_f(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area,
                                       z.CNI_0,
                                       z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN, z.UnsatStor_0,
                                       z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap,
                                       z.SatStor_0, z.RecessionCoef, z.SeepCoef, z.Landuse, z.TileDrainDensity)
-    av_runoff = AvRunoff_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
+    av_runoff = AvRunoff_f(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
                            z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.Qretention, z.PctAreaInfil,
                            z.n25b, z.CN, z.Landuse, z.TileDrainDensity)
     output['monthly'] = []
@@ -1095,7 +1095,7 @@ def WriteOutput(z):
     output['Loads'].append({
         'Source': 'Farm Animals',
         'Sediment': 0,
-        'TotalN': AvAnimalNSum_1_2(z.NYrs, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN, z.NGAppNRate,
+        'TotalN': AvAnimalNSum_1_f(z.NYrs, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN, z.NGAppNRate,
                                  z.NGPctSoilIncRate, z.GRAppNRate, z.GRPctSoilIncRate, z.GrazingNRate, z.GRPctManApp,
                                  z.PctGrazing, z.GRBarnNRate,
                                  z.Prec, z.DaysMonth, z.AWMSGrPct, z.GrAWMSCoeffN, z.RunContPct, z.RunConCoeffN, z.n41b,

@@ -1,7 +1,8 @@
 from GRAppManN import GRAppManN
-from GRAppManN import GRAppManN_2
+from GRAppManN import GRAppManN_f
+from gwlfe.Memoization import memoize
 from gwlfe.AFOS.GrazingAnimals.Loads.GRAccManAppN import GRAccManAppN
-from gwlfe.AFOS.GrazingAnimals.Loads.GRAccManAppN import GRAccManAppN_2
+from gwlfe.AFOS.GrazingAnimals.Loads.GRAccManAppN import GRAccManAppN_f
 
 
 def GRInitBarnN(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, GRPctManApp, PctGrazing):
@@ -13,6 +14,6 @@ def GRInitBarnN(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, GRPctMan
     return result
 
 
-def GRInitBarnN_2(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, GRPctManApp, PctGrazing):
-    return GRAccManAppN_2(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, GRPctManApp,
-                          PctGrazing) - GRAppManN_2(GRPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN)
+def GRInitBarnN_f(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, GRPctManApp, PctGrazing):
+    return GRAccManAppN_f(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, GRPctManApp,
+                          PctGrazing) - GRAppManN_f(GRPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN)

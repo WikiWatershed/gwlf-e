@@ -14,5 +14,5 @@ class TestGrowFactor(unittest.TestCase):
     def test_GrowFactor(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            GrowFactor.GrowFactor_2(z.Grow_0),
+            GrowFactor.GrowFactor_f(z.Grow_0),
             GrowFactor.GrowFactor(z.Grow_0), decimal=7)

@@ -1,8 +1,8 @@
 # from Timer import time_function
 from AreaTotal import AreaTotal
-from AreaTotal import AreaTotal_2
+from AreaTotal import AreaTotal_f
 from UrbAreaTotal import UrbAreaTotal
-from UrbAreaTotal import UrbAreaTotal_2
+from UrbAreaTotal import UrbAreaTotal_f
 
 
 def PcntUrbanArea(NRur, NUrb, Area):
@@ -16,9 +16,9 @@ def PcntUrbanArea(NRur, NUrb, Area):
     return result
 
 
-def PcntUrbanArea_2(NRur, NUrb, Area):
-    areatotal = AreaTotal_2(Area)
+def PcntUrbanArea_f(NRur, NUrb, Area):
+    areatotal = AreaTotal_f(Area)
     if areatotal != 0:
-        return UrbAreaTotal_2(NRur, NUrb, Area) / areatotal
+        return UrbAreaTotal_f(NRur, NUrb, Area) / areatotal
     else:
         return 0

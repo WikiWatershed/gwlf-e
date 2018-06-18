@@ -20,5 +20,5 @@ class TestErosiv(unittest.TestCase):
     def test_Erosiv(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            Erosiv.Erosiv_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.Acoef),
+            Erosiv.Erosiv_f(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.Acoef),
             Erosiv.Erosiv(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.Acoef), decimal=20)

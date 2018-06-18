@@ -14,7 +14,7 @@ def TotAEU(NumAnimals, AvgAnimalWt):
     return result
 
 
-def TotAEU_2(NumAnimals, AvgAnimalWt):
+def TotAEU_f(NumAnimals, AvgAnimalWt):
     aeu = NumAnimals * AvgAnimalWt / 1000
     aeu[2:4] /= 2
     return sum(aeu)

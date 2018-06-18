@@ -14,5 +14,5 @@ class TestGRSN(unittest.TestCase):
     def test_GRSN(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            GRSN.GRSN_2(),
+            GRSN.GRSN_f(),
             GRSN.GRSN(), decimal=7)

@@ -1,7 +1,8 @@
 from numpy import sum
 
+from gwlfe.Memoization import memoize
 from gwlfe.AFOS.GrazingAnimals.Losses.AvGRLostBarnN import AvGRLostBarnN
-from gwlfe.AFOS.GrazingAnimals.Losses.AvGRLostBarnN import AvGRLostBarnN_2
+from gwlfe.AFOS.GrazingAnimals.Losses.AvGRLostBarnN import AvGRLostBarnN_f
 
 
 def AvGRLostBarnNSum(NYrs, GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN, GRPctManApp, PctGrazing, GRBarnNRate,
@@ -12,8 +13,8 @@ def AvGRLostBarnNSum(NYrs, GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN,
     result = sum(av_gr_lost_barn_n)
     return result
 
-
-def AvGRLostBarnNSum_2(NYrs, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, GRPctManApp, PctGrazing, GRBarnNRate,
+@memoize
+def AvGRLostBarnNSum_f(NYrs, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, GRPctManApp, PctGrazing, GRBarnNRate,
                        Prec, DaysMonth, AWMSGrPct, GrAWMSCoeffN, RunContPct, RunConCoeffN):
-    return sum(AvGRLostBarnN_2(NYrs, Prec, DaysMonth, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, GRPctManApp,
+    return sum(AvGRLostBarnN_f(NYrs, Prec, DaysMonth, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, GRPctManApp,
                     PctGrazing, GRBarnNRate, AWMSGrPct, GrAWMSCoeffN, RunContPct, RunConCoeffN))

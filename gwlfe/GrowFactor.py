@@ -1,6 +1,6 @@
 from numpy import zeros
 
-from Grow import Grow_2
+from Grow import Grow_f
 # @time_function
 from Memoization import memoize
 # from Timer import time_function
@@ -16,5 +16,5 @@ def GrowFactor(Grow_0):
 
 
 @memoize
-def GrowFactor_2(Grow_0):
-    return Grow_2(Grow_0)
+def GrowFactor_f(Grow_0):
+    return Grow_f(Grow_0)

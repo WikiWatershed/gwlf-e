@@ -15,8 +15,8 @@ def CNP(NRur, NUrb, CNP_0):
         result[2][l] = CNP_0[1][l] / (0.4036 + 0.0059 * CNP_0[1][l])
     return result
 
-# @time_function
-def CNP_2(NRur, NUrb, CNP_0):
+@memoize
+def CNP_f(NRur, NUrb, CNP_0):
     nlu = NLU(NRur, NUrb)
     result = zeros((3, nlu))
     result[0] = CNP_0[1] / (2.334 - 0.01334 * CNP_0[1][1])

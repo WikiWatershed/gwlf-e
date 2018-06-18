@@ -3,15 +3,15 @@ from numpy import sum
 from numpy import zeros
 
 from ErosWashoff import ErosWashoff
-from ErosWashoff import ErosWashoff_2
+from ErosWashoff import ErosWashoff_f
 from LuLoad import LuLoad
-from LuLoad import LuLoad_2
+from LuLoad import LuLoad_f
 # from Timer import time_function
 from Memoization import memoize
 from NLU import NLU
 from SedDelivRatio import SedDelivRatio
 from pRunoff import pRunoff
-from pRunoff import pRunoff_2
+from pRunoff import pRunoff_f
 
 
 @memoize
@@ -41,7 +41,7 @@ def LuTotPhos(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb, C
                 result[Y][l] += lu_load[Y][l][1] / NYrs / 2
     return result
 
-def LuTotPhos_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb, CN, Grow_0, Area, PhosConc, ManPhos,
+def LuTotPhos_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb, CN, Grow_0, Area, PhosConc, ManPhos,
               ManuredAreas, FirstManureMonth, LastManureMonth, FirstManureMonth2, LastManureMonth2, SedDelivRatio_0, KF,
               LS, C, P, CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil, Nqual, LoadRateImp, LoadRatePerv, Storm,
               UrbBMPRed, FilterWidth, PctStrmBuf, Acoef, SedPhos, CNI_0):
@@ -51,15 +51,15 @@ def LuTotPhos_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb,
     #                   ManuredAreas,
     #                   FirstManureMonth, LastManureMonth, ManPhos, FirstManureMonth2, LastManureMonth2), axis=1),
     #         repeats=10), (NYrs, 10))
-    p_runoff = sum(pRunoff_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb, CN, Grow_0, Area, PhosConc,
+    p_runoff = sum(pRunoff_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb, CN, Grow_0, Area, PhosConc,
                        ManuredAreas, FirstManureMonth, LastManureMonth, ManPhos, FirstManureMonth2,
                        LastManureMonth2), axis=1)
     sed_deliv_ratio = SedDelivRatio(SedDelivRatio_0)
 
-    eros_washoff = sum(ErosWashoff_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, Acoef,
+    eros_washoff = sum(ErosWashoff_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, Acoef,
                                         KF, LS, C, P, Area), axis=1)
 
-    lu_load = LuLoad_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
+    lu_load = LuLoad_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
              Grow_0, CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil, Nqual, LoadRateImp,
              LoadRatePerv, Storm, UrbBMPRed, FilterWidth, PctStrmBuf)[:,:,1]
     # luLoad is not needed because it is only defined for NUrb land use, and the others are only defined for NRur

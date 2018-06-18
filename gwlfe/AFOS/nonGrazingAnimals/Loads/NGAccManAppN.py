@@ -2,7 +2,7 @@ from numpy import maximum
 from numpy import zeros
 
 from InitNgN import InitNgN
-from InitNgN import InitNgN_2
+from InitNgN import InitNgN_f
 
 
 def NGAccManAppN(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, NGPctManApp):
@@ -16,6 +16,6 @@ def NGAccManAppN(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, NGPctMa
     return result
 
 
-def NGAccManAppN_2(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, NGPctManApp):
-    init_ng_n = InitNgN_2(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN)
+def NGAccManAppN_f(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, NGPctManApp):
+    init_ng_n = InitNgN_f(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN)
     return maximum((init_ng_n / 12) - (NGPctManApp * init_ng_n),0)

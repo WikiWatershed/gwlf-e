@@ -4,13 +4,13 @@ from numpy import zeros
 # from Timer import time_function
 from Memoization import memoize
 from NFEN import NFEN
-from NFEN import NFEN_2
+from NFEN import NFEN_f
 from NSTAB import NSTAB
-from NSTAB import NSTAB_2
+from NSTAB import NSTAB_f
 from NURBBANK import NURBBANK
-from NURBBANK import NURBBANK_2
+from NURBBANK import NURBBANK_f
 from StreamBankN import StreamBankN
-from StreamBankN import StreamBankN_2
+from StreamBankN import StreamBankN_f
 
 
 @memoize
@@ -62,7 +62,7 @@ def StreamBankN_1(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area,
     return result
 
 @memoize
-def StreamBankN_1_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area,
+def StreamBankN_1_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area,
                     CNI_0, AntMoist_0, Grow_0, CNP_0, Imper, ISRR, ISRA, CN,
                     UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0,
                     RecessionCoef, SeepCoef, Qretention, PctAreaInfil, n25b, Landuse,
@@ -70,14 +70,14 @@ def StreamBankN_1_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area,
                     NumAnimals, AvgAnimalWt, StreamFlowVolAdj, SedAFactor_0, AvKF,
                     AvSlope, SedAAdjust, StreamLength, n42b, AgLength,
                     UrbBankStab, SedNitr, BankNFrac, n69c, n45, n69, n46c, n42):
-    streambank_n = StreamBankN_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area,
+    streambank_n = StreamBankN_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area,
                                  CNI_0, AntMoist_0, Grow_0, CNP_0, Imper, ISRR, ISRA, CN,
                                  UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0,
                                  RecessionCoef, SeepCoef, Qretention, PctAreaInfil, n25b, Landuse,
                                  TileDrainDensity, PointFlow, StreamWithdrawal, GroundWithdrawal,
                                  NumAnimals, AvgAnimalWt, StreamFlowVolAdj, SedAFactor_0, AvKF,
                                  AvSlope, SedAAdjust, StreamLength, SedNitr, BankNFrac)
-    nstab = NSTAB_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area,
+    nstab = NSTAB_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area,
             CNI_0, AntMoist_0, Grow_0, CNP_0, Imper, ISRR, ISRA, CN,
             UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0,
             RecessionCoef, SeepCoef, Qretention, PctAreaInfil, n25b, Landuse,
@@ -85,7 +85,7 @@ def StreamBankN_1_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area,
             NumAnimals, AvgAnimalWt, StreamFlowVolAdj, SedAFactor_0, AvKF,
             AvSlope, SedAAdjust, StreamLength, n42b, n46c, SedNitr, BankNFrac, n69c)
 
-    nfen = NFEN_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area,
+    nfen = NFEN_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area,
            CNI_0, AntMoist_0, Grow_0, CNP_0, Imper, ISRR, ISRA, CN,
            UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0,
            RecessionCoef, SeepCoef, Qretention, PctAreaInfil, n25b, Landuse,
@@ -94,7 +94,7 @@ def StreamBankN_1_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area,
            AvSlope, SedAAdjust, StreamLength, AgLength,
            n42, SedNitr, BankNFrac, n45, n69)
 
-    nurbbank = NURBBANK_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area,
+    nurbbank = NURBBANK_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area,
                CNI_0, AntMoist_0, Grow_0, CNP_0, Imper, ISRR, ISRA, CN,
                UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0,
                RecessionCoef, SeepCoef, Qretention, PctAreaInfil, n25b, Landuse,

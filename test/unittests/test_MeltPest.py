@@ -16,5 +16,5 @@ from gwlfe import MeltPest
 #     def test_MeltPest(self):
 #         z = self.z
 #         np.testing.assert_array_almost_equal(
-#             MeltPest.MeltPest_2(),
+#             MeltPest.MeltPest_f(),
 #             MeltPest.MeltPest(), decimal=7)

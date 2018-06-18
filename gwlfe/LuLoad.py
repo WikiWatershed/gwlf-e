@@ -6,7 +6,7 @@ from AdjUrbanQTotal import AdjUrbanQTotal
 from Memoization import memoize
 from NLU import NLU
 from SurfaceLoad_1 import SurfaceLoad_1
-from SurfaceLoad_1 import SurfaceLoad_1_2
+from SurfaceLoad_1 import SurfaceLoad_1_f
 from Water import Water
 
 
@@ -38,9 +38,9 @@ def LuLoad(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, Ant
     return result
 
 @memoize
-def LuLoad_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
+def LuLoad_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
              Grow_0, CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil, Nqual, LoadRateImp,
              LoadRatePerv, Storm, UrbBMPRed, FilterWidth, PctStrmBuf):
-    return sum(SurfaceLoad_1_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
+    return sum(SurfaceLoad_1_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
                                   CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil, Nqual, LoadRateImp, LoadRatePerv,
                                   Storm, UrbBMPRed, FilterWidth, PctStrmBuf), axis=(1, 2))

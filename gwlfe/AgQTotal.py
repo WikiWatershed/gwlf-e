@@ -4,7 +4,7 @@ from numpy import zeros
 
 from AgAreaTotal import AgAreaTotal
 from Memoization import memoize
-from Qrun import Qrun, Qrun_2
+from Qrun import Qrun, Qrun_f
 from Retention import Retention
 # from Timer import time_function
 from Water import Water
@@ -44,9 +44,9 @@ def AgQTotal(NYrs,DaysMonth,InitSnow_0, Temp, Prec,NRur,CN, AntMoist_0,NUrb,Grow
     return result
 
 @memoize
-def AgQTotal_2(NYrs,DaysMonth,InitSnow_0, Temp, Prec,NRur,CN, AntMoist_0,NUrb,Grow_0,Landuse,Area):
+def AgQTotal_f(NYrs,DaysMonth,InitSnow_0, Temp, Prec,NRur,CN, AntMoist_0,NUrb,Grow_0,Landuse,Area):
     result = zeros((NYrs, 12, 31))
-    q_run = Qrun_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, CN, AntMoist_0, Grow_0)
+    q_run = Qrun_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, CN, AntMoist_0, Grow_0)
     ag_area_total = AgAreaTotal(NRur, Landuse, Area)
     ag_used = array([1,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0])
     ag_area = Area * ag_used

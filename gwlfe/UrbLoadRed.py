@@ -1,11 +1,11 @@
 from numpy import zeros
 
 from AdjUrbanQTotal import AdjUrbanQTotal
-from AdjUrbanQTotal import AdjUrbanQTotal_2
+from AdjUrbanQTotal import AdjUrbanQTotal_f
 from NLU import NLU
 # from Timer import time_function
 from Water import Water
-from Water import Water_2
+from Water import Water_f
 
 try:
     from UrbLoadRed_inner_compiled import UrbLoadRed_inner
@@ -41,12 +41,12 @@ def UrbLoadRed(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Area, CNI_0,
     return result
 
 
-# UrbLoadRed_2 is faster than UrbLoadRed_1
-def UrbLoadRed_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0,
+# UrbLoadRed_f is faster than UrbLoadRed_1
+def UrbLoadRed_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0,
                  Imper, ISRR, ISRA, Qretention, PctAreaInfil, Nqual, Storm, UrbBMPRed):
     if (Storm > 0):
-        water = Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
-        adjurbanqtotal = AdjUrbanQTotal_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
+        water = Water_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
+        adjurbanqtotal = AdjUrbanQTotal_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
                                             Grow_0, CNP_0,
                                             Imper, ISRR, ISRA, Qretention, PctAreaInfil)
         nlu = NLU(NRur, NUrb)
@@ -57,8 +57,8 @@ def UrbLoadRed_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Area, CNI_
 # def UrbLoadRed_1(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0,
 #                  Imper, ISRR, ISRA, Qretention, PctAreaInfil, Nqual, Storm, UrbBMPRed):
 #     result = zeros((NYrs, 12, 31, 16, Nqual))
-#     water = Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
-#     adjurbanqtotal = AdjUrbanQTotal_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
+#     water = Water_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
+#     adjurbanqtotal = AdjUrbanQTotal_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
 #                                         Grow_0, CNP_0,
 #                                         Imper, ISRR, ISRA, Qretention, PctAreaInfil)
 #     repeat(Temp[:, :, :, None, None], NRur, axis=3)
@@ -82,10 +82,10 @@ def UrbLoadRed_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Area, CNI_
 #         nlu = NLU(NRur, NUrb)
 #         temp = reshape(repeat(Temp, repeats=(nlu - NRur) * Nqual, axis=2),(NYrs, 12, 31, nlu - NRur, Nqual))
 #         water = reshape(
-#             repeat(Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec), repeats=(nlu - NRur) * Nqual, axis=2),
+#             repeat(Water_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec), repeats=(nlu - NRur) * Nqual, axis=2),
 #             (NYrs, 12, 31, nlu - NRur, Nqual))
 #         adjurbanqtotal = reshape(
-#             repeat(AdjUrbanQTotal_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0,
+#             repeat(AdjUrbanQTotal_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0,
 #                                             AntMoist_0, Grow_0, CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil), repeats=(nlu - NRur) * Nqual, axis=2),
 #             (NYrs, 12, 31, nlu - NRur, Nqual))
 #

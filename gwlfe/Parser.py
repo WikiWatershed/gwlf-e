@@ -383,7 +383,7 @@ class GmsReader(object):
         z.LuSedYield = zeros((z.DimYrs, 16))
         z.LuDisNitr = zeros((z.DimYrs, 16))
         z.LuTotNitr = zeros((z.DimYrs, 16))
-        z.LuTotNitr_2 = zeros((z.DimYrs, 16))
+        z.LuTotNitr_f = zeros((z.DimYrs, 16))
         z.LuDisPhos = zeros((z.DimYrs, 16))
         z.LuTotPhos = zeros((z.DimYrs, 16))
         z.LuTotPhos_1 = zeros((z.DimYrs, 16))

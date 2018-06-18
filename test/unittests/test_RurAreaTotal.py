@@ -16,5 +16,5 @@ class TestRurAreaTotal(unittest.TestCase):
     def test_RurAreaTotal(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            RurAreaTotal.RurAreaTotal_2(z.NRur, z.Area),
+            RurAreaTotal.RurAreaTotal_f(z.NRur, z.Area),
             RurAreaTotal.RurAreaTotal(z.NRur, z.Area), decimal=7)

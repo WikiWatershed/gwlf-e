@@ -22,7 +22,6 @@ def Rain_inner(NYrs, DaysMonth, Temp, Prec):
 def Rain(NYrs, DaysMonth, Temp, Prec):
     return Rain_inner(NYrs,DaysMonth,Temp,Prec)
 
-# @time_function
-# @jit(cache=True, nopython = True)
-def Rain_2(Temp, Prec):
+@memoize
+def Rain_f(Temp, Prec):
     return where(Temp <= 0,0,Prec )

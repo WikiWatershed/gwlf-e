@@ -2,9 +2,10 @@ from numpy import maximum
 from numpy import zeros
 
 from NGAccManAppN import NGAccManAppN
-from NGAccManAppN import NGAccManAppN_2
+from NGAccManAppN import NGAccManAppN_f
 from NGAppManN import NGAppManN
-from NGAppManN import NGAppManN_2
+from NGAppManN import NGAppManN_f
+from gwlfe.Memoization import memoize
 
 
 def NGInitBarnN(NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN):
@@ -17,8 +18,8 @@ def NGInitBarnN(NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDai
             result[i] = 0
     return result
 
-
-def NGInitBarnN_2(NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN):
-    ng_app_man_n = NGAppManN_2(NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN)
-    ng_acc_man_app_n = NGAccManAppN_2(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, NGPctManApp)
+@memoize
+def NGInitBarnN_f(NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN):
+    ng_app_man_n = NGAppManN_f(NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN)
+    ng_acc_man_app_n = NGAccManAppN_f(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, NGPctManApp)
     return maximum(ng_acc_man_app_n - ng_app_man_n, 0)[None,:]

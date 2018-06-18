@@ -2,7 +2,7 @@ from numpy import sum
 from numpy import zeros
 
 from ErosWashoff import ErosWashoff
-from ErosWashoff import ErosWashoff_2
+from ErosWashoff import ErosWashoff_f
 # from Timer import time_function
 from Memoization import memoize
 
@@ -19,7 +19,7 @@ def LuErosion(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Acoef, KF, LS
     return result
 
 @memoize
-def LuErosion_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, Acoef, KF, LS,
+def LuErosion_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, Acoef, KF, LS,
                 C, P, Area):
-    return sum(ErosWashoff_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, Acoef, KF, LS,
+    return sum(ErosWashoff_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, Acoef, KF, LS,
                                 C, P, Area), axis=1)

@@ -5,9 +5,9 @@ from numpy import zeros
 
 from Memoization import memoize
 from NLU import NLU
-from Retention import Retention, Retention_2
+from Retention import Retention, Retention_f
 # from Timer import time_function
-from Water import Water, Water_2
+from Water import Water, Water_f
 
 
 @memoize
@@ -30,13 +30,13 @@ def Qrun(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, CN, AntMoist_0, Gr
 
 
 @memoize
-def Qrun_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, CN, AntMoist_0, Grow_0):
+def Qrun_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, CN, AntMoist_0, Grow_0):
     nlu = NLU(NRur, NUrb)
     result = zeros((NYrs, 12, 31, nlu))
-    water = repeat(Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)[:, :, :, None], nlu, axis=3)
+    water = repeat(Water_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec)[:, :, :, None], nlu, axis=3)
     TempE = repeat(Temp[:, :, :, None], nlu, axis=3)
     cnrur = tile(CN[None, None, None, :], (NYrs, 12, 31, 1))
-    retention = Retention_2(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, NRur, NUrb, CN, Grow_0)
+    retention = Retention_f(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, NRur, NUrb, CN, Grow_0)
     retention02 = 0.2 * retention
     # val = np.zeros((NYrs, 12, 31, nlu))
     nonzero = where((TempE > 0) & (water > 0.01) & (water >= retention02) & (cnrur > 0))

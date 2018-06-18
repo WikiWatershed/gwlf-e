@@ -3,9 +3,9 @@ from numpy import zeros
 # from Timer import time_function
 from Memoization import memoize
 from PConc import PConc
-from PConc import PConc_2
+from PConc import PConc_f
 from RurQRunoff import RurQRunoff
-from RurQRunoff import RurQRunoff_2
+from RurQRunoff import RurQRunoff_f
 
 
 @memoize
@@ -25,9 +25,9 @@ def pRunoff(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb, CN,
 
 
 @memoize
-def pRunoff_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb, CN, Grow_0, Area, PhosConc, ManuredAreas,
+def pRunoff_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb, CN, Grow_0, Area, PhosConc, ManuredAreas,
               FirstManureMonth, LastManureMonth, ManPhos, FirstManureMonth2, LastManureMonth2):
-    p_conc = PConc_2(NRur, NUrb, PhosConc, ManPhos, ManuredAreas, FirstManureMonth, LastManureMonth, FirstManureMonth2,
+    p_conc = PConc_f(NRur, NUrb, PhosConc, ManPhos, ManuredAreas, FirstManureMonth, LastManureMonth, FirstManureMonth2,
                    LastManureMonth2)[:, :NRur]
-    rur_q_runoff = RurQRunoff_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb, CN, Grow_0)
+    rur_q_runoff = RurQRunoff_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb, CN, Grow_0)
     return 0.1 * p_conc * rur_q_runoff * Area[:NRur]

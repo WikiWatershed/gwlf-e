@@ -15,13 +15,13 @@ class TestRurEros(unittest.TestCase):
         z = self.z
         np.testing.assert_array_almost_equal(
             np.load("unittests/RurEros.npy"),
-            RurEros.RurEros_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.Acoef, z.NRur, z.KF, z.LS, z.C, z.P,
+            RurEros.RurEros_f(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.Acoef, z.NRur, z.KF, z.LS, z.C, z.P,
                             z.Area), decimal=7)
 
     def test_RurEros(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            RurEros.RurEros_2(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.Acoef, z.NRur, z.KF, z.LS, z.C, z.P,
+            RurEros.RurEros_f(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.Acoef, z.NRur, z.KF, z.LS, z.C, z.P,
                               z.Area),
             RurEros.RurEros(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.Acoef, z.NRur, z.KF, z.LS, z.C, z.P,
                             z.Area), decimal=7)

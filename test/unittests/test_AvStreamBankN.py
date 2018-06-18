@@ -16,5 +16,5 @@
 #     def test_AvStreamBankN(self):
 #         z = self.z
 #         np.testing.assert_array_almost_equal(
-#             AvStreamBankN.AvStreamBankN_2(),
+#             AvStreamBankN.AvStreamBankN_f(),
 #             AvStreamBankN.AvStreamBankN(), decimal=7)

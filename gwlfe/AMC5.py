@@ -4,7 +4,7 @@ from numpy import zeros
 
 from Memoization import memoize
 # from Timer import time_function
-from Water import Water, Water_2
+from Water import Water, Water_f
 
 try:
     from AMC5_yesterday_inner_compiled import AMC5_yesterday_inner
@@ -39,9 +39,9 @@ def AMC5(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0):
 
 # @time_function
 # @jit(cache=True)
-# def AMC5_2(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0):
+# def AMC5_f(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0):
 #     result = np.zeros((NYrs, 12, 31))
-#     water = Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
+#     water = Water_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
 #     AMC5 = 0
 #     AntMoist = copy.deepcopy(AntMoist_0)
 #     AMC5 = np.sum(AntMoist)
@@ -80,7 +80,7 @@ def AMC5_1(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0):
                 AntMoist1[0] = water[Y][i][j]
     return result
 
-
+@memoize
 def AMC5_yesterday(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0):
-    water = Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
+    water = Water_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     return AMC5_yesterday_inner(NYrs, DaysMonth, AntMoist_0, water)

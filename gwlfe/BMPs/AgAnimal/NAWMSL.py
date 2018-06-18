@@ -1,5 +1,5 @@
 from gwlfe.AFOS.GrazingAnimals.Losses.GRLBN import GRLBN
-from gwlfe.AFOS.GrazingAnimals.Losses.GRLBN import GRLBN_2
+from gwlfe.AFOS.GrazingAnimals.Losses.GRLBN import GRLBN_f
 
 
 def NAWMSL(NYrs, GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN, GRPctManApp, PctGrazing, GRBarnNRate,
@@ -10,7 +10,7 @@ def NAWMSL(NYrs, GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN, GRPctManA
     return result
 
 
-def NAWMSL_2(NYrs, GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN, GRPctManApp, PctGrazing, GRBarnNRate,
+def NAWMSL_f(NYrs, GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN, GRPctManApp, PctGrazing, GRBarnNRate,
            Prec, DaysMonth, AWMSGrPct, GrAWMSCoeffN, RunContPct, RunConCoeffN, n41b, n85h):
-    return (n41b/100) * n85h * GRLBN_2(NYrs, GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN, GRPctManApp, PctGrazing, GRBarnNRate,
+    return (n41b/100) * n85h * GRLBN_f(NYrs, GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN, GRPctManApp, PctGrazing, GRBarnNRate,
                   Prec, DaysMonth, AWMSGrPct, GrAWMSCoeffN, RunContPct, RunConCoeffN)

@@ -5,10 +5,11 @@ from numpy import sum
 from numpy import where
 from numpy import zeros
 
+from gwlfe.Memoization import memoize
 from gwlfe.AFOS.nonGrazingAnimals.Loads.NGInitBarnN import NGInitBarnN
-from gwlfe.AFOS.nonGrazingAnimals.Loads.NGInitBarnN import NGInitBarnN_2
+from gwlfe.AFOS.nonGrazingAnimals.Loads.NGInitBarnN import NGInitBarnN_f
 from gwlfe.MultiUse_Fxns.LossFactAdj import LossFactAdj
-from gwlfe.MultiUse_Fxns.LossFactAdj import LossFactAdj_2
+from gwlfe.MultiUse_Fxns.LossFactAdj import LossFactAdj_f
 
 
 def NGLostBarnN(NYrs, NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, NGBarnNRate, Prec,
@@ -27,11 +28,11 @@ def NGLostBarnN(NYrs, NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, Ani
                 result[Y][i] = 0
     return result
 
-def NGLostBarnN_2(NYrs, NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, NGBarnNRate, Prec,
+def NGLostBarnN_f(NYrs, NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, NGBarnNRate, Prec,
                   DaysMonth, AWMSNgPct, NgAWMSCoeffN, RunContPct, RunConCoeffN):
-    loss_fact_adj = LossFactAdj_2(Prec, DaysMonth)
+    loss_fact_adj = LossFactAdj_f(Prec, DaysMonth)
     ng_init_barn_n = reshape(
-        repeat(NGInitBarnN_2(NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN), repeats=NYrs,
+        repeat(NGInitBarnN_f(NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN), repeats=NYrs,
                   axis=0), (NYrs, 12))
 
     temp = NGBarnNRate * loss_fact_adj * (1 - AWMSNgPct * NgAWMSCoeffN + RunContPct * RunConCoeffN)
@@ -42,6 +43,7 @@ def NGLostBarnN_2(NYrs, NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, A
     return maximum(result, 0)
 
 #TODO: this needs to be split into it's own function
+@memoize
 def AvNGLostBarnN(NYrs, NGPctManApp, GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN, NGBarnNRate,
                   Prec, DaysMonth, AWMSNgPct, NgAWMSCoeffN, RunContPct, RunConCoeffN):
     result = zeros((12,))
@@ -52,10 +54,10 @@ def AvNGLostBarnN(NYrs, NGPctManApp, GrazingAnimal, NumAnimals, AvgAnimalWt, Ani
             result[i] += ng_lost_barn_n[Y][i] / NYrs
     return result
 
-
-def AvNGLostBarnN_2(NYrs, NGPctManApp, GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN, NGBarnNRate,
+@memoize
+def AvNGLostBarnN_f(NYrs, NGPctManApp, GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN, NGBarnNRate,
                   Prec, DaysMonth, AWMSNgPct, NgAWMSCoeffN, RunContPct, RunConCoeffN):
-    return sum(NGLostBarnN_2(NYrs, NGPctManApp, GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN, NGBarnNRate,
+    return sum(NGLostBarnN_f(NYrs, NGPctManApp, GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN, NGBarnNRate,
                                  Prec, DaysMonth, AWMSNgPct, NgAWMSCoeffN, RunContPct, RunConCoeffN),axis=0)/NYrs
 
 
@@ -66,10 +68,10 @@ def AvNGLostBarnNSum(NYrs, NGPctManApp, GrazingAnimal, NumAnimals, AvgAnimalWt, 
     result = sum(av_ng_lost_barn_n)
     return result
 
-
-def AvNGLostBarnNSum_2(NYrs, NGPctManApp, GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN, NGBarnNRate,
+@memoize
+def AvNGLostBarnNSum_f(NYrs, NGPctManApp, GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN, NGBarnNRate,
                      Prec, DaysMonth, AWMSNgPct, NgAWMSCoeffN, RunContPct, RunConCoeffN):
-    return sum(AvNGLostBarnN_2(NYrs, NGPctManApp, GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN,
+    return sum(AvNGLostBarnN_f(NYrs, NGPctManApp, GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN,
                                       NGBarnNRate, Prec, DaysMonth, AWMSNgPct, NgAWMSCoeffN, RunContPct, RunConCoeffN))
 
 
@@ -85,5 +87,5 @@ def NGLostBarnNSum(NYrs, NGPctManApp, GrazingAnimal, NumAnimals, AvgAnimalWt, An
     return result
 
 
-def NGLostBarnNSum_2():
+def NGLostBarnNSum_f():
     pass

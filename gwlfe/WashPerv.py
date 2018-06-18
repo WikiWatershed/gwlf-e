@@ -4,9 +4,9 @@ import math
 from Memoization import memoize
 from NLU import NLU
 from QrunP import QrunP
-from QrunP import QrunP_2
+from QrunP import QrunP_f
 from Water import Water
-from Water import Water_2
+from Water import Water_f
 from numpy import zeros
 from numpy import exp
 
@@ -45,8 +45,8 @@ def WashPerv(NYrs, DaysMonth, InitSnow_0, Temp, Prec, CNP_0, AntMoist_0, Grow_0,
     return washperv
 
 
-def WashPerv_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, CNP_0, AntMoist_0, Grow_0, NRur, NUrb):
+def WashPerv_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec, CNP_0, AntMoist_0, Grow_0, NRur, NUrb):
     nlu = NLU(NRur, NUrb)
-    water = Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
-    qrunp = QrunP_2(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, CNP_0, AntMoist_0, Grow_0)
+    water = Water_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
+    qrunp = QrunP_f(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, CNP_0, AntMoist_0, Grow_0)
     return WashPerv_inner(NYrs, DaysMonth, Temp, NRur, nlu, water, qrunp)

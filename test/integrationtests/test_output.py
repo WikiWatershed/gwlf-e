@@ -125,7 +125,7 @@ class TestOutput(unittest.TestCase):
     #     static_output = json.load(open('input_4.output', 'r'))
     #
     #     self.assertEqual(generated_output, static_output)
-    @skip("we broke it")
+    @skip("GMS writer has been depreciated")
     def test_gms_writer(self):
         """
         Test that GmsWriter is able to replicate the sample GMS created

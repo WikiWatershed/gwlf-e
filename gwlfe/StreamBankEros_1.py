@@ -3,14 +3,14 @@ from numpy import zeros
 
 from Memoization import memoize
 from SEDFEN import SEDFEN
-from SEDFEN import SEDFEN_2
+from SEDFEN import SEDFEN_f
 from SEDSTAB import SEDSTAB
-from SEDSTAB import SEDSTAB_2
+from SEDSTAB import SEDSTAB_f
 from SURBBANK import SURBBANK
-from SURBBANK import SURBBANK_2
+from SURBBANK import SURBBANK_f
 # from Timer import time_function
 from StreamBankEros import StreamBankEros
-from StreamBankEros import StreamBankEros_2 as StreamBankEros_2_actual
+from StreamBankEros import StreamBankEros_f as StreamBankEros_f_actual
 
 
 @memoize
@@ -61,13 +61,13 @@ def StreamBankEros_1(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, 
     return result
 
 @memoize
-def StreamBankEros_1_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0,
+def StreamBankEros_1_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0,
                        Imper,
                        ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0, RecessionCoef, SeepCoef,
                        Qretention, PctAreaInfil, n25b, Landuse, TileDrainDensity, PointFlow, StreamWithdrawal,
                        GroundWithdrawal, NumAnimals, AvgAnimalWt, StreamFlowVolAdj, SedAFactor_0, AvKF, AvSlope,
                        SedAAdjust, StreamLength, n42b, n46c, n85d, AgLength, n42, n45, n85, UrbBankStab):
-    streambankeros = StreamBankEros_2_actual(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0,
+    streambankeros = StreamBankEros_f_actual(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0,
                                              AntMoist_0, Grow_0,
                                              CNP_0, Imper,
                                              ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0,
@@ -78,7 +78,7 @@ def StreamBankEros_1_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area
                                              SedAAdjust, StreamLength)
 
 
-    sedstab = SEDSTAB_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
+    sedstab = SEDSTAB_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
                         CNP_0, Imper,
                         ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0,
                         RecessionCoef, SeepCoef
@@ -86,7 +86,7 @@ def StreamBankEros_1_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area
                         StreamWithdrawal, GroundWithdrawal
                         , NumAnimals, AvgAnimalWt, StreamFlowVolAdj, SedAFactor_0, AvKF, AvSlope,
                         SedAAdjust, StreamLength, n42b, n46c, n85d)
-    sedfen = SEDFEN_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
+    sedfen = SEDFEN_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
                       CNP_0, Imper,
                       ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0,
                       RecessionCoef, SeepCoef
@@ -94,7 +94,7 @@ def StreamBankEros_1_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area
                       StreamWithdrawal, GroundWithdrawal
                       , NumAnimals, AvgAnimalWt, StreamFlowVolAdj, SedAFactor_0, AvKF, AvSlope,
                       SedAAdjust, StreamLength, AgLength, n42, n45, n85)
-    surbbank = SURBBANK_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0,
+    surbbank = SURBBANK_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0,
                           Imper, ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0, RecessionCoef,
                           SeepCoef, Qretention, PctAreaInfil, n25b, Landuse, TileDrainDensity, PointFlow,
                           StreamWithdrawal, GroundWithdrawal, NumAnimals, AvgAnimalWt, StreamFlowVolAdj, SedAFactor_0,

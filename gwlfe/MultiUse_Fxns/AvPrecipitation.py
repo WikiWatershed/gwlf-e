@@ -6,5 +6,5 @@
 #     return result
 #
 #
-# def AvPrecipitation_2(Precipitation):
+# def AvPrecipitation_f(Precipitation):
 #     return np.average(Precipitation, axis=0)

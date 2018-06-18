@@ -6,9 +6,9 @@ from numpy import zeros
 # from Timer import time_function
 from Memoization import memoize
 from NetDisLoad import NetDisLoad
-from NetDisLoad import NetDisLoad_2
+from NetDisLoad import NetDisLoad_f
 from Water import Water
-from Water import Water_2
+from Water import Water_f
 
 
 @memoize
@@ -33,12 +33,12 @@ def DisLoad(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, An
     return result
 
 @memoize
-def DisLoad_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
+def DisLoad_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
                  Grow_0, CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil, Nqual, LoadRateImp,
                  LoadRatePerv, Storm, UrbBMPRed, DisFract, FilterWidth, PctStrmBuf):
-    water = repeat(Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)[:,:,:,None], Nqual, axis =3)
+    water = repeat(Water_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec)[:,:,:,None], Nqual, axis =3)
     temp = repeat(Temp[:,:,:,None], Nqual, axis = 3)
-    netdisload = NetDisLoad_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
+    netdisload = NetDisLoad_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
                  Grow_0, CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil, Nqual, LoadRateImp,
                  LoadRatePerv, Storm, UrbBMPRed, DisFract, FilterWidth, PctStrmBuf)
     result = sum(where((temp > 0) & (water > 0.01), netdisload, 0), axis = 2)

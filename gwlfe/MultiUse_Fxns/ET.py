@@ -2,13 +2,13 @@ from numpy import absolute
 from numpy import multiply
 from numpy import where
 from numpy import zeros
+from numpy import array
 
 # from Timer import time_function
 from gwlfe.Memoization import memoize
 from gwlfe.enums import ETflag
 
-
-@memoize
+#@memoize #TODO: adding memoization causes this function to not pass the tests
 def DailyET(NYrs, DaysMonth, Temp, DayHrs, KV, PcntET, ETFlag):
     result = zeros((NYrs, 12, 31))
     # CALCULATE ET FROM SATURATED VAPOR PRESSURE,
@@ -40,5 +40,5 @@ def PotentET(DayHrs, Temp):
 
 
 @memoize
-def DailyET_2(Temp, KV, PcntET, DayHrs):
+def DailyET_f(Temp, KV, PcntET, DayHrs):
     return where(Temp > 0, multiply((KV * PcntET).reshape(12, 1), PotentET(DayHrs, Temp)), 0)

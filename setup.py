@@ -8,9 +8,9 @@ from setuptools import setup, find_packages
 from gwlfe.AMC5_yesterday_inner import cc as amc5ycc
 # Added to fix error.
 # See http://stackoverflow.com/questions/9352656/python-assertionerror-when-running-nose-tests-with-coverage  # NOQA
-from gwlfe.AdjUrbanQTotal_2_inner import cc as adjcc  # TODO: use full length names
-from gwlfe.CNumImperv_2_inner import cc as cnicc
-from gwlfe.CNumPerv_2_inner import cc as cnpcc
+from gwlfe.AdjUrbanQTotal_inner import cc as adjcc  # TODO: use full length names
+from gwlfe.CNumImperv_inner import cc as cnicc
+from gwlfe.CNumPerv_inner import cc as cnpcc
 from gwlfe.CNum_inner import cc as cncc
 from gwlfe.DeepSeep_inner import cc as dscc
 from gwlfe.InitSnowYesterday_inner import cc as isycc

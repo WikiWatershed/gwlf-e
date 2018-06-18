@@ -18,7 +18,7 @@ class TestNGLostBarnN(unittest.TestCase):
             NGLostBarnN.NGLostBarnN(z.NYrs, z.NGPctManApp, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt,
                                     z.AnimalDailyN, z.NGBarnNRate, z.Prec, z.DaysMonth, z.AWMSNgPct, z.NgAWMSCoeffN,
                                     z.RunContPct, z.RunConCoeffN),
-            NGLostBarnN.NGLostBarnN_2(z.NYrs, z.NGPctManApp, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt,
+            NGLostBarnN.NGLostBarnN_f(z.NYrs, z.NGPctManApp, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt,
                                       z.AnimalDailyN, z.NGBarnNRate, z.Prec, z.DaysMonth, z.AWMSNgPct, z.NgAWMSCoeffN,
                                       z.RunContPct, z.RunConCoeffN),
             decimal=7)
@@ -27,13 +27,13 @@ class TestNGLostBarnN(unittest.TestCase):
     def test_AvNGLostBarnN(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            NGLostBarnN.AvNGLostBarnN_2(),
+            NGLostBarnN.AvNGLostBarnN_f(),
             NGLostBarnN.AvNGLostBarnN(), decimal=7)
 
     def test_AvNGLostBarnNSum(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            NGLostBarnN.AvNGLostBarnNSum_2(z.NYrs, z.NGPctManApp, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt,
+            NGLostBarnN.AvNGLostBarnNSum_f(z.NYrs, z.NGPctManApp, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt,
                                            z.AnimalDailyN, z.NGBarnNRate, z.Prec, z.DaysMonth, z.AWMSNgPct,
                                            z.NgAWMSCoeffN, z.RunContPct, z.RunConCoeffN),
             NGLostBarnN.AvNGLostBarnNSum(z.NYrs, z.NGPctManApp, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt,
@@ -44,5 +44,5 @@ class TestNGLostBarnN(unittest.TestCase):
     def test_NGLostBarnNSum(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            NGLostBarnN.NGLostBarnNSum_2(),
+            NGLostBarnN.NGLostBarnNSum_f(),
             NGLostBarnN.NGLostBarnNSum(), decimal=7)

@@ -14,7 +14,7 @@ class TestDisSurfLoad(unittest.TestCase):
     def test_DisSurfLoad(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            DisSurfLoad.DisSurfLoad_2(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.Nqual, z.NRur, z.NUrb,
+            DisSurfLoad.DisSurfLoad_f(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.Nqual, z.NRur, z.NUrb,
                                       z.Area, z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA,
                                       z.Qretention, z.PctAreaInfil, z.LoadRateImp, z.LoadRatePerv,
                                       z.Storm, z.UrbBMPRed, z.DisFract, z.FilterWidth, z.PctStrmBuf),

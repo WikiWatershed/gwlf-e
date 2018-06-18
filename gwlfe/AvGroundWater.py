@@ -2,7 +2,8 @@ from numpy import sum
 from numpy import zeros
 
 from GroundWatLE_1 import GroundWatLE_1
-from GroundWatLE_1 import GroundWatLE_1_2
+from GroundWatLE_1 import GroundWatLE_1_f
+from Memoization import memoize
 
 
 def AvGroundWater(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0,
@@ -17,11 +18,11 @@ def AvGroundWater(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI
             result[i] += ground_wat_le[Y][i] / NYrs
     return result
 
-
-def AvGroundWater_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0,
+@memoize
+def AvGroundWater_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0,
                     AntMoist_0, Grow_0, CNP_0, Imper, ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap,
                     SatStor_0, RecessionCoef, SeepCoef, Landuse, TileDrainDensity):
-    return sum(GroundWatLE_1_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0,
+    return sum(GroundWatLE_1_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0,
                                 AntMoist_0, Grow_0, CNP_0, Imper, ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs,
                                 MaxWaterCap, SatStor_0, RecessionCoef, SeepCoef, Landuse, TileDrainDensity),
                   axis=0) / NYrs

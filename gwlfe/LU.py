@@ -13,8 +13,8 @@ def LU(NRur, NUrb):
     return result
 
 # @time_function
-# lu is faster than lu_2
-# def lu_2(NRur, NUrb):
+# lu is faster than lu_f
+# def lu_f(NRur, NUrb):
 #     nlu = NLU(NRur, NUrb)
 #     result = np.zeros((nlu,)).astype("int")
 #     result[NRur:nlu] = np.asarray(range(NRur, nlu)) - NRur

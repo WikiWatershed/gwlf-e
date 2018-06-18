@@ -3,7 +3,7 @@ from numpy import zeros
 
 from AdjUrbanQTotal import AdjUrbanQTotal
 from DisSurfLoad import DisSurfLoad
-from DisSurfLoad import DisSurfLoad_2
+from DisSurfLoad import DisSurfLoad_f
 # from Timer import time_function
 from Memoization import memoize
 from NLU import NLU
@@ -38,9 +38,9 @@ def LuDisLoad(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, 
 
 
 @memoize
-def LuDisLoad_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, Nqual, NRur, NUrb, Area, CNI_0, AntMoist_0,
+def LuDisLoad_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec, Nqual, NRur, NUrb, Area, CNI_0, AntMoist_0,
                 Grow_0, CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil, LoadRateImp, LoadRatePerv,
                 Storm, UrbBMPRed, DisFract, FilterWidth, PctStrmBuf):
-    return sum(DisSurfLoad_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, Nqual, NRur, NUrb, Area, CNI_0, AntMoist_0,
+    return sum(DisSurfLoad_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec, Nqual, NRur, NUrb, Area, CNI_0, AntMoist_0,
                                 Grow_0, CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil, LoadRateImp, LoadRatePerv,
                                 Storm, UrbBMPRed, DisFract, FilterWidth, PctStrmBuf), axis=(1, 2))

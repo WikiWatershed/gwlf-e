@@ -4,10 +4,10 @@ from numpy import zeros
 from Memoization import memoize
 
 try:
-    from InitSnow_2_inner_compiled import InitSnow_2_inner
+    from InitSnow_f_inner_compiled import InitSnow_f_inner
 except ImportError:
     print("Unable to import compiled InitSnow_inner, using slower version")
-    from InitSnow_inner import InitSnow_2_inner
+    from InitSnow_inner import InitSnow_f_inner
 
 
 # @memoize
@@ -29,5 +29,5 @@ def InitSnow(NYrs, DaysMonth, InitSnow_0, Temp, Prec):
 
 
 @memoize
-def InitSnow_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec):
-    return InitSnow_2_inner(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
+def InitSnow_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec):
+    return InitSnow_f_inner(NYrs, DaysMonth, InitSnow_0, Temp, Prec)

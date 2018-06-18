@@ -1,7 +1,7 @@
 from numpy import zeros
 
 from GwAgLE import GwAgLE
-from GwAgLE import GwAgLE_2
+from GwAgLE import GwAgLE_f
 from Memoization import memoize
 
 
@@ -18,12 +18,12 @@ def TileDrainGW(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0
             result[Y][i] = (result[Y][i] + [gwagle[Y][i] * TileDrainDensity])
     return result
 
-
-def TileDrainGW_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
+@memoize
+def TileDrainGW_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
                   ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0, RecessionCoef, SeepCoef,
                   Landuse, TileDrainDensity):
     if (TileDrainDensity > 0):
-        gwagle = GwAgLE_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0,
+        gwagle = GwAgLE_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0,
                           Imper, ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0, RecessionCoef,
                           SeepCoef, Landuse)
         return gwagle * TileDrainDensity

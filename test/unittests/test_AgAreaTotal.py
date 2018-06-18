@@ -15,5 +15,5 @@ class TestAgAreaTotal(unittest.TestCase):
         pass
         # z = self.z
         # np.testing.assert_array_almost_equal(
-        #     AgAreaTotal.AgAreaTotal_2(z.Landuse, z.Area),
+        #     AgAreaTotal.AgAreaTotal_f(z.Landuse, z.Area),
         #     AgAreaTotal.AgAreaTotal(z.NRur, z.Landuse, z.Area), decimal=7)

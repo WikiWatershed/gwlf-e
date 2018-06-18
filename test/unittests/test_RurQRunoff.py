@@ -14,7 +14,7 @@ class TestRurQRunoff(unittest.TestCase):
     def test_RurQRunoff(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            RurQRunoff.RurQRunoff_2(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.NRur, z.NUrb,
+            RurQRunoff.RurQRunoff_f(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.NRur, z.NUrb,
                                     z.CN, z.Grow_0),
             np.swapaxes(
                 RurQRunoff.RurQRunoff(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.NRur, z.NUrb,

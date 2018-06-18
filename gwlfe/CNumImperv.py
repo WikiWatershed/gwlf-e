@@ -1,21 +1,21 @@
 from numpy import zeros
 
 from AMC5 import AMC5, AMC5_yesterday
-from CNI import CNI, CNI_2
+from CNI import CNI, CNI_f
 from DailyArrayConverter import get_value_for_yesterday
 from GrowFactor import GrowFactor
 from Melt import Melt
-from Melt_1 import Melt_1_2
+from Melt_1 import Melt_1_f
 from Memoization import memoize
 # from Timer import time_function
 from NLU import NLU
-from Water import Water, Water_2
+from Water import Water, Water_f
 
 try:
-    from CNumImperv_2_inner_compiled import CNumImperv_2_inner
+    from CNumImperv_inner_compiled import CNumImperv_inner
 except ImportError:
-    print("Unable to import compiled CNumImper_2_inner, using slower version")
-    from CNumImperv_2_inner import CNumImperv_2_inner
+    print("Unable to import compiled CNumImper_f_inner, using slower version")
+    from CNumImperv_inner import CNumImperv_inner
 
 
 @memoize
@@ -65,11 +65,11 @@ def CNumImperv(NYrs, NRur, NUrb, DaysMonth, InitSnow_0, Temp, Prec, CNI_0, Grow_
     return result
 
 
-def CNumImperv_2(NYrs, NRur, NUrb, DaysMonth, InitSnow_0, Temp, Prec, CNI_0, Grow_0, AntMoist_0):
+def CNumImperv_f(NYrs, NRur, NUrb, DaysMonth, InitSnow_0, Temp, Prec, CNI_0, Grow_0, AntMoist_0):
     nlu = NLU(NRur, NUrb)
-    cni = CNI_2(NRur, NUrb, CNI_0)
-    water = Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
-    melt = Melt_1_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
+    cni = CNI_f(NRur, NUrb, CNI_0)
+    water = Water_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
+    melt = Melt_1_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     grow_factor = GrowFactor(Grow_0)
     amc5 = AMC5_yesterday(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0)
-    return CNumImperv_2_inner(NYrs, NRur, DaysMonth, Temp, nlu, cni, water, melt, grow_factor, amc5)
+    return CNumImperv_inner(NYrs, NRur, DaysMonth, Temp, nlu, cni, water, melt, grow_factor, amc5)

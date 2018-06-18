@@ -16,5 +16,5 @@ class TestRuralRunoff(unittest.TestCase):
     # def test_RuralRunoff(self):
     #     z = self.z
     #     np.testing.assert_array_almost_equal(
-    #         RuralRunoff.RuralRunoff_2(),
+    #         RuralRunoff.RuralRunoff_f(),
     #         RuralRunoff.RuralRunoff(), decimal=7)

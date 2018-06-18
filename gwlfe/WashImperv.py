@@ -7,9 +7,9 @@ from numpy import exp
 from Memoization import memoize
 from NLU import NLU
 from QrunI import QrunI
-from QrunI import QrunI_2
+from QrunI import QrunI_f
 from Water import Water
-from Water import Water_2
+from Water import Water_f
 
 try:
     from WashImperv_inner_compiled import WashImperv_inner
@@ -46,8 +46,8 @@ def WashImperv(NYrs, DaysMonth, InitSnow_0, Temp, Prec, CNI_0, AntMoist_0, Grow_
     return result
 
 @memoize
-def WashImperv_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, CNI_0, AntMoist_0, Grow_0, NRur, NUrb):
+def WashImperv_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec, CNI_0, AntMoist_0, Grow_0, NRur, NUrb):
     nlu = NLU(NRur, NUrb)
-    water = Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
-    qruni = QrunI_2(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, CNI_0, AntMoist_0, Grow_0)
+    water = Water_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
+    qruni = QrunI_f(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, CNI_0, AntMoist_0, Grow_0)
     return WashImperv_inner(NYrs, DaysMonth, Temp, NRur, nlu, water, qruni)

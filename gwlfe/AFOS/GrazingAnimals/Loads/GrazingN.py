@@ -1,6 +1,6 @@
 from InitGrN import InitGrN
-from InitGrN import InitGrN_2
-
+from InitGrN import InitGrN_f
+from gwlfe.Memoization import memoize
 
 def GrazingN(PctGrazing, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN):
     result = zeros((12,))
@@ -9,6 +9,6 @@ def GrazingN(PctGrazing, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN)
         result[i] = PctGrazing[i] * (init_gr_n / 12)
     return result
 
-
-def GrazingN_2(PctGrazing, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN):
-    return (PctGrazing * (InitGrN_2(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN) / 12))[None,:]
+@memoize
+def GrazingN_f(PctGrazing, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN):
+    return (PctGrazing * (InitGrN_f(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN) / 12))[None,:]

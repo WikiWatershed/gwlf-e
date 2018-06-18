@@ -15,5 +15,5 @@ class TestAvGRLostBarnNSum(unittest.TestCase):
     def test_AvGRLostBarnNSum(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            AvGRLostBarnNSum.AvGRLostBarnNSum_2(),
+            AvGRLostBarnNSum.AvGRLostBarnNSum_f(),
             AvGRLostBarnNSum.AvGRLostBarnNSum(), decimal=7)

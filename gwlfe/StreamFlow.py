@@ -3,16 +3,16 @@ from numpy import zeros
 # from Timer import time_function
 from Flow import Flow
 from GroundWatLE_1 import GroundWatLE_1
-from GroundWatLE_1 import GroundWatLE_1_2
+from GroundWatLE_1 import GroundWatLE_1_f
 from Memoization import memoize
 from MultiUse_Fxns.PtSrcFlow import PtSrcFlow
-from MultiUse_Fxns.PtSrcFlow import PtSrcFlow_2
+from MultiUse_Fxns.PtSrcFlow import PtSrcFlow_f
 from Runoff import Runoff
-from Runoff import Runoff_2
+from Runoff import Runoff_f
 from TileDrain import TileDrain
-from TileDrain import TileDrain_2
+from TileDrain import TileDrain_f
 from Withdrawal import Withdrawal
-from Withdrawal import Withdrawal_2
+from Withdrawal import Withdrawal_f
 
 
 @memoize
@@ -25,7 +25,7 @@ def StreamFlow(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0,
                 ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0, RecessionCoef, SeepCoef)
     runoff = Runoff(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
                     ISRR, ISRA, Qretention, PctAreaInfil, n25b, CN, Landuse, TileDrainDensity)
-    groundwatle_2 = GroundWatLE_1(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
+    groundwatle_f = GroundWatLE_1(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
                                   CNP_0, Imper,
                                   ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0,
                                   RecessionCoef, SeepCoef, Landuse, TileDrainDensity)
@@ -40,26 +40,26 @@ def StreamFlow(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0,
             # for j in range(DaysMonth[Y][i]):
             #     result[Y][i] = result[Y][i] + flow[Y][i][j]  # This is weird, it seems to be immediately overwritten
             result[Y][i] = (runoff[Y][i]
-                            + groundwatle_2[Y][i]
+                            + groundwatle_f[Y][i]
                             + ptsrcflow[Y][i]
                             + tiledrain[Y][i]
                             - withdrawal[Y][i])
     return result
 
 @memoize
-def StreamFlow_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
+def StreamFlow_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
                  ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0, RecessionCoef, SeepCoef,
                  Qretention, PctAreaInfil, n25b, Landuse, TileDrainDensity, PointFlow, StreamWithdrawal,
                  GroundWithdrawal):
-    runoff = Runoff_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
+    runoff = Runoff_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
                       ISRR, ISRA, Qretention, PctAreaInfil, n25b, CN, Landuse, TileDrainDensity)
-    groundwatle_2 = GroundWatLE_1_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
+    groundwatle_f = GroundWatLE_1_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
                                   CNP_0, Imper, ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0,
                                   RecessionCoef, SeepCoef, Landuse, TileDrainDensity)
-    ptsrcflow = PtSrcFlow_2(NYrs, PointFlow)
-    tiledrain = TileDrain_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0,
+    ptsrcflow = PtSrcFlow_f(NYrs, PointFlow)
+    tiledrain = TileDrain_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0,
                             Imper, ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0,
                             RecessionCoef,
                             SeepCoef, Landuse, TileDrainDensity)
-    withdrawal = Withdrawal_2(NYrs, StreamWithdrawal, GroundWithdrawal)
-    return runoff + groundwatle_2 + ptsrcflow + tiledrain - withdrawal
+    withdrawal = Withdrawal_f(NYrs, StreamWithdrawal, GroundWithdrawal)
+    return runoff + groundwatle_f + ptsrcflow + tiledrain - withdrawal

@@ -3,7 +3,7 @@ from numpy import zeros
 
 from AreaTotal import AreaTotal
 from Memoization import memoize
-from Qrun import Qrun, Qrun_2
+from Qrun import Qrun, Qrun_f
 from Retention import Retention
 from RurAreaTotal import RurAreaTotal
 # from Timer import time_function
@@ -37,9 +37,9 @@ def RuralQTotal(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, CN, NUrb, AntMois
     return result
 
 @memoize
-def RuralQTotal_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, CN, NUrb, AntMoist_0, Grow_0, Area):
+def RuralQTotal_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, CN, NUrb, AntMoist_0, Grow_0, Area):
     result = zeros((NYrs, 12, 31))
-    q_run = Qrun_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, CN, AntMoist_0, Grow_0)
+    q_run = Qrun_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, CN, AntMoist_0, Grow_0)
     area_total = AreaTotal(NRur, NUrb, Area)
     qrun_area = q_run * Area
     result = sum(qrun_area, axis=3)/area_total

@@ -3,14 +3,14 @@ from numpy import where
 from numpy import zeros
 
 from BSed import BSed
-from BSed import BSed_2
+from BSed import BSed_f
 from Erosion import Erosion
-from Erosion import Erosion_2
+from Erosion import Erosion_f
 # from Timer import time_function
 from Memoization import memoize
 from SedDelivRatio import SedDelivRatio
 from SedTrans import SedTrans
-from SedTrans import SedTrans_2
+from SedTrans import SedTrans_f
 
 
 # @memoize
@@ -33,13 +33,13 @@ def SedYield(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef, NRur, KF, LS, C, P,
     return result
 
 @memoize
-def SedYield_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef, NRur, KF, LS, C, P, Area, NUrb, CNI_0, AntMoist_0, Grow_0,
+def SedYield_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef, NRur, KF, LS, C, P, Area, NUrb, CNI_0, AntMoist_0, Grow_0,
                ISRR, ISRA, Qretention, PctAreaInfil, n25b, CN, CNP_0, Imper, SedDelivRatio_0):
-    erosion = Erosion_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef, NRur, KF, LS, C, P, Area)
-    bsed = BSed_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
+    erosion = Erosion_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef, NRur, KF, LS, C, P, Area)
+    bsed = BSed_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
                   ISRR, ISRA, Qretention, PctAreaInfil, n25b, CN)
     seddelivratio = SedDelivRatio(SedDelivRatio_0)
-    sedtrans = SedTrans_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0,
+    sedtrans = SedTrans_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0,
                           Imper, ISRR, ISRA, Qretention, PctAreaInfil, n25b, CN)
     nonzero = where(bsed >0)
     temp = zeros((NYrs,12))

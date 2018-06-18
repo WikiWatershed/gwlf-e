@@ -14,5 +14,5 @@ class TestNAGBUFFER(unittest.TestCase):
     def test_NAGBUFFER(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            NAGBUFFER.NAGBUFFER_2(),
+            NAGBUFFER.NAGBUFFER_f(),
             NAGBUFFER.NAGBUFFER(), decimal=7)

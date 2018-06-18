@@ -1,10 +1,10 @@
 from numpy import zeros
 
 from AGSTRM import AGSTRM
-from AGSTRM import AGSTRM_2
+from AGSTRM import AGSTRM_f
 # from Timer import time_function
 from StreamBankN import StreamBankN
-from StreamBankN import StreamBankN_2
+from StreamBankN import StreamBankN_f
 
 
 def NFEN(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area,
@@ -33,7 +33,7 @@ def NFEN(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area,
     return result
 
 
-def NFEN_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area,
+def NFEN_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area,
            CNI_0, AntMoist_0, Grow_0, CNP_0, Imper, ISRR, ISRA, CN,
            UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0,
            RecessionCoef, SeepCoef, Qretention, PctAreaInfil, n25b, Landuse,
@@ -42,8 +42,8 @@ def NFEN_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area,
            AvSlope, SedAAdjust, StreamLength, AgLength,
            n42, SedNitr, BankNFrac, n45, n69):
     if n42 > 0:
-        agstrm = AGSTRM_2(AgLength, StreamLength)
-        streambank_n = StreamBankN_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area,
+        agstrm = AGSTRM_f(AgLength, StreamLength)
+        streambank_n = StreamBankN_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area,
                                      CNI_0, AntMoist_0, Grow_0, CNP_0, Imper, ISRR, ISRA, CN,
                                      UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0,
                                      RecessionCoef, SeepCoef, Qretention, PctAreaInfil, n25b, Landuse,

@@ -1,9 +1,9 @@
 from numpy import zeros
 
 # from Timer import time_function
-from Melt_1 import Melt_1, Melt_1_2
+from Melt_1 import Melt_1, Melt_1_f
 from Memoization import memoize
-from Rain import Rain, Rain_2
+from Rain import Rain, Rain_f
 
 
 @memoize
@@ -18,7 +18,7 @@ def Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec):
     return result
 
 @memoize
-def Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec):
-    melt_1 = Melt_1_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
-    rain = Rain_2(Temp, Prec)
+def Water_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec):
+    melt_1 = Melt_1_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
+    rain = Rain_f(Temp, Prec)
     return rain + melt_1

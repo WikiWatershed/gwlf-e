@@ -1,21 +1,21 @@
 from numpy import zeros
 
 from AMC5 import AMC5, AMC5_yesterday
-from CNP import CNP, CNP_2
+from CNP import CNP, CNP_f
 # from Timer import time_function
 from DailyArrayConverter import get_value_for_yesterday
 from GrowFactor import GrowFactor
 from Melt import Melt
-from Melt_1 import Melt_1_2
+from Melt_1 import Melt_1_f
 from Memoization import memoize
 from NLU import NLU
-from Water import Water, Water_2
+from Water import Water, Water_f
 
 try:
-    from CNumPerv_2_inner_compiled import CNumPerv_2_inner
+    from CNumPerv_inner_compiled import CNumPerv_inner
 except ImportError:
-    print("Unable to import compiled CNumPerv_2_inner, using slower version")
-    from CNumPerv_2_inner import CNumPerv_2_inner
+    print("Unable to import compiled CNumPerv_f_inner, using slower version")
+    from CNumPerv_inner import CNumPerv_inner
 
 
 @memoize
@@ -65,22 +65,22 @@ def CNumPerv(NYrs, DaysMonth, Temp, NRur, NUrb, CNP_0, InitSnow_0, Prec, Grow_0,
     return result
 
 
-def CNumPerv_2(NYrs, DaysMonth, Temp, NRur, NUrb, CNP_0, InitSnow_0, Prec, Grow_0, AntMoist_0):
+def CNumPerv_f(NYrs, DaysMonth, Temp, NRur, NUrb, CNP_0, InitSnow_0, Prec, Grow_0, AntMoist_0):
     nlu = NLU(NRur, NUrb)
-    cnp = CNP_2(NRur, NUrb, CNP_0)
-    water = Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
-    melt = Melt_1_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
+    cnp = CNP_f(NRur, NUrb, CNP_0)
+    water = Water_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
+    melt = Melt_1_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     grow_factor = GrowFactor(Grow_0)
     amc5 = AMC5_yesterday(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0)
-    return CNumPerv_2_inner(NYrs, DaysMonth, Temp, NRur, nlu, cnp, water, melt, grow_factor, amc5)
+    return CNumPerv_inner(NYrs, DaysMonth, Temp, NRur, nlu, cnp, water, melt, grow_factor, amc5)
 
 # def CNumPerv_3(NYrs, DaysMonth, Temp, NRur, NUrb, CNP_0, InitSnow_0, Prec, Grow_0, AntMoist_0):
 #     nlu = NLU(NRur, NUrb)
 #     result = np.zeros((NYrs, 12, 31, 16))
 #     landuse = np.zeros((16,))
-#     cnp = CNP_2(NRur, NUrb, CNP_0)
-#     water = Water_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
-#     melt = Melt_1_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
+#     cnp = CNP_f(NRur, NUrb, CNP_0)
+#     water = Water_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
+#     melt = Melt_1_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
 #     grow_factor = GrowFactor(Grow_0)
 #     amc5 = AMC5_yesterday(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0)
 #

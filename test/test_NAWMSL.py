@@ -14,5 +14,5 @@ class TestNAWMSL(unittest.TestCase):
     def test_NAWMSL(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            NAWMSL.NAWMSL_2(),
+            NAWMSL.NAWMSL_f(),
             NAWMSL.NAWMSL(), decimal=7)

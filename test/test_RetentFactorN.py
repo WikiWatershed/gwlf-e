@@ -15,5 +15,5 @@ class TestRetentFactorN(unittest.TestCase):
     # def test_RetentFactorN(self):
     #     z = self.z
     #     np.testing.assert_array_almost_equal(
-    #         RetentFactorN.RetentFactorN_2(),
+    #         RetentFactorN.RetentFactorN_f(),
     #         RetentFactorN.RetentFactorN(), decimal=7)

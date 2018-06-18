@@ -4,7 +4,7 @@ from numpy import zeros
 from Memoization import memoize
 from NLU import NLU
 from RurEros import RurEros
-from RurEros import RurEros_2
+from RurEros import RurEros_f
 from Water import Water
 
 
@@ -29,5 +29,5 @@ def ErosWashoff(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Acoef, KF, 
     return result
 
 @memoize
-def ErosWashoff_2(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, Acoef, KF, LS, C, P, Area):
-    return sum(RurEros_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef, NRur, KF, LS, C, P, Area), axis=2)
+def ErosWashoff_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, Acoef, KF, LS, C, P, Area):
+    return sum(RurEros_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef, NRur, KF, LS, C, P, Area), axis=2)

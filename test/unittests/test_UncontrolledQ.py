@@ -15,5 +15,5 @@ class TestUncontrolledQ(unittest.TestCase):
     # def test_UncontrolledQ(self):
     #     z = self.z
     #     np.testing.assert_array_almost_equal(
-    #         UncontrolledQ.UncontrolledQ_2(),
+    #         UncontrolledQ.UncontrolledQ_f(),
     #         UncontrolledQ.UncontrolledQ(), decimal=7)

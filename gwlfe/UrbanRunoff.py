@@ -4,7 +4,7 @@ from numpy import zeros
 # from Timer import time_function
 from Memoization import memoize
 from UrbanQTotal_1 import UrbanQTotal_1
-from UrbanQTotal_1 import UrbanQTotal_1_2
+from UrbanQTotal_1 import UrbanQTotal_1_f
 from Water import Water
 
 
@@ -26,7 +26,7 @@ def UrbanRunoff(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Area, CNI_0
     return result
 
 
-def UrbanRunoff_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
+def UrbanRunoff_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
                   CNP_0, Imper, ISRR, ISRA):
-    return sum(UrbanQTotal_1_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
+    return sum(UrbanQTotal_1_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
                                   CNP_0, Imper, ISRR, ISRA), axis=2)

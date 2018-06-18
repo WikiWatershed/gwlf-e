@@ -2,9 +2,9 @@ from numpy import zeros
 
 # from Timer import time_function
 from Infiltration import Infiltration
-from Infiltration import Infiltration_2
+from Infiltration import Infiltration_f
 from Memoization import memoize
-from MultiUse_Fxns.ET import DailyET_2
+from MultiUse_Fxns.ET import DailyET_f
 
 try:
     from Percolation_inner_compiled import Percolation_inner
@@ -22,7 +22,7 @@ def Percolation(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0
                                 CNP_0, Imper,
                                 ISRR, ISRA, CN)
     unsatstor_carryover = UnsatStor_0
-    et = DailyET_2(Temp, KV, PcntET, DayHrs)
+    et = DailyET_f(Temp, KV, PcntET, DayHrs)
     for Y in range(NYrs):
         for i in range(12):
             for j in range(DaysMonth[Y][i]):
@@ -41,12 +41,12 @@ def Percolation(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0
     return percolation
 
 
-def Percolation_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
+def Percolation_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
                   ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap):
-    infiltration = Infiltration_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
+    infiltration = Infiltration_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
                                   CNP_0, Imper, ISRR, ISRA, CN)
 
-    et = DailyET_2(Temp, KV, PcntET, DayHrs)
+    et = DailyET_f(Temp, KV, PcntET, DayHrs)
     return Percolation_inner(NYrs, UnsatStor_0, DaysMonth, MaxWaterCap, infiltration, et)
 
     #   NYrs = arg(0, name=NYrs)  :: int64

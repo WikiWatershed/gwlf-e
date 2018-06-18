@@ -14,5 +14,5 @@ class TestAGSTRM(unittest.TestCase):
     def test_AGSTRM(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            AGSTRM.AGSTRM_2(z.AgLength, z.StreamLength),
+            AGSTRM.AGSTRM_f(z.AgLength, z.StreamLength),
             AGSTRM.AGSTRM(z.AgLength, z.StreamLength), decimal=7)

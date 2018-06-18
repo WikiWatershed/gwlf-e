@@ -15,5 +15,5 @@ class TestGRInitBarnN(unittest.TestCase):
         np.testing.assert_array_almost_equal(
             GRInitBarnN.GRInitBarnN(z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN, z.GRPctManApp,
                                     z.PctGrazing),
-            GRInitBarnN.GRInitBarnN_2(z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN, z.GRPctManApp,
+            GRInitBarnN.GRInitBarnN_f(z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN, z.GRPctManApp,
                                       z.PctGrazing), decimal=7)

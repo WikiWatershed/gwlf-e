@@ -11,5 +11,5 @@ def GRLostBarnNSum(NYrs, GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN, G
     return result
 
 
-def GRLostBarnNSum_2():
+def GRLostBarnNSum_f():
     pass

@@ -1,8 +1,8 @@
 # import numpy as np
 # from Timer import time_function
 # from Infiltration import Infiltration
-# from Infiltration import Infiltration_2
-# from MultiUse_Fxns.ET import DailyET_2
+# from Infiltration import Infiltration_f
+# from MultiUse_Fxns.ET import DailyET_f
 # from Memoization import memoize
 #
 # try:
@@ -21,7 +21,7 @@
 #                                 CNP_0, Imper,
 #                                 ISRR, ISRA, CN)
 #     unsatstor_carryover = UnsatStor_0
-#     et = DailyET_2(Temp, KV, PcntET, DayHrs)
+#     et = DailyET_f(Temp, KV, PcntET, DayHrs)
 #     for Y in range(NYrs):
 #         for i in range(12):
 #             for j in range(DaysMonth[Y][i]):
@@ -51,9 +51,9 @@
 #
 #
 # @memoize
-# def UnsatStor_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
+# def UnsatStor_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
 #                 ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap):
-#     infiltration = Infiltration_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
+#     infiltration = Infiltration_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
 #                                   CNP_0, Imper, ISRR, ISRA, CN)
-#     et = DailyET_2(Temp, KV, PcntET, DayHrs)
+#     et = DailyET_f(Temp, KV, PcntET, DayHrs)
 #     return UnsatStor_inner(NYrs, DaysMonth, MaxWaterCap, UnsatStor_0, infiltration, et)[0]

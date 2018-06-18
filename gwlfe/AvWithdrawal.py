@@ -4,7 +4,7 @@ from numpy import zeros
 # from Timer import time_function
 from Memoization import memoize
 from Withdrawal import Withdrawal
-from Withdrawal import Withdrawal_2
+from Withdrawal import Withdrawal_f
 
 
 def AvWithdrawal(NYrs, StreamWithdrawal, GroundWithdrawal):
@@ -16,5 +16,5 @@ def AvWithdrawal(NYrs, StreamWithdrawal, GroundWithdrawal):
     return result
 
 @memoize
-def AvWithdrawal_2(NYrs, StreamWithdrawal, GroundWithdrawal):
-    return sum(Withdrawal_2(NYrs, StreamWithdrawal, GroundWithdrawal), axis=0) / NYrs
+def AvWithdrawal_f(NYrs, StreamWithdrawal, GroundWithdrawal):
+    return sum(Withdrawal_f(NYrs, StreamWithdrawal, GroundWithdrawal), axis=0) / NYrs
