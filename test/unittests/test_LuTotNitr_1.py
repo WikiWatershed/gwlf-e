@@ -27,5 +27,5 @@ class TestLuTotNitr_1(unittest.TestCase):
                                     z.LS, z.C, z.P, z.SedNitr, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.Qretention,
                                     z.PctAreaInfil, z.LoadRateImp, z.LoadRatePerv, z.Storm, z.UrbBMPRed, z.FilterWidth,
                                     z.PctStrmBuf, z.Acoef, z.CNI_0, z.Nqual, z.ShedAreaDrainLake, z.RetentNLake,
-                                    z.AttenFlowDist,z.AttenFlowVel, z.AttenLossRateN)[:, :z.NRur],
+                                    z.AttenFlowDist,z.AttenFlowVel, z.AttenLossRateN),
             decimal=7)
