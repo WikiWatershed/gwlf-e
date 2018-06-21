@@ -1,4 +1,5 @@
 from numba.pycc import CC
+from numpy import zeros
 
 cc = CC('CNumImperv_2_inner_compiled')
 

@@ -12,7 +12,7 @@ from NewCN import NewCN, NewCN_2
 from Water import Water, Water_2
 
 try:
-    from CNum_inner_compiled import CNum_inner
+    from CNum_inner_xcompiled import CNum_inner
 except ImportError:
     print("Unable to import compiled CNum_inner, using slower version")
     from CNum_inner import CNum_inner

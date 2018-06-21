@@ -12,7 +12,7 @@ from NLU import NLU
 from Water import Water, Water_2
 
 try:
-    from CNumImperv_2_inner_compiled import CNumImperv_2_inner
+    from CNumImperv_2_inner_xcompiled import CNumImperv_2_inner
 except ImportError:
     print("Unable to import compiled CNumImper_2_inner, using slower version")
     from CNumImperv_2_inner import CNumImperv_2_inner

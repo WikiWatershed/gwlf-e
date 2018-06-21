@@ -95,7 +95,7 @@ def ymd_to_daily_slow(ymd_array, NYrs, DaysMonth):
     return array(result)
 
 def get_value_for_yesterday(variable, variable_0, Y_in, i_in, j_in, DaysMonth):
-    temp = variable
+    temp = array(variable)
     key = random.randint(100000000000,999999999999)#use something that is hopefully unique so we can find it again
     temp[Y_in,i_in,j_in] = key
     temp = ymd_to_daily(temp,DaysMonth)

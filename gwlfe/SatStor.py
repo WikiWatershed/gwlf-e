@@ -1,6 +1,4 @@
 from numpy import zeros
-
-from DeepSeep import DeepSeep_inner
 from Memoization import memoize
 # from Timer import time_function
 from Percolation import Percolation
