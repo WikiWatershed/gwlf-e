@@ -21,6 +21,6 @@ class TestGRStreamN(unittest.TestCase):
     def test_AvGRStreamN(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            GRStreamN.AvGRStreamN_2(z.PctStreams, z.PctGrazing, z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN),
-            GRStreamN.AvGRStreamN(z.PctStreams, z.PctGrazing, z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN),
+            GRStreamN.AvGRStreamN_2(z.PctStreams, z.PctGrazing, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN),
+            GRStreamN.AvGRStreamN(z.PctStreams, z.PctGrazing, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN),
             decimal=7)

@@ -26,10 +26,10 @@ class TestNGLostBarnN(unittest.TestCase):
     def test_AvNGLostBarnN(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            NGLostBarnN.AvNGLostBarnN_2(z.NYrs, z.NGPctManApp, z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt,
+            NGLostBarnN.AvNGLostBarnN_2(z.NYrs, z.NGPctManApp, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt,
                                         z.AnimalDailyN, z.NGBarnNRate, z.Prec, z.DaysMonth, z.AWMSNgPct, z.NgAWMSCoeffN,
                                         z.RunContPct, z.RunConCoeffN),
-            NGLostBarnN.AvNGLostBarnN(z.NYrs, z.NGPctManApp, z.GrazingAnimal, z.NumAnimals, z.AvgAnimalWt,
+            NGLostBarnN.AvNGLostBarnN(z.NYrs, z.NGPctManApp, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt,
                                       z.AnimalDailyN, z.NGBarnNRate, z.Prec, z.DaysMonth, z.AWMSNgPct, z.NgAWMSCoeffN,
                                       z.RunContPct, z.RunConCoeffN), decimal=7)
 

@@ -26,8 +26,6 @@ def main():
     result = gwlfe.run(z)
     print(time.time()-start)
     print(json.dumps(result, indent=4))
-    with open("GMS6_output.json","w") as file:
-        json.dump(result, file, indent=4)
 
 if __name__ == '__main__':
     main()
