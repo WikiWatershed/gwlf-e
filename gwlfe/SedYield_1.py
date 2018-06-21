@@ -5,6 +5,8 @@ from SedYield import SedYield_2
 from StreamBankEros_1 import StreamBankEros_1
 from StreamBankEros_1 import StreamBankEros_1_2
 
+from numpy import zeros
+
 
 @memoize
 def SedYield_1(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,

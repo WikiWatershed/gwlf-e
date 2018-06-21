@@ -3,6 +3,7 @@ from AGSTRM import AGSTRM
 from AGSTRM import AGSTRM_2
 from StreamBankEros import StreamBankEros
 from StreamBankEros import StreamBankEros_2
+from numpy import zeros
 
 
 # @memoize

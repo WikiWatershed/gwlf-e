@@ -2,7 +2,7 @@ from GRAppManN import GRAppManN
 from GRAppManN import GRAppManN_2
 from gwlfe.AFOS.GrazingAnimals.Loads.GRAccManAppN import GRAccManAppN
 from gwlfe.AFOS.GrazingAnimals.Loads.GRAccManAppN import GRAccManAppN_2
-
+from numpy import zeros
 
 def GRInitBarnN(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, GRPctManApp, PctGrazing):
     result = zeros((12,))

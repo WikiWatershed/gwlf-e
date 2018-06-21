@@ -1,6 +1,6 @@
 from InitGrN import InitGrN
 from InitGrN import InitGrN_2
-
+from numpy import zeros
 
 def GRAppManN(GRPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN):
     result = zeros((12,))

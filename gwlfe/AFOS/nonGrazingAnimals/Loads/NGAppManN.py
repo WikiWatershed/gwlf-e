@@ -1,5 +1,5 @@
 from InitNgN import InitNgN
-
+from numpy import zeros
 
 def NGAppManN(NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN):
     result = zeros((12,))

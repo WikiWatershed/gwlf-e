@@ -2,6 +2,8 @@ from Precipitation import Precipitation
 from Precipitation import Precipitation_2
 from ..Memoization import memoize
 
+from numpy import zeros
+
 
 def LossFactAdj(NYrs, Prec, DaysMonth):
     result = zeros((NYrs, 12))

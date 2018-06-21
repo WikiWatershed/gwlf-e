@@ -1,7 +1,7 @@
 # from Timer import time_function
 from Memoization import memoize
 from NLU import NLU
-
+from numpy import zeros
 
 @memoize
 def LU_1(NRur, NUrb):

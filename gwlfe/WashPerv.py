@@ -1,6 +1,9 @@
 # from Timer import time_function
 import math
 
+from numpy import zeros
+from numpy import exp
+
 from Memoization import memoize
 from NLU import NLU
 from QrunP import QrunP

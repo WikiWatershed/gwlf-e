@@ -2,7 +2,7 @@ from numpy import sum
 
 from gwlfe.AFOS.GrazingAnimals.Loads.GrazingN import GrazingN
 from gwlfe.AFOS.GrazingAnimals.Loads.GrazingN import GrazingN_2
-
+from numpy import zeros
 
 def GRStreamN(PctStreams, PctGrazing, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN):
     result = zeros((12,))
