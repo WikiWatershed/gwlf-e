@@ -1,4 +1,5 @@
 from GRLostBarnN import GRLostBarnN
+from numpy import zeros
 
 def GRLostBarnNSum(NYrs, GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN, GRPctManApp, PctGrazing, GRBarnNRate,
                    Prec, DaysMonth, AWMSGrPct, GrAWMSCoeffN, RunContPct, RunConCoeffN):
@@ -11,5 +12,5 @@ def GRLostBarnNSum(NYrs, GrazingAnimal, NumAnimals, AvgAnimalWt, AnimalDailyN, G
     return result
 
 
-def GRLostBarnNSum_2():
-    pass
+# def GRLostBarnNSum_2():
+#     pass

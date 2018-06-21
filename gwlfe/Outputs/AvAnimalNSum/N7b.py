@@ -48,18 +48,20 @@ def N7b_2(NYrs, Grazinganimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, NGAppNRa
                                      NGAppNRate, Prec, DaysMonth, NGPctSoilIncRate, GRPctManApp, GRAppNRate,
                                      GRPctSoilIncRate, NGBarnNRate, AWMSNgPct, NgAWMSCoeffN, RunContPct, RunConCoeffN,
                                      PctGrazing, GRBarnNRate, AWMSGrPct, GrAWMSCoeffN, PctStreams, GrazingNRate)
-    nawmsl = NAWMSL_2(NYrs, Grazinganimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, GRPctManApp, PctGrazing, GRBarnNRate,
-                    Prec, DaysMonth, AWMSGrPct, GrAWMSCoeffN, RunContPct, RunConCoeffN, n41b, n85h)
-    nawmsp = NAWMSP_2(NYrs, NGPctManApp, Grazinganimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, NGBarnNRate,
-                    Prec, DaysMonth, AWMSNgPct, NgAWMSCoeffN, RunContPct, RunConCoeffN, n41d, n85j)
-    nruncon = NRUNCON_2(NYrs, Grazinganimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, GRPctManApp, PctGrazing,
+    nawmsl = NAWMSL_2(NYrs, Grazinganimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, GRPctManApp, PctGrazing,
                       GRBarnNRate,
-                      Prec, DaysMonth, AWMSGrPct, GrAWMSCoeffN, RunContPct, RunConCoeffN, NGPctManApp, NGBarnNRate,
-                      AWMSNgPct, NgAWMSCoeffN, n41f, n85l)
+                      Prec, DaysMonth, AWMSGrPct, GrAWMSCoeffN, RunContPct, RunConCoeffN, n41b, n85h)
+    nawmsp = NAWMSP_2(NYrs, NGPctManApp, Grazinganimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, NGBarnNRate,
+                      Prec, DaysMonth, AWMSNgPct, NgAWMSCoeffN, RunContPct, RunConCoeffN, n41d, n85j)
+    nruncon = NRUNCON_2(NYrs, Grazinganimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, GRPctManApp, PctGrazing,
+                        GRBarnNRate,
+                        Prec, DaysMonth, AWMSGrPct, GrAWMSCoeffN, RunContPct, RunConCoeffN, NGPctManApp, NGBarnNRate,
+                        AWMSNgPct, NgAWMSCoeffN, n41f, n85l)
     nfencing = NFENCING_2(PctStreams, PctGrazing, Grazinganimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, n42, n45, n69)
     nagbuffer = NAGBUFFER_2(n42, n43, n64, NYrs, NGPctManApp, Grazinganimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN,
-                          NGBarnNRate, Prec, DaysMonth, AWMSNgPct, NgAWMSCoeffN, RunContPct, RunConCoeffN, GRPctManApp,
-                          PctGrazing, GRBarnNRate, AWMSGrPct, GrAWMSCoeffN, PctStreams, NGAppNRate, NGPctSoilIncRate,
-                          GRAppNRate, GRPctSoilIncRate, GrazingNRate)
+                            NGBarnNRate, Prec, DaysMonth, AWMSNgPct, NgAWMSCoeffN, RunContPct, RunConCoeffN,
+                            GRPctManApp,
+                            PctGrazing, GRBarnNRate, AWMSGrPct, GrAWMSCoeffN, PctStreams, NGAppNRate, NGPctSoilIncRate,
+                            GRAppNRate, GRPctSoilIncRate, GrazingNRate)
     result = av_animal_n_sum - (nawmsl + nawmsp + nruncon + nfencing + nagbuffer)
     return result
