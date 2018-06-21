@@ -4,6 +4,7 @@ from Percolation import Percolation_2
 from Memoization import memoize
 from Percolation import Percolation
 from Percolation import Percolation_2
+from numpy import zeros
 
 try:
     from DeepSeep_inner_compiled import DeepSeep_inner

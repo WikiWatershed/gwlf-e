@@ -3,7 +3,7 @@ from Memoization import memoize
 from StreamFlowLE import StreamFlowLE
 from StreamFlowLE import StreamFlowLE_2
 from TotAreaMeters import TotAreaMeters
-
+from numpy import zeros
 
 @memoize
 def StreamFlowVol(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,

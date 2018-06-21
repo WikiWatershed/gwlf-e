@@ -2,7 +2,7 @@
 from LE import LE
 from LE import LE_2
 from Memoization import memoize
-
+from numpy import zeros
 
 @memoize
 def StreamBankEros(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
