@@ -12,7 +12,7 @@ from gwlfe.MultiUse_Fxns.Runoff.NewCN import NewCN, NewCN_f
 from gwlfe.Input.WaterBudget.Water import Water, Water_f
 
 try:
-    from CNum_inner_xcompiled import CNum_inner
+    from CNum_inner_compiled import CNum_inner
 except ImportError:
     print("Unable to import compiled CNum_inner, using slower version")
     from gwlfe.MultiUse_Fxns.Runoff.CNum_inner import CNum_inner

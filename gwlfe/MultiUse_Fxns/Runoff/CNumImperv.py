@@ -4,6 +4,7 @@ from gwlfe.Input.WaterBudget.AMC5 import AMC5, AMC5_yesterday
 from gwlfe.MultiUse_Fxns.Runoff.CNI import CNI, CNI_f
 from gwlfe.DailyArrayConverter import get_value_for_yesterday
 from gwlfe.Input.WaterBudget.GrowFactor import GrowFactor
+from gwlfe.Input.WaterBudget.GrowFactor import GrowFactor_f
 from gwlfe.Input.WaterBudget.Melt import Melt
 from gwlfe.Input.WaterBudget.Melt_1 import Melt_1_f
 from gwlfe.Memoization import memoize
@@ -12,9 +13,9 @@ from gwlfe.Input.LandUse.NLU import NLU
 from gwlfe.Input.WaterBudget.Water import Water, Water_f
 
 try:
-    from CNumImperv_2_inner_xcompiled import CNumImperv_2_inner
+    from CNumImperv_inner_compiled import CNumImperv_inner
 except ImportError:
-    print("Unable to import compiled CNumImper_f_inner, using slower version")
+    print("Unable to import compiled CNumImper_2_inner, using slower version")
     from gwlfe.MultiUse_Fxns.Runoff.CNumImperv_inner import CNumImperv_inner
 
 
@@ -70,6 +71,6 @@ def CNumImperv_f(NYrs, NRur, NUrb, DaysMonth, InitSnow_0, Temp, Prec, CNI_0, Gro
     cni = CNI_f(NRur, NUrb, CNI_0)
     water = Water_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     melt = Melt_1_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
-    grow_factor = GrowFactor(Grow_0)
+    grow_factor = GrowFactor_f(Grow_0)
     amc5 = AMC5_yesterday(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0)
     return CNumImperv_inner(NYrs, NRur, DaysMonth, Temp, nlu, cni, water, melt, grow_factor, amc5)

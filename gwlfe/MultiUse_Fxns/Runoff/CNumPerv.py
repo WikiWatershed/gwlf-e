@@ -5,6 +5,7 @@ from gwlfe.MultiUse_Fxns.Runoff.CNP import CNP, CNP_f
 # from Timer import time_function
 from gwlfe.DailyArrayConverter import get_value_for_yesterday
 from gwlfe.Input.WaterBudget.GrowFactor import GrowFactor
+from gwlfe.Input.WaterBudget.GrowFactor import GrowFactor_f
 from gwlfe.Input.WaterBudget.Melt import Melt
 from gwlfe.Input.WaterBudget.Melt_1 import Melt_1_f
 from gwlfe.Memoization import memoize
@@ -70,7 +71,7 @@ def CNumPerv_f(NYrs, DaysMonth, Temp, NRur, NUrb, CNP_0, InitSnow_0, Prec, Grow_
     cnp = CNP_f(NRur, NUrb, CNP_0)
     water = Water_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     melt = Melt_1_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
-    grow_factor = GrowFactor(Grow_0)
+    grow_factor = GrowFactor_f(Grow_0)
     amc5 = AMC5_yesterday(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0)
     return CNumPerv_inner(NYrs, DaysMonth, Temp, NRur, nlu, cnp, water, melt, grow_factor, amc5)
 
