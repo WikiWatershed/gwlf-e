@@ -1,5 +1,5 @@
 from numpy import sum
-
+from gwlfe.Memoization import memoize
 
 def TotLAEU(NumAnimals, AvgAnimalWt):
     result = 0
@@ -11,6 +11,6 @@ def TotLAEU(NumAnimals, AvgAnimalWt):
     result += aeu3 + aeu4 + aeu5 + aeu6 + aeu7
     return result
 
-
+@memoize
 def TotLAEU_f(NumAnimals, AvgAnimalWt):
     return sum(NumAnimals[[0, 1, 4, 5, 6]] * AvgAnimalWt[[0, 1, 4, 5, 6]] / 1000)

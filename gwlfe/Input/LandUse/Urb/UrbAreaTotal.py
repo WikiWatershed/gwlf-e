@@ -16,6 +16,6 @@ def UrbAreaTotal(NRur,NUrb,Area):
 
 # Tried, it was slower. UrbAreaTotal is faster
 # @time_function
-#@memoize
+@memoize
 def UrbAreaTotal_f(NRur,NUrb,Area):
     return sum(Area[NRur:])

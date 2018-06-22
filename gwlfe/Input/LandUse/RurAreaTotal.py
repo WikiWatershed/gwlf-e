@@ -12,7 +12,6 @@ def RurAreaTotal(NRur, Area):
         result += Area[l]
     return result
 
-# @memoize
-# @time_function
+@memoize
 def RurAreaTotal_f(NRur, Area):
     return sum(Area[0:NRur])
