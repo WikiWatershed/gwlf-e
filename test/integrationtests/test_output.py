@@ -38,7 +38,7 @@ class TestOutput(unittest.TestCase):
         for key in constant_keys:
             try:
                 self.assertIn(key, self.generated_output)
-                np.testing.assert_almost_equal(self.generated_output[key], self.static_output[key], decimal=7,
+                np.testing.assert_allclose(self.generated_output[key], self.static_output[key], rtol=1e-7,
                                                verbose=True)
             except AssertionError as e:
                 print("AssertionError on %s" % (key))
@@ -50,9 +50,9 @@ class TestOutput(unittest.TestCase):
             self.assertItemsEqual(self.generated_output["monthly"][i], self.static_output["monthly"][i])
             for (key, val) in month.iteritems():
                 try:
-                    np.testing.assert_almost_equal(self.generated_output["monthly"][i][key],
+                    np.testing.assert_allclose(self.generated_output["monthly"][i][key],
                                                    self.static_output["monthly"][i][key],
-                                                   decimal=7,
+                                                   rtol=1e-7,
                                                    verbose=True)
                 except AssertionError as e:
                     print("AssertionError on %s (month %i)" % (key, i))
@@ -62,8 +62,8 @@ class TestOutput(unittest.TestCase):
         for key in self.static_output["meta"].keys():
             try:
                 self.assertIn(key, self.generated_output["meta"])
-                np.testing.assert_almost_equal(self.generated_output["meta"][key], self.static_output["meta"][key],
-                                               decimal=7,
+                np.testing.assert_allclose(self.generated_output["meta"][key], self.static_output["meta"][key],
+                                               rtol=1e-7,
                                                verbose=True)
             except AssertionError as e:
                 print("AssertionError on %s" % (key))
@@ -76,9 +76,9 @@ class TestOutput(unittest.TestCase):
             for (key, val) in month.iteritems():
                 try:
                     try:
-                        np.testing.assert_almost_equal(self.generated_output["SummaryLoads"][i][key],
+                        np.testing.assert_allclose(self.generated_output["SummaryLoads"][i][key],
                                                        self.static_output["SummaryLoads"][i][key],
-                                                       decimal=7, err_msg='',
+                                                       rtol=1e-7,
                                                        verbose=True)
                     except TypeError:
                         self.assertEqual(self.generated_output["SummaryLoads"][i][key],
@@ -94,9 +94,9 @@ class TestOutput(unittest.TestCase):
             for (key, val) in month.iteritems():
                 try:
                     try:
-                        np.testing.assert_almost_equal(self.generated_output["Loads"][i][key],
+                        np.testing.assert_allclose(self.generated_output["Loads"][i][key],
                                                        self.static_output["Loads"][i][key],
-                                                       decimal=7, err_msg='',
+                                                       rtol=1e-7,
                                                        verbose=True)
                     except TypeError:
                         self.assertEqual(self.generated_output["Loads"][i][key], self.static_output["Loads"][i][key])
