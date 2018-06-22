@@ -22,3 +22,4 @@ __pycache__/
 **.csv
 **.dot
 **.DS_Store
+**.orig
