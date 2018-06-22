@@ -13,9 +13,9 @@ from gwlfe.Input.LandUse.NLU import NLU
 from gwlfe.Input.WaterBudget.Water import Water, Water_f
 
 try:
-    from CNumImperv_inner_compiled import CNumImperv_inner
+    from CNumImperv_inner_xcompiled import CNumImperv_inner
 except ImportError:
-    print("Unable to import compiled CNumImper_2_inner, using slower version")
+    print("Unable to import compiled CNumImper_inner, using slower version")
     from gwlfe.MultiUse_Fxns.Runoff.CNumImperv_inner import CNumImperv_inner
 
 
