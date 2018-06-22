@@ -2,8 +2,8 @@ from numpy import zeros
 
 from gwlfe.MultiUse_Fxns.Runoff.DayRunoff import DayRunoff
 from gwlfe.MultiUse_Fxns.Runoff.DayRunoff import DayRunoff_f
-from Input.WaterBudget.GrFlow import GrFlow
-from Input.WaterBudget.GrFlow import GrFlow_f
+from gwlfe.Input.WaterBudget.GrFlow import GrFlow
+from gwlfe.Input.WaterBudget.GrFlow import GrFlow_f
 # from Timer import time_function
 from gwlfe.Memoization import memoize
 

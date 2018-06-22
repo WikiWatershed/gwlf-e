@@ -45,7 +45,6 @@ class TestOutput(unittest.TestCase):
                 raise e
 
     def test_check_monthly(self):
-        last_error = None
         self.assertEqual(len(self.generated_output["monthly"]), len(self.static_output["monthly"]))
         for i, month in enumerate(self.generated_output["monthly"]):
             self.assertItemsEqual(self.generated_output["monthly"][i], self.static_output["monthly"][i])
@@ -57,9 +56,7 @@ class TestOutput(unittest.TestCase):
                                                    verbose=True)
                 except AssertionError as e:
                     print("AssertionError on %s (month %i)" % (key, i))
-                    last_error = e
-        if (last_error != None):
-            raise last_error
+                    raise e
 
     def test_meta(self):
         for key in self.static_output["meta"].keys():
@@ -73,7 +70,6 @@ class TestOutput(unittest.TestCase):
                 raise e
 
     def test_summary_loads(self):
-        last_error = None
         self.assertEqual(len(self.generated_output["SummaryLoads"]), len(self.static_output["SummaryLoads"]))
         for i, month in enumerate(self.generated_output["SummaryLoads"]):
             self.assertItemsEqual(self.generated_output["SummaryLoads"][i], self.static_output["SummaryLoads"][i])
@@ -89,12 +85,9 @@ class TestOutput(unittest.TestCase):
                                          self.static_output["SummaryLoads"][i][key])
                 except Exception as e:
                     print("AssertionError on %s (%s)" % (key, self.generated_output["SummaryLoads"][i]["Source"]))
-                    last_error = e
-        if (last_error != None):
-            raise last_error
+                    raise e
 
     def test_loads(self):
-        last_error = None
         self.assertEqual(len(self.generated_output["Loads"]), len(self.static_output["Loads"]))
         for i, month in enumerate(self.generated_output["Loads"]):
             self.assertItemsEqual(self.generated_output["Loads"][i], self.static_output["Loads"][i])
@@ -109,9 +102,7 @@ class TestOutput(unittest.TestCase):
                         self.assertEqual(self.generated_output["Loads"][i][key], self.static_output["Loads"][i][key])
                 except AssertionError as e:
                     print("AssertionError on %s (%s)" % (key, self.static_output["Loads"][i]["Source"]))
-                    last_error = e
-        if (last_error != None):
-            raise last_error
+                    raise e
 
     # def test_generated_output_matches_static_output(self):
     #     """

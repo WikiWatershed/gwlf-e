@@ -2,8 +2,7 @@ from VariableUnittest import VariableUnitTest
 
 
 class TestDeepSeep(VariableUnitTest):
-    def setUp(self):
-        pass
+    pass
     #     input_file = open('unittests/input_4.gms', 'r')
     #     self.z = Parser.GmsReader(input_file).read()
     #

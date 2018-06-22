@@ -6,10 +6,6 @@ from gwlfe.MultiUse_Fxns.Runoff import RurQRunoff
 
 
 class TestRurQRunoff(VariableUnitTest):
-    def setUp(self):
-        input_file = open('integrationtests/test1.gms', 'r')
-        self.z = Parser.GmsReader(input_file).read()
-
     def test_RurQRunoff(self):
         z = self.z
         np.testing.assert_array_almost_equal(

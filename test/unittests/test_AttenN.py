@@ -1,12 +1,18 @@
+import unittest
+from unittest import skip
+from mock import patch
 import numpy as np
-
+from gwlfe import Parser
+from gwlfe import AttenN
 from VariableUnittest import VariableUnitTest
-from gwlfe.MultiUse_Fxns.AttenN import AttenN
-
 
 class TestAttenN(VariableUnitTest):
+    pass
 
-    def test_AttenN(self):
-        z = self.z
-        np.testing.assert_array_almost_equal(0.077884625, AttenN(z.AttenFlowDist, z.AttenFlowVel, z.AttenLossRateN),
-                                             decimal=7)
+
+    # @skip("not ready")
+    # def test_AttenN(self):
+    #     z = self.z
+    #     np.testing.assert_array_almost_equal(
+    #         AttenN.AttenN_2(),
+    #         AttenN.AttenN(), decimal=7)

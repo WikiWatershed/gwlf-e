@@ -8,6 +8,7 @@ from calendar import monthrange
 from decimal import Decimal
 
 from numpy import zeros
+from numpy import int
 
 
 class DataModel(object):

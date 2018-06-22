@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from MultiUse_Fxns.Discharge import AdjQTotal
+from gwlfe.MultiUse_Fxns.Discharge import AdjQTotal
 
 
 class TestAdjQTotal(VariableUnitTest):

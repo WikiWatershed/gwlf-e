@@ -12,11 +12,11 @@ from gwlfe.MultiUse_Fxns.LossFactAdj import LossFactAdj
 from gwlfe.MultiUse_Fxns.LossFactAdj import LossFactAdj_f
 
 
-def NGLostBarnN(NYrs, NGPctManApp, GrazingAnimal_0_0, NumAnimals, AvgAnimalWt, AnimalDailyN, NGBarnNRate, Prec,
+def NGLostBarnN(NYrs, NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, NGBarnNRate, Prec,
                 DaysMonth, AWMSNgPct, NgAWMSCoeffN, RunContPct, RunConCoeffN):
     result = zeros((NYrs, 12))
     loss_fact_adj = LossFactAdj(NYrs, Prec, DaysMonth)
-    ng_init_barn_n = NGInitBarnN(NGPctManApp, GrazingAnimal_0_0, NumAnimals, AvgAnimalWt, AnimalDailyN)
+    ng_init_barn_n = NGInitBarnN(NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN)
     for Y in range(NYrs):
         for i in range(12):
             result[Y][i] = (ng_init_barn_n[i] * NGBarnNRate[i] * loss_fact_adj[Y][i]
@@ -29,11 +29,11 @@ def NGLostBarnN(NYrs, NGPctManApp, GrazingAnimal_0_0, NumAnimals, AvgAnimalWt, A
     return result
 
 @memoize
-def NGLostBarnN_f(NYrs, NGPctManApp, GrazingAnimal_0_0, NumAnimals, AvgAnimalWt, AnimalDailyN, NGBarnNRate, Prec,
+def NGLostBarnN_f(NYrs, NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, NGBarnNRate, Prec,
                   DaysMonth, AWMSNgPct, NgAWMSCoeffN, RunContPct, RunConCoeffN):
     loss_fact_adj = LossFactAdj_f(Prec, DaysMonth)
     ng_init_barn_n = reshape(
-        repeat(NGInitBarnN_f(NGPctManApp, GrazingAnimal_0_0, NumAnimals, AvgAnimalWt, AnimalDailyN), repeats=NYrs,
+        repeat(NGInitBarnN_f(NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN), repeats=NYrs,
                   axis=0), (NYrs, 12))
 
     temp = NGBarnNRate * loss_fact_adj * (1 - AWMSNgPct * NgAWMSCoeffN + RunContPct * RunConCoeffN)

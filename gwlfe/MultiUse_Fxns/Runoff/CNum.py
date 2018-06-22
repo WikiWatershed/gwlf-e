@@ -12,7 +12,7 @@ from gwlfe.MultiUse_Fxns.Runoff.NewCN import NewCN, NewCN_f
 from gwlfe.Input.WaterBudget.Water import Water, Water_f
 
 try:
-    from CNum_inner_compiled import CNum_inner
+    from CNum_inner_xcompiled import CNum_inner
 except ImportError:
     print("Unable to import compiled CNum_inner, using slower version")
     from gwlfe.MultiUse_Fxns.Runoff.CNum_inner import CNum_inner
@@ -37,26 +37,26 @@ def CNum(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, CN, NRur, NUrb, Gr
                             if melt[Y][i][j] <= 0:
                                 if grow_factor[i] > 0:
                                     # growing season
-                                    if get_value_for_yesterday(amc5, 0, Y, i, j, NYrs, DaysMonth) >= 5.33:
+                                    if get_value_for_yesterday(amc5, 0, Y, i, j, DaysMonth) >= 5.33:
                                         result[Y][i][j][l] = new_cn[2][l]
-                                    elif get_value_for_yesterday(amc5, 0, Y, i, j, NYrs, DaysMonth) < 3.56:
+                                    elif get_value_for_yesterday(amc5, 0, Y, i, j, DaysMonth) < 3.56:
                                         result[Y][i][j][l] = new_cn[0][l] + (
                                                 CN[l] - new_cn[0][l]) * get_value_for_yesterday(amc5, 0, Y, i, j,
-                                                                                                NYrs, DaysMonth) / 3.56
+                                                                                                DaysMonth) / 3.56
                                     else:
                                         result[Y][i][j][l] = CN[l] + (new_cn[2][l] - CN[l]) * (
-                                                get_value_for_yesterday(amc5, 0, Y, i, j, NYrs, DaysMonth) - 3.56) / 1.77
+                                                get_value_for_yesterday(amc5, 0, Y, i, j, DaysMonth) - 3.56) / 1.77
                                 else:
                                     # dormant season
-                                    if get_value_for_yesterday(amc5, 0, Y, i, j, NYrs, DaysMonth) >= 2.79:
+                                    if get_value_for_yesterday(amc5, 0, Y, i, j, DaysMonth) >= 2.79:
                                         result[Y][i][j][l] = new_cn[2][l]
-                                    elif get_value_for_yesterday(amc5, 0, Y, i, j, NYrs, DaysMonth) < 1.27:
+                                    elif get_value_for_yesterday(amc5, 0, Y, i, j, DaysMonth) < 1.27:
                                         result[Y][i][j][l] = new_cn[0][l] + (
                                                 CN[l] - new_cn[0][l]) * get_value_for_yesterday(amc5, 0, Y, i, j,
-                                                                                                NYrs, DaysMonth) / 1.27
+                                                                                                DaysMonth) / 1.27
                                     else:
                                         result[Y][i][j][l] = CN[l] + (new_cn[2][l] - CN[l]) * (
-                                                get_value_for_yesterday(amc5, 0, Y, i, j, NYrs, DaysMonth) - 1.27) / 1.52
+                                                get_value_for_yesterday(amc5, 0, Y, i, j, DaysMonth) - 1.27) / 1.52
                             else:
                                 result[Y][i][j][l] = new_cn[2][l]
                         # result[Y][i][j][l] = CNum

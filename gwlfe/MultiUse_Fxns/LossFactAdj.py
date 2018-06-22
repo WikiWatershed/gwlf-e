@@ -4,6 +4,8 @@ from gwlfe.Input.WaterBudget.Precipitation import Precipitation
 from gwlfe.Input.WaterBudget.Precipitation import Precipitation_f
 from gwlfe.Memoization import memoize
 
+from numpy import zeros
+
 
 def LossFactAdj(NYrs, Prec, DaysMonth):
     result = zeros((NYrs, 12))

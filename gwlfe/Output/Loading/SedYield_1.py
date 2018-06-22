@@ -7,6 +7,8 @@ from gwlfe.Output.Loading.SedYield import SedYield_f
 from gwlfe.Output.Loading.StreamBankEros_1 import StreamBankEros_1
 from gwlfe.Output.Loading.StreamBankEros_1 import StreamBankEros_1_f
 
+from numpy import zeros
+
 
 @memoize
 def SedYield_1(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,

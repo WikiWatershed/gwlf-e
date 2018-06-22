@@ -1,15 +1,10 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import Parser
 from gwlfe.MultiUse_Fxns.Runoff import pRunoff
 
 
 class TestpRunoff(VariableUnitTest):
-    def setUp(self):
-        input_file = open('integrationtests/test1.gms', 'r')
-        self.z = Parser.GmsReader(input_file).read()
-
     def test_pRunoff(self):
         z = self.z
         np.testing.assert_array_almost_equal(

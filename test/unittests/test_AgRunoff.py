@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from MultiUse_Fxns.Runoff import AgRunoff
+from gwlfe.MultiUse_Fxns.Runoff import AgRunoff
 
 
 class TestAgRunoff(VariableUnitTest):

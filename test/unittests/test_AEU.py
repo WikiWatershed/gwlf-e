@@ -1,7 +1,7 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from Input.Animals import AEU
+from gwlfe.Input.Animals import AEU
 
 
 class TestAEU(VariableUnitTest):

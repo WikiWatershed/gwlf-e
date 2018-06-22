@@ -5,8 +5,8 @@ from gwlfe.MultiUse_Fxns.Discharge.AdjQTotal import AdjQTotal
 from gwlfe.MultiUse_Fxns.Discharge.AdjQTotal import AdjQTotal_f
 # from Timer import time_function
 from gwlfe.Memoization import memoize
-from MultiUse_Fxns.Discharge.QTotal import QTotal
-from MultiUse_Fxns.Discharge.QTotal import QTotal_f
+from gwlfe.MultiUse_Fxns.Discharge.QTotal import QTotal
+from gwlfe.MultiUse_Fxns.Discharge.QTotal import QTotal_f
 from gwlfe.Input.WaterBudget.Water import Water
 from gwlfe.Input.WaterBudget.Water import Water_f
 
