@@ -9,15 +9,16 @@ import re
 
 from numpy import zeros
 
+from AFOS.GrazingAnimals.Loads.InitGrN import InitGrN_f
+from AFOS.GrazingAnimals.Losses.GRLBN import GRLBN_f
+from AFOS.GrazingAnimals.Losses.GRStreamN import AvGRStreamN_f
 from AFOS.nonGrazingAnimals.Loads.InitNgN import InitNgN_f
+from AFOS.nonGrazingAnimals.Losses.NGLostBarnN import AvNGLostBarnNSum_f
+from Input.WaterBudget.SatStorCarryOver import SatStorCarryOver_f
+from Input.WaterBudget.UnSatStorCarryover import UnSatStorCarryover_f
 from MultiUse_Fxns.Runoff.CNI import CNI_f
 from MultiUse_Fxns.Runoff.CNP import CNP_f
 from Output.AvAnimalNSum.N7b_1 import N7b_1_f
-from AFOS.GrazingAnimals.Losses.GRLBN import GRLBN_f
-from AFOS.nonGrazingAnimals.Losses.NGLostBarnN import AvNGLostBarnNSum_f
-from AFOS.GrazingAnimals.Losses.GRStreamN import AvGRStreamN_f
-from AFOS.GrazingAnimals.Loads.InitGrN import InitGrN_f
-from Input.WaterBudget.UnSatStorCarryover import UnSatStorCarryover_f
 from .datamodel import DataModel
 from .enums import YesOrNo, ETflag, GrowFlag, LandUse, SweepType
 
@@ -1369,9 +1370,12 @@ class GmsWriter(object):
             z.TranVersionNo,
             z.RecessionCoef,
             z.SeepCoef,
-            UnSatStorCarryover_f(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow_0,
-                               z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap),
-            z.SatStor_0,
+            UnSatStorCarryover_f(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
+                                 z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV,
+                                 z.PcntET, z.DayHrs, z.MaxWaterCap),
+            SatStorCarryOver_f(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
+                             z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV,
+                             z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0, z.RecessionCoef, z.SeepCoef),
             z.InitSnow_0,
             z.SedDelivRatio_0,
             z.MaxWaterCap,
@@ -1647,10 +1651,12 @@ class GmsWriter(object):
             z.n42b,
             z.n42c,
             z.n43,
-            GRLBN_f(z.NYrs, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN, z.GRPctManApp, z.PctGrazing, z.GRBarnNRate,
+            GRLBN_f(z.NYrs, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN, z.GRPctManApp, z.PctGrazing,
+                    z.GRBarnNRate,
                     z.Prec, z.DaysMonth, z.AWMSGrPct, z.GrAWMSCoeffN, z.RunContPct, z.RunConCoeffN),
-            AvNGLostBarnNSum_f(z.NYrs, z.NGPctManApp, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN, z.NGBarnNRate,
-                             z.Prec, z.DaysMonth, z.AWMSNgPct, z.NgAWMSCoeffN, z.RunContPct, z.RunConCoeffN),
+            AvNGLostBarnNSum_f(z.NYrs, z.NGPctManApp, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN,
+                               z.NGBarnNRate,
+                               z.Prec, z.DaysMonth, z.AWMSNgPct, z.NgAWMSCoeffN, z.RunContPct, z.RunConCoeffN),
             z.GRLBP,
             z.NGLBP,
             z.NGLManP,

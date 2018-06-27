@@ -4,7 +4,6 @@ from gwlfe.Memoization import memoize
 
 cc = CC('DeepSeep_inner_compiled')
 
-@memoize
 @cc.export('DeepSeep_inner', '(int64, float64, int64[:,::1], float64, float64, float64[:,:,::1])')
 def DeepSeep_inner(NYrs, SatStor_0, DaysMonth, RecessionCoef, SeepCoef, percolation):
     deepseep = zeros((NYrs, 12, 31))
