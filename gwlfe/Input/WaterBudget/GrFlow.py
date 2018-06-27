@@ -1,4 +1,4 @@
-# from Timer import time_function
+from gwlfe.Timer import time_function
 from numpy import zeros
 from gwlfe.Memoization import memoize
 from gwlfe.Input.WaterBudget.Percolation import Percolation

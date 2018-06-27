@@ -1,10 +1,11 @@
 from gwlfe.Output.AvAnimalNSum.N7b import N7b
+from gwlfe.MultiUse_Fxns.Constants import NPConvert
 
 
 def N7b_1(NYrs, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, NGAppNRate, NGPctSoilIncRate, GRAppNRate,
           GRPctSoilIncRate, GrazingNRate, GRPctManApp, PctGrazing, GRBarnNRate, Prec, DaysMonth, AWMSGrPct,
           GrAWMSCoeffN, RunContPct, RunConCoeffN, n41b, n85h, NGPctManApp, AWMSNgPct, NGBarnNRate, NgAWMSCoeffN, n41d,
-          n85j, n41f, n85l, PctStreams, n42, n45, n69, n43, n64, NPConvert):
+          n85j, n41f, n85l, PctStreams, n42, n45, n69, n43, n64):
     n7b = N7b(NYrs, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, NGAppNRate, NGPctSoilIncRate, GRAppNRate,
               GRPctSoilIncRate, GrazingNRate, GRPctManApp, PctGrazing, GRBarnNRate, Prec, DaysMonth, AWMSGrPct,
               GrAWMSCoeffN, RunContPct, RunConCoeffN, n41b, n85h, NGPctManApp, AWMSNgPct, NGBarnNRate, NgAWMSCoeffN,
@@ -13,5 +14,13 @@ def N7b_1(NYrs, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, NGAppNRa
     return result
 
 
-def N7b_1_2():
-    pass
+def N7b_1_f(NYrs, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, NGAppNRate, NGPctSoilIncRate, GRAppNRate,
+          GRPctSoilIncRate, GrazingNRate, GRPctManApp, PctGrazing, GRBarnNRate, Prec, DaysMonth, AWMSGrPct,
+          GrAWMSCoeffN, RunContPct, RunConCoeffN, n41b, n85h, NGPctManApp, AWMSNgPct, NGBarnNRate, NgAWMSCoeffN, n41d,
+          n85j, n41f, n85l, PctStreams, n42, n45, n69, n43, n64):
+    n7b = N7b(NYrs, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, NGAppNRate, NGPctSoilIncRate, GRAppNRate,
+              GRPctSoilIncRate, GrazingNRate, GRPctManApp, PctGrazing, GRBarnNRate, Prec, DaysMonth, AWMSGrPct,
+              GrAWMSCoeffN, RunContPct, RunConCoeffN, n41b, n85h, NGPctManApp, AWMSNgPct, NGBarnNRate, NgAWMSCoeffN,
+              n41d, n85j, n41f, n85l, PctStreams, n42, n45, n69, n43, n64)
+    result = n7b * NPConvert
+    return result

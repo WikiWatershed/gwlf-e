@@ -43,7 +43,7 @@ def NGLostBarnN_f(NYrs, NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, A
     result[adjusted] = ng_init_barn_n[adjusted] * temp[adjusted]
     return maximum(result, 0)
 
-#TODO: this needs to be split into it's own function
+#TODO: this needs to be split into its own function
 @memoize
 def AvNGLostBarnN(NYrs, NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, NGBarnNRate,
                   Prec, DaysMonth, AWMSNgPct, NgAWMSCoeffN, RunContPct, RunConCoeffN):

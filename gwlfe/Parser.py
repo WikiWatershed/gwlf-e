@@ -9,6 +9,15 @@ import re
 
 from numpy import zeros
 
+from AFOS.nonGrazingAnimals.Loads.InitNgN import InitNgN_f
+from MultiUse_Fxns.Runoff.CNI import CNI_f
+from MultiUse_Fxns.Runoff.CNP import CNP_f
+from Output.AvAnimalNSum.N7b_1 import N7b_1_f
+from AFOS.GrazingAnimals.Losses.GRLBN import GRLBN_f
+from AFOS.nonGrazingAnimals.Losses.NGLostBarnN import AvNGLostBarnNSum_f
+from AFOS.GrazingAnimals.Losses.GRStreamN import AvGRStreamN_f
+from AFOS.GrazingAnimals.Loads.InitGrN import InitGrN_f
+from Input.WaterBudget.UnSatStorCarryover import UnSatStorCarryover_f
 from .datamodel import DataModel
 from .enums import YesOrNo, ETflag, GrowFlag, LandUse, SweepType
 
@@ -491,8 +500,8 @@ class GmsReader(object):
             z.CN[i] = self.next(float)  # Curve Number
             z.KF[i] = self.next(float)  # K Factor
             z.LS[i] = self.next(float)  # LS Factor
-            z.C[i] = self.next(float)   # C Factor
-            z.P[i] = self.next(float)   # P Factor
+            z.C[i] = self.next(float)  # C Factor
+            z.P[i] = self.next(float)  # P Factor
             self.next(EOL)
 
         # Lines 30 - 35: (for each Urban Land Use Category)
@@ -763,9 +772,9 @@ class GmsReader(object):
         z.n42b = self.next(float)  # Total Stream Length (km)
         z.n42c = self.next(float)  # Unpaved Road Length (km)
         z.n43 = self.next(float)  # Stream Km with Vegetated Buffer Strips: Existing
-        # z.GRLBN = self.next(float)  # Average Grazing Animal Loss Rate (Barnyard/Confined Area): Nitrogen
+        # z.GRLBN_0 = self.next(float)  # Average Grazing Animal Loss Rate (Barnyard/Confined Area): Nitrogen
         _ = self.next(float)  # Average Grazing Animal Loss Rate (Barnyard/Confined Area): Nitrogen
-        # z.NGLBN = self.next(float)  # Average Non-Grazing Animal Loss Rate (Barnyard/Confined Area): Nitrogen
+        # z.NGLBN_0 = self.next(float)  # Average Non-Grazing Animal Loss Rate (Barnyard/Confined Area): Nitrogen
         _ = self.next(float)  # Average Non-Grazing Animal Loss Rate (Barnyard/Confined Area): Nitrogen
         z.GRLBP = self.next(float)  # Average Grazing Animal Loss Rate (Barnyard/Confined Area): Phosphorus
         z.NGLBP = self.next(float)  # Average Non-Grazing Animal Loss Rate (Barnyard/Confined Area): Phosphorus
@@ -773,8 +782,8 @@ class GmsReader(object):
         z.NGLBFC = self.next(float)  # Average Non-Grazing Animal Loss Rate (Barnyard/Confined Area): Fecal Coliform
         z.GRLBFC = self.next(float)  # Average Grazing Animal Loss Rate (Barnyard/Confined Area): Fecal Coliform
         z.GRSFC = self.next(float)  # Average Grazing Animal Loss Rate (Spent in Streams): Fecal Coliform
-        # z.GRSN = self.next(float)  # Average Grazing Animal Loss Rate (Spent in Streams): Nitrogen
-        _ = self.next(float)  # Value set before it is used
+        # z.GRSN_0 = self.next(float)  # Average Grazing Animal Loss Rate (Spent in Streams): Nitrogen
+        _ = self.next(float)  # Average Grazing Animal Loss Rate (Spent in Streams): Nitrogen
         z.GRSP = self.next(float)  # Average Grazing Animal Loss Rate (Spent in Streams): Phosphorus
         self.next(EOL)
 
@@ -1360,9 +1369,10 @@ class GmsWriter(object):
             z.TranVersionNo,
             z.RecessionCoef,
             z.SeepCoef,
-            z.UnsatStor,
-            z.SatStor,
-            z.InitSnow,
+            UnSatStorCarryover_f(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow_0,
+                               z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap),
+            z.SatStor_0,
+            z.InitSnow_0,
             z.SedDelivRatio_0,
             z.MaxWaterCap,
             z.StreamLength,
@@ -1375,7 +1385,6 @@ class GmsWriter(object):
             z.WxYrs,
             z.WxYrBeg,
             z.WxYrEnd,
-            # z.SedAFactor,
             z.SedAFactor_0,
             z.TotArea,
             z.TileDrainRatio,
@@ -1415,8 +1424,9 @@ class GmsWriter(object):
                 z.Landuse[i],
                 z.Area[i],
                 z.Imper[i],
-                z.CNI[1][i],
-                z.CNP[1][i],
+
+                CNI_f(z.NRur, z.NUrb, z.CNI_0)[1][i],
+                CNP_f(z.NRur, z.NUrb, z.CNP_0)[1][i],
                 z.TotSusSolids[i],
             ])
 
@@ -1528,7 +1538,13 @@ class GmsWriter(object):
             z.n6c,
             z.n6d,
             z.n7,
-            z.n7b,
+            N7b_1_f(z.NYrs, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN, z.NGAppNRate,
+                    z.NGPctSoilIncRate, z.GRAppNRate,
+                    z.GRPctSoilIncRate, z.GrazingNRate, z.GRPctManApp, z.PctGrazing, z.GRBarnNRate, z.Prec, z.DaysMonth,
+                    z.AWMSGrPct, z.GrAWMSCoeffN, z.RunContPct, z.RunConCoeffN, z.n41b, z.n85h, z.NGPctManApp,
+                    z.AWMSNgPct, z.NGBarnNRate, z.NgAWMSCoeffN, z.n41d, z.n85j, z.n41f, z.n85l, z.PctStreams, z.n42,
+                    z.n45, z.n69, z.n43, z.n64)
+            ,
             z.n8,
             z.n9,
             z.n10,
@@ -1631,15 +1647,17 @@ class GmsWriter(object):
             z.n42b,
             z.n42c,
             z.n43,
-            z.GRLBN,
-            z.NGLBN,
+            GRLBN_f(z.NYrs, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN, z.GRPctManApp, z.PctGrazing, z.GRBarnNRate,
+                    z.Prec, z.DaysMonth, z.AWMSGrPct, z.GrAWMSCoeffN, z.RunContPct, z.RunConCoeffN),
+            AvNGLostBarnNSum_f(z.NYrs, z.NGPctManApp, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN, z.NGBarnNRate,
+                             z.Prec, z.DaysMonth, z.AWMSNgPct, z.NgAWMSCoeffN, z.RunContPct, z.RunConCoeffN),
             z.GRLBP,
             z.NGLBP,
             z.NGLManP,
             z.NGLBFC,
             z.GRLBFC,
             z.GRSFC,
-            z.GRSN,
+            AvGRStreamN_f(z.PctStreams, z.PctGrazing, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN),
             z.GRSP,
         ])
 
@@ -1949,13 +1967,13 @@ class GmsWriter(object):
         ])
 
         self.writerow([
-            z.InitNgN,
+            InitNgN_f(z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN),
             z.InitNgP,
             z.InitNgFC,
             z.NGAppSum,
             z.NGBarnSum,
             z.NGTotSum,
-            z.InitGrN,
+            InitGrN_f(z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN),
             z.InitGrP,
             z.InitGrFC,
             z.GRAppSum,
