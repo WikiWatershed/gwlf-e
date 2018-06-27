@@ -1,8 +1,11 @@
-import json
+import csv
 import unittest
 from StringIO import StringIO
+from itertools import izip
 
-from gwlfe import gwlfe, Parser
+import numpy as np
+
+from gwlfe import Parser
 
 
 class TestGMSWriter(unittest.TestCase):
@@ -18,56 +21,18 @@ class TestGMSWriter(unittest.TestCase):
         writer = Parser.GmsWriter(output)
         writer.write(z)
 
-        ground_truth = open('input_4.gmsout', 'r')
+        ground_truth = csv.reader(open('input_4.gmsout', 'r'), delimiter=",")
         output.seek(0)
-
-        self.assertGmsEqual(ground_truth, output)
-
-    def assertGmsEqual(self, gms1, gms2):
-        """
-        Assert that 2 GMS files match.
-        """
-        left = Parser.iterate_csv_values(gms1)
-        right = Parser.iterate_csv_values(gms2)
-
-        done = False
-        counter = 0
-        while not done:
-            print(counter)
-            try:
-                a, y1, x1 = left.next()
-            except StopIteration:
-                done = True
-
-            try:
-                b, y2, x2 = right.next()
-            except StopIteration:
-                if done:
-                    # The first file must have ended.
-                    continue
-                else:
-                    self.fail('GMS files did not end at the same time')
-
-            if done:
-                # The first file must have ended, but the second file didn't.
-                self.fail('GMS files did not end at the same time')
-
-            self.assertAlmostEqual(y1, y2,places=7)
-            self.assertAlmostEqual(x1, x2,places=7)
-            self.assertEqualFuzzy(a, b)
-            counter += 1
-
-    def assertEqualFuzzy(self, a, b):
-        """
-        Assert that 2 values match. The purpose of doing a fuzzy comparison
-        is to ignore slight formatting differences between VB and Python.
-        """
-        # Test that floats like ".06" match "0.06".
-        try:
-            f1 = float(a)
-            f2 = float(b)
-            self.assertAlmostEqual(f1, f2, places=7)
-            return
-        except ValueError:
-            pass
-        self.assertAlmostEqual(a, b, places=7)
+        output_parsed = csv.reader(output, delimiter=",")
+        for i, row in enumerate(izip(ground_truth, output_parsed)):
+            for j, column in enumerate(izip(row[0],row[1])):
+                ground_truth_val = column[0]
+                output_val = column[1]
+                try:
+                    try:
+                        np.testing.assert_allclose(float(ground_truth_val), float(output_val), rtol=1e-07)
+                    except ValueError:#catch all non float values
+                        self.assertEqual(ground_truth_val,output_val)
+                except AssertionError as e:
+                    print("Error on line %i, column %i" % (i+1,j))
+                    raise e
