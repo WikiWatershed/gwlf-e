@@ -8,11 +8,11 @@ from setuptools import setup, find_packages
 from gwlfe.Input.WaterBudget.AMC5_yesterday_inner import cc as amc5ycc
 # Added to fix error.
 # See http://stackoverflow.com/questions/9352656/python-assertionerror-when-running-nose-tests-with-coverage  # NOQA
-from MultiUse_Fxns.Discharge.AdjUrbanQTotal_inner import cc as adjcc  # TODO: use full length names
+from gwlfe.MultiUse_Fxns.Discharge.AdjUrbanQTotal_inner import cc as adjcc  # TODO: use full length names
 from gwlfe.MultiUse_Fxns.Runoff.CNumImperv_inner import cc as cnicc
 from gwlfe.MultiUse_Fxns.Runoff.CNumPerv_inner import cc as cnpcc
 from gwlfe.MultiUse_Fxns.Runoff.CNum_inner import cc as cncc
-from Input.WaterBudget.DeepSeep_inner import cc as dscc
+from gwlfe.Input.WaterBudget.DeepSeep_inner import cc as dscc
 from gwlfe.Input.WaterBudget.InitSnowYesterday_inner import cc as isycc
 from gwlfe.Input.WaterBudget.InitSnow_inner import cc as iscc
 from gwlfe.Input.WaterBudget.Percolation_inner import cc as pcc

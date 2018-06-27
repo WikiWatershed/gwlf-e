@@ -52,8 +52,8 @@ class TestGMSWriter(unittest.TestCase):
                 # The first file must have ended, but the second file didn't.
                 self.fail('GMS files did not end at the same time')
 
-            self.assertEqual(y1, y2)
-            self.assertEqual(x1, x2)
+            self.assertAlmostEqual(y1, y2,places=7)
+            self.assertAlmostEqual(x1, x2,places=7)
             self.assertEqualFuzzy(a, b)
             counter += 1
 
@@ -66,8 +66,8 @@ class TestGMSWriter(unittest.TestCase):
         try:
             f1 = float(a)
             f2 = float(b)
-            self.assertEqual(f1, f2)
+            self.assertAlmostEqual(f1, f2, places=7)
             return
         except ValueError:
             pass
-        self.assertEqual(a, b)
+        self.assertAlmostEqual(a, b, places=7)
