@@ -44,7 +44,7 @@ TONNE_TO_KG = 1000
 def WriteOutput(z):
     # DIMENSION VARIABLES FOR PREDICT CALCULATION AND SCENARIO FILE
     AvOtherLuSed = 0
-    # AvOtherLuNitr = 0
+    AvOtherLuNitr = 0
     AvOtherLuPhos = 0
     TotSewerSys = 0
     TotNormSys = 0
@@ -102,7 +102,7 @@ def WriteOutput(z):
             z.n13ddp = z.AvLuDisPhos[l]
         else:
             AvOtherLuSed = AvOtherLuSed + z.AvLuSedYield[l]
-            # AvOtherLuNitr = AvOtherLuNitr + z.AvLuTotNitr[l]
+            AvOtherLuNitr = AvOtherLuNitr + z.AvLuTotNitr[l]
             AvOtherLuPhos = AvOtherLuPhos + z.AvLuTotPhos[l]
 
     z.n2c = 0
@@ -498,8 +498,8 @@ def WriteOutput(z):
 
     # ENTER THE OTHER SEDIMENT, N AND P INTO FIELDS
     z.n3 = round(((AvOtherLuSed + ((z.AvTileDrainSedSum * z.RetentFactorSed * (1 - z.AttenTSS)) / 1000)) * SedConvert))
-    # z.n7 = round((AvOtherLuNitr * RetentFactorN(z.ShedAreaDrainLake, z.RetentNLake) * (
-    #         1 - AttenN(z.AttenFlowDist, z.AttenFlowVel, z.AttenLossRateN)) * NPConvert))
+    z.n7 = round((AvOtherLuNitr * RetentFactorN(z.ShedAreaDrainLake, z.RetentNLake) * (
+            1 - AttenN(z.AttenFlowDist, z.AttenFlowVel, z.AttenLossRateN)) * NPConvert))
     z.n14 = round((AvOtherLuPhos * z.RetentFactorP * (1 - z.AttenP) * NPConvert))
 
     # ADD TURF TO HAY/PASTURE
@@ -528,7 +528,7 @@ def WriteOutput(z):
 
     # SET THE SCENARIO VALUES TO LANDUSE LOADS\
     AvOtherLuSed = 0
-    # AvOtherLuNitr = 0
+    AvOtherLuNitr = 0
     AvOtherLuPhos = 0
 
     # lu_tot_nitr_1 = LuTotNitr_1_f(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.AntMoist_0, z.NRur, z.NUrb,

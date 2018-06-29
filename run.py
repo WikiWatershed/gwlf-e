@@ -23,9 +23,15 @@ def main():
     fp = open(gms_filename, 'r')
     z = Parser.GmsReader(fp).read()
     start = time.time()
-    result = gwlfe.run(z)
+    result,z = gwlfe.run(z)
     print(time.time()-start)
     print(json.dumps(result, indent=4))
+    if(len(sys.argv) == 3):#gms out filename is sepcified so write
+        gmsout_filename = sys.argv[2]
+        log.debug("Writing GMS output file (%s)"%(gmsout_filename))
+        with open(gmsout_filename,"w") as file:
+            test = Parser.GmsWriter(file)
+            test.write(z)
 
 if __name__ == '__main__':
     main()

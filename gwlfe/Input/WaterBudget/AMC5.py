@@ -33,7 +33,6 @@ def AMC5(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0):
                 AntMoist[0] = water[Y][i][j]
 
                 result[Y][i][j] = AMC5  # TODO: why did this fix the mismatch of amc5?
-
     return result
 
 

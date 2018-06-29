@@ -218,7 +218,7 @@ def AdjustScnLoads(z):
     # NFENCING = (z.n45 / z.n42) * z.n69 * z.GRSN
     # NAGBUFFER = (z.n43 / z.n42) * z.n64 * (z.AvAnimalNSum - (z.NGLBN + z.GRLBN + z.GRSN))
 
-    # z.n7b = z.AvAnimalNSum - (z.NAWMSL + z.NAWMSP + z.NRUNCON + z.NFENCING + z.NAGBUFFER)
+    # z.n7b = z.AvAnimalNSum - (NAWMSL + z.NAWMSP + z.NRUNCON + z.NFENCING + z.NAGBUFFER)
 
     # Calculate phosphorus reduction for animal activities based on different percent of BMPs
     PAWMSL = (z.n41b / 100) * z.n85i * z.GRLBP

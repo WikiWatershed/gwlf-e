@@ -15,6 +15,7 @@ import logging
 from numpy import zeros
 from numpy import seterr
 
+import Parser
 import ReadGwlfDataFile
 import PrelimCalculations
 import AFOS_old
@@ -165,4 +166,4 @@ def run(z):
 
     output = WriteOutputFiles.WriteOutput(z)
     # WriteOutputFiles.WriteOutputSumFiles()
-    return output
+    return output,z

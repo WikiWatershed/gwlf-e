@@ -14,11 +14,12 @@ from AFOS.GrazingAnimals.Losses.GRLBN import GRLBN_f
 from AFOS.GrazingAnimals.Losses.GRStreamN import AvGRStreamN_f
 from AFOS.nonGrazingAnimals.Loads.InitNgN import InitNgN_f
 from AFOS.nonGrazingAnimals.Losses.NGLostBarnN import AvNGLostBarnNSum_f
+from Input.WaterBudget.AntMoist import AntMoist
 from Input.WaterBudget.SatStorCarryOver import SatStorCarryOver_f
 from Input.WaterBudget.UnSatStorCarryover import UnSatStorCarryover_f
 from MultiUse_Fxns.Runoff.CNI import CNI_f
 from MultiUse_Fxns.Runoff.CNP import CNP_f
-from Output.AvAnimalNSum.N7b_1 import N7b_1_f
+from Output.AvAnimalNSum.N7b_2 import N7b_2
 from .datamodel import DataModel
 from .enums import YesOrNo, ETflag, GrowFlag, LandUse, SweepType
 
@@ -1374,8 +1375,8 @@ class GmsWriter(object):
                                  z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV,
                                  z.PcntET, z.DayHrs, z.MaxWaterCap),
             SatStorCarryOver_f(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
-                             z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV,
-                             z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0, z.RecessionCoef, z.SeepCoef),
+                               z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV,
+                               z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0, z.RecessionCoef, z.SeepCoef),
             z.InitSnow_0,
             z.SedDelivRatio_0,
             z.MaxWaterCap,
@@ -1398,7 +1399,7 @@ class GmsWriter(object):
         ])
 
         for i in range(5):
-            self.writerow([z.AntMoist[i]])
+            self.writerow([AntMoist(z.NYrs, z.DaysMonth, z.Temp, z.Prec, z.InitSnow_0, z.AntMoist_0)[i]])
 
         for i in range(12):
             self.writerow([
@@ -1542,12 +1543,12 @@ class GmsWriter(object):
             z.n6c,
             z.n6d,
             z.n7,
-            N7b_1_f(z.NYrs, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN, z.NGAppNRate,
-                    z.NGPctSoilIncRate, z.GRAppNRate,
-                    z.GRPctSoilIncRate, z.GrazingNRate, z.GRPctManApp, z.PctGrazing, z.GRBarnNRate, z.Prec, z.DaysMonth,
-                    z.AWMSGrPct, z.GrAWMSCoeffN, z.RunContPct, z.RunConCoeffN, z.n41b, z.n85h, z.NGPctManApp,
-                    z.AWMSNgPct, z.NGBarnNRate, z.NgAWMSCoeffN, z.n41d, z.n85j, z.n41f, z.n85l, z.PctStreams, z.n42,
-                    z.n45, z.n69, z.n43, z.n64)
+            N7b_2(z.NYrs, z.NGPctManApp, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN, z.NGAppNRate, z.Prec,
+                  z.DaysMonth,
+                  z.NGPctSoilIncRate, z.GRPctManApp, z.GRAppNRate, z.GRPctSoilIncRate, z.NGBarnNRate, z.AWMSNgPct, z.NgAWMSCoeffN,
+                  z.RunContPct, z.RunConCoeffN, z.PctGrazing, z.GRBarnNRate, z.AWMSGrPct, z.GrAWMSCoeffN, z.PctStreams, z.GrazingNRate,
+                  z.n41b,
+                  z.n85h, z.n41d, z.n85j, z.n41f, z.n85l, z.n42, z.n45, z.n69, z.n43, z.n64)[-1]#get the carried over value
             ,
             z.n8,
             z.n9,
