@@ -28,6 +28,7 @@ class TestGMSWriter(unittest.TestCase):
         ground_truth = csv.reader(open('input_4.gmsout', 'r'), delimiter=",")
         output.seek(0)
         output_parsed = csv.reader(output, delimiter=",")
+        error = False
         for i, row in enumerate(izip(ground_truth, output_parsed, variable_names)):
             for j, column in enumerate(izip(row[0],row[1], row[2])):
                 ground_truth_val = column[0]
@@ -40,4 +41,7 @@ class TestGMSWriter(unittest.TestCase):
                         self.assertEqual(ground_truth_val,output_val)
                 except AssertionError as e:
                     print("Error on line %i, column %i (%s)" % (i+1,j,variable_name))
-                    raise e
+                    print(e)
+                    error = True
+        if(error == True):
+            raise AssertionError("Not all variables within margin of error")

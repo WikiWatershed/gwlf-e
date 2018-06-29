@@ -520,7 +520,7 @@ def WriteOutput(z):
     # Obtain the totals for sed, z.n az.nd P
     # Obtain the totals for sed, N and P
     z.n19 = z.n1 + z.n2 + z.n2b + z.n2c + z.n2d + z.n3 + z.n4
-    z.n20 = z.n5 + z.n6 + z.n6b + z.n6c + z.n6d + z.n7 + 10+N7b_1_f(z.NYrs, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN, z.NGAppNRate, z.NGPctSoilIncRate, z.GRAppNRate,
+    z.n20 = z.n5 + z.n6 + z.n6b + z.n6c + z.n6d + z.n7 + N7b_1_f(z.NYrs, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN, z.NGAppNRate, z.NGPctSoilIncRate, z.GRAppNRate,
           z.GRPctSoilIncRate, z.GrazingNRate, z.GRPctManApp, z.PctGrazing, z.GRBarnNRate, z.Prec, z.DaysMonth, z.AWMSGrPct,
           z.GrAWMSCoeffN, z.RunContPct, z.RunConCoeffN, z.n41b, z.n85h, z.NGPctManApp, z.AWMSNgPct, z.NGBarnNRate, z.NgAWMSCoeffN, z.n41d,
           z.n85j, z.n41f, z.n85l, z.PctStreams, z.n42, z.n45, z.n69, z.n43, z.n64) + z.n8 + z.n9 + z.n10 + z.n11
