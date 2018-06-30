@@ -17,6 +17,6 @@ def GRLoadN(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN):
     return result
 
 
-def GRLoadN_f(GrazingAnimal_0,NumAnimals,AvgAnimalWt,AnimalDailyN):
+def GRLoadN_f(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN):
     grazing_animals = GrazingAnimal_f(GrazingAnimal_0)
     return (NumAnimals[grazing_animals] * AvgAnimalWt[grazing_animals] / 1000) * AnimalDailyN[grazing_animals] * 365

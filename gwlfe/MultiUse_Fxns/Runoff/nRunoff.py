@@ -1,17 +1,16 @@
 from numpy import zeros
 
-# from Timer import time_function
 from gwlfe.Memoization import memoize
-from gwlfe.Output.Loading.NConc import NConc
-from gwlfe.Output.Loading.NConc import NConc_f
 from gwlfe.MultiUse_Fxns.Runoff.RurQRunoff import RurQRunoff
 from gwlfe.MultiUse_Fxns.Runoff.RurQRunoff import RurQRunoff_f
+from gwlfe.Output.Loading.NConc import NConc
+from gwlfe.Output.Loading.NConc import NConc_f
 
 
 @memoize
 def nRunoff(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb, CN, Grow_0, Area, NitrConc,
             ManNitr, ManuredAreas, FirstManureMonth, LastManureMonth, FirstManureMonth2, LastManureMonth2):
-    result = zeros((NYrs, 12,10))
+    result = zeros((NYrs, 12, 10))
     rur_q_runoff = RurQRunoff(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb, CN, Grow_0)
     n_conc = NConc(NRur, NUrb, NitrConc, ManNitr, ManuredAreas, FirstManureMonth, LastManureMonth, FirstManureMonth2,
                    LastManureMonth2)
@@ -27,7 +26,7 @@ def nRunoff(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb, CN,
 def nRunoff_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb, CN, Grow_0, Area, NitrConc,
               ManNitr, ManuredAreas, FirstManureMonth, LastManureMonth, FirstManureMonth2, LastManureMonth2):
     n_conc = NConc_f(NRur, NUrb, NitrConc, ManNitr, ManuredAreas, FirstManureMonth, LastManureMonth, FirstManureMonth2,
-                   LastManureMonth2)[:, :NRur]
+                     LastManureMonth2)[:, :NRur]
 
     return 0.1 * n_conc * RurQRunoff_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb, CN,
-                                     Grow_0) * Area[:NRur]
+                                       Grow_0) * Area[:NRur]

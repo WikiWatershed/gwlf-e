@@ -5,9 +5,9 @@ from numpy import reshape
 from numpy import tile
 from numpy import zeros
 
-from gwlfe.Memoization import memoize
 from gwlfe.AFOS.nonGrazingAnimals.Loads.NGAppManN import NGAppManN
 from gwlfe.AFOS.nonGrazingAnimals.Loads.NGAppManN import NGAppManN_f
+from gwlfe.Memoization import memoize
 from gwlfe.MultiUse_Fxns.LossFactAdj import LossFactAdj
 from gwlfe.MultiUse_Fxns.LossFactAdj import LossFactAdj_f
 
@@ -27,6 +27,7 @@ def NGLostManN(NYrs, NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, Anim
             if result[Y][i] < 0:
                 result[Y][i] = 0
     return result
+
 
 @memoize
 def NGLostManN_f(NYrs, NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, NGAppNRate, Prec, DaysMonth,

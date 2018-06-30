@@ -1,9 +1,8 @@
-import unittest
-from unittest import skip
 import numpy as np
-from gwlfe import Parser
-from gwlfe.AFOS.nonGrazingAnimals.Loads import InitNgN
+
 from VariableUnittest import VariableUnitTest
+from gwlfe.AFOS.nonGrazingAnimals.Loads import InitNgN
+
 
 class TestInitNgN(VariableUnitTest):
     def test_InitNgN(self):

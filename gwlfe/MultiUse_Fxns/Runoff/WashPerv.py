@@ -1,14 +1,14 @@
-# from Timer import time_function
 import math
 
-from gwlfe.Memoization import memoize
+from numpy import exp
+from numpy import zeros
+
 from gwlfe.Input.LandUse.NLU import NLU
-from gwlfe.MultiUse_Fxns.Runoff.QrunP import QrunP
-from gwlfe.MultiUse_Fxns.Runoff.QrunP import QrunP_f
 from gwlfe.Input.WaterBudget.Water import Water
 from gwlfe.Input.WaterBudget.Water import Water_f
-from numpy import zeros
-from numpy import exp
+from gwlfe.Memoization import memoize
+from gwlfe.MultiUse_Fxns.Runoff.QrunP import QrunP
+from gwlfe.MultiUse_Fxns.Runoff.QrunP import QrunP_f
 
 try:
     from WashPerv_inner_compiled import WashPerv_inner

@@ -1,6 +1,5 @@
 from numpy import zeros
 
-# from Timer import time_function
 from gwlfe.Output.Loading.StreamBankN import StreamBankN
 from gwlfe.Output.Loading.StreamBankN import StreamBankN_f
 

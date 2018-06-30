@@ -5,10 +5,9 @@ from numpy import reshape
 from numpy import tile
 from numpy import zeros
 
-from gwlfe.Memoization import memoize
-
 from gwlfe.AFOS.GrazingAnimals.Loads.GRAppManN import GRAppManN
 from gwlfe.AFOS.GrazingAnimals.Loads.GRAppManN import GRAppManN_f
+from gwlfe.Memoization import memoize
 from gwlfe.MultiUse_Fxns.LossFactAdj import LossFactAdj
 from gwlfe.MultiUse_Fxns.LossFactAdj import LossFactAdj_f
 
@@ -26,6 +25,7 @@ def GRLostManN(NYrs, GRPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, Anim
             if result[Y][i] < 0:
                 result[Y][i] = 0
     return result
+
 
 @memoize
 def GRLostManN_f(NYrs, GRPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, GRAppNRate, Prec, DaysMonth,

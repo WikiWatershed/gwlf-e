@@ -3,12 +3,11 @@ from numpy import sum
 from numpy import where
 from numpy import zeros
 
-from gwlfe.MultiUse_Fxns.Discharge.AdjQTotal import AdjQTotal
-from gwlfe.MultiUse_Fxns.Discharge.AdjQTotal import AdjQTotal_f
-# from Timer import time_function
-from gwlfe.Memoization import memoize
 from gwlfe.Input.WaterBudget.Water import Water
 from gwlfe.Input.WaterBudget.Water import Water_f
+from gwlfe.Memoization import memoize
+from gwlfe.MultiUse_Fxns.Discharge.AdjQTotal import AdjQTotal
+from gwlfe.MultiUse_Fxns.Discharge.AdjQTotal import AdjQTotal_f
 
 
 @memoize
@@ -28,11 +27,12 @@ def SedTrans(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, A
                     result[Y][i] = result[Y][i]
     return result
 
+
 @memoize
 def SedTrans_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
                ISRR, ISRA, Qretention, PctAreaInfil, n25b, CN):
     water = Water_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     adjqtotal = AdjQTotal_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0,
-                          Imper, ISRR, ISRA, Qretention, PctAreaInfil, n25b, CN)
+                            Imper, ISRR, ISRA, Qretention, PctAreaInfil, n25b, CN)
 
     return sum(where(logical_and(Temp > 0, water > 0.01), adjqtotal ** 1.67, 0), axis=2)

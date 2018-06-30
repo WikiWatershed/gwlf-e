@@ -1,4 +1,3 @@
-# from Timer import time_function
 from gwlfe.enums import GROWING_SEASON
 
 

@@ -1,9 +1,7 @@
 from numpy import zeros
 
 from gwlfe.Input.WaterBudget.Grow import Grow_f
-# @time_function
 from gwlfe.Memoization import memoize
-# from Timer import time_function
 from gwlfe.enums import GROWING_SEASON
 
 

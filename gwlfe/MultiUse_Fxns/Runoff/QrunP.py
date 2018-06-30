@@ -3,12 +3,11 @@ from numpy import tile
 from numpy import where
 from numpy import zeros
 
-from gwlfe.MultiUse_Fxns.Runoff.CNP import CNP, CNP_f
-from gwlfe.MultiUse_Fxns.Runoff.CNumPervReten import CNumPervReten, CNumPervReten_f
-from gwlfe.Memoization import memoize
-# from Timer import time_function
 from gwlfe.Input.LandUse.NLU import NLU
 from gwlfe.Input.WaterBudget.Water import Water, Water_f
+from gwlfe.Memoization import memoize
+from gwlfe.MultiUse_Fxns.Runoff.CNP import CNP, CNP_f
+from gwlfe.MultiUse_Fxns.Runoff.CNumPervReten import CNumPervReten, CNumPervReten_f
 
 
 @memoize

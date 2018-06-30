@@ -2,14 +2,13 @@ from numpy import sum
 from numpy import zeros
 
 from gwlfe.Input.LandUse.LU import LU
-# from Timer import time_function
-from gwlfe.Memoization import memoize
 from gwlfe.Input.LandUse.NLU import NLU
+from gwlfe.Input.WaterBudget.Water import Water
+from gwlfe.Memoization import memoize
 from gwlfe.MultiUse_Fxns.Runoff.QrunI import QrunI
 from gwlfe.MultiUse_Fxns.Runoff.QrunI import QrunI_f
 from gwlfe.MultiUse_Fxns.Runoff.QrunP import QrunP
 from gwlfe.MultiUse_Fxns.Runoff.QrunP import QrunP_f
-from gwlfe.Input.WaterBudget.Water import Water
 
 
 @memoize
@@ -43,9 +42,10 @@ def UrbQRunoff(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, CNI_0, CNP_0
                     pass
     return result
 
+
 def UrbQRunoff_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, CNI_0, CNP_0, AntMoist_0, Grow_0, Imper, ISRR,
                  ISRA):
     qruni = QrunI_f(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, CNI_0, AntMoist_0, Grow_0)[:, :, :, NRur:]
     qrunp = QrunP_f(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, CNP_0, AntMoist_0, Grow_0)[:, :, :, NRur:]
     temp = (Imper[NRur:] * (1 - ISRR) * (1 - ISRA))
-    return sum(qruni * temp+ qrunp * (1 - temp),axis=2)
+    return sum(qruni * temp + qrunp * (1 - temp), axis=2)

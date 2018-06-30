@@ -24,6 +24,7 @@ def AvPtSrcFlow(NYrs, PtSrcFlow):
             result[i] += PtSrcFlow[Y][i] / NYrs
     return result
 
+
 @memoize
 def AvPtSrcFlow_f(PointFlow):
     return PointFlow

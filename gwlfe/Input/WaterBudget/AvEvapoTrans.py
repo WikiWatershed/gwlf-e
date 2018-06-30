@@ -3,16 +3,15 @@ from numpy import zeros
 
 from gwlfe.Input.WaterBudget.Evapotrans import Evapotrans
 from gwlfe.Input.WaterBudget.Evapotrans import Evapotrans_f
-# from Timer import time_function
 from gwlfe.Memoization import memoize
 
 
 @memoize
 def AvEvapoTrans(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
-                 ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap,ETFlag):
+                 ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, ETFlag):
     result = zeros(12)
     evapotrans = Evapotrans(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0,
-                            Imper, ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap,ETFlag)
+                            Imper, ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, ETFlag)
     for Y in range(NYrs):
         for i in range(12):
             result[i] += evapotrans[Y][i] / NYrs

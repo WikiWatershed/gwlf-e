@@ -1,4 +1,3 @@
-# from Timer import time_function
 from numpy import zeros
 
 from gwlfe.Memoization import memoize
@@ -6,8 +5,6 @@ from gwlfe.Output.Loading.SedYield import SedYield
 from gwlfe.Output.Loading.SedYield import SedYield_f
 from gwlfe.Output.Loading.StreamBankEros_1 import StreamBankEros_1
 from gwlfe.Output.Loading.StreamBankEros_1 import StreamBankEros_1_f
-
-from numpy import zeros
 
 
 @memoize

@@ -1,9 +1,8 @@
 from numpy import zeros
-from gwlfe.Timer import time_function
-from gwlfe.Memoization import memoize
-from gwlfe.Input.WaterBudget.Infiltration import Infiltration_f
+
 from gwlfe.Input.WaterBudget.ET import DailyET
 from gwlfe.Input.WaterBudget.ET import DailyET_f
+from gwlfe.Input.WaterBudget.Infiltration import Infiltration_f
 
 try:
     from UnsatStor_inner_compiled import UnsatStor_inner
@@ -12,10 +11,9 @@ except ImportError:
     from gwlfe.Input.WaterBudget.UnsatStor_inner import UnsatStor_inner
 
 
-
-
-def UnSatStorCarryover(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
-         ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, ETFlag):
+def UnSatStorCarryover(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0,
+                       Imper,
+                       ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, ETFlag):
     result = zeros((NYrs, 12, 31))
     infiltration = Infiltration_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
                                   CNP_0, Imper, ISRR, ISRA, CN)
@@ -39,8 +37,9 @@ def UnSatStorCarryover(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area
     return unsatstor_carryover
 
 
-def UnSatStorCarryover_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
-           ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap):
+def UnSatStorCarryover_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0,
+                         Imper,
+                         ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap):
     infiltration = Infiltration_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
                                   CNP_0, Imper, ISRR, ISRA, CN)
     daily_et = DailyET_f(Temp, KV, PcntET, DayHrs)

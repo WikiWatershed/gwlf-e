@@ -1,4 +1,5 @@
 from numpy import zeros
+
 from InitGrN import InitGrN
 from InitGrN import InitGrN_f
 from gwlfe.Memoization import memoize
@@ -10,6 +11,7 @@ def GRAppManN(GRPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDaily
     for i in range(12):
         result[i] = GRPctManApp[i] * init_gr_n
     return result
+
 
 @memoize
 def GRAppManN_f(GRPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN):

@@ -1,14 +1,13 @@
 from numpy import where
 from numpy import zeros
 
-from gwlfe.MultiUse_Fxns.Discharge.AdjQTotal import AdjQTotal
-from gwlfe.MultiUse_Fxns.Discharge.AdjQTotal import AdjQTotal_f
-# from Timer import time_function
-from gwlfe.Memoization import memoize
-from gwlfe.MultiUse_Fxns.Discharge.QTotal import QTotal
-from gwlfe.MultiUse_Fxns.Discharge.QTotal import QTotal_f
 from gwlfe.Input.WaterBudget.Water import Water
 from gwlfe.Input.WaterBudget.Water import Water_f
+from gwlfe.Memoization import memoize
+from gwlfe.MultiUse_Fxns.Discharge.AdjQTotal import AdjQTotal
+from gwlfe.MultiUse_Fxns.Discharge.AdjQTotal import AdjQTotal_f
+from gwlfe.MultiUse_Fxns.Discharge.QTotal import QTotal
+from gwlfe.MultiUse_Fxns.Discharge.QTotal import QTotal_f
 
 
 @memoize
@@ -34,15 +33,20 @@ def DayRunoff(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, 
                     pass
     return result
 
+
 @memoize
 def DayRunoff_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0,
-              Imper, ISRR, ISRA, Qretention, PctAreaInfil, n25b, CN):
+                Imper, ISRR, ISRA, Qretention, PctAreaInfil, n25b, CN):
     result = zeros((NYrs, 12, 31))
     water = Water_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
-    adj_q_total = AdjQTotal_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0,
-                            Imper, ISRR, ISRA, Qretention, PctAreaInfil, n25b, CN)
-    q_total = QTotal_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
-                     ISRR, ISRA, CN)
-    result[where((Temp>0) & (water > 0.01) & (adj_q_total > 0))]  = adj_q_total[where((Temp>0) & (water > 0) & (adj_q_total > 0))]
-    result[where((Temp > 0) & (water > 0.01) & (q_total > 0))] = q_total[where((Temp > 0) & (water > 0) & (q_total > 0))]
+    adj_q_total = AdjQTotal_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
+                              CNP_0,
+                              Imper, ISRR, ISRA, Qretention, PctAreaInfil, n25b, CN)
+    q_total = QTotal_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0,
+                       Imper,
+                       ISRR, ISRA, CN)
+    result[where((Temp > 0) & (water > 0.01) & (adj_q_total > 0))] = adj_q_total[
+        where((Temp > 0) & (water > 0) & (adj_q_total > 0))]
+    result[where((Temp > 0) & (water > 0.01) & (q_total > 0))] = q_total[
+        where((Temp > 0) & (water > 0) & (q_total > 0))]
     return result

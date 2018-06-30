@@ -1,9 +1,10 @@
-import unittest
 from unittest import skip
+
 import numpy as np
-from gwlfe import Parser
-from gwlfe.Output.AvAnimalNSum.N7b_1 import N7b_1
+
 from VariableUnittest import VariableUnitTest
+from gwlfe.Output.AvAnimalNSum.N7b_1 import N7b_1
+
 
 class TestN7b_1(VariableUnitTest):
     @skip("not ready")

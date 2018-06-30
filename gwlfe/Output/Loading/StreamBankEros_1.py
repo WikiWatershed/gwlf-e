@@ -1,14 +1,13 @@
 from numpy import maximum
 from numpy import zeros
 
-from gwlfe.Memoization import memoize
 from gwlfe.BMPs.Stream.SEDFEN import SEDFEN
 from gwlfe.BMPs.Stream.SEDFEN import SEDFEN_f
 from gwlfe.BMPs.Stream.SEDSTAB import SEDSTAB
 from gwlfe.BMPs.Stream.SEDSTAB import SEDSTAB_f
 from gwlfe.BMPs.Stream.SURBBANK import SURBBANK
 from gwlfe.BMPs.Stream.SURBBANK import SURBBANK_f
-# from Timer import time_function
+from gwlfe.Memoization import memoize
 from gwlfe.Output.Loading.StreamBankEros import StreamBankEros
 from gwlfe.Output.Loading.StreamBankEros import StreamBankEros_f as StreamBankEros_f_actual
 
@@ -60,6 +59,7 @@ def StreamBankEros_1(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, 
                 result[Y][i] = 0
     return result
 
+
 @memoize
 def StreamBankEros_1_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0,
                        Imper,
@@ -76,7 +76,6 @@ def StreamBankEros_1_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area
                                              StreamWithdrawal, GroundWithdrawal
                                              , NumAnimals, AvgAnimalWt, StreamFlowVolAdj, SedAFactor_0, AvKF, AvSlope,
                                              SedAAdjust, StreamLength)
-
 
     sedstab = SEDSTAB_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
                         CNP_0, Imper,

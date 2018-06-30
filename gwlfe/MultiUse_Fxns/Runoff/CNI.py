@@ -1,8 +1,7 @@
 from numpy import zeros
 
-from gwlfe.Memoization import memoize
-# from Timer import time_function
 from gwlfe.Input.LandUse.NLU import NLU
+from gwlfe.Memoization import memoize
 
 
 @memoize
@@ -14,6 +13,7 @@ def CNI(NRur, NUrb, CNI_0):
         result[1][l] = CNI_0[1][l]
         result[2][l] = CNI_0[1][l] / (0.4036 + 0.0059 * CNI_0[1][l])
     return result
+
 
 @memoize
 def CNI_f(NRur, NUrb, CNI_0):

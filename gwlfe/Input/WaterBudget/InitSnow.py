@@ -1,4 +1,3 @@
-# from Timer import time_function
 from numpy import zeros
 
 from gwlfe.Memoization import memoize
@@ -10,7 +9,6 @@ except ImportError:
     from gwlfe.Input.WaterBudget.InitSnow_inner import InitSnow_f_inner
 
 
-# @memoize
 def InitSnow(NYrs, DaysMonth, InitSnow_0, Temp, Prec):
     result = zeros((NYrs, 12, 31))
     yesterday = InitSnow_0

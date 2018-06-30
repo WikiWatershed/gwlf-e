@@ -1,9 +1,8 @@
 from numpy import zeros
 
-from gwlfe.Memoization import memoize
-# from Timer import time_function
 from gwlfe.Input.WaterBudget.Percolation import Percolation
 from gwlfe.Input.WaterBudget.Percolation import Percolation_f
+from gwlfe.Memoization import memoize
 
 try:
     from DeepSeep_inner_compiled import DeepSeep_inner
@@ -18,7 +17,8 @@ def SatStor(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, An
     result = zeros((NYrs, 12, 31))
     grflow = zeros((NYrs, 12, 31))
     deepseep = zeros((NYrs, 12, 31))
-    percolation = Percolation(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0,
+    percolation = Percolation(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
+                              CNP_0,
                               Imper,
                               ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap)
     satstor_carryover = SatStor_0
@@ -42,4 +42,3 @@ def SatStor_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, 
                                 CNP_0,
                                 Imper, ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap)
     return DeepSeep_inner(NYrs, SatStor_0, DaysMonth, RecessionCoef, SeepCoef, percolation)[2]
-

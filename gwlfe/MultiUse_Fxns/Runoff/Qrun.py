@@ -3,11 +3,10 @@ from numpy import tile
 from numpy import where
 from numpy import zeros
 
-from gwlfe.Memoization import memoize
 from gwlfe.Input.LandUse.NLU import NLU
-from gwlfe.MultiUse_Fxns.Runoff.Retention import Retention, Retention_f
-# from Timer import time_function
 from gwlfe.Input.WaterBudget.Water import Water, Water_f
+from gwlfe.Memoization import memoize
+from gwlfe.MultiUse_Fxns.Runoff.Retention import Retention, Retention_f
 
 
 @memoize
@@ -38,7 +37,6 @@ def Qrun_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, CN, AntMoist_0, 
     cnrur = tile(CN[None, None, None, :], (NYrs, 12, 31, 1))
     retention = Retention_f(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0, NRur, NUrb, CN, Grow_0)
     retention02 = 0.2 * retention
-    # val = np.zeros((NYrs, 12, 31, nlu))
     nonzero = where((TempE > 0) & (water > 0.01) & (water >= retention02) & (cnrur > 0))
     result[nonzero] = (water[nonzero] - retention02[nonzero]) ** 2 / (water[nonzero] + 0.8 * retention[nonzero])
     return result

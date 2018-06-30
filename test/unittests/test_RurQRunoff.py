@@ -1,7 +1,6 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe import Parser
 from gwlfe.MultiUse_Fxns.Runoff import RurQRunoff
 
 

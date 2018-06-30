@@ -1,13 +1,12 @@
 from numpy import sum
 from numpy import zeros
 
-from gwlfe.MultiUse_Fxns.Discharge.AdjUrbanQTotal import AdjUrbanQTotal
-# from Timer import time_function
-from gwlfe.Memoization import memoize
 from gwlfe.Input.LandUse.NLU import NLU
+from gwlfe.Input.WaterBudget.Water import Water
+from gwlfe.Memoization import memoize
+from gwlfe.MultiUse_Fxns.Discharge.AdjUrbanQTotal import AdjUrbanQTotal
 from gwlfe.Output.Loading.SurfaceLoad_1 import SurfaceLoad_1
 from gwlfe.Output.Loading.SurfaceLoad_1 import SurfaceLoad_1_f
-from gwlfe.Input.WaterBudget.Water import Water
 
 
 @memoize
@@ -18,7 +17,7 @@ def LuLoad(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, Ant
     water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     nlu = NLU(NRur, NUrb)
     adjurbanqtotal = AdjUrbanQTotal(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
-                                        Grow_0, CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil)
+                                    Grow_0, CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil)
     surfaceload_1 = SurfaceLoad_1(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
                                   CNP_0,
                                   Imper, ISRR, ISRA, Qretention, PctAreaInfil, Nqual, LoadRateImp, LoadRatePerv, Storm,
@@ -37,10 +36,11 @@ def LuLoad(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, Ant
                     pass
     return result
 
+
 @memoize
 def LuLoad_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
              Grow_0, CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil, Nqual, LoadRateImp,
              LoadRatePerv, Storm, UrbBMPRed, FilterWidth, PctStrmBuf):
     return sum(SurfaceLoad_1_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
-                                  CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil, Nqual, LoadRateImp, LoadRatePerv,
-                                  Storm, UrbBMPRed, FilterWidth, PctStrmBuf), axis=(1, 2))
+                               CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil, Nqual, LoadRateImp, LoadRatePerv,
+                               Storm, UrbBMPRed, FilterWidth, PctStrmBuf), axis=(1, 2))

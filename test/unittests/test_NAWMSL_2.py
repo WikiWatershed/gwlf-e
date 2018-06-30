@@ -1,7 +1,9 @@
+from unittest import skip
+
 import numpy as np
+
 from VariableUnittest import VariableUnitTest
 from gwlfe.BMPs.AgAnimal import NAWMSL_2
-from unittest import skip
 
 
 class TestNAWMSL_2(VariableUnitTest):

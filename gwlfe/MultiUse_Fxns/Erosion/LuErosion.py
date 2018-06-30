@@ -1,10 +1,9 @@
 from numpy import sum
 from numpy import zeros
 
+from gwlfe.Memoization import memoize
 from gwlfe.MultiUse_Fxns.Erosion.ErosWashoff import ErosWashoff
 from gwlfe.MultiUse_Fxns.Erosion.ErosWashoff import ErosWashoff_f
-# from Timer import time_function
-from gwlfe.Memoization import memoize
 
 
 def LuErosion(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Acoef, KF, LS,
@@ -18,8 +17,9 @@ def LuErosion(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Acoef, KF, LS
                 result[Y][l] += eros_washoff[Y][l][i]
     return result
 
+
 @memoize
 def LuErosion_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, Acoef, KF, LS,
                 C, P, Area):
     return sum(ErosWashoff_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, Acoef, KF, LS,
-                                C, P, Area), axis=1)
+                             C, P, Area), axis=1)

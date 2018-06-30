@@ -1,8 +1,8 @@
 import numpy as np
 
 from VariableUnittest import VariableUnitTest
-from gwlfe.Input.WaterBudget import Grow
 from gwlfe import enums
+from gwlfe.Input.WaterBudget import Grow
 
 
 class TestGrow(VariableUnitTest):

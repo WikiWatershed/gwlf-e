@@ -1,7 +1,6 @@
-# from Timer import time_function
+from gwlfe.Input.Animals.TotLAEU import TotLAEU
 from gwlfe.Input.LandUse.AreaTotal import AreaTotal
 from gwlfe.Input.LandUse.AreaTotal import AreaTotal_f
-from gwlfe.Input.Animals.TotLAEU import TotLAEU
 
 
 def AEU(NumAnimals, AvgAnimalWt, NRur, NUrb, Area):

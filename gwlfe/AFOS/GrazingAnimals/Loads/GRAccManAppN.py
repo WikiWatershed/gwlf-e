@@ -1,11 +1,11 @@
 from numpy import maximum
 from numpy import zeros
 
-from gwlfe.Memoization import memoize
 from gwlfe.AFOS.GrazingAnimals.Loads.GrazingN import GrazingN
 from gwlfe.AFOS.GrazingAnimals.Loads.GrazingN import GrazingN_f
 from gwlfe.AFOS.GrazingAnimals.Loads.InitGrN import InitGrN
 from gwlfe.AFOS.GrazingAnimals.Loads.InitGrN import InitGrN_f
+from gwlfe.Memoization import memoize
 
 
 def GRAccManAppN(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, GRPctManApp, PctGrazing):
@@ -18,16 +18,9 @@ def GRAccManAppN(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, GRPctMa
             result[i] = 0
     return result
 
+
 @memoize
 def GRAccManAppN_f(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, GRPctManApp, PctGrazing):
     init_gr_n = InitGrN_f(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN)
     grazing_n = GrazingN_f(PctGrazing, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN)
     return maximum(((1.0 / 12) - GRPctManApp) * init_gr_n - grazing_n, 0)
-
-# @time_function
-# def GRAccManAppN_f(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, GRPctManApp, PctGrazing):
-#     init_gr_n = InitGrN(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN)
-#     grazing_n = GrazingN_f(PctGrazing, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN)
-#     result = (np.repeat(init_gr_n / 12, 12)) - (GRPctManApp * np.repeat(init_gr_n, 12)) - grazing_n
-#     result = np.maximum(result, 0)
-#     return result

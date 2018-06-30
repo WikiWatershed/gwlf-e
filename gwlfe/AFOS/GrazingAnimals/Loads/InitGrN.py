@@ -2,8 +2,8 @@ from numpy import sum
 
 from GRLoadN import GRLoadN
 from GRLoadN import GRLoadN_f
-from gwlfe.Memoization import memoize
 from gwlfe.Input.Animals.GrazingAnimal import GrazingAnimal
+from gwlfe.Memoization import memoize
 from gwlfe.enums import YesOrNo
 
 
@@ -17,6 +17,7 @@ def InitGrN(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN):
         elif grazing_animal[a] is YesOrNo.YES:
             result += gr_load_n[a]
     return result
+
 
 @memoize
 def InitGrN_f(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN):

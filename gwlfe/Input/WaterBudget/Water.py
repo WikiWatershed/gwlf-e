@@ -1,9 +1,8 @@
 from numpy import zeros
 
-# from Timer import time_function
 from gwlfe.Input.WaterBudget.Melt_1 import Melt_1, Melt_1_f
-from gwlfe.Memoization import memoize
 from gwlfe.Input.WaterBudget.Rain import Rain, Rain_f
+from gwlfe.Memoization import memoize
 
 
 @memoize
@@ -16,6 +15,7 @@ def Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec):
             for j in range(DaysMonth[Y][i]):
                 result[Y][i][j] = rain[Y][i][j] + melt_1[Y][i][j]
     return result
+
 
 @memoize
 def Water_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec):

@@ -1,11 +1,11 @@
 from numpy import zeros
 
 from gwlfe.Input.LandUse.AreaTotal import AreaTotal
-from gwlfe.Memoization import memoize
 from gwlfe.Input.LandUse.Urb.UrbAreaTotal import UrbAreaTotal
-from gwlfe.MultiUse_Fxns.Discharge.UrbanQTotal import UrbanQTotal, UrbanQTotal_f
 # from Timer import time_function
 from gwlfe.Input.WaterBudget.Water import Water
+from gwlfe.Memoization import memoize
+from gwlfe.MultiUse_Fxns.Discharge.UrbanQTotal import UrbanQTotal, UrbanQTotal_f
 
 
 @memoize
@@ -27,11 +27,12 @@ def UrbanQTotal_1(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI
                         result[Y][i][j] = 0
     return result
 
+
 @memoize
 def UrbanQTotal_1_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
-                  ISRR, ISRA):
+                    ISRR, ISRA):
     urban_area_total = UrbAreaTotal(NRur, NUrb, Area)
     area_total = AreaTotal(NRur, NUrb, Area)
     urban_q_total = UrbanQTotal_f(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, Area, CNI_0, AntMoist_0, Grow_0,
-                                CNP_0, Imper, ISRR, ISRA)
+                                  CNP_0, Imper, ISRR, ISRA)
     return urban_q_total * urban_area_total / area_total

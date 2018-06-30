@@ -2,12 +2,12 @@ from numpy import sum
 from numpy import zeros
 
 from gwlfe.Input.LandUse.AreaTotal import AreaTotal
-from gwlfe.Memoization import memoize
-from gwlfe.MultiUse_Fxns.Runoff.Qrun import Qrun, Qrun_f
-from gwlfe.MultiUse_Fxns.Runoff.Retention import Retention
 from gwlfe.Input.LandUse.RurAreaTotal import RurAreaTotal
 # from Timer import time_function
 from gwlfe.Input.WaterBudget.Water import Water
+from gwlfe.Memoization import memoize
+from gwlfe.MultiUse_Fxns.Runoff.Qrun import Qrun, Qrun_f
+from gwlfe.MultiUse_Fxns.Runoff.Retention import Retention
 
 
 # @time_function
@@ -36,11 +36,12 @@ def RuralQTotal(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, CN, NUrb, AntMois
                     pass
     return result
 
+
 @memoize
 def RuralQTotal_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, CN, NUrb, AntMoist_0, Grow_0, Area):
     result = zeros((NYrs, 12, 31))
     q_run = Qrun_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, CN, AntMoist_0, Grow_0)
     area_total = AreaTotal(NRur, NUrb, Area)
     qrun_area = q_run * Area
-    result = sum(qrun_area, axis=3)/area_total
+    result = sum(qrun_area, axis=3) / area_total
     return result

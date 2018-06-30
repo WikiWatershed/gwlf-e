@@ -2,7 +2,6 @@ from numpy import zeros
 
 from gwlfe.Input.LandUse.Ag.AGSTRM import AGSTRM
 from gwlfe.Input.LandUse.Ag.AGSTRM import AGSTRM_f
-# from Timer import time_function
 from gwlfe.Output.Loading.StreamBankN import StreamBankN
 from gwlfe.Output.Loading.StreamBankN import StreamBankN_f
 

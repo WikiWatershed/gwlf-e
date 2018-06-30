@@ -1,10 +1,5 @@
-import unittest
-from unittest import skip
-from mock import patch
-import numpy as np
-from gwlfe import Parser
-from gwlfe import FlowDays
 from VariableUnittest import VariableUnitTest
+
 
 class TestFlowDays(VariableUnitTest):
     pass

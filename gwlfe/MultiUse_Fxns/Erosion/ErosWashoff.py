@@ -1,11 +1,11 @@
 from numpy import sum
 from numpy import zeros
 
-from gwlfe.Memoization import memoize
 from gwlfe.Input.LandUse.NLU import NLU
+from gwlfe.Input.WaterBudget.Water import Water
+from gwlfe.Memoization import memoize
 from gwlfe.MultiUse_Fxns.Erosion.RurEros import RurEros
 from gwlfe.MultiUse_Fxns.Erosion.RurEros import RurEros_f
-from gwlfe.Input.WaterBudget.Water import Water
 
 
 @memoize
@@ -27,6 +27,7 @@ def ErosWashoff(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Acoef, KF, 
                 else:
                     pass
     return result
+
 
 @memoize
 def ErosWashoff_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, Acoef, KF, LS, C, P, Area):

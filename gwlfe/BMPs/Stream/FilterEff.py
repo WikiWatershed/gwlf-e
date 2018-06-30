@@ -1,4 +1,3 @@
-# from Timer import time_function
 from gwlfe.Memoization import memoize
 
 
@@ -11,7 +10,7 @@ def FilterEff(FilterWidth):
     return result
 
 
-#Both have same running time
+# Both have same running time
 @memoize
 def FilterEff_f(FilterWidth):
     result = 1

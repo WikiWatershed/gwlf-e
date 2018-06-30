@@ -18,4 +18,4 @@ def NGAccManAppN(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, NGPctMa
 
 def NGAccManAppN_f(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, NGPctManApp):
     init_ng_n = InitNgN_f(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN)
-    return maximum((init_ng_n / 12) - (NGPctManApp * init_ng_n),0)
+    return maximum((init_ng_n / 12) - (NGPctManApp * init_ng_n), 0)

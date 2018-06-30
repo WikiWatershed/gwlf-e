@@ -3,11 +3,11 @@ from numpy import reshape
 from numpy import where
 from numpy import zeros
 
-from gwlfe.Memoization import memoize
 from GRStreamN import GRStreamN
 from GRStreamN import GRStreamN_f
 from gwlfe.AFOS.GrazingAnimals.Loads.GrazingN import GrazingN
 from gwlfe.AFOS.GrazingAnimals.Loads.GrazingN import GrazingN_f
+from gwlfe.Memoization import memoize
 from gwlfe.MultiUse_Fxns.LossFactAdj import LossFactAdj
 from gwlfe.MultiUse_Fxns.LossFactAdj import LossFactAdj_f
 
@@ -27,6 +27,7 @@ def GRLossN(NYrs, PctStreams, PctGrazing, GrazingAnimal_0, NumAnimals, AvgAnimal
                 result[Y][i] = 0
     return result
 
+
 @memoize
 def GRLossN_f(NYrs, PctStreams, PctGrazing, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, GrazingNRate, Prec,
               DaysMonth):
@@ -35,7 +36,7 @@ def GRLossN_f(NYrs, PctStreams, PctGrazing, GrazingAnimal_0, NumAnimals, AvgAnim
         (NYrs, 12))
     gr_stream_n = reshape(
         repeat(GRStreamN_f(PctStreams, PctGrazing, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN),
-                  repeats=NYrs, axis=0),
+               repeats=NYrs, axis=0),
         (NYrs, 12))
     loss_face_adj = LossFactAdj_f(Prec, DaysMonth)
     result = grazing_n - gr_stream_n

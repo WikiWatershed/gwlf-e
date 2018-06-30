@@ -1,5 +1,5 @@
-# from Timer import time_function
 from gwlfe.Memoization import memoize
+
 
 @memoize
 def FlowDays(AttenFlowDist, AttenFlowVel):
@@ -7,7 +7,6 @@ def FlowDays(AttenFlowDist, AttenFlowVel):
         return AttenFlowDist / (AttenFlowVel * 24)
     else:
         return 0
-
 
 # def FlowDays_f():
 #     pass

@@ -4,8 +4,6 @@ from gwlfe.Input.WaterBudget.Precipitation import Precipitation
 from gwlfe.Input.WaterBudget.Precipitation import Precipitation_f
 from gwlfe.Memoization import memoize
 
-from numpy import zeros
-
 
 def LossFactAdj(NYrs, Prec, DaysMonth):
     result = zeros((NYrs, 12))
@@ -14,6 +12,7 @@ def LossFactAdj(NYrs, Prec, DaysMonth):
         for i in range(12):
             result[Y][i] = (precipitation[Y][i] / DaysMonth[Y][i]) / 0.3301
     return result
+
 
 @memoize
 def LossFactAdj_f(Prec, DaysMonth):

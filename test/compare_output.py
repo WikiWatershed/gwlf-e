@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
+from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
-from __future__ import division
 
 import csv
 import json
@@ -27,7 +27,8 @@ with open('compare-4_sum.dat', 'r') as expected:
                     key = results_json['monthly'][i - 1]
                     month = '%s (ours)' % row[0]
                     result_row = [month, key['AvPrecipitation'], key['AvEvapoTrans'], key['AvGroundWater'],
-                                  key['AvRunoff'], key['AvStreamFlow'], key['AvPtSrcFlow'], key['AvTileDrain'], key['AvWithdrawal']]
+                                  key['AvRunoff'], key['AvStreamFlow'], key['AvPtSrcFlow'], key['AvTileDrain'],
+                                  key['AvWithdrawal']]
 
                 writer.writerow(row)
                 writer.writerow(result_row)

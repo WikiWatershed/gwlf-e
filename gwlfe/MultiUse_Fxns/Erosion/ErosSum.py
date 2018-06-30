@@ -1,9 +1,9 @@
 from numpy import sum
 from numpy import zeros
 
+from gwlfe.Memoization import memoize
 from gwlfe.MultiUse_Fxns.Erosion.Erosion_1 import Erosion_1
 from gwlfe.MultiUse_Fxns.Erosion.Erosion_1 import Erosion_1_f
-from gwlfe.Memoization import memoize
 
 
 @memoize
@@ -29,7 +29,6 @@ def ErosSum(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0,
     return result
 
 
-# @time_function
 @memoize
 def ErosSum_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0,
               AntMoist_0, Grow_0, CNP_0, Imper, ISRR, ISRA, CN, UnsatStor_0, KV, PcntET,

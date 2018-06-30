@@ -1,9 +1,10 @@
-from numpy import zeros
 import copy
 
-from gwlfe.Memoization import memoize
+from numpy import zeros
 
 from gwlfe.Input.WaterBudget.Water import Water
+from gwlfe.Memoization import memoize
+
 
 @memoize
 def AntMoist(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0):

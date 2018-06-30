@@ -1,8 +1,8 @@
-# from Timer import time_function
 from numpy import sum
-from gwlfe.Memoization import memoize
+
 from gwlfe.Input.LandUse.RurAreaTotal import RurAreaTotal
 from gwlfe.Input.LandUse.RurAreaTotal import RurAreaTotal_f
+from gwlfe.Memoization import memoize
 
 
 @memoize

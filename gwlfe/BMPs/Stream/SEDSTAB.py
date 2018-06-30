@@ -1,11 +1,9 @@
 from numpy import zeros
 
-# from Timer import time_function
 from gwlfe.Output.Loading.StreamBankEros import StreamBankEros
 from gwlfe.Output.Loading.StreamBankEros import StreamBankEros_f
 
 
-# @memoize
 def SEDSTAB(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
             CNP_0, Imper,
             ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0,
@@ -15,7 +13,8 @@ def SEDSTAB(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, An
             , NumAnimals, AvgAnimalWt, StreamFlowVolAdj, SedAFactor_0, AvKF, AvSlope,
             SedAAdjust, StreamLength, n42b, n46c, n85d):
     result = zeros((NYrs, 12))
-    streambankeros = StreamBankEros(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
+    streambankeros = StreamBankEros(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
+                                    Grow_0,
                                     CNP_0, Imper,
                                     ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0,
                                     RecessionCoef, SeepCoef

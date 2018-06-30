@@ -1,9 +1,5 @@
-import unittest
-from unittest import skip
-import numpy as np
-from gwlfe import Parser
-from gwlfe.AFOS.GrazingAnimals.Losses import GRLostBarnNSum
 from VariableUnittest import VariableUnitTest
+
 
 class TestGRLostBarnNSum(VariableUnitTest):
     def test_GRLostBarnNSum(self):

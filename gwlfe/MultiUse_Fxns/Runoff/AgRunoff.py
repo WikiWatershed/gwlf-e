@@ -2,12 +2,11 @@ from numpy import sum
 from numpy import where
 from numpy import zeros
 
-from gwlfe.MultiUse_Fxns.Discharge.AgQTotal import AgQTotal
-from gwlfe.MultiUse_Fxns.Discharge.AgQTotal import AgQTotal_f
-from gwlfe.Memoization import memoize
-# from Timer import time_function
 from gwlfe.Input.WaterBudget.Water import Water
 from gwlfe.Input.WaterBudget.Water import Water_f
+from gwlfe.Memoization import memoize
+from gwlfe.MultiUse_Fxns.Discharge.AgQTotal import AgQTotal
+from gwlfe.MultiUse_Fxns.Discharge.AgQTotal import AgQTotal_f
 
 
 @memoize

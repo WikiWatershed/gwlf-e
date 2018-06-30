@@ -1,10 +1,9 @@
 from numpy import zeros
 
-# from Timer import time_function
+from gwlfe.Input.WaterBudget.ET import DailyET_f
 from gwlfe.Input.WaterBudget.Infiltration import Infiltration
 from gwlfe.Input.WaterBudget.Infiltration import Infiltration_f
 from gwlfe.Memoization import memoize
-from gwlfe.Input.WaterBudget.ET import DailyET_f
 
 try:
     from Percolation_inner_compiled import Percolation_inner
@@ -48,10 +47,3 @@ def Percolation_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI
 
     et = DailyET_f(Temp, KV, PcntET, DayHrs)
     return Percolation_inner(NYrs, UnsatStor_0, DaysMonth, MaxWaterCap, infiltration, et)
-
-    #   NYrs = arg(0, name=NYrs)  :: int64
-    #   UnsatStor_0 = arg(1, name=UnsatStor_0)  :: float64
-    #   DaysMonth = arg(2, name=DaysMonth)  :: array(int64, 2d, C)
-    #   MaxWaterCap = arg(3, name=MaxWaterCap)  :: float64
-    #   infiltration = arg(4, name=infiltration)  :: array(float64, 3d, C)
-    #   et = arg(5, name=et)  :: array(float64, 3d, C)

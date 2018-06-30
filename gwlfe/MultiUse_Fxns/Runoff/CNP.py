@@ -1,8 +1,7 @@
 from numpy import zeros
 
-from gwlfe.Memoization import memoize
-# from Timer import time_function
 from gwlfe.Input.LandUse.NLU import NLU
+from gwlfe.Memoization import memoize
 
 
 @memoize
@@ -14,6 +13,7 @@ def CNP(NRur, NUrb, CNP_0):
         result[1][l] = CNP_0[1][l]
         result[2][l] = CNP_0[1][l] / (0.4036 + 0.0059 * CNP_0[1][l])
     return result
+
 
 @memoize
 def CNP_f(NRur, NUrb, CNP_0):

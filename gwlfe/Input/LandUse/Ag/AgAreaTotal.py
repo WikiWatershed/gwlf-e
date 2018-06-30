@@ -1,4 +1,3 @@
-# from Timer import time_function
 from gwlfe.enums import LandUse as LandUseNames
 
 

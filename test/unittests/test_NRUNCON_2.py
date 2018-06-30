@@ -1,7 +1,9 @@
+from unittest import skip
+
 import numpy as np
+
 from VariableUnittest import VariableUnitTest
 from gwlfe.BMPs.AgAnimal import NRUNCON_2
-from unittest import skip
 
 
 class TestNRUNCON_2(VariableUnitTest):

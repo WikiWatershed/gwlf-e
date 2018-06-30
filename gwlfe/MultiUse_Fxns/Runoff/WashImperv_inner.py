@@ -1,8 +1,8 @@
 import math
-from numpy import zeros
-from numpy import exp
 
 from numba.pycc import CC
+from numpy import exp
+from numpy import zeros
 
 cc = CC('WashImperv_inner_compiled')
 

@@ -60,19 +60,8 @@ class GmsReader(object):
         z.RunConCoeffP = 0.15
         z.PhytaseCoeff = 0.16
 
-        # z.ImpervAccum = np.zeros(16)
-        # z.PervAccum = np.zeros(16)
-        # z.QrunI = np.zeros(16)
-        # z.QrunP = np.zeros(16)
-        # z.WashPerv = np.zeros(16)
-        # z.NetDisLoad = np.zeros(3)
-
         z.AvGRStreamFC = 0
-        # z.AvGRStreamN = 0
         z.AvGRStreamP = 0
-        # z.AvTileDrain = np.zeros(12)
-        # z.RurAreaTotal = 0
-        # z.UrbAreaTotal = 0
         z.d = zeros(12)
         z.KVD = zeros(12)
         z.CV = zeros(12)
@@ -82,18 +71,12 @@ class GmsReader(object):
         z.UrbanPhos = zeros(16)
         z.AvStreamFlow = zeros(12)
         z.AvPrecipitation = zeros(12)
-        # z.AvEvapoTrans = np.zeros(12)
-        # z.AvGroundWater = np.zeros(12)
-        # z.AvRunoff = np.zeros(12)
-        # z.AvErosion = np.zeros(12)
-        # z.AvSedYield = np.zeros(12)
         z.AFON = zeros(12)
         z.AFOP = zeros(12)
         z.AvLoad = zeros((12, 3))
         z.AvLuLoad = zeros((16, 3))
         z.AvDisLoad = zeros((16, 3))
         z.AvLuDisLoad = zeros((16, 3))
-        # z.UrbSedLoad = np.zeros((16, 12))
         z.AvGroundNitr = zeros(12)
         z.AvGroundPhos = zeros(12)
         z.AvDisNitr = zeros(12)
@@ -110,11 +93,8 @@ class GmsReader(object):
         z.BSed = zeros(16)
         z.UrbanSed = zeros(16)
         z.UrbanErosion = zeros(16)
-        # z.ErosWashoff = np.zeros((16, 12))
         z.QRunoff = zeros((16, 12))
         z.AgQRunoff = zeros((16, 12))
-        # z.RurQRunoff = np.zeros((16, 12))
-        # z.UrbQRunoff = np.zeros((16, 12))
         z.DailyLoad = zeros((50, 12, 31))
         z.SepticsDay = zeros(12)
         z.MonthlyLoad = zeros((12, 31))
@@ -125,8 +105,6 @@ class GmsReader(object):
         z.DayPondPhos = zeros((12, 31))
         z.DayNormNitr = zeros((12, 31))
         z.DayNormPhos = zeros((12, 31))
-        # z.WashImperv = np.zeros(16)
-        # z.NetSolidLoad = np.zeros(3)
         z.DayShortNitr = zeros((12, 31))
         z.DayShortPhos = zeros((12, 31))
         z.DayDischargeNitr = zeros((12, 31))
@@ -155,53 +133,39 @@ class GmsReader(object):
         z.PestParamWater2 = zeros(16)
         z.PestDecay2 = zeros(16)
         z.PestHalfLife2 = zeros(16)
-        # z.AvStreamBankEros = np.zeros(12)
-        # z.AvStreamBankN = np.zeros(12)
         z.AvStreamBankP = zeros(12)
         z.CropPercent = zeros(12)
         z.PestSoilAwcCm = zeros(12)
 
         # Tile Drainage and Flow Variables
-        # z.AvTileDrain = np.zeros(12)
-        # z.AvWithdrawal = np.zeros(12)
         z.AvTileDrainN = zeros(12)
         z.AvTileDrainP = zeros(12)
         z.AvTileDrainSed = zeros(12)
         z.AvPtSrcFlow = zeros(12)
 
         # Calculated Values for Animal Feeding Operations
-        # z.NGLoadN = np.zeros(9)
         z.NGLoadP = zeros(9)
         z.NGLoadFC = zeros(9)
-        # z.NGAccManAppN = np.zeros(12)
         z.NGAccManAppP = zeros(12)
         z.NGAccManAppFC = zeros(12)
-        # z.NGAppManN = np.zeros(12)
-        # z.NGInitBarnN = np.zeros(12)
         z.NGAppManP = zeros(12)
         z.NGInitBarnP = zeros(12)
         z.NGAppManFC = zeros(12)
         z.NGInitBarnFC = zeros(12)
 
-        # z.GRLoadN = np.zeros(9)
         z.GRLoadP = zeros(9)
         z.GRLoadFC = zeros(9)
-        # z.GRAccManAppN = np.zeros(12)
         z.GRAccManAppP = zeros(12)
         z.GRAccManAppFC = zeros(12)
-        # z.GRAppManN = np.zeros(12)
-        # z.GRInitBarnN = np.zeros(12)
         z.GRAppManP = zeros(12)
         z.GRInitBarnP = zeros(12)
         z.GRAppManFC = zeros(12)
         z.GRInitBarnFC = zeros(12)
-        # z.GrazingN = np.zeros(12)
         z.GrazingP = zeros(12)
         z.GrazingFC = zeros(12)
         z.GRStreamN = zeros(12)
         z.GRStreamP = zeros(12)
         z.GRStreamFC = zeros(12)
-        # z.AvAnimalN = np.zeros(12)
         z.AvAnimalP = zeros(12)
         z.AvAnimalFC = zeros(12)
         z.AvWWOrgs = zeros(12)
@@ -211,9 +175,7 @@ class GmsReader(object):
         z.AvTotalOrgs = zeros(12)
         z.AvCMStream = zeros(12)
         z.AvOrgConc = zeros(12)
-        # z.AvGRLostBarnN = np.zeros(12)
         z.AvGRLostBarnP = zeros(12)
-        # z.AvNGLostBarnN = np.zeros(12)
         z.AvNGLostBarnP = zeros(12)
         z.AvNGLostManP = zeros(12)
         z.AvNGLostBarnFC = zeros(12)
@@ -222,7 +184,6 @@ class GmsReader(object):
 
         z.q = 0
         z.k = 0
-        # z.FilterEff = 0
         z.OutFiltWidth = 0
         z.Clean = 0
         z.CleanSwitch = 0
@@ -232,12 +193,10 @@ class GmsReader(object):
         z.ActiveVol = 0
         z.DetentFlow = 0
         z.AnnDayHrs = 0
-        # z.AreaTotal = 0
         z.FrozenPondNitr = 0
         z.FrozenPondPhos = 0
         z.AvSeptNitr = 0
         z.AvSeptPhos = 0
-        # z.AgAreaTotal = 0
         z.ForestAreaTotal = 0
 
         # Referenced in LoadReductions
@@ -259,19 +218,13 @@ class GmsReader(object):
         z.BasinId = self.next(int)  # Basin ID
         self.next(EOL)
 
-        # z.NLU = z.NRur + z.NUrb
-
         # Line 2:
         z.TranVersionNo = self.next(str)  # GWLF-E Version
         z.RecessionCoef = self.next(float)  # Recession Coefficient
         z.SeepCoef = self.next(float)  # Seepage Coefficient
-        # z.UnsatStor = self.next(float)  # Unsaturated Storage
         z.UnsatStor_0 = self.next(float)  # Unsaturated Storage
-        # z.SatStor = self.next(float)  # Saturated Storage
         z.SatStor_0 = self.next(float)  # Saturated Storage
-        # z.InitSnow = self.next(int)  # Initial Snow Days
         z.InitSnow_0 = self.next(int)  # Initial Snow Days
-        # z.SedDelivRatio = self.next(float)  # Sediment Delivery Ratio
         z.SedDelivRatio_0 = self.next(float)  # Sediment Delivery Ratio
         z.MaxWaterCap = self.next(float)  # Average Available Water Capacity
         z.StreamLength = self.next(float)  # Total Stream Length (meters)
@@ -284,7 +237,6 @@ class GmsReader(object):
         z.WxYrs = self.next(int)  # Total Weather Years
         z.WxYrBeg = self.next(int)  # Beginning Weather Year
         z.WxYrEnd = self.next(int)  # Ending Weather Year
-        # z.SedAFactor = self.next(float)  # Sediment A Factor
         z.SedAFactor_0 = self.next(float)  # Sediment A Factor
         z.TotArea = self.next(float)  # Total Basin Area (Ha)
         z.TileDrainRatio = self.next(float)  # Tile Drain Ratio
@@ -297,17 +249,10 @@ class GmsReader(object):
         # TODO: Remove DimYrs
         z.DimYrs = z.WxYrs
 
-        # z.Load = zeros((z.DimYrs, 12, 3))
-        # z.DisLoad = zeros((z.DimYrs, 12, 3))
-        # z.LuLoad = np.zeros((z.DimYrs, 16, 3))
-        # z.LuDisLoad = np.zeros((z.DimYrs, 16, 3))
         z.UplandN = zeros((z.DimYrs, 12))
         z.UplandP = zeros((z.DimYrs, 12))
         z.UrbRunoffCm = zeros((z.DimYrs, 12))
-        # z.UrbRunoffLiter = np.zeros((z.DimYrs, 12))
-        # z.DailyFlow = np.zeros((z.DimYrs, 12, 31))
         z.DailyFlowMGD = zeros((z.DimYrs, 12, 31))
-        # z.DailyFlowGPM = np.zeros((z.DimYrs, 12, 31))
         z.DailyPtSrcFlow = zeros((z.DimYrs, 12, 31))
 
         # Declare the daily values as ReDimensional arrays in
@@ -346,33 +291,18 @@ class GmsReader(object):
         z.DayLuErosion = zeros((16, z.DimYrs, 12, 31))
         z.DaySed = zeros((z.DimYrs, 12, 31))
         z.DayLuSed = zeros((16, z.DimYrs, 12, 31))
-        # z.DayRunoff = np.zeros((z.DimYrs, 12, 31))
         z.DayLuRunoff = zeros((16, z.DimYrs, 12, 31))
-        # z.MeltPest = np.zeros((z.DimYrs, 12, 31))
         z.PrecPest = zeros((z.DimYrs, 12, 31))
-        # z.DailyGrFlow = np.zeros((z.DimYrs, 12, 31))
         z.DailyETCm = zeros((z.DimYrs, 12, 31))
         z.DailyETShal = zeros((z.DimYrs, 12, 31))
-        # z.PercCm = np.zeros((z.DimYrs, 12, 31))
         z.PercShal = zeros((z.DimYrs, 12, 31))
         z.DailyUnsatStorCm = zeros((z.DimYrs, 12, 31))
         z.DailyUnsatStorShal = zeros((z.DimYrs, 12, 31))
         z.DailyET = zeros((z.DimYrs, 12, 31))
         z.DailyRetent = zeros((z.DimYrs, 12, 31))
         z.SatStorPest = zeros((z.DimYrs, 12, 31))
-        # z.UrbanRunoff = np.zeros((z.DimYrs, 12))
-        # z.RuralRunoff = np.zeros((z.DimYrs, 12))
         z.DailyInfilt = zeros((z.DimYrs, 12, 31))
-        # z.StreamFlowVol = np.zeros((z.DimYrs, 12))
-        # z.DailyCN = np.zeros((z.DimYrs, 12, 31))
-        # z.DailyWater = np.zeros((z.DimYrs, 12, 31))
-        # z.LE = np.zeros((z.DimYrs, 12))
-        # z.StreamBankEros = np.zeros((z.DimYrs, 12))
-        # z.StreamBankN = np.zeros((z.DimYrs, 12))
-        # z.StreamBankN_1 = np.zeros((z.DimYrs, 12))
         z.StreamBankP = zeros((z.DimYrs, 12))
-        # z.DailyAMC5 = np.zeros((z.DimYrs, 12, 31))
-        # z.MonthFlow = np.zeros((z.DimYrs, 12))
         z.LuGrFlow = zeros((16, z.DimYrs, 12, 31))
         z.LuDeepSeep = zeros((16, z.DimYrs, 12, 31))
         z.LuInfiltration = zeros((16, z.DimYrs, 12, 31))
@@ -393,10 +323,8 @@ class GmsReader(object):
         z.TotPhos = zeros((z.DimYrs, 12))
         z.LuSedYield = zeros((z.DimYrs, 16))
         z.LuDisNitr = zeros((z.DimYrs, 16))
-        # z.LuTotNitr = zeros((z.DimYrs, 16))
         z.LuTotNitr_2 = zeros((z.DimYrs, 16))
         z.LuDisPhos = zeros((z.DimYrs, 16))
-        # z.LuTotPhos = zeros((z.DimYrs, 16))
         z.LuTotPhos_1 = zeros((z.DimYrs, 16))
         z.SepticNitr = zeros(z.DimYrs)
         z.SepticPhos = zeros(z.DimYrs)
@@ -413,7 +341,6 @@ class GmsReader(object):
         z.NGLostManFC = zeros((z.DimYrs, 12))
         z.NGLostBarnFC = zeros((z.DimYrs, 12))
 
-        # z.GRLostManN = np.zeros((z.DimYrs, 12))
         z.GRLostBarnN = zeros((z.DimYrs, 12))
         z.GRLossN = zeros((z.DimYrs, 12))
         z.GRLostManP = zeros((z.DimYrs, 12))
@@ -422,8 +349,6 @@ class GmsReader(object):
         z.GRLostManFC = zeros((z.DimYrs, 12))
         z.GRLostBarnFC = zeros((z.DimYrs, 12))
         z.GRLossFC = zeros((z.DimYrs, 12))
-        # z.LossFactAdj = np.zeros((z.DimYrs, 12))
-        # z.AnimalN = np.zeros((z.DimYrs, 12))
         z.AnimalP = zeros((z.DimYrs, 12))
         z.AnimalFC = zeros((z.DimYrs, 12))
         z.WWOrgs = zeros((z.DimYrs, 12))
@@ -451,10 +376,8 @@ class GmsReader(object):
         z.UrbOrgsSum = zeros(z.WxYrs)
         z.WildOrgsSum = zeros(z.WxYrs)
         z.TotalOrgsSum = zeros(z.WxYrs)
-        # z.GRLostBarnNSum = np.zeros(z.WxYrs)
         z.GRLostBarnPSum = zeros(z.WxYrs)
         z.GRLostBarnFCSum = zeros(z.WxYrs)
-        # z.NGLostBarnNSum = np.zeros(z.WxYrs)
         z.NGLostBarnPSum = zeros(z.WxYrs)
         z.NGLostBarnFCSum = zeros(z.WxYrs)
         z.NGLostManPSum = zeros(z.WxYrs)
@@ -670,7 +593,6 @@ class GmsReader(object):
         z.n6c = self.next(float)  # Low Density Urban
         z.n6d = self.next(float)  # Unpaved Roads
         z.n7 = self.next(float)  # Other
-        # z.n7b_0 = self.next(float)  # Farm Animals
         _ = self.next(float)  # Farm Animals
         z.n8 = self.next(float)  # Streambank Erosion
         z.n9 = self.next(float)  # Groundwater/Subsurface
@@ -774,9 +696,7 @@ class GmsReader(object):
         z.n42b = self.next(float)  # Total Stream Length (km)
         z.n42c = self.next(float)  # Unpaved Road Length (km)
         z.n43 = self.next(float)  # Stream Km with Vegetated Buffer Strips: Existing
-        # z.GRLBN_0 = self.next(float)  # Average Grazing Animal Loss Rate (Barnyard/Confined Area): Nitrogen
         _ = self.next(float)  # Average Grazing Animal Loss Rate (Barnyard/Confined Area): Nitrogen
-        # z.NGLBN_0 = self.next(float)  # Average Non-Grazing Animal Loss Rate (Barnyard/Confined Area): Nitrogen
         _ = self.next(float)  # Average Non-Grazing Animal Loss Rate (Barnyard/Confined Area): Nitrogen
         z.GRLBP = self.next(float)  # Average Grazing Animal Loss Rate (Barnyard/Confined Area): Phosphorus
         z.NGLBP = self.next(float)  # Average Non-Grazing Animal Loss Rate (Barnyard/Confined Area): Phosphorus
@@ -784,7 +704,6 @@ class GmsReader(object):
         z.NGLBFC = self.next(float)  # Average Non-Grazing Animal Loss Rate (Barnyard/Confined Area): Fecal Coliform
         z.GRLBFC = self.next(float)  # Average Grazing Animal Loss Rate (Barnyard/Confined Area): Fecal Coliform
         z.GRSFC = self.next(float)  # Average Grazing Animal Loss Rate (Spent in Streams): Fecal Coliform
-        # z.GRSN_0 = self.next(float)  # Average Grazing Animal Loss Rate (Spent in Streams): Nitrogen
         _ = self.next(float)  # Average Grazing Animal Loss Rate (Spent in Streams): Nitrogen
         z.GRSP = self.next(float)  # Average Grazing Animal Loss Rate (Spent in Streams): Phosphorus
         self.next(EOL)
@@ -1118,15 +1037,14 @@ class GmsReader(object):
         self.next(EOL)
 
         # Line 146:
-        # z.InitNgN = self.next(float)  # Initial Non-Grazing Animal Totals: Nitrogen (kg/yr)
         _ = self.next(float)  # Seems to be set to 0 before it is used
         z.InitNgP = self.next(float)  # Initial Non-Grazing Animal Totals: Phosphorus (kg/yr)
         z.InitNgFC = self.next(float)  # Initial Non-Grazing Animal Totals: Fecal Coliforms (orgs/yr)
         z.NGAppSum = self.next(float)  # Non-Grazing Manure Data Check: Land Applied (%)
         z.NGBarnSum = self.next(float)  # Non-Grazing Manure Data Check: In Confined Areas (%)
         z.NGTotSum = self.next(float)  # Non-Grazing Manure Data Check: Total (<= 1)
-        # z.InitGrN = self.next(float)  # Initial Grazing Animal Totals: Nitrogen (kg/yr)
-        _ = self.next(float)  # Value seems to be set to 0 before it is used
+        _ = self.next(
+            float)  # # Initial Grazing Animal Totals: Nitrogen (kg/yr) (Value seems to be set to 0 before it is used)
         z.InitGrP = self.next(float)  # Initial Grazing Animal Totals: Phosphorus (kg/yr)
         z.InitGrFC = self.next(float)  # Initial Grazing Animal Totals: Fecal Coliforms (orgs/yr)
         z.GRAppSum = self.next(float)  # Grazing Manure Data Check: Land Applied (%)
@@ -1543,12 +1461,16 @@ class GmsWriter(object):
             z.n6c,
             z.n6d,
             z.n7,
-            N7b_2(z.NYrs, z.NGPctManApp, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN, z.NGAppNRate, z.Prec,
+            N7b_2(z.NYrs, z.NGPctManApp, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN, z.NGAppNRate,
+                  z.Prec,
                   z.DaysMonth,
-                  z.NGPctSoilIncRate, z.GRPctManApp, z.GRAppNRate, z.GRPctSoilIncRate, z.NGBarnNRate, z.AWMSNgPct, z.NgAWMSCoeffN,
-                  z.RunContPct, z.RunConCoeffN, z.PctGrazing, z.GRBarnNRate, z.AWMSGrPct, z.GrAWMSCoeffN, z.PctStreams, z.GrazingNRate,
+                  z.NGPctSoilIncRate, z.GRPctManApp, z.GRAppNRate, z.GRPctSoilIncRate, z.NGBarnNRate, z.AWMSNgPct,
+                  z.NgAWMSCoeffN,
+                  z.RunContPct, z.RunConCoeffN, z.PctGrazing, z.GRBarnNRate, z.AWMSGrPct, z.GrAWMSCoeffN, z.PctStreams,
+                  z.GrazingNRate,
                   z.n41b,
-                  z.n85h, z.n41d, z.n85j, z.n41f, z.n85l, z.n42, z.n45, z.n69, z.n43, z.n64)[-1]#get the carried over value
+                  z.n85h, z.n41d, z.n85j, z.n41f, z.n85l, z.n42, z.n45, z.n69, z.n43, z.n64)[-1]
+            # get the carried over value
             ,
             z.n8,
             z.n9,
@@ -1656,8 +1578,8 @@ class GmsWriter(object):
                     z.GRBarnNRate,
                     z.Prec, z.DaysMonth, z.AWMSGrPct, z.GrAWMSCoeffN, z.RunContPct, z.RunConCoeffN)[-1],
             NGLostBarnNSum(z.NYrs, z.NGPctManApp, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN,
-                               z.NGBarnNRate,
-                               z.Prec, z.DaysMonth, z.AWMSNgPct, z.NgAWMSCoeffN, z.RunContPct, z.RunConCoeffN)[-1],
+                           z.NGBarnNRate,
+                           z.Prec, z.DaysMonth, z.AWMSNgPct, z.NgAWMSCoeffN, z.RunContPct, z.RunConCoeffN)[-1],
             z.GRLBP,
             z.NGLBP,
             z.NGLManP,

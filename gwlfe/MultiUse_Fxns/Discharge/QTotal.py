@@ -1,14 +1,14 @@
 from numpy import where
 from numpy import zeros
 
+from gwlfe.Input.WaterBudget.Water import Water
+from gwlfe.Input.WaterBudget.Water import Water_f
 from gwlfe.Memoization import memoize
 from gwlfe.MultiUse_Fxns.Discharge.RuralQTotal import RuralQTotal
 from gwlfe.MultiUse_Fxns.Discharge.RuralQTotal import RuralQTotal_f
 # from Timer import time_function
 from gwlfe.MultiUse_Fxns.Discharge.UrbanQTotal_1 import UrbanQTotal_1
 from gwlfe.MultiUse_Fxns.Discharge.UrbanQTotal_1 import UrbanQTotal_1_f
-from gwlfe.Input.WaterBudget.Water import Water
-from gwlfe.Input.WaterBudget.Water import Water_f
 
 
 @memoize

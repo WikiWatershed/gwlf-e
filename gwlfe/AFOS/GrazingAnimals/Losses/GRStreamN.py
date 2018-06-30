@@ -1,9 +1,9 @@
 from numpy import sum
 from numpy import zeros
 
-from gwlfe.Memoization import memoize
 from gwlfe.AFOS.GrazingAnimals.Loads.GrazingN import GrazingN
 from gwlfe.AFOS.GrazingAnimals.Loads.GrazingN import GrazingN_f
+from gwlfe.Memoization import memoize
 
 
 def GRStreamN(PctStreams, PctGrazing, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN):
@@ -13,9 +13,11 @@ def GRStreamN(PctStreams, PctGrazing, GrazingAnimal_0, NumAnimals, AvgAnimalWt, 
         result[i] = PctStreams[i] * grazing_n[i]
     return result
 
+
 @memoize
 def GRStreamN_f(PctStreams, PctGrazing, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN):
     return PctStreams * GrazingN_f(PctGrazing, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN)
+
 
 @memoize
 def AvGRStreamN(PctStreams, PctGrazing, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN):
@@ -24,6 +26,7 @@ def AvGRStreamN(PctStreams, PctGrazing, GrazingAnimal_0, NumAnimals, AvgAnimalWt
     for i in range(12):
         result += gr_stream_n[i]
     return result
+
 
 @memoize
 def AvGRStreamN_f(PctStreams, PctGrazing, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN):

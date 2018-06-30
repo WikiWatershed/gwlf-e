@@ -5,9 +5,6 @@ from gwlfe.Input.WaterBudget.ET_1 import ET_1
 from gwlfe.Input.WaterBudget.ET_1 import ET_1_f
 from gwlfe.Memoization import memoize
 
-# from Timer import time_function
-
-
 
 def Evapotrans(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
                ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, ETFlag):
@@ -20,6 +17,7 @@ def Evapotrans(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0,
             for j in range(DaysMonth[Y][i]):
                 result[Y][i] = result[Y][i] + et_f[Y][i][j]
     return result
+
 
 @memoize
 def Evapotrans_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,

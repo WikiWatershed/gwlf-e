@@ -1,9 +1,9 @@
 from numpy import sum
 from numpy import zeros
 
-from gwlfe.Memoization import memoize
 from AnimalN import AnimalN
 from AnimalN import AnimalN_f
+from gwlfe.Memoization import memoize
 
 
 def AvAnimalN(NYrs, NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, NGAppNRate, Prec, DaysMonth,
@@ -21,6 +21,7 @@ def AvAnimalN(NYrs, NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, Anima
             result[i] += animal_n[Y][i] / NYrs
     return result
 
+
 @memoize
 def AvAnimalN_f(NYrs, NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, NGAppNRate, Prec, DaysMonth,
                 NGPctSoilIncRate, GRPctManApp, GRAppNRate, GRPctSoilIncRate, NGBarnNRate, AWMSNgPct, NgAWMSCoeffN,
@@ -30,4 +31,4 @@ def AvAnimalN_f(NYrs, NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, Ani
                          NGPctSoilIncRate, GRPctManApp, GRAppNRate, GRPctSoilIncRate, NGBarnNRate, AWMSNgPct,
                          NgAWMSCoeffN,
                          RunContPct, RunConCoeffN, PctGrazing, GRBarnNRate, AWMSGrPct, GrAWMSCoeffN, PctStreams,
-                         GrazingNRate),axis=0) / NYrs
+                         GrazingNRate), axis=0) / NYrs
