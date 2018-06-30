@@ -9,7 +9,7 @@ from decimal import Decimal
 
 from numpy import int
 from numpy import zeros
-
+from numpy import ndarray
 
 class DataModel(object):
     def __init__(self, data=None):

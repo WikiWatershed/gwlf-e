@@ -24,7 +24,6 @@ def NConc_f(NRur, NUrb, NitrConc, ManNitr, ManuredAreas, FirstManureMonth, LastM
         return repeat(NitrConc[None, :], 12, axis=0)
 
     else:
-        nlu = NLU(NRur, NUrb)
         result = repeat(NitrConc[None, :], 12, axis=0)
         result[FirstManureMonth:LastManureMonth + 1, :ManuredAreas] = ManNitr
         result[FirstManureMonth2:LastManureMonth2 + 1, :ManuredAreas] = ManNitr

@@ -35,28 +35,6 @@ def AMC5(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0):
                 result[Y][i][j] = AMC5  # TODO: why did this fix the mismatch of amc5?
     return result
 
-
-def AMC5_1(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0):
-    result = zeros((NYrs, 12, 31))
-    AntMoist1 = zeros((5,))
-    water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
-    AMC5 = 0
-    for k in range(5):
-        AMC5 += AntMoist_0[k]
-        AntMoist1[k] = AntMoist_0[k]
-    for Y in range(NYrs):
-        for i in range(12):
-            for j in range(DaysMonth[Y][i]):
-                result[Y][i][j] = AMC5
-                AMC5 = AMC5 - AntMoist1[4] + water[Y][i][j]
-                AntMoist1[4] = AntMoist1[3]
-                AntMoist1[3] = AntMoist1[2]
-                AntMoist1[2] = AntMoist1[1]
-                AntMoist1[1] = AntMoist1[0]
-                AntMoist1[0] = water[Y][i][j]
-    return result
-
-
 @memoize
 def AMC5_yesterday(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0):
     water = Water_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec)

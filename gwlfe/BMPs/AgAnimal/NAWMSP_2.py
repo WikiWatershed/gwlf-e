@@ -10,8 +10,8 @@ def NAWMSP_2(NYrs, NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, Animal
     return result
 
 
-def NAWMSP_2_f(NYrs, NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, NGBarnNRate,
-               Prec, DaysMonth, AWMSNgPct, NgAWMSCoeffN, RunContPct, RunConCoeffN, n41d, n85j):
-    return (n41d / 100) * n85j * AvNGLostBarnNSum_f(NYrs, NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt,
-                                                    AnimalDailyN, NGBarnNRate,
-                                                    Prec, DaysMonth, AWMSNgPct, NgAWMSCoeffN, RunContPct, RunConCoeffN)
+# def NAWMSP_2_f(NYrs, NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, NGBarnNRate,
+#                Prec, DaysMonth, AWMSNgPct, NgAWMSCoeffN, RunContPct, RunConCoeffN, n41d, n85j):
+#     return (n41d / 100) * n85j * AvNGLostBarnNSum_f(NYrs, NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt,
+#                                                     AnimalDailyN, NGBarnNRate,
+#                                                     Prec, DaysMonth, AWMSNgPct, NgAWMSCoeffN, RunContPct, RunConCoeffN)
