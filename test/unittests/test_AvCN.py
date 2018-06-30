@@ -1,6 +1,8 @@
 import numpy as np
+
 from VariableUnittest import VariableUnitTest
 from gwlfe.MultiUse_Fxns.Runoff import AvCN
+
 
 class TestAvCN(VariableUnitTest):
 

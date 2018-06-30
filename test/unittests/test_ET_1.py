@@ -2,7 +2,6 @@ import numpy as np
 
 from VariableUnittest import VariableUnitTest
 from gwlfe.Input.WaterBudget import ET_1
-from gwlfe import Parser
 
 
 class TestET_f(VariableUnitTest):

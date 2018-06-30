@@ -3,10 +3,10 @@ from numpy import tile
 from numpy import where
 from numpy import zeros
 
-from gwlfe.Memoization import memoize
 from gwlfe.Input.LandUse.NLU import NLU
-from gwlfe.MultiUse_Fxns.Runoff.Retention import Retention, Retention_f
 from gwlfe.Input.WaterBudget.Water import Water, Water_f
+from gwlfe.Memoization import memoize
+from gwlfe.MultiUse_Fxns.Runoff.Retention import Retention, Retention_f
 
 
 @memoize

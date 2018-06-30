@@ -1,7 +1,9 @@
+from unittest import skip
+
 import numpy as np
+
 from VariableUnittest import VariableUnitTest
 from gwlfe.AFOS.nonGrazingAnimals.Losses import NGLostBarnNSum
-from unittest import skip
 
 
 class TestNGLostBarnNSum(VariableUnitTest):

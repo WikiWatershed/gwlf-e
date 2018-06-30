@@ -3,11 +3,11 @@ from numpy import tile
 from numpy import where
 from numpy import zeros
 
-from gwlfe.MultiUse_Fxns.Runoff.CNI import CNI, CNI_f
-from gwlfe.MultiUse_Fxns.Runoff.CNumImperv import CNumImperv, CNumImperv_f
-from gwlfe.Memoization import memoize
 from gwlfe.Input.LandUse.NLU import NLU
 from gwlfe.Input.WaterBudget.Water import Water, Water_f
+from gwlfe.Memoization import memoize
+from gwlfe.MultiUse_Fxns.Runoff.CNI import CNI, CNI_f
+from gwlfe.MultiUse_Fxns.Runoff.CNumImperv import CNumImperv, CNumImperv_f
 
 
 @memoize

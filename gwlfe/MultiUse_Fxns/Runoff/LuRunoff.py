@@ -2,8 +2,8 @@ from numpy import hstack
 from numpy import sum
 from numpy import zeros
 
-from gwlfe.Memoization import memoize
 from gwlfe.Input.LandUse.NLU import NLU
+from gwlfe.Memoization import memoize
 from gwlfe.MultiUse_Fxns.Runoff.RurQRunoff import RurQRunoff
 from gwlfe.MultiUse_Fxns.Runoff.RurQRunoff import RurQRunoff_f
 from gwlfe.MultiUse_Fxns.Runoff.UrbQRunoff import UrbQRunoff
@@ -28,11 +28,12 @@ def LuRunoff(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, CNI_0, CNP_0,
                 result[Y][l] += urb_q_runoff[Y][l][i]
     return result
 
+
 @memoize
 def LuRunoff_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, CNI_0, CNP_0,
                AntMoist_0, Grow_0, Imper, ISRR, ISRA, CN):
     return hstack(
         (sum(RurQRunoff_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb, CN, Grow_0), axis=1),
          sum(UrbQRunoff_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, CNI_0, CNP_0,
-                             AntMoist_0, Grow_0, Imper, ISRR, ISRA), axis=1),
+                          AntMoist_0, Grow_0, Imper, ISRR, ISRA), axis=1),
          ))

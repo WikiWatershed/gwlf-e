@@ -1,9 +1,9 @@
 from numpy import average
 from numpy import zeros
 
-from gwlfe.Memoization import memoize
 from GRLostBarnN import GRLostBarnN
 from GRLostBarnN import GRLostBarnN_f
+from gwlfe.Memoization import memoize
 
 
 def AvGRLostBarnN(NYrs, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, GRPctManApp, PctGrazing, GRBarnNRate,
@@ -15,6 +15,7 @@ def AvGRLostBarnN(NYrs, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, 
         for i in range(12):
             result[i] += gr_lost_barn_n[Y][i] / NYrs
     return result
+
 
 @memoize
 def AvGRLostBarnN_f(NYrs, Prec, DaysMonth, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, GRPctManApp,

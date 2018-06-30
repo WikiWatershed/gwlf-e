@@ -1,14 +1,14 @@
 import math
 
-from numpy import zeros
 from numpy import exp
+from numpy import zeros
 
-from gwlfe.Memoization import memoize
 from gwlfe.Input.LandUse.NLU import NLU
-from gwlfe.MultiUse_Fxns.Runoff.QrunI import QrunI
-from gwlfe.MultiUse_Fxns.Runoff.QrunI import QrunI_f
 from gwlfe.Input.WaterBudget.Water import Water
 from gwlfe.Input.WaterBudget.Water import Water_f
+from gwlfe.Memoization import memoize
+from gwlfe.MultiUse_Fxns.Runoff.QrunI import QrunI
+from gwlfe.MultiUse_Fxns.Runoff.QrunI import QrunI_f
 
 try:
     from WashImperv_inner_compiled import WashImperv_inner
@@ -43,6 +43,7 @@ def WashImperv(NYrs, DaysMonth, InitSnow_0, Temp, Prec, CNI_0, AntMoist_0, Grow_
                 for l in range(nlu):
                     carryover[l] = impervaccum[l]
     return result
+
 
 @memoize
 def WashImperv_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec, CNI_0, AntMoist_0, Grow_0, NRur, NUrb):

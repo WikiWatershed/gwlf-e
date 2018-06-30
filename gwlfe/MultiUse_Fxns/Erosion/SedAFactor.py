@@ -1,10 +1,10 @@
 from gwlfe.Input.Animals.AEU import AEU
 from gwlfe.Input.Animals.AEU import AEU_f
-from gwlfe.MultiUse_Fxns.Runoff.AvCN import AvCN
-from gwlfe.MultiUse_Fxns.Runoff.AvCN import AvCN_f
-from gwlfe.Memoization import memoize
 from gwlfe.Input.LandUse.Urb.PcntUrbanArea import PcntUrbanArea
 from gwlfe.Input.LandUse.Urb.PcntUrbanArea import PcntUrbanArea_f
+from gwlfe.Memoization import memoize
+from gwlfe.MultiUse_Fxns.Runoff.AvCN import AvCN
+from gwlfe.MultiUse_Fxns.Runoff.AvCN import AvCN_f
 
 
 @memoize
@@ -24,8 +24,9 @@ def SedAFactor(NumAnimals, AvgAnimalWt, NRur, NUrb, CNI_0, CNP_0, CN, Imper, Are
         result = 0.00001
     return result
 
+
 def SedAFactor_f(NumAnimals, AvgAnimalWt, NRur, NUrb, CNI_0, CNP_0, CN, Imper, Area, SedAFactor_0, AvKF, AvSlope,
-               SedAAdjust):
+                 SedAAdjust):
     pcnturbanarea = PcntUrbanArea_f(NRur, NUrb, Area)
     aeu = AEU_f(NumAnimals, AvgAnimalWt, Area)
     avcn = AvCN_f(NRur, NUrb, CNI_0, CNP_0, CN, Imper, Area)

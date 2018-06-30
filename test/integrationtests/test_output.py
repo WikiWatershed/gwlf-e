@@ -1,17 +1,14 @@
 # -*- coding: utf-8 -*-
+from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
-from __future__ import division
 
-from types import ModuleType
-import sys
-import importlib
-import unittest
 import json
+import unittest
+
 import numpy as np
-from gwlfe import gwlfe,Parser
 
-
+from gwlfe import gwlfe, Parser
 
 
 class TestOutput(unittest.TestCase):
@@ -20,11 +17,12 @@ class TestOutput(unittest.TestCase):
     static output.
     """
     __test__ = False
+
     def setUp(self, input_file_name, output_file_name):
-        input_file = open('integrationtests/'+input_file_name, 'r')
+        input_file = open('integrationtests/' + input_file_name, 'r')
         self.z = Parser.GmsReader(input_file).read()
-        self.generated_output,_ = gwlfe.run(self.z)
-        self.static_output = json.load(open('integrationtests/'+output_file_name, 'r'))
+        self.generated_output, _ = gwlfe.run(self.z)
+        self.static_output = json.load(open('integrationtests/' + output_file_name, 'r'))
 
     def test_constants(self):
         constant_keys = ["MeanFlow", "MeanFlowPerSecond", "AreaTotal"]
@@ -33,12 +31,12 @@ class TestOutput(unittest.TestCase):
             try:
                 self.assertIn(key, self.generated_output)
                 np.testing.assert_allclose(self.generated_output[key], self.static_output[key], rtol=1e-7,
-                                               verbose=True)
+                                           verbose=True)
             except AssertionError as e:
                 print("AssertionError on %s" % (key))
                 print(e)
                 error = True
-        if(error == True):
+        if (error == True):
             raise AssertionError("Not all values within margin of error")
 
     def test_check_monthly(self):
@@ -49,9 +47,9 @@ class TestOutput(unittest.TestCase):
             for (key, val) in month.iteritems():
                 try:
                     np.testing.assert_allclose(self.generated_output["monthly"][i][key],
-                                                   self.static_output["monthly"][i][key],
-                                                   rtol=1e-7,
-                                                   verbose=True)
+                                               self.static_output["monthly"][i][key],
+                                               rtol=1e-7,
+                                               verbose=True)
                 except AssertionError as e:
                     print("AssertionError on %s (month %i)" % (key, i))
                     print(e)
@@ -65,8 +63,8 @@ class TestOutput(unittest.TestCase):
             try:
                 self.assertIn(key, self.generated_output["meta"])
                 np.testing.assert_allclose(self.generated_output["meta"][key], self.static_output["meta"][key],
-                                               rtol=1e-7,
-                                               verbose=True)
+                                           rtol=1e-7,
+                                           verbose=True)
             except AssertionError as e:
                 print("AssertionError on %s" % (key))
                 print(e)
@@ -83,9 +81,9 @@ class TestOutput(unittest.TestCase):
                 try:
                     try:
                         np.testing.assert_allclose(self.generated_output["SummaryLoads"][i][key],
-                                                       self.static_output["SummaryLoads"][i][key],
-                                                       rtol=1e-7,
-                                                       verbose=True)
+                                                   self.static_output["SummaryLoads"][i][key],
+                                                   rtol=1e-7,
+                                                   verbose=True)
                     except TypeError:
                         self.assertEqual(self.generated_output["SummaryLoads"][i][key],
                                          self.static_output["SummaryLoads"][i][key])
@@ -105,9 +103,9 @@ class TestOutput(unittest.TestCase):
                 try:
                     try:
                         np.testing.assert_allclose(self.generated_output["Loads"][i][key],
-                                                       self.static_output["Loads"][i][key],
-                                                       rtol=1e-7,
-                                                       verbose=True)
+                                                   self.static_output["Loads"][i][key],
+                                                   rtol=1e-7,
+                                                   verbose=True)
                     except TypeError:
                         self.assertEqual(self.generated_output["Loads"][i][key], self.static_output["Loads"][i][key])
                 except AssertionError as e:

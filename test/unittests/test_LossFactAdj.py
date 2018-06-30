@@ -1,8 +1,8 @@
-import unittest
 import numpy as np
-from gwlfe import Parser
-from gwlfe.MultiUse_Fxns import LossFactAdj
+
 from VariableUnittest import VariableUnitTest
+from gwlfe.MultiUse_Fxns import LossFactAdj
+
 
 class TestLossFactAdj(VariableUnitTest):
     def test_LossFactAdj(self):

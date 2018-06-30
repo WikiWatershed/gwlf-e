@@ -1,8 +1,8 @@
 from numpy import where
 from numpy import zeros
 
-from gwlfe.Memoization import memoize
 from gwlfe.Input.LandUse.NLU import NLU
+from gwlfe.Memoization import memoize
 
 
 @memoize
@@ -16,11 +16,12 @@ def NewCN(NRur, NUrb, CN):
             result[2][l] = 100
     return result
 
+
 @memoize
 def NewCN_f(NRur, NUrb, CN):
     nlu = NLU(NRur, NUrb)
     result = zeros((3, nlu))
-    result[0,:] = CN / (2.334 - 0.01334 * CN)
-    result[2,:] = CN / (0.4036 + 0.0059 * CN)
-    result[2,:][where(result[2,:]>100)] = 100
+    result[0, :] = CN / (2.334 - 0.01334 * CN)
+    result[2, :] = CN / (0.4036 + 0.0059 * CN)
+    result[2, :][where(result[2, :] > 100)] = 100
     return result

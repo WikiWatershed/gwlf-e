@@ -22,5 +22,6 @@ class gms8_TestOutput(TestOutput):
     static output.
     """
     __test__ = True
+
     def setUp(self):
-        super(gms8_TestOutput, self).setUp('GMS8.gms','GMS8_output.json')
+        super(gms8_TestOutput, self).setUp('GMS8.gms', 'GMS8_output.json')

@@ -1,11 +1,11 @@
 from numpy import sum
 from numpy import zeros
 
+from gwlfe.Input.WaterBudget.Water import Water
+from gwlfe.Input.WaterBudget.Water import Water_f
 from gwlfe.Memoization import memoize
 from gwlfe.MultiUse_Fxns.Erosion.RurEros import RurEros
 from gwlfe.MultiUse_Fxns.Erosion.RurEros import RurEros_f
-from gwlfe.Input.WaterBudget.Water import Water
-from gwlfe.Input.WaterBudget.Water import Water_f
 
 
 @memoize

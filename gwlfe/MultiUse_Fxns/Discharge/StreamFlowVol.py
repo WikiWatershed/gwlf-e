@@ -1,9 +1,10 @@
 # from Timer import time_function
+from numpy import zeros
+
+from gwlfe.Input.LandUse.TotAreaMeters import TotAreaMeters
 from gwlfe.Memoization import memoize
 from gwlfe.MultiUse_Fxns.Discharge.StreamFlowLE import StreamFlowLE
 from gwlfe.MultiUse_Fxns.Discharge.StreamFlowLE import StreamFlowLE_f
-from gwlfe.Input.LandUse.TotAreaMeters import TotAreaMeters
-from numpy import zeros
 
 
 @memoize

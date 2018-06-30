@@ -2,14 +2,14 @@ from numpy import sum
 from numpy import where
 from numpy import zeros
 
-from gwlfe.MultiUse_Fxns.Discharge.AdjQTotal import AdjQTotal
-from gwlfe.MultiUse_Fxns.Discharge.AdjQTotal import AdjQTotal_f
-from gwlfe.Memoization import memoize
-from gwlfe.MultiUse_Fxns.Discharge.QTotal import QTotal
-from gwlfe.MultiUse_Fxns.Discharge.QTotal import QTotal_f
 from gwlfe.Input.LandUse.Ag.TileDrainRO import TileDrainRO
 from gwlfe.Input.LandUse.Ag.TileDrainRO import TileDrainRO_f
 from gwlfe.Input.WaterBudget.Water import Water
+from gwlfe.Memoization import memoize
+from gwlfe.MultiUse_Fxns.Discharge.AdjQTotal import AdjQTotal
+from gwlfe.MultiUse_Fxns.Discharge.AdjQTotal import AdjQTotal_f
+from gwlfe.MultiUse_Fxns.Discharge.QTotal import QTotal
+from gwlfe.MultiUse_Fxns.Discharge.QTotal import QTotal_f
 
 
 def Runoff(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
@@ -38,18 +38,21 @@ def Runoff(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, Ant
                 result[Y][i] = 0
     return result
 
+
 @memoize
 def Runoff_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
-           ISRR, ISRA, Qretention, PctAreaInfil, n25b, CN, Landuse, TileDrainDensity):
-    adj_q_total = AdjQTotal_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0,
-                            Imper,
-                            ISRR, ISRA, Qretention, PctAreaInfil, n25b, CN)
-    q_total = QTotal_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
-                     ISRR, ISRA, CN)
+             ISRR, ISRA, Qretention, PctAreaInfil, n25b, CN, Landuse, TileDrainDensity):
+    adj_q_total = AdjQTotal_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
+                              CNP_0,
+                              Imper,
+                              ISRR, ISRA, Qretention, PctAreaInfil, n25b, CN)
+    q_total = QTotal_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0,
+                       Imper,
+                       ISRR, ISRA, CN)
     tile_drain_ro = TileDrainRO_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, CN, AntMoist_0, NUrb, Grow_0, Landuse,
-                                Area,
-                                TileDrainDensity)
-    result = where(adj_q_total>0,adj_q_total,q_total)
+                                  Area,
+                                  TileDrainDensity)
+    result = where(adj_q_total > 0, adj_q_total, q_total)
     result = sum(result, axis=2) - tile_drain_ro
-    result[result<0] = 0
+    result[result < 0] = 0
     return result

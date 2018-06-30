@@ -1,11 +1,11 @@
 from numpy import maximum
 from numpy import zeros
 
-from gwlfe.Memoization import memoize
 from gwlfe.AFOS.GrazingAnimals.Loads.GrazingN import GrazingN
 from gwlfe.AFOS.GrazingAnimals.Loads.GrazingN import GrazingN_f
 from gwlfe.AFOS.GrazingAnimals.Loads.InitGrN import InitGrN
 from gwlfe.AFOS.GrazingAnimals.Loads.InitGrN import InitGrN_f
+from gwlfe.Memoization import memoize
 
 
 def GRAccManAppN(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, GRPctManApp, PctGrazing):
@@ -17,6 +17,7 @@ def GRAccManAppN(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, GRPctMa
         if result[i] < 0:
             result[i] = 0
     return result
+
 
 @memoize
 def GRAccManAppN_f(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, GRPctManApp, PctGrazing):

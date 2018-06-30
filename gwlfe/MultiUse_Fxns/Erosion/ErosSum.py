@@ -1,9 +1,9 @@
 from numpy import sum
 from numpy import zeros
 
+from gwlfe.Memoization import memoize
 from gwlfe.MultiUse_Fxns.Erosion.Erosion_1 import Erosion_1
 from gwlfe.MultiUse_Fxns.Erosion.Erosion_1 import Erosion_1_f
-from gwlfe.Memoization import memoize
 
 
 @memoize

@@ -3,13 +3,13 @@ from numpy import zeros
 
 from gwlfe.Input.LandUse.AreaTotal import AreaTotal
 from gwlfe.Input.LandUse.AreaTotal import AreaTotal_f
-from gwlfe.Memoization import memoize
 from gwlfe.Input.LandUse.Urb.UrbAreaTotal import UrbAreaTotal
 from gwlfe.Input.LandUse.Urb.UrbAreaTotal import UrbAreaTotal_f
-from gwlfe.MultiUse_Fxns.Discharge.UrbanQTotal import UrbanQTotal
-from gwlfe.MultiUse_Fxns.Discharge.UrbanQTotal import UrbanQTotal_f
 from gwlfe.Input.WaterBudget.Water import Water
 from gwlfe.Input.WaterBudget.Water import Water_f
+from gwlfe.Memoization import memoize
+from gwlfe.MultiUse_Fxns.Discharge.UrbanQTotal import UrbanQTotal
+from gwlfe.MultiUse_Fxns.Discharge.UrbanQTotal import UrbanQTotal_f
 
 try:
     from AdjUrbanQTotal_inner_compiled import AdjUrbanQTotal_inner
@@ -65,7 +65,7 @@ def AdjUrbanQTotal_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, 
     urb_area_total = UrbAreaTotal_f(NRur, NUrb, Area)
     area_total = AreaTotal_f(Area)
     return AdjUrbanQTotal_inner(NYrs, DaysMonth, Temp, Qretention, PctAreaInfil, water, urban_q_total, urb_area_total,
-                                  area_total)
+                                area_total)
 
 # @jit
 # def AdjUrbanQTotal_f_inner(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,

@@ -1,9 +1,10 @@
-import unittest
 from unittest import skip
+
 import numpy as np
-from gwlfe import Parser
-from gwlfe.AFOS.GrazingAnimals.Losses import GRLBN
+
 from VariableUnittest import VariableUnitTest
+from gwlfe.AFOS.GrazingAnimals.Losses import GRLBN
+
 
 class TestGRLBN(VariableUnitTest):
     @skip("not ready")

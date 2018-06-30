@@ -1,7 +1,9 @@
+from unittest import skip
+
 import numpy as np
+
 from VariableUnittest import VariableUnitTest
 from gwlfe.AFOS.GrazingAnimals.Losses import GRLBN_2
-from unittest import skip
 
 
 class TestGRLBN_2(VariableUnitTest):

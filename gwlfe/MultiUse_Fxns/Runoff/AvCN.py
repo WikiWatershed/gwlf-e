@@ -1,14 +1,9 @@
 from gwlfe.Input.LandUse.AreaTotal import AreaTotal
-from gwlfe.Input.LandUse.AreaTotal import AreaTotal_f
-from gwlfe.MultiUse_Fxns.Runoff.AvCNRur import AvCNRur
-from gwlfe.MultiUse_Fxns.Runoff.AvCNRur import AvCNRur_f
-from gwlfe.MultiUse_Fxns.Runoff.AvCNUrb import AvCNUrb
-from gwlfe.MultiUse_Fxns.Runoff.AvCNUrb import AvCNUrb_f
-from gwlfe.Memoization import memoize
 from gwlfe.Input.LandUse.RurAreaTotal import RurAreaTotal
-from gwlfe.Input.LandUse.RurAreaTotal import RurAreaTotal_f
 from gwlfe.Input.LandUse.Urb.UrbAreaTotal import UrbAreaTotal
-from gwlfe.Input.LandUse.Urb.UrbAreaTotal import UrbAreaTotal_f
+from gwlfe.Memoization import memoize
+from gwlfe.MultiUse_Fxns.Runoff.AvCNRur import AvCNRur
+from gwlfe.MultiUse_Fxns.Runoff.AvCNUrb import AvCNUrb
 
 
 @memoize
@@ -25,6 +20,7 @@ def AvCN(NRur, NUrb, CNI_0, CNP_0, CN, Imper, Area):
     else:
         result += ((avcnrur * rurareatotal / areatotal) + (avcnurb * urbareatotal / areatotal))
     return result
+
 
 def AvCN_f(NRur, NUrb, CNI_0, CNP_0, CN, Imper, Area):
     areatotal = AreaTotal(NRur, NUrb, Area)

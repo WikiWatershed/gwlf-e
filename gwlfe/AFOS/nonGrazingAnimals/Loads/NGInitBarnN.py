@@ -18,8 +18,9 @@ def NGInitBarnN(NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDai
             result[i] = 0
     return result
 
+
 @memoize
 def NGInitBarnN_f(NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN):
     ng_app_man_n = NGAppManN_f(NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN)
     ng_acc_man_app_n = NGAccManAppN_f(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, NGPctManApp)
-    return maximum(ng_acc_man_app_n - ng_app_man_n, 0)[None,:]
+    return maximum(ng_acc_man_app_n - ng_app_man_n, 0)[None, :]

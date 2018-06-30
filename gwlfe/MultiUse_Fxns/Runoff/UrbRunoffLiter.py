@@ -1,11 +1,11 @@
 from numpy import zeros
 
-from gwlfe.Memoization import memoize
 from gwlfe.Input.LandUse.Urb.UrbAreaTotal import UrbAreaTotal
 from gwlfe.Input.LandUse.Urb.UrbAreaTotal import UrbAreaTotal_f
+from gwlfe.Input.WaterBudget.Water import Water
+from gwlfe.Memoization import memoize
 from gwlfe.MultiUse_Fxns.Runoff.UrbanRunoff import UrbanRunoff
 from gwlfe.MultiUse_Fxns.Runoff.UrbanRunoff import UrbanRunoff_f
-from gwlfe.Input.WaterBudget.Water import Water
 
 
 @memoize

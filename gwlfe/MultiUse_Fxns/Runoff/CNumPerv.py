@@ -1,16 +1,14 @@
 from numpy import zeros
 
-from gwlfe.Input.WaterBudget.AMC5 import AMC5, AMC5_yesterday
-from gwlfe.MultiUse_Fxns.Runoff.CNP import CNP, CNP_f
-from gwlfe.Timer import time_function
 from gwlfe.DailyArrayConverter import get_value_for_yesterday
+from gwlfe.Input.LandUse.NLU import NLU
+from gwlfe.Input.WaterBudget.AMC5 import AMC5, AMC5_yesterday
 from gwlfe.Input.WaterBudget.GrowFactor import GrowFactor
-from gwlfe.Input.WaterBudget.GrowFactor import GrowFactor_f
 from gwlfe.Input.WaterBudget.Melt import Melt
 from gwlfe.Input.WaterBudget.Melt_1 import Melt_1_f
-from gwlfe.Memoization import memoize
-from gwlfe.Input.LandUse.NLU import NLU
 from gwlfe.Input.WaterBudget.Water import Water, Water_f
+from gwlfe.Memoization import memoize
+from gwlfe.MultiUse_Fxns.Runoff.CNP import CNP, CNP_f
 
 try:
     from CNumPerv_inner_compiled import CNumPerv_inner
@@ -46,7 +44,8 @@ def CNumPerv(NYrs, DaysMonth, Temp, NRur, NUrb, CNP_0, InitSnow_0, Prec, Grow_0,
                                         elif get_value_for_yesterday(amc5, 0, Y, i, j, DaysMonth) < 3.56:
                                             result[Y][i][j][l] = cnp[0][l] + (
                                                     cnp[1][l] - cnp[0][l]) * \
-                                                                 get_value_for_yesterday(amc5, 0, Y, i, j, DaysMonth) / 3.56
+                                                                 get_value_for_yesterday(amc5, 0, Y, i, j,
+                                                                                         DaysMonth) / 3.56
                                         else:
                                             result[Y][i][j][l] = cnp[1][l] + (cnp[2][l] - cnp[1][l]) * (
                                                     get_value_for_yesterday(amc5, 0, Y, i, j, DaysMonth) - 3.56) / 1.77
@@ -57,7 +56,8 @@ def CNumPerv(NYrs, DaysMonth, Temp, NRur, NUrb, CNP_0, InitSnow_0, Prec, Grow_0,
                                         elif get_value_for_yesterday(amc5, 0, Y, i, j, DaysMonth) < 1.27:
                                             result[Y][i][j][l] = cnp[0][l] + (
                                                     cnp[1][l] - cnp[0][l]) * \
-                                                                 get_value_for_yesterday(amc5, 0, Y, i, j, DaysMonth) / 1.27
+                                                                 get_value_for_yesterday(amc5, 0, Y, i, j,
+                                                                                         DaysMonth) / 1.27
                                         else:
                                             result[Y][i][j][l] = cnp[1][l] + (cnp[2][l] - cnp[1][l]) * (
                                                     get_value_for_yesterday(amc5, 0, Y, i, j, DaysMonth) - 1.27) / 1.52
@@ -65,11 +65,12 @@ def CNumPerv(NYrs, DaysMonth, Temp, NRur, NUrb, CNP_0, InitSnow_0, Prec, Grow_0,
                                     result[Y][i][j][l] = cnp[2][l]
     return result
 
+
 def CNumPerv_f(NYrs, DaysMonth, Temp, NRur, NUrb, CNP_0, InitSnow_0, Prec, Grow_0, AntMoist_0):
     nlu = NLU(NRur, NUrb)
     cnp = CNP_f(NRur, NUrb, CNP_0)
     water = Water_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     melt = Melt_1_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
-    grow_factor = GrowFactor(Grow_0)#TODO: some bug in cnumperv_inner causes an error if this is switched to _f
+    grow_factor = GrowFactor(Grow_0)  # TODO: some bug in cnumperv_inner causes an error if this is switched to _f
     amc5 = AMC5_yesterday(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0)
     return CNumPerv_inner(NYrs, DaysMonth, Temp, NRur, nlu, cnp, water, melt, grow_factor, amc5)
