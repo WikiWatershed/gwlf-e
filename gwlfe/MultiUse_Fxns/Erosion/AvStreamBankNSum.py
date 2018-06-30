@@ -1,4 +1,3 @@
-# from Timer import time_function
 from numpy import zeros
 from numpy import sum as npsum
 from gwlfe.Output.Loading.StreamBankN_1 import StreamBankN_1

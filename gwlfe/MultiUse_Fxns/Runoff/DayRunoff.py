@@ -3,7 +3,6 @@ from numpy import zeros
 
 from gwlfe.MultiUse_Fxns.Discharge.AdjQTotal import AdjQTotal
 from gwlfe.MultiUse_Fxns.Discharge.AdjQTotal import AdjQTotal_f
-# from Timer import time_function
 from gwlfe.Memoization import memoize
 from gwlfe.MultiUse_Fxns.Discharge.QTotal import QTotal
 from gwlfe.MultiUse_Fxns.Discharge.QTotal import QTotal_f

@@ -1,6 +1,5 @@
 from numpy import zeros
 
-# from Timer import time_function
 from gwlfe.Memoization import memoize
 from gwlfe.Input.LandUse.Urb.UrbAreaTotal import UrbAreaTotal
 from gwlfe.Input.LandUse.Urb.UrbAreaTotal import UrbAreaTotal_f

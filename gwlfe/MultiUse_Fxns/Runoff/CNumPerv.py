@@ -73,29 +73,3 @@ def CNumPerv_f(NYrs, DaysMonth, Temp, NRur, NUrb, CNP_0, InitSnow_0, Prec, Grow_
     grow_factor = GrowFactor(Grow_0)#TODO: some bug in cnumperv_inner causes an error if this is switched to _f
     amc5 = AMC5_yesterday(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0)
     return CNumPerv_inner(NYrs, DaysMonth, Temp, NRur, nlu, cnp, water, melt, grow_factor, amc5)
-
-# def CNumPerv_3(NYrs, DaysMonth, Temp, NRur, NUrb, CNP_0, InitSnow_0, Prec, Grow_0, AntMoist_0):
-#     nlu = NLU(NRur, NUrb)
-#     result = np.zeros((NYrs, 12, 31, 16))
-#     landuse = np.zeros((16,))
-#     cnp = CNP_f(NRur, NUrb, CNP_0)
-#     water = Water_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
-#     melt = Melt_1_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
-#     grow_factor = GrowFactor(Grow_0)
-#     amc5 = AMC5_yesterday(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0)
-#
-#     non_zero = result[(Temp > 0) & (water > 0.05)]
-#
-#     if amc5[Y][i][j] >= 5.33:
-#         landuse[cnp[1] > 0] = cnp[2][l]
-#     elif amc5[Y][i][j] < 3.56:
-#         landuse[cnp[1] > 0] = cnp[0][l] + (
-#                 cnp[1][l] - cnp[0][l]) * amc5[Y][i][j] / 3.56
-#     else:
-#         result[Y][i][j][l] = cnp[1][l] + (cnp[2][l] - cnp[1][l]) * (
-#                 amc5[Y][i][j] - 3.56) / 1.77
-#
-#     # =
-#     print(non_zero.shape)
-#
-#     temp = np.where(melt <= 0, 2, cnp[2])

@@ -6,7 +6,6 @@ from numpy import zeros
 from gwlfe.MultiUse_Fxns.Runoff.CNI import CNI, CNI_f
 from gwlfe.MultiUse_Fxns.Runoff.CNumImpervReten import CNumImpervReten, CNumImpervReten_f
 from gwlfe.Memoization import memoize
-# from Timer import time_function
 from gwlfe.Input.LandUse.NLU import NLU
 from gwlfe.Input.WaterBudget.Water import Water, Water_f
 

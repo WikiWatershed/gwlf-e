@@ -4,7 +4,6 @@ from numpy import sum
 from numpy import where
 from numpy import zeros
 
-# from Timer import time_function
 from gwlfe.Memoization import memoize
 from gwlfe.Input.LandUse.NLU import NLU
 from gwlfe.MultiUse_Fxns.Runoff.Qrun import Qrun

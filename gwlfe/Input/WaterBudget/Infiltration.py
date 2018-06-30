@@ -2,7 +2,6 @@ from numpy import where
 from numpy import zeros
 
 from gwlfe.Memoization import memoize
-# from Timer import time_function
 from gwlfe.MultiUse_Fxns.Discharge.QTotal import QTotal
 from gwlfe.MultiUse_Fxns.Discharge.QTotal import QTotal_f
 from gwlfe.Input.WaterBudget.Water import Water

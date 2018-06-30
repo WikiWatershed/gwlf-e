@@ -1,7 +1,6 @@
 from numpy import sum
 from numpy import zeros
 
-# from Timer import time_function
 from gwlfe.Output.Loading.StreamBankEros_1 import StreamBankEros_1
 from gwlfe.Output.Loading.StreamBankEros_1 import StreamBankEros_1_f
 from gwlfe.Memoization import memoize

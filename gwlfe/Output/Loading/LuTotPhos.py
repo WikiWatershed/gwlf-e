@@ -6,7 +6,6 @@ from gwlfe.MultiUse_Fxns.Erosion.ErosWashoff import ErosWashoff
 from gwlfe.MultiUse_Fxns.Erosion.ErosWashoff import ErosWashoff_f
 from gwlfe.Output.Loading.LuLoad import LuLoad
 from gwlfe.Output.Loading.LuLoad import LuLoad_f
-# from Timer import time_function
 from gwlfe.Memoization import memoize
 from gwlfe.Input.LandUse.NLU import NLU
 from gwlfe.MultiUse_Fxns.Erosion.SedDelivRatio import SedDelivRatio

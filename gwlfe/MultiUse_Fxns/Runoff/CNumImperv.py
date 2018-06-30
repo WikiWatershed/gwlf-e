@@ -8,7 +8,6 @@ from gwlfe.Input.WaterBudget.GrowFactor import GrowFactor_f
 from gwlfe.Input.WaterBudget.Melt import Melt
 from gwlfe.Input.WaterBudget.Melt_1 import Melt_1_f
 from gwlfe.Memoization import memoize
-# from Timer import time_function
 from gwlfe.Input.LandUse.NLU import NLU
 from gwlfe.Input.WaterBudget.Water import Water, Water_f
 

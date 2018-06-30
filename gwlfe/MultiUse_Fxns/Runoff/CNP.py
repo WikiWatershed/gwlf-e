@@ -1,7 +1,6 @@
 from numpy import zeros
 
 from gwlfe.Memoization import memoize
-# from Timer import time_function
 from gwlfe.Input.LandUse.NLU import NLU
 
 

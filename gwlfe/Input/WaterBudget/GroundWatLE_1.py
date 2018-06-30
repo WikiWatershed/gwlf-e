@@ -4,7 +4,6 @@ from numpy import zeros
 from gwlfe.Input.WaterBudget.GroundWatLE import GroundWatLE
 from gwlfe.Input.WaterBudget.GroundWatLE import GroundWatLE_f
 from gwlfe.Memoization import memoize
-# from Timer import time_function
 from gwlfe.Input.LandUse.Ag.TileDrainGW import TileDrainGW
 from gwlfe.Input.LandUse.Ag.TileDrainGW import TileDrainGW_f
 

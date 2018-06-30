@@ -19,17 +19,6 @@ log = logging.getLogger(__name__)
 
 def AnimalOperations(z, Y):
     for i in range(12):
-        # z.LossFactAdj[Y][i] = (z.Precipitation[Y][i] / z.DaysMonth[Y][i]) / 0.3301
-
-        # Non-grazing animal losses
-        # z.NGLostManN[Y][i] = (z.NGAppManN[i] * z.NGAppNRate[i] * z.LossFactAdj[Y][i]
-        #                       * (1 - z.NGPctSoilIncRate[i]))
-        #
-        # if z.NGLostManN[Y][i] > z.NGAppManN[i]:
-        #     z.NGLostManN[Y][i] = z.NGAppManN[i]
-        # if z.NGLostManN[Y][i] < 0:
-        #     z.NGLostManN[Y][i] = 0
-
         z.NGLostManP[Y][i] = (z.NGAppManP[i] * z.NGAppPRate[i] * LossFactAdj_f(z.Prec, z.DaysMonth)[Y][i]
                               * (1 - z.NGPctSoilIncRate[i]))
 
@@ -45,17 +34,6 @@ def AnimalOperations(z, Y):
             z.NGLostManFC[Y][i] = z.NGAppManFC[i]
         if z.NGLostManFC[Y][i] < 0:
             z.NGLostManFC[Y][i] = 0
-
-        # z.NGLostBarnN[Y][i] = (z.NGInitBarnN[i] * z.NGBarnNRate[i] * z.LossFactAdj[Y][i]
-        #                        - z.NGInitBarnN[i] * z.NGBarnNRate[i] * z.LossFactAdj[Y][
-        #                            i] * z.AWMSNgPct * z.NgAWMSCoeffN
-        #                        + z.NGInitBarnN[i] * z.NGBarnNRate[i] * z.LossFactAdj[Y][
-        #                            i] * z.RunContPct * z.RunConCoeffN)
-        #
-        # if z.NGLostBarnN[Y][i] > z.NGInitBarnN[i]:
-        #     z.NGLostBarnN[Y][i] = z.NGInitBarnN[i]
-        # if z.NGLostBarnN[Y][i] < 0:
-        #     z.NGLostBarnN[Y][i] = 0
 
         z.NGLostBarnP[Y][i] = (z.NGInitBarnP[i] * z.NGBarnPRate[i] * LossFactAdj_f(z.Prec, z.DaysMonth)[Y][i]
                                - z.NGInitBarnP[i] * z.NGBarnPRate[i] * LossFactAdj_f(z.Prec, z.DaysMonth)[Y][
@@ -80,13 +58,6 @@ def AnimalOperations(z, Y):
             z.NGLostBarnFC[Y][i] = 0
 
         # Grazing animal losses
-        # z.GRLostManN[Y][i] = (z.GRAppManN[i] * z.GRAppNRate[i] * z.LossFactAdj[Y][i]
-        #                       * (1 - z.GRPctSoilIncRate[i]))
-        #
-        # if z.GRLostManN[Y][i] > z.GRAppManN[i]:
-        #     z.GRLostManN[Y][i] = z.GRAppManN[i]
-        # if z.GRLostManN[Y][i] < 0:
-        #     z.GRLostManN[Y][i] = 0
 
         z.GRLostManP[Y][i] = (z.GRAppManP[i] * z.GRAppPRate[i] * LossFactAdj_f(z.Prec, z.DaysMonth)[Y][i]
                               * (1 - z.GRPctSoilIncRate[i]))
@@ -103,17 +74,6 @@ def AnimalOperations(z, Y):
             z.GRLostManFC[Y][i] = z.GRAppManFC[i]
         if z.GRLostManFC[Y][i] < 0:
             z.GRLostManFC[Y][i] = 0
-
-        # z.GRLostBarnN[Y][i] = (z.GRInitBarnN[i] * z.GRBarnNRate[i] * z.LossFactAdj[Y][i]
-        #                        - z.GRInitBarnN[i] * z.GRBarnNRate[i] * z.LossFactAdj[Y][
-        #                            i] * z.AWMSGrPct * z.GrAWMSCoeffN
-        #                        + z.GRInitBarnN[i] * z.GRBarnNRate[i] * z.LossFactAdj[Y][
-        #                            i] * z.RunContPct * z.RunConCoeffN)
-        #
-        # if z.GRLostBarnN[Y][i] > z.GRInitBarnN[i]:
-        #     z.GRLostBarnN[Y][i] = z.GRInitBarnN[i]
-        # if z.GRLostBarnN[Y][i] < 0:
-        #     z.GRLostBarnN[Y][i] = 0
 
         z.GRLostBarnP[Y][i] = (z.GRInitBarnP[i] * z.GRBarnPRate[i] * LossFactAdj_f(z.Prec, z.DaysMonth)[Y][i]
                                - z.GRInitBarnP[i] * z.GRBarnPRate[i] * LossFactAdj_f(z.Prec, z.DaysMonth)[Y][
@@ -137,14 +97,6 @@ def AnimalOperations(z, Y):
         if z.GRLostBarnFC[Y][i] < 0:
             z.GRLostBarnFC[Y][i] = 0
 
-        # z.GRLossN[Y][i] = ((z.GrazingN[i] - z.GRStreamN[i])
-        #                    * z.GrazingNRate[i] * z.LossFactAdj[Y][i])
-        #
-        # if z.GRLossN[Y][i] > (z.GrazingN[i] - z.GRStreamN[i]):
-        #     z.GRLossN[Y][i] = (z.GrazingN[i] - z.GRStreamN[i])
-        # if z.GRLossN[Y][i] < 0:
-        #     z.GRLossN[Y][i] = 0
-
         z.GRLossP[Y][i] = ((z.GrazingP[i] - z.GRStreamP[i])
                            * z.GrazingPRate[i] * LossFactAdj_f(z.Prec, z.DaysMonth)[Y][i])
 
@@ -162,12 +114,6 @@ def AnimalOperations(z, Y):
             z.GRLossFC[Y][i] = 0
 
         # Total animal related losses
-        # z.AnimalN[Y][i] = (z.NGLostManN[Y][i]
-        #                    + z.GRLostManN[Y][i]
-        #                    + z.NGLostBarnN[Y][i]
-        #                    + z.GRLostBarnN[Y][i]
-        #                    + z.GRLossN[Y][i]
-        #                    + z.GRStreamN[i])
 
         z.AnimalP[Y][i] = ((z.NGLostManP[Y][i]
                            + z.GRLostManP[Y][i]

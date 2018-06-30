@@ -1,7 +1,6 @@
 from numpy import sum
 from numpy import zeros
 
-# from Timer import time_function
 from gwlfe.Memoization import memoize
 from gwlfe.MultiUse_Fxns.Discharge.UrbanQTotal_1 import UrbanQTotal_1
 from gwlfe.MultiUse_Fxns.Discharge.UrbanQTotal_1 import UrbanQTotal_1_f

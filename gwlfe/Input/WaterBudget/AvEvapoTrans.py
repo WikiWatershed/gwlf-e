@@ -3,7 +3,6 @@ from numpy import zeros
 
 from gwlfe.Input.WaterBudget.Evapotrans import Evapotrans
 from gwlfe.Input.WaterBudget.Evapotrans import Evapotrans_f
-# from Timer import time_function
 from gwlfe.Memoization import memoize
 
 

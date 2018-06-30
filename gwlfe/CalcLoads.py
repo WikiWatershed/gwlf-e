@@ -7,11 +7,7 @@ from __future__ import unicode_literals
 Imported from CalcLoads.bas
 """
 
-# import logging
-
 from numpy import zeros
-
-# log = logging.getLogger(__name__)
 
 from Input.LandUse.AreaTotal import AreaTotal_f
 from Input.WaterBudget.GroundWatLE_1 import GroundWatLE_1_f
@@ -30,13 +26,7 @@ from Output.Loading.Load import Load_f
 
 
 def CalculateLoads(z, Y):
-    # PrecipitationTotal = 0
-    # RunoffTotal = 0
     GroundWatLETotal = zeros(z.WxYrs)
-    # EvapotransTotal = 0
-    # PtSrcFlowTotal = 0
-    # WithdrawalTotal = 0
-    # StreamFlowTotal = 0
     SedYieldTotal = 0
     ErosionTotal = 0
     DisNitrTotal = 0

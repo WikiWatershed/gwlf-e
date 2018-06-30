@@ -14,70 +14,11 @@ log = logging.getLogger(__name__)
 
 
 def InitialCalculations(z):
-    # OBTAIN THE LENGTH OF STREAMS IN AGRICULTURAL AREAS
-    # z.AGSTRM = z.AgLength / z.StreamLength if z.StreamLength > 0 else 0
 
     # Obtain areas in Ha for Urban, Agricultural and Forested landuse
     for l in range(z.NRur):
         if z.Landuse[l] is LandUse.FOREST:
             z.ForestAreaTotal += z.Area[l]
-        # elif z.Landuse[l] is LandUse.CROPLAND:
-        #     z.AgAreaTotal += z.Area[l]
-        # elif z.Landuse[l] is LandUse.HAY_PAST:
-        #     z.AgAreaTotal += z.Area[l]
-        # elif z.Landuse[l] is LandUse.TURFGRASS:
-        #     z.AgAreaTotal += z.Area[l]
-
-        # z.NewCN[0][l] = z.CN[l] / (2.334 - 0.01334 * z.CN[l])
-        # z.NewCN[2][l] = z.CN[l] / (0.4036 + 0.0059 * z.CN[l])
-        # if z.NewCN[2][l] > 100:
-        #     z.NewCN[2][l] = 100
-
-    # for l in range(z.NRur, z.NLU):
-    # z.CNI[0][l] = z.CNI[1][l] / (2.334 - 0.01334 * z.CNI[1][1])
-    # z.CNI[2][l] = z.CNI[1][l] / (0.4036 + 0.0059 * z.CNI[1][l])
-    #
-    # print(z.CNI_f[0][l],z.CNI[0][l])
-    # print(z.CNI_f[1][l],z.CNI[1][l])
-    # print(z.CNI_f[2][l],z.CNI[2][l])
-    # z.CNP[0][l] = z.CNP[1][l] / (2.334 - 0.01334 * z.CNP[1][1])
-    # z.CNP[2][l] = z.CNP[1][l] / (0.4036 + 0.0059 * z.CNP[1][l])
-
-    # if z.FilterWidth <= 30:
-    #     z.FilterEff = z.FilterWidth / 30
-    # else:
-    #     z.FilterEff = 1
-
-    # TODO: BasinArea is never supposed to be over 0, this retention basin data set DNE according to Barry
-    # Model and Tests complete with no errors without this section of code
-    # if z.BasinArea > 0:
-    #     z.BasinVol = z.BasinDeadStorage
-    #     z.Difference = z.Capacity - z.BasinDeadStorage
-    #     z.OutletCoef = 0
-    #
-    #     while z.Difference > 0:
-    #         z.OutletCoef += 0.001
-    #         z.Volume = z.Capacity - z.BasinDeadStorage
-    #         for k in range(z.DaysToDrain):
-    #             z.Head = z.Volume / z.BasinArea
-    #             if z.Volume > 0:
-    #                 z.Flow = 382700 * z.OutletCoef * math.sqrt(z.Head)
-    #             else:
-    #                 z.Flow = 0
-    #             z.Volume -= z.Flow
-    #         z.Difference = z.Volume
-    #
-    #     z.OutletCoef -= 0.001
-    #     z.Difference = z.Capacity - z.BasinDeadStorage
-    #
-    #     while z.Difference > 0:
-    #         z.OutletCoef += 0.0001
-    #         z.Volume = z.Capacity - z.BasinDeadStorage
-    #         for k in range(z.DaysToDrain):
-    #             z.Head = z.Volume / z.BasinArea
-    #             z.Flow = 382700 * z.OutletCoef * math.sqrt(z.Head)
-    #             z.Volume -= z.Flow
-    #         z.Difference = z.Volume
 
     # ANTECEDANT MOISTURE OUT TO 5 DAYS
     z.AMC5_f = 0

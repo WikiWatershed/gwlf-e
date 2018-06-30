@@ -3,7 +3,6 @@ from numpy import zeros
 
 from gwlfe.MultiUse_Fxns.Erosion.ErosWashoff import ErosWashoff
 from gwlfe.MultiUse_Fxns.Erosion.ErosWashoff import ErosWashoff_f
-# from Timer import time_function
 from gwlfe.Memoization import memoize
 
 

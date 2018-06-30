@@ -3,7 +3,6 @@ from numpy import sum
 from numpy import where
 from numpy import zeros
 
-# from Timer import time_function
 from gwlfe.Memoization import memoize
 from gwlfe.Output.Loading.NetDisLoad import NetDisLoad
 from gwlfe.Output.Loading.NetDisLoad import NetDisLoad_f

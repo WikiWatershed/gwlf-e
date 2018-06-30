@@ -4,7 +4,6 @@ from numpy import zeros
 
 from gwlfe.MultiUse_Fxns.Erosion.Erosion import Erosion
 from gwlfe.MultiUse_Fxns.Erosion.Erosion import Erosion_f
-# from Timer import time_function
 from gwlfe.Memoization import memoize
 from gwlfe.MultiUse_Fxns.Erosion.SedDelivRatio import SedDelivRatio
 from gwlfe.Output.Loading.SedYield_1 import SedYield_1

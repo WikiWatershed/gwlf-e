@@ -1,7 +1,6 @@
 from numpy import sum
 from numpy import zeros
 
-# from Timer import time_function
 from gwlfe.Memoization import memoize
 from gwlfe.MultiUse_Fxns.Erosion.RurEros import RurEros
 from gwlfe.MultiUse_Fxns.Erosion.RurEros import RurEros_f
@@ -29,5 +28,4 @@ def Erosion(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef, NRur, KF, LS, C, P, 
 def Erosion_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef, NRur, KF, LS, C, P, Area):
     water = Water_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     rureros = RurEros_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef, NRur, KF, LS, C, P, Area)
-    # return np.sum(np.where((Temp > 0) & (water > 0.01), np.sum(rureros, axis=3), 0), axis=2)
     return sum(sum(rureros, axis=3), axis=2)

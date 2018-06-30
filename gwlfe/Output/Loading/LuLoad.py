@@ -2,7 +2,6 @@ from numpy import sum
 from numpy import zeros
 
 from gwlfe.MultiUse_Fxns.Discharge.AdjUrbanQTotal import AdjUrbanQTotal
-# from Timer import time_function
 from gwlfe.Memoization import memoize
 from gwlfe.Input.LandUse.NLU import NLU
 from gwlfe.Output.Loading.SurfaceLoad_1 import SurfaceLoad_1

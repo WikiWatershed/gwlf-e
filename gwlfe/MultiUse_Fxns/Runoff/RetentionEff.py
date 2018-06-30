@@ -1,7 +1,6 @@
 from numpy import where
 from numpy import zeros
 
-# from Timer import time_function
 from gwlfe.Memoization import memoize
 from gwlfe.MultiUse_Fxns.Discharge.UrbanQTotal import UrbanQTotal
 from gwlfe.MultiUse_Fxns.Discharge.UrbanQTotal import UrbanQTotal_f
@@ -52,20 +51,3 @@ def RetentionEff_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec, Qretention, NRur, NU
                         urbanqtotal > Qretention * PctAreaInfil))]
 
     return result
-
-@memoize
-def RetentionEff_3(NYrs, DaysMonth, InitSnow_0, Temp, Prec, Qretention, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
-                   CNP_0, Imper, ISRR, ISRA, PctAreaInfil):
-    water = Water_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
-    urbanqtotal = UrbanQTotal_f(NYrs, DaysMonth, NRur, NUrb, Temp, InitSnow_0, Prec, Area, CNI_0, AntMoist_0, Grow_0,
-                                CNP_0,
-                                Imper, ISRR, ISRA)
-    try:
-        test = urbanqtotal[where((Temp > 0) & (water > 0.05) & (Qretention > 0) & (urbanqtotal > 0))][::-1][0]
-        if test <= Qretention * PctAreaInfil:
-            return 1
-        else:
-            return Qretention * PctAreaInfil / test
-    except IndexError:
-        return 0
-    #

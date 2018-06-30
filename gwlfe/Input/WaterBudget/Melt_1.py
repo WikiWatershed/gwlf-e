@@ -1,7 +1,6 @@
 from numpy import where
 from numpy import zeros
 
-# from Timer import time_function
 from gwlfe.Input.WaterBudget.InitSnow import InitSnow
 from gwlfe.Input.WaterBudget.InitSnowYesterday import InitSnowYesterday
 from gwlfe.Input.WaterBudget.Melt import Melt, Melt_f

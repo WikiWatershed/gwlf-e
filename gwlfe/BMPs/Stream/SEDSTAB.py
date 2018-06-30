@@ -1,11 +1,9 @@
 from numpy import zeros
 
-# from Timer import time_function
 from gwlfe.Output.Loading.StreamBankEros import StreamBankEros
 from gwlfe.Output.Loading.StreamBankEros import StreamBankEros_f
 
 
-# @memoize
 def SEDSTAB(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
             CNP_0, Imper,
             ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0,

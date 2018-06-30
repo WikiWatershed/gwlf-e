@@ -1,7 +1,6 @@
 from numpy import sum
 from numpy import zeros
 
-# from Timer import time_function
 from gwlfe.Memoization import memoize
 from gwlfe.Input.WaterBudget.Withdrawal import Withdrawal
 from gwlfe.Input.WaterBudget.Withdrawal import Withdrawal_f

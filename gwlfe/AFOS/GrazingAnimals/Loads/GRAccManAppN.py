@@ -23,11 +23,3 @@ def GRAccManAppN_f(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, GRPct
     init_gr_n = InitGrN_f(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN)
     grazing_n = GrazingN_f(PctGrazing, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN)
     return maximum(((1.0 / 12) - GRPctManApp) * init_gr_n - grazing_n, 0)
-
-# @time_function
-# def GRAccManAppN_f(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, GRPctManApp, PctGrazing):
-#     init_gr_n = InitGrN(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN)
-#     grazing_n = GrazingN_f(PctGrazing, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN)
-#     result = (np.repeat(init_gr_n / 12, 12)) - (GRPctManApp * np.repeat(init_gr_n, 12)) - grazing_n
-#     result = np.maximum(result, 0)
-#     return result

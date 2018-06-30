@@ -4,7 +4,6 @@ from numpy import zeros
 from gwlfe.MultiUse_Fxns.Discharge.AdjUrbanQTotal import AdjUrbanQTotal
 from gwlfe.Output.Loading.DisSurfLoad import DisSurfLoad
 from gwlfe.Output.Loading.DisSurfLoad import DisSurfLoad_f
-# from Timer import time_function
 from gwlfe.Memoization import memoize
 from gwlfe.Input.LandUse.NLU import NLU
 from gwlfe.Input.WaterBudget.Water import Water

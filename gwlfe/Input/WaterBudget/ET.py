@@ -4,7 +4,6 @@ from numpy import where
 from numpy import zeros
 from numpy import array
 
-# from Timer import time_function
 from gwlfe.Memoization import memoize
 from gwlfe.enums import ETflag
 

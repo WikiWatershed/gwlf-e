@@ -1,4 +1,3 @@
-# from Timer import time_function
 from gwlfe.Memoization import memoize
 
 @memoize

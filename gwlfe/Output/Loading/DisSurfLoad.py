@@ -6,7 +6,6 @@ from gwlfe.MultiUse_Fxns.Discharge.AdjUrbanQTotal import AdjUrbanQTotal
 from gwlfe.MultiUse_Fxns.Discharge.AdjUrbanQTotal import AdjUrbanQTotal_f
 from gwlfe.BMPs.Stream.FilterEff import FilterEff
 from gwlfe.BMPs.Stream.FilterEff import FilterEff_f
-# from Timer import time_function
 from gwlfe.Memoization import memoize
 from gwlfe.Input.LandUse.NLU import NLU
 from gwlfe.MultiUse_Fxns.Runoff.RetentionEff import RetentionEff

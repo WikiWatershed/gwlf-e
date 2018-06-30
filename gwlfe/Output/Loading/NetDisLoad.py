@@ -6,7 +6,6 @@ from gwlfe.MultiUse_Fxns.Discharge.AdjUrbanQTotal import AdjUrbanQTotal
 from gwlfe.MultiUse_Fxns.Discharge.AdjUrbanQTotal import AdjUrbanQTotal_f
 from gwlfe.Output.Loading.DisSurfLoad import DisSurfLoad
 from gwlfe.Output.Loading.DisSurfLoad import DisSurfLoad_f
-# from Timer import time_function
 from gwlfe.Memoization import memoize
 from gwlfe.Input.LandUse.NLU import NLU
 from gwlfe.Input.WaterBudget.Water import Water
@@ -44,7 +43,6 @@ def NetDisLoad(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0,
 def NetDisLoad_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
                  Grow_0, CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil, Nqual, LoadRateImp,
                  LoadRatePerv, Storm, UrbBMPRed, DisFract, FilterWidth, PctStrmBuf):
-    # nlu = NLU(NRur, NUrb)
     result = zeros((NYrs, 12, 31, Nqual))
     water = Water_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     adjurbanqtotal = AdjUrbanQTotal_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,

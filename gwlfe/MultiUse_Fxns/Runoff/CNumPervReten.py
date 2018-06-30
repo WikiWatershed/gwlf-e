@@ -3,7 +3,6 @@ from numpy import tile
 from numpy import where
 from numpy import zeros
 
-# from Timer import time_function
 from gwlfe.MultiUse_Fxns.Runoff.CNP import CNP, CNP_f
 from gwlfe.MultiUse_Fxns.Runoff.CNumPerv import CNumPerv, CNumPerv_f
 from gwlfe.Memoization import memoize

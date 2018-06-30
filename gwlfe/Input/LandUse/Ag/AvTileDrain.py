@@ -1,7 +1,6 @@
 from numpy import sum
 from numpy import zeros
 
-# from Timer import time_function
 from gwlfe.Input.LandUse.Ag.TileDrain import TileDrain
 from gwlfe.Input.LandUse.Ag.TileDrain import TileDrain_f
 from gwlfe.Memoization import memoize

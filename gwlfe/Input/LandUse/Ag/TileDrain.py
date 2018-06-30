@@ -1,14 +1,12 @@
 from numpy import zeros
 
 from gwlfe.Memoization import memoize
-# from Timer import time_function
 from gwlfe.Input.LandUse.Ag.TileDrainGW import TileDrainGW
 from gwlfe.Input.LandUse.Ag.TileDrainGW import TileDrainGW_f
 from gwlfe.Input.LandUse.Ag.TileDrainRO import TileDrainRO
 from gwlfe.Input.LandUse.Ag.TileDrainRO import TileDrainRO_f
 
 
-# @memoize
 def TileDrain(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
               ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0, RecessionCoef, SeepCoef, Landuse,
               TileDrainDensity):

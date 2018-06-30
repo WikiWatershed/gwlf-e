@@ -34,7 +34,6 @@ from MultiUse_Fxns.Runoff.AvRunoff import AvRunoff_f
 log = logging.getLogger(__name__)
 
 
-# @time_function
 def run(z):
     log.debug('Running model...')
 
@@ -68,10 +67,6 @@ def run(z):
             for l in range(z.NLU):
                 z.QRunoff[l, i] = 0
                 z.AgQRunoff[l, i] = 0
-                # z.ErosWashoff[l, i] = 0
-                # z.RurQRunoff[l, i] = 0
-                # z.UrbQRunoff[l, i] = 0
-                # z.LuErosion[Y, l] = 0
 
             # DAILY CALCULATIONS
             for j in range(z.DaysMonth[Y][i]):
@@ -103,8 +98,6 @@ def run(z):
                 # Obtain the monthly Pond nutrients
                 z.MonthPondNitr[i] = z.MonthPondNitr[i] + z.NitrPondOverflow
                 z.MonthPondPhos[i] = z.MonthPondPhos[i] + z.PhosPondOverflow
-
-                # grow_factor = GrowFlag.intval(z.Grow_0[i]) # duplicate
 
                 # Obtain the monthly Normal Nitrogen
                 z.MonthNormNitr[i] = (z.MonthNormNitr[i] + z.NitrSepticLoad -

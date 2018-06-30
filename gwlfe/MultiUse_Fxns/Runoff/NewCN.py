@@ -2,7 +2,6 @@ from numpy import where
 from numpy import zeros
 
 from gwlfe.Memoization import memoize
-# from Timer import time_function
 from gwlfe.Input.LandUse.NLU import NLU
 
 
@@ -17,8 +16,6 @@ def NewCN(NRur, NUrb, CN):
             result[2][l] = 100
     return result
 
-# @time_function
-# @jit(cache=True, nopython = True)
 @memoize
 def NewCN_f(NRur, NUrb, CN):
     nlu = NLU(NRur, NUrb)

@@ -1,4 +1,3 @@
-# from Timer import time_function
 from numpy import sum
 from gwlfe.MultiUse_Fxns.Runoff.CNI import CNI
 from gwlfe.MultiUse_Fxns.Runoff.CNP import CNP
@@ -7,7 +6,6 @@ from gwlfe.Input.LandUse.NLU import NLU
 from gwlfe.Input.LandUse.Urb.UrbAreaTotal import UrbAreaTotal
 
 
-# @time_function
 @memoize
 def AvCNUrb(NRur, NUrb, CNI_0, CNP_0, Imper, Area):
     result = 0
@@ -21,8 +19,6 @@ def AvCNUrb(NRur, NUrb, CNI_0, CNP_0, Imper, Area):
             result += ((Imper[l] * cni[1][l] + (1 - Imper[l]) * cnp[1][l]) * Area[l] / urbareatotal)
     return result
 
-# Tried, slower than original.
-# @time_function
 def AvCNUrb_f(NRur, NUrb, CNI_0, CNP_0, Imper, Area):
     cni = CNI(NRur, NUrb, CNI_0)
     cnp = CNP(NRur, NUrb, CNP_0)

@@ -1,7 +1,6 @@
 from numpy import sum
 from numpy import zeros
 
-# from Timer import time_function
 from gwlfe.MultiUse_Fxns.Runoff.Runoff import Runoff
 from gwlfe.MultiUse_Fxns.Runoff.Runoff import Runoff_f
 from gwlfe.Memoization import memoize

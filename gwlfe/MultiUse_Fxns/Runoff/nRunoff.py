@@ -1,6 +1,5 @@
 from numpy import zeros
 
-# from Timer import time_function
 from gwlfe.Memoization import memoize
 from gwlfe.Output.Loading.NConc import NConc
 from gwlfe.Output.Loading.NConc import NConc_f

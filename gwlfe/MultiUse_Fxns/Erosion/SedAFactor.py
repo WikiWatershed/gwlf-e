@@ -10,7 +10,6 @@ from gwlfe.Input.LandUse.Urb.PcntUrbanArea import PcntUrbanArea_f
 @memoize
 def SedAFactor(NumAnimals, AvgAnimalWt, NRur, NUrb, CNI_0, CNP_0, CN, Imper, Area, SedAFactor_0, AvKF, AvSlope,
                SedAAdjust):
-    # result = SedAFactor_0
     pcnturbanarea = PcntUrbanArea(NRur, NUrb, Area)
     aeu = AEU(NumAnimals, AvgAnimalWt, NRur, NUrb, Area)
     avcn = AvCN(NRur, NUrb, CNI_0, CNP_0, CN, Imper, Area)

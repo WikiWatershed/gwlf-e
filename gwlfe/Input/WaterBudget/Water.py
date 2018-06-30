@@ -1,6 +1,5 @@
 from numpy import zeros
 
-# from Timer import time_function
 from gwlfe.Input.WaterBudget.Melt_1 import Melt_1, Melt_1_f
 from gwlfe.Memoization import memoize
 from gwlfe.Input.WaterBudget.Rain import Rain, Rain_f

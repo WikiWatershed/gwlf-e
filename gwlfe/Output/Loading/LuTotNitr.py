@@ -6,7 +6,6 @@ from gwlfe.MultiUse_Fxns.Erosion.ErosWashoff import ErosWashoff
 from gwlfe.MultiUse_Fxns.Erosion.ErosWashoff import ErosWashoff_f
 from gwlfe.Output.Loading.LuLoad import LuLoad
 from gwlfe.Output.Loading.LuLoad import LuLoad_f
-# from Timer import time_function
 from gwlfe.Memoization import memoize
 from gwlfe.Input.LandUse.NLU import NLU
 from gwlfe.MultiUse_Fxns.Erosion.SedDelivRatio import SedDelivRatio
@@ -52,10 +51,6 @@ def LuTotNitr_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb,
               FirstManureMonth2, LastManureMonth2, SedDelivRatio_0, KF, LS, C, P, SedNitr, CNP_0, Imper, ISRR, ISRA,
               Qretention, PctAreaInfil, LoadRateImp, LoadRatePerv, Storm, UrbBMPRed, FilterWidth, PctStrmBuf, Acoef,
               CNI_0, Nqual):
-    # n_runoff = np.reshape(
-    #     np.repeat(np.sum(nRunoff(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb, CN, Grow_0,
-    #                                Area, NitrConc, ManNitr, ManuredAreas, FirstManureMonth, LastManureMonth,
-    #                                FirstManureMonth2, LastManureMonth2), axis=1), repeats=10), (NYrs, 10))
     n_runoff = sum(nRunoff_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec, AntMoist_0, NRur, NUrb, CN, Grow_0,
                        Area, NitrConc, ManNitr, ManuredAreas, FirstManureMonth, LastManureMonth,
                        FirstManureMonth2, LastManureMonth2), axis =1)

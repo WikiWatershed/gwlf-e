@@ -2,7 +2,6 @@ from numpy import cumsum
 from numpy import flip
 from numpy import zeros
 
-# from Timer import time_function
 from gwlfe.MultiUse_Fxns.Erosion.SedTrans import SedTrans
 from gwlfe.MultiUse_Fxns.Erosion.SedTrans import SedTrans_f
 

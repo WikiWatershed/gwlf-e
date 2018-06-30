@@ -1,4 +1,3 @@
-# from Timer import time_function
 import math
 
 from numpy import zeros

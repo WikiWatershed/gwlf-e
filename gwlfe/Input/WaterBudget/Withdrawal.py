@@ -3,12 +3,6 @@ from numpy import reshape
 from numpy import zeros
 from gwlfe.Memoization import memoize
 
-
-# from Timer import time_function
-
-
-# @memoize
-
 def Withdrawal(NYrs, StreamWithdrawal, GroundWithdrawal):
     result = zeros((NYrs, 12))
     for Y in range(NYrs):

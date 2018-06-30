@@ -35,30 +35,6 @@ def AMC5(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0):
                 result[Y][i][j] = AMC5  # TODO: why did this fix the mismatch of amc5?
     return result
 
-
-# @time_function
-# @jit(cache=True)
-# def AMC5_f(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0):
-#     result = np.zeros((NYrs, 12, 31))
-#     water = Water_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
-#     AMC5 = 0
-#     AntMoist = copy.deepcopy(AntMoist_0)
-#     AMC5 = np.sum(AntMoist)
-#     for Y in range(NYrs):
-#         for i in range(12):
-#             for j in range(DaysMonth[Y][i]):
-#                 AMC5 = AMC5 - AntMoist[4] + water[Y][i][j]
-#                 AntMoist[4] = AntMoist[3]
-#                 AntMoist[3] = AntMoist[2]
-#                 AntMoist[2] = AntMoist[1]
-#                 AntMoist[1] = AntMoist[0]
-#                 AntMoist[0] = water[Y][i][j]
-#
-#                 result[Y][i][j] = AMC5  # TODO: why did this fix the mismatch of amc5?
-#
-#     return result
-
-
 def AMC5_1(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0):
     result = zeros((NYrs, 12, 31))
     AntMoist1 = zeros((5,))

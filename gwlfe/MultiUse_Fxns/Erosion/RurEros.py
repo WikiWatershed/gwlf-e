@@ -2,7 +2,6 @@ from numpy import repeat
 from numpy import where
 from numpy import zeros
 
-# from Timer import time_function
 from gwlfe.MultiUse_Fxns.Erosion.Erosiv import Erosiv
 from gwlfe.MultiUse_Fxns.Erosion.Erosiv import Erosiv_f
 from gwlfe.Memoization import memoize
@@ -25,11 +24,7 @@ def RurEros(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef, NRur, KF, LS, C, P, 
 
 @memoize
 def RurEros_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef, NRur, KF, LS, C, P, Area):
-    # erosiv = np.reshape(np.repeat(Erosiv_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef), NRur, axis=2),(NYrs, 12, 31, NRur))
-    # water = np.reshape(np.repeat(Water_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec),NRur,axis=2),(NYrs, 12, 31, NRur)) #TODO: is there a way to repeating
-    # resized_temp = np.reshape(np.repeat(Temp,NRur,axis=2),(NYrs, 12, 31, NRur))
     erosiv = repeat(Erosiv_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, Acoef)[:,:,:,None], NRur, axis =3)
-    Temp_r = Temp[:,:,:,None]
     water = Water_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     water = water[:,:,:,None]
     resized_temp = repeat(Temp[:,:,:,None], NRur, axis=3)

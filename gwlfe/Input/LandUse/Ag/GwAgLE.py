@@ -3,7 +3,6 @@ from numpy import zeros
 from gwlfe.Input.LandUse.Ag.AgAreaTotal import AgAreaTotal
 from gwlfe.Input.LandUse.AreaTotal import AreaTotal
 from gwlfe.Input.LandUse.AreaTotal import AreaTotal_f
-# from Timer import time_function
 from gwlfe.Input.WaterBudget.GroundWatLE import GroundWatLE
 from gwlfe.Input.WaterBudget.GroundWatLE import GroundWatLE_f
 from gwlfe.Memoization import memoize

@@ -3,9 +3,6 @@ from numpy import zeros
 
 from gwlfe.Memoization import memoize
 
-
-# from Timer import time_function
-
 def Rain_inner(NYrs, DaysMonth, Temp, Prec):
     result = zeros((NYrs, 12, 31))
     for Y in range(NYrs):

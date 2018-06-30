@@ -8,7 +8,6 @@ Imported from AnnualMeans.bas
 """
 
 import logging
-# from Precipitation import AvPrecipitation_f
 from Input.WaterBudget import Precipitation
 from Input.WaterBudget.AvEvapoTrans import AvEvapoTrans_f
 from MultiUse_Fxns.PtSrcFlow import AvPtSrcFlow_f
@@ -31,14 +30,9 @@ def CalculateAnnualMeanLoads(z, Y):
     z.AvSeptNitr += z.SepticNitr[Y] / z.NYrs
     z.AvSeptPhos += z.SepticPhos[Y] / z.NYrs
 
-    # Add the Stream Bank Erosion to sediment yield
-    # for i in range(12):
-    #     z.SedYield[Y][i] += z.StreamBankEros_f[Y][i] / 1000
-
     z.CalendarYr = z.WxYrBeg + (Y - 1)
 
     # CALCULATE ANNUAL MEANS FOR STREAM BANK AND TILE DRAINAGE VALUES
-    # z.AvPtSrcFlow = AvPtSrcFlow(z.NYrs,z.PtSrcFlow)
     z.AvPtSrcFlow = AvPtSrcFlow_f(z.PointFlow)
     for i in range(12):
         z.AvStreamBankP[i] += z.StreamBankP[Y][i] / z.NYrs
@@ -47,7 +41,6 @@ def CalculateAnnualMeanLoads(z, Y):
         z.AvTileDrainSed[i] += z.TileDrainSed[Y][i] / z.NYrs
 
     # COMPUTE ANNUAL MEANS
-    # z.AvPrecipitation = AvPrecipitation_f(z.Prec)
     z.AvPrecipitation = Precipitation.AvPrecipitation_f(Precipitation.Precipitation_f(z.Prec))
     for i in range(12):
         z.AvDisNitr[i] += z.DisNitr[Y][i] / z.NYrs
@@ -56,14 +49,11 @@ def CalculateAnnualMeanLoads(z, Y):
         z.AvTotPhos[i] += z.TotPhos[Y][i] / z.NYrs
         z.AvGroundNitr[i] += z.GroundNitr[Y][i] / z.NYrs
         z.AvGroundPhos[i] += z.GroundPhos[Y][i] / z.NYrs
-        # z.AvAnimalN[i] += z.AnimalN[Y][i] / z.NYrs
         z.AvAnimalP[i] += z.AnimalP[Y][i] / z.NYrs
 
-        # z.AvGRLostBarnN[i] += z.GRLostBarnN[Y][i] / z.NYrs
         z.AvGRLostBarnP[i] += z.GRLostBarnP[Y][i] / z.NYrs
         z.AvGRLostBarnFC[i] += z.GRLostBarnFC[Y][i] / z.NYrs
 
-        # z.AvNGLostBarnN[i] += z.NGLostBarnN[Y][i] / z.NYrs
         z.AvNGLostBarnP[i] += z.NGLostBarnP[Y][i] / z.NYrs
         z.AvNGLostBarnFC[i] += z.NGLostBarnFC[Y][i] / z.NYrs
 
@@ -128,7 +118,6 @@ def CalculateAnnualMeanLoads(z, Y):
                            z.GroundWithdrawal, z.NumAnimals, z.AvgAnimalWt, z.StreamFlowVolAdj, z.SedAFactor_0, z.AvKF,
                            z.AvSlope, z.SedAAdjust, z.StreamLength, z.n42b, z.n46c, z.n85d, z.AgLength, z.n42, z.n45,
                            z.n85, z.UrbBankStab))
-    # z.AvStreamBankNSum = sum(z.AvStreamBankN)
     z.AvStreamBankPSum = sum(z.AvStreamBankP)
     z.AvPtSrcFlowSum = sum(z.AvPtSrcFlow)
     z.AvTileDrainSum = sum(AvTileDrain_f(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area,
@@ -140,7 +129,6 @@ def CalculateAnnualMeanLoads(z, Y):
     z.AvTileDrainNSum = sum(z.AvTileDrainN)
     z.AvTileDrainPSum = sum(z.AvTileDrainP)
     z.AvTileDrainSedSum = sum(z.AvTileDrainSed)
-    # z.AvPrecipitationSum = sum(z.AvPrecipitation)
     z.AvEvapoTransSum = sum(
         AvEvapoTrans_f(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0,
                        z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs,
@@ -176,12 +164,9 @@ def CalculateAnnualMeanLoads(z, Y):
     z.AvTotPhosSum = sum(z.AvTotPhos)
     z.AvGroundNitrSum = sum(z.AvGroundNitr)
     z.AvGroundPhosSum = sum(z.AvGroundPhos)
-    # z.AvAnimalNSum = sum(z.AvAnimalN)
     z.AvAnimalPSum = sum(z.AvAnimalP)
-    # z.AvGRLostBarnNSum = sum(z.AvGRLostBarnN)
     z.AvGRLostBarnPSum = sum(z.AvGRLostBarnP)
     z.AvGRLostBarnFCSum = sum(z.AvGRLostBarnFC)
-    # z.AvNGLostBarnNSum = sum(z.AvNGLostBarnN)
     z.AvNGLostBarnPSum = sum(z.AvNGLostBarnP)
     z.AvNGLostBarnFCSum = sum(z.AvNGLostBarnFC)
     z.AvNGLostManPSum = sum(z.AvNGLostManP)

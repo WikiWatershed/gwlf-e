@@ -1,9 +1,8 @@
 from numpy import zeros
 
 from gwlfe.Memoization import memoize
-# from Timer import time_function
 from gwlfe.Input.WaterBudget.Percolation import Percolation
-from gwlfe.Input.WaterBudget.Percolation import Percolation_2
+from gwlfe.Input.WaterBudget.Percolation import Percolation_f
 import numpy as np
 try:
     from DeepSeep_inner_compiled import DeepSeep_inner
@@ -44,12 +43,6 @@ def SatStor(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, An
 
 def SatStor_accumulate_fast(DaysMonth, NYrs, RecessionCoef, SeepCoef, percolation, SatStor_0=0,):
     mult= RecessionCoef+SeepCoef
-    # day_mask=np.zeros_like(percolation, dtype=np.bool)
-    # for YY in range(int(NYrs)):
-    #     for ii in range(12):
-    #         ndays = int(DaysMonth[YY,ii])
-    #         day_mask[YY,ii, 0:ndays]=True
-    # percolation=percolation[np.where(day_mask)]
     percolation= percolation.flatten()
     result= np.zeros_like(percolation)
     result[0]=SatStor_0
@@ -69,14 +62,11 @@ def SatStor_accumulate_test():
     RecessionCoef, SeepCoef=(.3,.9)
     percolation = np.random.normal(size=sz)
     res1=SatStor_accumulate(DaysMonth, 300, RecessionCoef, SeepCoef, percolation, SatStor_0=0 ).flatten()
-    # res2=SatStor_accumulate_old(DaysMonth, 300, RecessionCoef, SeepCoef, percolation, SatStor_0=0 ).flatten()
-    # print(res2.shape)
-    # print(res2-res1)
 
 @memoize
-def SatStor_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
+def SatStor_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
               ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap, SatStor_0, RecessionCoef, SeepCoef):
-    percolation = Percolation_2(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
+    percolation = Percolation_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
                                 CNP_0,
                                 Imper, ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap)
     return DeepSeep_inner(NYrs, SatStor_0, DaysMonth, RecessionCoef, SeepCoef, percolation)[2]

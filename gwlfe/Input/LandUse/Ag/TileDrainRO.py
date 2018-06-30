@@ -1,12 +1,10 @@
 from numpy import zeros
 
-# from Timer import time_function
 from gwlfe.MultiUse_Fxns.Runoff.AgRunoff import AgRunoff
 from gwlfe.MultiUse_Fxns.Runoff.AgRunoff import AgRunoff_f
 from gwlfe.Memoization import memoize
 
 
-# @time_function
 @memoize
 def TileDrainRO(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, CN, AntMoist_0, NUrb, Grow_0, Landuse, Area,
                 TileDrainDensity):
@@ -18,7 +16,6 @@ def TileDrainRO(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, CN, AntMoist_0, N
             result[Y][i] = ag_runoff[Y][i] * TileDrainDensity
     return result
 
-# @time_function
 @memoize
 def TileDrainRO_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, CN, AntMoist_0, NUrb, Grow_0, Landuse, Area,
                 TileDrainDensity):

@@ -6,12 +6,10 @@ from gwlfe.MultiUse_Fxns.Discharge.AdjUrbanQTotal_1 import AdjUrbanQTotal_1_f
 from gwlfe.Memoization import memoize
 from gwlfe.MultiUse_Fxns.Discharge.RuralQTotal import RuralQTotal
 from gwlfe.MultiUse_Fxns.Discharge.RuralQTotal import RuralQTotal_f
-# from Timer import time_function
 from gwlfe.Input.WaterBudget.Water import Water
 from gwlfe.Input.WaterBudget.Water import Water_f
 
 
-# @time_function
 @memoize
 def AdjQTotal(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
               ISRR, ISRA, Qretention, PctAreaInfil, n25b, CN):
@@ -29,7 +27,6 @@ def AdjQTotal(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, 
                     result[Y][i][j] = (adj_urban_q_total[Y][i][j] * (1 - (n25b * 0.2))) + rural_q_total[Y][i][j]
     return result
 
-# @time_function
 @memoize
 def AdjQTotal_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,
               ISRR, ISRA, Qretention, PctAreaInfil, n25b, CN):

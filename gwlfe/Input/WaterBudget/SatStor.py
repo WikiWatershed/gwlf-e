@@ -1,7 +1,6 @@
 from numpy import zeros
 
 from gwlfe.Memoization import memoize
-# from Timer import time_function
 from gwlfe.Input.WaterBudget.Percolation import Percolation
 from gwlfe.Input.WaterBudget.Percolation import Percolation_f
 

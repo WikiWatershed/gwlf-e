@@ -1,12 +1,10 @@
 from numpy import where
 from numpy import zeros
 
-# from Timer import time_function
 from gwlfe.Input.WaterBudget.InitSnow import InitSnow
 from gwlfe.Input.WaterBudget.InitSnowYesterday import InitSnowYesterday
 
 
-# @memoize
 def Melt(NYrs, DaysMonth, Temp, InitSnow_0, Prec):
     result = zeros((NYrs, 12, 31))
     init_snow = InitSnow(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
