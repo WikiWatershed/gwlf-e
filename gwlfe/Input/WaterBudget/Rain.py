@@ -3,6 +3,7 @@ from numpy import zeros
 
 from gwlfe.Memoization import memoize
 
+
 def Rain_inner(NYrs, DaysMonth, Temp, Prec):
     result = zeros((NYrs, 12, 31))
     for Y in range(NYrs):
@@ -15,10 +16,12 @@ def Rain_inner(NYrs, DaysMonth, Temp, Prec):
                     result[Y][i][j] = Prec[Y][i][j]
     return result
 
+
 @memoize
 def Rain(NYrs, DaysMonth, Temp, Prec):
-    return Rain_inner(NYrs,DaysMonth,Temp,Prec)
+    return Rain_inner(NYrs, DaysMonth, Temp, Prec)
+
 
 @memoize
 def Rain_f(Temp, Prec):
-    return where(Temp <= 0,0,Prec )
+    return where(Temp <= 0, 0, Prec)

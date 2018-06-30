@@ -2,18 +2,18 @@ from numpy import repeat
 from numpy import where
 from numpy import zeros
 
-from gwlfe.MultiUse_Fxns.Discharge.AdjUrbanQTotal import AdjUrbanQTotal
-from gwlfe.MultiUse_Fxns.Discharge.AdjUrbanQTotal import AdjUrbanQTotal_f
 from gwlfe.BMPs.Stream.FilterEff import FilterEff
 from gwlfe.BMPs.Stream.FilterEff import FilterEff_f
-from gwlfe.Memoization import memoize
 from gwlfe.Input.LandUse.NLU import NLU
+from gwlfe.Input.WaterBudget.Water import Water
+from gwlfe.Input.WaterBudget.Water import Water_f
+from gwlfe.Memoization import memoize
+from gwlfe.MultiUse_Fxns.Discharge.AdjUrbanQTotal import AdjUrbanQTotal
+from gwlfe.MultiUse_Fxns.Discharge.AdjUrbanQTotal import AdjUrbanQTotal_f
 from gwlfe.MultiUse_Fxns.Runoff.RetentionEff import RetentionEff
 from gwlfe.MultiUse_Fxns.Runoff.RetentionEff import RetentionEff_f
 from gwlfe.Output.Loading.SurfaceLoad import SurfaceLoad
 from gwlfe.Output.Loading.SurfaceLoad import SurfaceLoad_f
-from gwlfe.Input.WaterBudget.Water import Water
-from gwlfe.Input.WaterBudget.Water import Water_f
 
 
 @memoize
@@ -24,8 +24,8 @@ def DisSurfLoad(NYrs, DaysMonth, InitSnow_0, Temp, Prec, Nqual, NRur, NUrb, Area
     water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     nlu = NLU(NRur, NUrb)
     adjurbanqtotal = AdjUrbanQTotal(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
-                                        Grow_0, CNP_0,
-                                        Imper, ISRR, ISRA, Qretention, PctAreaInfil)
+                                    Grow_0, CNP_0,
+                                    Imper, ISRR, ISRA, Qretention, PctAreaInfil)
     surfaceload = SurfaceLoad(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
                               CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil, Nqual, LoadRateImp, LoadRatePerv,
                               Storm, UrbBMPRed)
@@ -47,6 +47,7 @@ def DisSurfLoad(NYrs, DaysMonth, InitSnow_0, Temp, Prec, Nqual, NRur, NUrb, Area
                     pass
     return result
 
+
 @memoize
 def DisSurfLoad_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec, Nqual, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0,
                   Imper, ISRR, ISRA, Qretention, PctAreaInfil, LoadRateImp, LoadRatePerv,
@@ -55,16 +56,17 @@ def DisSurfLoad_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec, Nqual, NRur, NUrb, Ar
     result = zeros((NYrs, 12, 31, nlu - NRur, Nqual))
     water = Water_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     adjurbanqtotal = AdjUrbanQTotal_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
-                                          Grow_0, CNP_0,
-                                          Imper, ISRR, ISRA, Qretention, PctAreaInfil)
+                                      Grow_0, CNP_0,
+                                      Imper, ISRR, ISRA, Qretention, PctAreaInfil)
     surfaceload = SurfaceLoad_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
                                 CNP_0,
                                 Imper, ISRR, ISRA, Qretention, PctAreaInfil, Nqual, LoadRateImp, LoadRatePerv, Storm,
                                 UrbBMPRed)
     retentioneff = RetentionEff_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec, Qretention, NRur, NUrb, Area, CNI_0,
-                                  AntMoist_0, Grow_0, CNP_0, Imper, ISRR, ISRA, PctAreaInfil)[:,:,:,None, None]
+                                  AntMoist_0, Grow_0, CNP_0, Imper, ISRR, ISRA, PctAreaInfil)[:, :, :, None, None]
     retentioneff = repeat(repeat(retentioneff, nlu - NRur, axis=3), Nqual, axis=4)
     filtereff = FilterEff_f(FilterWidth)
     nonzero = where((Temp > 0) & (water > 0.01) & (adjurbanqtotal > 0.001))
-    result[nonzero] = surfaceload[nonzero] * DisFract[NRur:] * (1 - retentioneff[nonzero]) * (1 - (filtereff * PctStrmBuf))
+    result[nonzero] = surfaceload[nonzero] * DisFract[NRur:] * (1 - retentioneff[nonzero]) * (
+                1 - (filtereff * PctStrmBuf))
     return result

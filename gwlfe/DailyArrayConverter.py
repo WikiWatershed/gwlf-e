@@ -1,13 +1,12 @@
 import random
 
 import numpy.ma as ma
+# from numba import jit
+from numpy import array
 from numpy import r_
 from numpy import ravel
 from numpy import where
 from numpy import zeros
-# from numba import jit
-from numpy import array
-from Memoization import memoize_with_args
 
 leap_year = [False, False, False, False, False, False, False, False, False, False, False, False, False, False, False,
              False, False, False, False, False, False, False, False, False, False, False, False, False, False, False,
@@ -96,16 +95,17 @@ def ymd_to_daily_slow(ymd_array, NYrs, DaysMonth):
                 result.append(ymd_array[Y][i][j])
     return array(result)
 
+
 def get_value_for_yesterday(variable, variable_0, Y_in, i_in, j_in, DaysMonth):
     temp = array(variable)
-    key = random.randint(100000000000,999999999999)#use something that is hopefully unique so we can find it again
-    temp[Y_in,i_in,j_in] = key
-    temp = ymd_to_daily(temp,DaysMonth)
-    today = where(temp==key)[0]
-    if(len(today) != 1):
+    key = random.randint(100000000000, 999999999999)  # use something that is hopefully unique so we can find it again
+    temp[Y_in, i_in, j_in] = key
+    temp = ymd_to_daily(temp, DaysMonth)
+    today = where(temp == key)[0]
+    if (len(today) != 1):
         raise AssertionError("this array has values equal to the key")
 
-    if(today[0]-1 >= 0):
-        return temp[today[0]-1]
-    else:#at the first index of the array
+    if (today[0] - 1 >= 0):
+        return temp[today[0] - 1]
+    else:  # at the first index of the array
         return variable_0

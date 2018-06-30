@@ -1,7 +1,8 @@
 # from Timer import time_function
 from numpy import zeros
-from gwlfe.Memoization import memoize
+
 from gwlfe.Input.LandUse.NLU import NLU
+from gwlfe.Memoization import memoize
 
 
 @memoize
@@ -12,6 +13,6 @@ def LU_1(NRur, NUrb):
         result[l] = l - 11
     return result
 
-#Tried, it was slower. LU_1 is faster
+# Tried, it was slower. LU_1 is faster
 # def LU_1_f():
 #     pass

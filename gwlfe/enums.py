@@ -3,6 +3,7 @@ from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
 
+
 class YesOrNo(object):
     NO = '<No>'
     YES = '<Yes>'
@@ -53,7 +54,10 @@ class ETflag(object):
             return 1
         raise ValueError('Unexpected value: ' + str(value))
 
+
 GROWING_SEASON = '<Growing season>'
+
+
 class GrowFlag(object):
     NON_GROWING_SEASON = '<Non-growing season>'
     GROWING_SEASON = '<Growing season>'

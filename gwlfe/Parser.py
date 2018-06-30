@@ -1043,7 +1043,8 @@ class GmsReader(object):
         z.NGAppSum = self.next(float)  # Non-Grazing Manure Data Check: Land Applied (%)
         z.NGBarnSum = self.next(float)  # Non-Grazing Manure Data Check: In Confined Areas (%)
         z.NGTotSum = self.next(float)  # Non-Grazing Manure Data Check: Total (<= 1)
-        _ = self.next(float)  #  # Initial Grazing Animal Totals: Nitrogen (kg/yr) (Value seems to be set to 0 before it is used)
+        _ = self.next(
+            float)  # # Initial Grazing Animal Totals: Nitrogen (kg/yr) (Value seems to be set to 0 before it is used)
         z.InitGrP = self.next(float)  # Initial Grazing Animal Totals: Phosphorus (kg/yr)
         z.InitGrFC = self.next(float)  # Initial Grazing Animal Totals: Fecal Coliforms (orgs/yr)
         z.GRAppSum = self.next(float)  # Grazing Manure Data Check: Land Applied (%)
@@ -1460,12 +1461,16 @@ class GmsWriter(object):
             z.n6c,
             z.n6d,
             z.n7,
-            N7b_2(z.NYrs, z.NGPctManApp, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN, z.NGAppNRate, z.Prec,
+            N7b_2(z.NYrs, z.NGPctManApp, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN, z.NGAppNRate,
+                  z.Prec,
                   z.DaysMonth,
-                  z.NGPctSoilIncRate, z.GRPctManApp, z.GRAppNRate, z.GRPctSoilIncRate, z.NGBarnNRate, z.AWMSNgPct, z.NgAWMSCoeffN,
-                  z.RunContPct, z.RunConCoeffN, z.PctGrazing, z.GRBarnNRate, z.AWMSGrPct, z.GrAWMSCoeffN, z.PctStreams, z.GrazingNRate,
+                  z.NGPctSoilIncRate, z.GRPctManApp, z.GRAppNRate, z.GRPctSoilIncRate, z.NGBarnNRate, z.AWMSNgPct,
+                  z.NgAWMSCoeffN,
+                  z.RunContPct, z.RunConCoeffN, z.PctGrazing, z.GRBarnNRate, z.AWMSGrPct, z.GrAWMSCoeffN, z.PctStreams,
+                  z.GrazingNRate,
                   z.n41b,
-                  z.n85h, z.n41d, z.n85j, z.n41f, z.n85l, z.n42, z.n45, z.n69, z.n43, z.n64)[-1]#get the carried over value
+                  z.n85h, z.n41d, z.n85j, z.n41f, z.n85l, z.n42, z.n45, z.n69, z.n43, z.n64)[-1]
+            # get the carried over value
             ,
             z.n8,
             z.n9,
@@ -1573,8 +1578,8 @@ class GmsWriter(object):
                     z.GRBarnNRate,
                     z.Prec, z.DaysMonth, z.AWMSGrPct, z.GrAWMSCoeffN, z.RunContPct, z.RunConCoeffN)[-1],
             NGLostBarnNSum(z.NYrs, z.NGPctManApp, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN,
-                               z.NGBarnNRate,
-                               z.Prec, z.DaysMonth, z.AWMSNgPct, z.NgAWMSCoeffN, z.RunContPct, z.RunConCoeffN)[-1],
+                           z.NGBarnNRate,
+                           z.Prec, z.DaysMonth, z.AWMSNgPct, z.NgAWMSCoeffN, z.RunContPct, z.RunConCoeffN)[-1],
             z.GRLBP,
             z.NGLBP,
             z.NGLManP,

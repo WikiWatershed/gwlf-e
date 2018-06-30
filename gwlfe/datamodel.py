@@ -7,8 +7,8 @@ import json
 from calendar import monthrange
 from decimal import Decimal
 
-from numpy import zeros
 from numpy import int
+from numpy import zeros
 
 
 class DataModel(object):
@@ -120,7 +120,7 @@ class DataModel(object):
 
             if 'DaysMonth' not in model:
                 output['DaysMonth'] = zeros((year_range, 12),
-                                               dtype=int)
+                                            dtype=int)
                 for y in range(year_range):
                     year = begyear + y
                     for m in range(12):

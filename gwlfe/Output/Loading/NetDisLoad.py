@@ -2,14 +2,14 @@ from numpy import sum
 from numpy import where
 from numpy import zeros
 
+from gwlfe.Input.LandUse.NLU import NLU
+from gwlfe.Input.WaterBudget.Water import Water
+from gwlfe.Input.WaterBudget.Water import Water_f
+from gwlfe.Memoization import memoize
 from gwlfe.MultiUse_Fxns.Discharge.AdjUrbanQTotal import AdjUrbanQTotal
 from gwlfe.MultiUse_Fxns.Discharge.AdjUrbanQTotal import AdjUrbanQTotal_f
 from gwlfe.Output.Loading.DisSurfLoad import DisSurfLoad
 from gwlfe.Output.Loading.DisSurfLoad import DisSurfLoad_f
-from gwlfe.Memoization import memoize
-from gwlfe.Input.LandUse.NLU import NLU
-from gwlfe.Input.WaterBudget.Water import Water
-from gwlfe.Input.WaterBudget.Water import Water_f
 
 
 @memoize
@@ -20,7 +20,7 @@ def NetDisLoad(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0,
     water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     nlu = NLU(NRur, NUrb)
     adjurbanqtotal = AdjUrbanQTotal(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
-                                        Grow_0, CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil)
+                                    Grow_0, CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil)
     dissurfaceload = DisSurfLoad(NYrs, DaysMonth, InitSnow_0, Temp, Prec, Nqual, NRur, NUrb, Area, CNI_0, AntMoist_0,
                                  Grow_0, CNP_0,
                                  Imper, ISRR, ISRA, Qretention, PctAreaInfil, LoadRateImp,
@@ -39,6 +39,7 @@ def NetDisLoad(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0,
                     pass
     return result
 
+
 @memoize
 def NetDisLoad_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
                  Grow_0, CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil, Nqual, LoadRateImp,
@@ -46,7 +47,7 @@ def NetDisLoad_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_
     result = zeros((NYrs, 12, 31, Nqual))
     water = Water_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     adjurbanqtotal = AdjUrbanQTotal_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
-                                          Grow_0, CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil)
+                                      Grow_0, CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil)
     dissurfaceload = DisSurfLoad_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec, Nqual, NRur, NUrb, Area, CNI_0, AntMoist_0,
                                    Grow_0, CNP_0,
                                    Imper, ISRR, ISRA, Qretention, PctAreaInfil, LoadRateImp,

@@ -44,6 +44,7 @@ def AnimalN(NYrs, NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalD
                             + gr_stream_n[i])
     return result
 
+
 @memoize
 def AnimalN_f(NYrs, NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, NGAppNRate, Prec, DaysMonth,
               NGPctSoilIncRate, GRPctManApp, GRAppNRate, GRPctSoilIncRate, NGBarnNRate, AWMSNgPct, NgAWMSCoeffN,
@@ -62,5 +63,5 @@ def AnimalN_f(NYrs, NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, Anima
                           DaysMonth)
     gr_stream_n = reshape(
         repeat(GRStreamN_f(PctStreams, PctGrazing, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN),
-                  repeats=NYrs, axis=0), (NYrs, 12))
+               repeats=NYrs, axis=0), (NYrs, 12))
     return ng_lost_man_n + gr_lost_man_n + ng_lost_barn_n + gr_lost_barn_n + gr_loss_n + gr_stream_n

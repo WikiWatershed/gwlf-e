@@ -14,7 +14,6 @@ log = logging.getLogger(__name__)
 
 
 def InitialCalculations(z):
-
     # Obtain areas in Ha for Urban, Agricultural and Forested landuse
     for l in range(z.NRur):
         if z.Landuse[l] is LandUse.FOREST:

@@ -1,10 +1,10 @@
 from numpy import zeros
 
-from gwlfe.MultiUse_Fxns.Discharge.AdjUrbanQTotal import AdjUrbanQTotal
-from gwlfe.MultiUse_Fxns.Discharge.AdjUrbanQTotal import AdjUrbanQTotal_f
 from gwlfe.Input.LandUse.NLU import NLU
 from gwlfe.Input.WaterBudget.Water import Water
 from gwlfe.Input.WaterBudget.Water import Water_f
+from gwlfe.MultiUse_Fxns.Discharge.AdjUrbanQTotal import AdjUrbanQTotal
+from gwlfe.MultiUse_Fxns.Discharge.AdjUrbanQTotal import AdjUrbanQTotal_f
 
 try:
     from UrbLoadRed_inner_compiled import UrbLoadRed_inner
@@ -18,7 +18,7 @@ def UrbLoadRed(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Area, CNI_0,
     result = zeros((NYrs, 12, 31, 16, Nqual))
     water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     adjurbanqtotal = AdjUrbanQTotal(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
-                                      Grow_0, CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil)
+                                    Grow_0, CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil)
     nlu = NLU(NRur, NUrb)
     for Y in range(NYrs):
         for i in range(12):
@@ -44,8 +44,8 @@ def UrbLoadRed_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Area, CNI_
     if (Storm > 0):
         water = Water_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
         adjurbanqtotal = AdjUrbanQTotal_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
-                                            Grow_0, CNP_0,
-                                            Imper, ISRR, ISRA, Qretention, PctAreaInfil)
+                                          Grow_0, CNP_0,
+                                          Imper, ISRR, ISRA, Qretention, PctAreaInfil)
         nlu = NLU(NRur, NUrb)
         return UrbLoadRed_inner(NYrs, DaysMonth, Temp, NRur, Nqual, Storm, UrbBMPRed, water, adjurbanqtotal, nlu)
     else:

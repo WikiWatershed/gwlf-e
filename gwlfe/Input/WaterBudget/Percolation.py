@@ -1,9 +1,9 @@
 from numpy import zeros
 
+from gwlfe.Input.WaterBudget.ET import DailyET_f
 from gwlfe.Input.WaterBudget.Infiltration import Infiltration
 from gwlfe.Input.WaterBudget.Infiltration import Infiltration_f
 from gwlfe.Memoization import memoize
-from gwlfe.Input.WaterBudget.ET import DailyET_f
 
 try:
     from Percolation_inner_compiled import Percolation_inner

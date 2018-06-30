@@ -8,7 +8,7 @@ cc = CC('UnsatStor_inner_compiled')
 def UnsatStor_inner(NYrs, DaysMonth, MaxWaterCap, UnsatStor_0, infiltration, DailyET):
     unsatstor = zeros((NYrs, 12, 31))
     unsatstor_carryover = UnsatStor_0
-    et = zeros((NYrs,12,31))
+    et = zeros((NYrs, 12, 31))
     for Y in range(NYrs):
         for i in range(12):
             for j in range(DaysMonth[Y][i]):
@@ -25,4 +25,4 @@ def UnsatStor_inner(NYrs, DaysMonth, MaxWaterCap, UnsatStor_0, infiltration, Dai
                 else:
                     pass
                 unsatstor_carryover = unsatstor[Y][i][j]
-    return unsatstor,et,unsatstor_carryover
+    return unsatstor, et, unsatstor_carryover

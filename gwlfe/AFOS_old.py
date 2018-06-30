@@ -3,9 +3,9 @@ from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
 
-from MultiUse_Fxns.LossFactAdj import LossFactAdj_f
-from MultiUse_Fxns.Discharge.StreamFlow_1 import StreamFlow_1_f
 from Input.LandUse.TotAreaMeters import TotAreaMeters
+from MultiUse_Fxns.Discharge.StreamFlow_1 import StreamFlow_1_f
+from MultiUse_Fxns.LossFactAdj import LossFactAdj_f
 from MultiUse_Fxns.Runoff.UrbRunoffLiter import UrbRunoffLiter_f
 
 """
@@ -116,11 +116,11 @@ def AnimalOperations(z, Y):
         # Total animal related losses
 
         z.AnimalP[Y][i] = ((z.NGLostManP[Y][i]
-                           + z.GRLostManP[Y][i]
-                           + z.NGLostBarnP[Y][i]
-                           + z.GRLostBarnP[Y][i]
-                           + z.GRLossP[Y][i]
-                           + z.GRStreamP[i])
+                            + z.GRLostManP[Y][i]
+                            + z.NGLostBarnP[Y][i]
+                            + z.GRLostBarnP[Y][i]
+                            + z.GRLossP[Y][i]
+                            + z.GRStreamP[i])
                            - ((z.NGLostManP[Y][i] + z.NGLostBarnP[Y][i]) * z.PhytasePct * z.PhytaseCoeff))
 
         z.AnimalFC[Y][i] = (z.NGLostManFC[Y][i]
@@ -157,9 +157,9 @@ def AnimalOperations(z, Y):
             z.UrbOrgs[Y][i] = (
                     UrbRunoffLiter_f(z.NYrs, z.DaysMonth, z.InitSnow_0, z.Temp, z.Prec, z.NRur, z.NUrb, z.Area,
                                      z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA)[Y][i]
-                               * (z.UrbEMC * 10)
-                               * (1 - z.WuDieoff)
-                               * (1 - z.InstreamDieoff))
+                    * (z.UrbEMC * 10)
+                    * (1 - z.WuDieoff)
+                    * (1 - z.InstreamDieoff))
             z.WildOrgs[Y][i] = (z.WildOrgsDay
                                 * z.DaysMonth[Y][i]
                                 * z.WildDensity
@@ -174,8 +174,11 @@ def AnimalOperations(z, Y):
                              + z.WildOrgs[Y][i]
                              + z.AnimalFC[Y][i])
 
-        z.CMStream[Y][i] = (StreamFlow_1_f(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
-                z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0, z.RecessionCoef, z.SeepCoef)[Y][i] / 100) * TotAreaMeters(z.NRur, z.NUrb, z.Area)
+        z.CMStream[Y][i] = (StreamFlow_1_f(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area,
+                                           z.CNI_0, z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper,
+                                           z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV, z.PcntET, z.DayHrs, z.MaxWaterCap,
+                                           z.SatStor_0, z.RecessionCoef, z.SeepCoef)[Y][i] / 100) * TotAreaMeters(
+            z.NRur, z.NUrb, z.Area)
 
         if z.CMStream[Y][i] > 0:
             z.OrgConc[Y][i] = (z.TotalOrgs[Y][i] / (z.CMStream[Y][i] * 1000)) / 10

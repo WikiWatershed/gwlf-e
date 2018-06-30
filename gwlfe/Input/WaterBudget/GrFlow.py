@@ -1,8 +1,8 @@
-from gwlfe.Timer import time_function
 from numpy import zeros
-from gwlfe.Memoization import memoize
+
 from gwlfe.Input.WaterBudget.Percolation import Percolation
 from gwlfe.Input.WaterBudget.Percolation import Percolation_f
+from gwlfe.Memoization import memoize
 
 try:
     from DeepSeep_inner_compiled import DeepSeep_inner
@@ -17,7 +17,8 @@ def GrFlow(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, Ant
     result = zeros((NYrs, 12, 31))
     deepseep = zeros((NYrs, 12, 31))
     satstor = zeros((NYrs, 12, 31))
-    percolation = Percolation(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0,
+    percolation = Percolation(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0,
+                              CNP_0,
                               Imper, ISRR, ISRA, CN, UnsatStor_0, KV, PcntET, DayHrs, MaxWaterCap)
     satstor_carryover = SatStor_0
     for Y in range(NYrs):
@@ -31,6 +32,7 @@ def GrFlow(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, Ant
                     satstor[Y][i][j] = 0
                 satstor_carryover = satstor[Y][i][j]
     return result
+
 
 @memoize
 def GrFlow_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0, Imper,

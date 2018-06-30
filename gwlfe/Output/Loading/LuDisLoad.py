@@ -1,12 +1,12 @@
 from numpy import sum
 from numpy import zeros
 
+from gwlfe.Input.LandUse.NLU import NLU
+from gwlfe.Input.WaterBudget.Water import Water
+from gwlfe.Memoization import memoize
 from gwlfe.MultiUse_Fxns.Discharge.AdjUrbanQTotal import AdjUrbanQTotal
 from gwlfe.Output.Loading.DisSurfLoad import DisSurfLoad
 from gwlfe.Output.Loading.DisSurfLoad import DisSurfLoad_f
-from gwlfe.Memoization import memoize
-from gwlfe.Input.LandUse.NLU import NLU
-from gwlfe.Input.WaterBudget.Water import Water
 
 
 @memoize
@@ -17,7 +17,7 @@ def LuDisLoad(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, 
     water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     nlu = NLU(NRur, NUrb)
     adjurbanqtotal = AdjUrbanQTotal(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
-                                        Grow_0, CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil)
+                                    Grow_0, CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil)
     dissurfaceload = DisSurfLoad(NYrs, DaysMonth, InitSnow_0, Temp, Prec, Nqual, NRur, NUrb, Area, CNI_0, AntMoist_0,
                                  Grow_0, CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil, LoadRateImp, LoadRatePerv,
                                  Storm, UrbBMPRed, DisFract, FilterWidth, PctStrmBuf)
@@ -41,5 +41,5 @@ def LuDisLoad_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec, Nqual, NRur, NUrb, Area
                 Grow_0, CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil, LoadRateImp, LoadRatePerv,
                 Storm, UrbBMPRed, DisFract, FilterWidth, PctStrmBuf):
     return sum(DisSurfLoad_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec, Nqual, NRur, NUrb, Area, CNI_0, AntMoist_0,
-                                Grow_0, CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil, LoadRateImp, LoadRatePerv,
-                                Storm, UrbBMPRed, DisFract, FilterWidth, PctStrmBuf), axis=(1, 2))
+                             Grow_0, CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil, LoadRateImp, LoadRatePerv,
+                             Storm, UrbBMPRed, DisFract, FilterWidth, PctStrmBuf), axis=(1, 2))

@@ -2,6 +2,7 @@ import hashlib
 
 from numpy import ndarray
 
+
 def memoize_with_args(f):
     class memodict():
         def __init__(self, f):

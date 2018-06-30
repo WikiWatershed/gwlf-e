@@ -1,7 +1,7 @@
 from numpy import zeros
 
-from gwlfe.Memoization import memoize
 from gwlfe.Input.LandUse.NLU import NLU
+from gwlfe.Memoization import memoize
 
 
 @memoize

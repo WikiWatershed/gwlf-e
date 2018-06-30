@@ -4,20 +4,19 @@ from numpy import reshape
 from numpy import where
 from numpy import zeros
 
-from gwlfe.MultiUse_Fxns.Discharge.AdjUrbanQTotal import AdjUrbanQTotal
-from gwlfe.MultiUse_Fxns.Discharge.AdjUrbanQTotal import AdjUrbanQTotal_f
-from gwlfe.Input.LandUse.LU_1 import LU_1
-# from Timer import time_function
-from gwlfe.Memoization import memoize
-from gwlfe.Input.LandUse.NLU import NLU
 from gwlfe.BMPs.Stream.UrbLoadRed import UrbLoadRed
 from gwlfe.BMPs.Stream.UrbLoadRed import UrbLoadRed_f
+from gwlfe.Input.LandUse.LU_1 import LU_1
+from gwlfe.Input.LandUse.NLU import NLU
+from gwlfe.Input.WaterBudget.Water import Water
+from gwlfe.Input.WaterBudget.Water import Water_f
+from gwlfe.Memoization import memoize
+from gwlfe.MultiUse_Fxns.Discharge.AdjUrbanQTotal import AdjUrbanQTotal
+from gwlfe.MultiUse_Fxns.Discharge.AdjUrbanQTotal import AdjUrbanQTotal_f
 from gwlfe.MultiUse_Fxns.Runoff.WashImperv import WashImperv
 from gwlfe.MultiUse_Fxns.Runoff.WashImperv import WashImperv_f
 from gwlfe.MultiUse_Fxns.Runoff.WashPerv import WashPerv
 from gwlfe.MultiUse_Fxns.Runoff.WashPerv import WashPerv_f
-from gwlfe.Input.WaterBudget.Water import Water
-from gwlfe.Input.WaterBudget.Water import Water_f
 
 
 @memoize
@@ -26,8 +25,8 @@ def SurfaceLoad(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Area, CNI_0
     result = zeros((NYrs, 12, 31, 16, Nqual))
     water = Water(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     adjurbanqtotal = AdjUrbanQTotal(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
-                                        Grow_0, CNP_0,
-                                        Imper, ISRR, ISRA, Qretention, PctAreaInfil)
+                                    Grow_0, CNP_0,
+                                    Imper, ISRR, ISRA, Qretention, PctAreaInfil)
     nlu = NLU(NRur, NUrb)
     washimperv = WashImperv(NYrs, DaysMonth, InitSnow_0, Temp, Prec, CNI_0, AntMoist_0, Grow_0, NRur, NUrb)
     washperv = WashPerv(NYrs, DaysMonth, InitSnow_0, Temp, Prec, CNP_0, AntMoist_0, Grow_0, NRur, NUrb)
@@ -64,6 +63,7 @@ def SurfaceLoad(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Area, CNI_0
                     pass
     return result
 
+
 @memoize
 def SurfaceLoad_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0, Grow_0, CNP_0,
                   Imper, ISRR, ISRA, Qretention, PctAreaInfil, Nqual, LoadRateImp,
@@ -72,8 +72,7 @@ def SurfaceLoad_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Area, CNI
     result = zeros((NYrs, 12, 31, nlu - NRur, Nqual))
     water = Water_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec)
     adjurbanqtotal = AdjUrbanQTotal_f(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area, CNI_0, AntMoist_0,
-                                          Grow_0, CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil)
-    # print(np.where((Temp > 0) & (water > 0.01) & (adjurbanqtotal_1 > 0.001)).shape)
+                                      Grow_0, CNP_0, Imper, ISRR, ISRA, Qretention, PctAreaInfil)
     nonzeroday = where((Temp > 0) & (water > 0.01) & (adjurbanqtotal > 0.001))
     washimperv = reshape(
         repeat(
@@ -90,9 +89,7 @@ def SurfaceLoad_f(NYrs, DaysMonth, InitSnow_0, Temp, Prec, NRur, NUrb, Area, CNI
                               CNP_0,
                               Imper, ISRR, ISRA, Qretention, PctAreaInfil, Nqual, Storm, UrbBMPRed)[:, :, :, NRur:]
 
-    # area = np.reshape(np.repeat(Area, repeats=NYrs * 12 * 31), (NYrs, 12, 31, nlu))[NRur:]
     temp = reshape(repeat(Imper[NRur:] * (1 - ISRR) * (1 - ISRA), repeats=Nqual, axis=0), (-1, Nqual))
-    # print((washimperv * LoadRateImp).shape)
     # making an assumption that Area cannot be negative. Therefor where area = 0 result will be <= 0 and will be set to zero before returned (eliminating an if)
     result[nonzeroday] = (washimperv[nonzeroday] * LoadRateImp[NRur:] * temp +
                           washperv[nonzeroday] * LoadRatePerv[NRur:] * (1 - temp)) * reshape(

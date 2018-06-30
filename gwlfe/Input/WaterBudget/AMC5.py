@@ -2,9 +2,9 @@ import copy
 
 from numpy import zeros
 
-from gwlfe.Memoization import memoize
 # from Timer import time_function
 from gwlfe.Input.WaterBudget.Water import Water, Water_f
+from gwlfe.Memoization import memoize
 
 try:
     from AMC5_yesterday_inner_compiled import AMC5_yesterday_inner
@@ -35,6 +35,7 @@ def AMC5(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0):
                 result[Y][i][j] = AMC5  # TODO: why did this fix the mismatch of amc5?
     return result
 
+
 def AMC5_1(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0):
     result = zeros((NYrs, 12, 31))
     AntMoist1 = zeros((5,))
@@ -54,6 +55,7 @@ def AMC5_1(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0):
                 AntMoist1[1] = AntMoist1[0]
                 AntMoist1[0] = water[Y][i][j]
     return result
+
 
 @memoize
 def AMC5_yesterday(NYrs, DaysMonth, Temp, Prec, InitSnow_0, AntMoist_0):

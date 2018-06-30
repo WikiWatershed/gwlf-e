@@ -1,8 +1,8 @@
-# from Timer import time_function
+from numpy import zeros
+
+from gwlfe.Memoization import memoize
 from gwlfe.MultiUse_Fxns.Erosion.LE import LE
 from gwlfe.MultiUse_Fxns.Erosion.LE import LE_f
-from gwlfe.Memoization import memoize
-from numpy import zeros
 
 
 @memoize

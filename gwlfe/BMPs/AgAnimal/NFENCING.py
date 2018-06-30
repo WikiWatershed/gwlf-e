@@ -11,7 +11,7 @@ def NFENCING(PctStreams, PctGrazing, GrazingAnimal_0, NumAnimals, AvgAnimalWt, A
     return result
 
 
-def NFENCING_f(PctStreams, PctGrazing, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN,n42,n45,n69):
+def NFENCING_f(PctStreams, PctGrazing, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, n42, n45, n69):
     if n42 > 0:  # based on the code, n42 is always > 0 (may not need to check
         grsn = AvGRStreamN_f(PctStreams, PctGrazing, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN)
         return (n45 / n42) * n69 * grsn

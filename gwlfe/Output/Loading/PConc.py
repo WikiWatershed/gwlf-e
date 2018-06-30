@@ -4,6 +4,7 @@ from numpy import zeros
 from gwlfe.Input.LandUse.NLU import NLU
 from gwlfe.Memoization import memoize
 
+
 def PConc(NRur, NUrb, PhosConc, ManPhos, ManuredAreas, FirstManureMonth, LastManureMonth, FirstManureMonth2,
           LastManureMonth2):
     nlu = NLU(NRur, NUrb)
@@ -19,13 +20,14 @@ def PConc(NRur, NUrb, PhosConc, ManPhos, ManuredAreas, FirstManureMonth, LastMan
                 result[i][l] = ManPhos[l]
     return result
 
+
 @memoize
 def PConc_f(NRur, NUrb, PhosConc, ManPhos, ManuredAreas, FirstManureMonth, LastManureMonth, FirstManureMonth2,
-          LastManureMonth2):
-    if(FirstManureMonth < 0 or FirstManureMonth2 < 0 or LastManureMonth < 0 or LastManureMonth2 < 0):
+            LastManureMonth2):
+    if (FirstManureMonth < 0 or FirstManureMonth2 < 0 or LastManureMonth < 0 or LastManureMonth2 < 0):
         return repeat(PhosConc[None, :], 12, axis=0)
     else:
         result = repeat(PhosConc[None, :], 12, axis=0)
-        result[FirstManureMonth:LastManureMonth+1, :ManuredAreas] = ManPhos
-        result[FirstManureMonth2:LastManureMonth2+1, :ManuredAreas] = ManPhos
+        result[FirstManureMonth:LastManureMonth + 1, :ManuredAreas] = ManPhos
+        result[FirstManureMonth2:LastManureMonth2 + 1, :ManuredAreas] = ManPhos
         return result

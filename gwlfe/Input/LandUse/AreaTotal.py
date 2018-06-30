@@ -1,6 +1,8 @@
-from gwlfe.Memoization import memoize
-from gwlfe.Input.LandUse.NLU import NLU
 from numpy import sum
+
+from gwlfe.Input.LandUse.NLU import NLU
+from gwlfe.Memoization import memoize
+
 
 @memoize
 def AreaTotal(NRur, NUrb, Area):
@@ -11,6 +13,7 @@ def AreaTotal(NRur, NUrb, Area):
     for l in range(NRur, nlu):
         result += Area[l]
     return result
+
 
 @memoize
 def AreaTotal_f(Area):
