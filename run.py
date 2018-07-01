@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
-from __future__ import division
 
-import sys
 import json
 import logging
+import sys
 import time
-
+import argparse
 from gwlfe import gwlfe, Parser
+
 
 def main():
     log = logging.getLogger('gwlfe')
@@ -18,20 +19,25 @@ def main():
     ch = logging.StreamHandler()
     log.addHandler(ch)
 
-    gms_filename = sys.argv[1]
+    parser = argparse.ArgumentParser(description='Run the GWLF-E model for a specified gms file.')
+    parser.add_argument('input', type=str, help='Input GMS file')
+    parser.add_argument('output', type=str, nargs="?", help='Optional output file to write result of model run')
+
+    args = parser.parse_args()
+
+    gms_filename = args.input
 
     fp = open(gms_filename, 'r')
     z = Parser.GmsReader(fp).read()
     start = time.time()
-    result,z = gwlfe.run(z)
-    print(time.time()-start)
-    print(json.dumps(result, indent=4))
-    if(len(sys.argv) == 3):#gms out filename is sepcified so write
-        gmsout_filename = sys.argv[2]
-        log.debug("Writing GMS output file (%s)"%(gmsout_filename))
-        with open(gmsout_filename,"w") as file:
+    result, z = gwlfe.run(z)
+    if (args.output != None):  # gms out filename is sepcified so write
+        gmsout_filename = args.output
+        log.debug("Writing GMS output file (%s)" % (gmsout_filename))
+        with open(gmsout_filename, "w") as file:
             test = Parser.GmsWriter(file)
             test.write(z)
+
 
 if __name__ == '__main__':
     main()

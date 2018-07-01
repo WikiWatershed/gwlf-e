@@ -4,6 +4,9 @@ from numpy import ndarray
 
 
 def memoize_with_args(f):
+    """This memoization function checks to ensure that the called arguments are equal before returning memoized result.
+    This is patched in for testing to ensure that there is less chance of unitentional coupling, but it comes at the
+    expense of some performance"""
     class memodict():
         def __init__(self, f):
             self.f = f
@@ -30,6 +33,8 @@ def memoize_with_args(f):
 #     return f
 
 def memoize(f):
+    """This memoization function does not check what arguments the function is called with. This requires that the model
+    be reitinitalized between each run, but saves a significant amount of time on a single run"""
     class memodict(dict):
         def __init__(self, f):
             self.f = f
