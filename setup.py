@@ -29,7 +29,6 @@ with open(path.join(path.abspath(path.dirname(__file__)),
 tests_require = [
     'nose == 1.3.4',
     'coverage == 4.0.3'
-    'numba == 0.38.0'
 ]
 
 setup(
@@ -52,7 +51,8 @@ setup(
     keywords='gwlf-e watershed hydrology',
     packages=find_packages(exclude=['tests']),
     install_requires=[
-        'numpy == 1.14.3'
+        'numpy == 1.14.3',
+        'numba == 0.38.0'
     ],
     extras_require={
         'dev': [],
