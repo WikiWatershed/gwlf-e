@@ -13,5 +13,6 @@ class gms5_TestOutput(TestOutput):
     """
     __test__ = True
 
-    def setUp(self):
-        super(gms5_TestOutput, self).setUp('GMS5.gms', 'GMS5_output.json')
+    @classmethod
+    def setUpClass(self):
+        super(gms5_TestOutput, self).setUpClass('GMS5.gms', 'GMS5_output.json')

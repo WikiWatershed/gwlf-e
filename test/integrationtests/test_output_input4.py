@@ -17,6 +17,6 @@ class input_4_TestOutput(TestOutput):
     static output.
     """
     __test__ = True
-
-    def setUp(self):
-        super(input_4_TestOutput, self).setUp('input_4.gms', 'input_4_output.json')
+    @classmethod
+    def setUpClass(self):
+        super(input_4_TestOutput, self).setUpClass('input_4.gms', 'input_4_output.json')

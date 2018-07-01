@@ -18,7 +18,8 @@ class TestOutput(unittest.TestCase):
     """
     __test__ = False
 
-    def setUp(self, input_file_name, output_file_name):
+    @classmethod
+    def setUpClass(self, input_file_name, output_file_name):
         input_file = open('integrationtests/' + input_file_name, 'r')
         self.z = Parser.GmsReader(input_file).read()
         self.generated_output, _ = gwlfe.run(self.z)

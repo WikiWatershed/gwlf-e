@@ -13,6 +13,7 @@ class elm_fork_TestOutput(TestOutput):
     """
     __test__ = True
 
-    def setUp(self):
-        super(elm_fork_TestOutput, self).setUp('underflow_exception_elm_fork_red.gms',
+    @classmethod
+    def setUpClass(self):
+        super(elm_fork_TestOutput, self).setUpClass('underflow_exception_elm_fork_red.gms',
                                                'underflow_exception_elm_fork_red_output.json')
