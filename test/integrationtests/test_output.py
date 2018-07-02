@@ -20,10 +20,10 @@ class TestOutput(unittest.TestCase):
 
     @classmethod
     def setUpClass(self, input_file_name, output_file_name):
-        input_file = open('integrationtests/' + input_file_name, 'r')
+        input_file = open(input_file_name, 'r')
         self.z = Parser.GmsReader(input_file).read()
         self.generated_output, _ = gwlfe.run(self.z)
-        self.static_output = json.load(open('integrationtests/' + output_file_name, 'r'))
+        self.static_output = json.load(open(output_file_name, 'r'))
 
     def test_constants(self):
         constant_keys = ["MeanFlow", "MeanFlowPerSecond", "AreaTotal"]

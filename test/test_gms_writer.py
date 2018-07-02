@@ -15,7 +15,7 @@ class TestGMSWriter(unittest.TestCase):
         Test that GmsWriter is able to replicate the sample GMS created
         from MapShed.
         """
-        input_file = open('unittests/input_4.gms', 'r')
+        input_file = open('input_4.gms', 'r')
         z = Parser.GmsReader(input_file).read()
 
         output = StringIO()
