@@ -4,6 +4,7 @@ from __future__ import print_function
 from __future__ import unicode_literals
 
 import json
+import os
 import unittest
 
 import numpy as np
@@ -20,10 +21,13 @@ class TestOutput(unittest.TestCase):
 
     @classmethod
     def setUpClass(self, input_file_name, output_file_name):
-        input_file = open(input_file_name, 'r')
+        self.basepath = os.path.abspath(os.path.join(__file__, '../'))
+        inputfile = os.path.join(self.basepath,input_file_name)
+        outputfile = os.path.join(self.basepath,output_file_name)
+        input_file = open(inputfile, 'r')
         self.z = Parser.GmsReader(input_file).read()
         self.generated_output, _ = gwlfe.run(self.z)
-        self.static_output = json.load(open(output_file_name, 'r'))
+        self.static_output = json.load(open(outputfile, 'r'))
 
     def test_constants(self):
         constant_keys = ["MeanFlow", "MeanFlowPerSecond", "AreaTotal"]

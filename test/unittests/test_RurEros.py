@@ -9,7 +9,7 @@ class TestRurEros(VariableUnitTest):
     def test_elementwise_RurEros(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            np.load("unittests/RurEros.npy"),
+            np.load(self.basepath + "/RurEros.npy"),
             RurEros.RurEros_f(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.Acoef, z.NRur, z.KF, z.LS, z.C, z.P,
                               z.Area), decimal=7)
 

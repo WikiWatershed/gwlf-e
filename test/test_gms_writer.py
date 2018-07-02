@@ -1,4 +1,5 @@
 import csv
+import os
 import unittest
 from StringIO import StringIO
 from itertools import izip
@@ -15,16 +16,17 @@ class TestGMSWriter(unittest.TestCase):
         Test that GmsWriter is able to replicate the sample GMS created
         from MapShed.
         """
-        input_file = open('input_4.gms', 'r')
+        input_file = open(os.path.abspath(os.path.join(__file__, '../', 'input_4.gms')), 'r')
         z = Parser.GmsReader(input_file).read()
 
         output = StringIO()
         _, output_z = gwlfe.run(z)
         output_writer = Parser.GmsWriter(output)
         output_writer.write(output_z)
-        variable_names = csv.reader(open('gms_variables.csv', 'r'), delimiter=",")
+        variable_names = csv.reader(open(os.path.abspath(os.path.join(__file__, '../', 'gms_variables.csv')), 'r'),
+                                    delimiter=",")
 
-        ground_truth = csv.reader(open('input_4.gmsout', 'r'), delimiter=",")
+        ground_truth = csv.reader(open(os.path.abspath(os.path.join(__file__, '../', 'input_4.gmsout')), 'r'), delimiter=",")
         output.seek(0)
         output_parsed = csv.reader(output, delimiter=",")
         error = False

@@ -5,13 +5,9 @@ import numpy as np
 
 from gwlfe import Parser
 from gwlfe.Input.WaterBudget import AntMoist
+from VariableUnittest import VariableUnitTest
 
-
-class TestAntMoist(unittest.TestCase):
-    def setUp(self):
-        input_file = open('unittests/input_4.gms', 'r')
-        self.z = Parser.GmsReader(input_file).read()
-
+class TestAntMoist(VariableUnitTest):
     @skip("not ready")
     def test_AntMoist(self):
         z = self.z

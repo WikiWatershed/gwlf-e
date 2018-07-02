@@ -9,7 +9,7 @@ class TestErosiv(VariableUnitTest):
     def test_elementwise_Erosiv(self):
         z = self.z
         np.testing.assert_array_almost_equal(
-            np.load("unittests/Erosiv.npy"),
+            np.load(self.basepath + "/Erosiv.npy"),
             Erosiv.Erosiv(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.Acoef), decimal=7)
 
     def test_Erosiv(self):
