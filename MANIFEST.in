@@ -3,6 +3,5 @@ include *.md
 include *.py
 include LICENSE
 include *.txt
-include *.csv
 
 recursive-include test *
