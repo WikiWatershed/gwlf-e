@@ -6,7 +6,7 @@ env/
 *,cover
 htmlcov/
 test/compare.csv
-
+run.build/
 build/
 dist/
 *.egg-info/
@@ -18,3 +18,8 @@ __pycache__/
 .tox
 .cache
 .eggs
+**.npy
+**.csv
+**.dot
+**.DS_Store
+**.orig

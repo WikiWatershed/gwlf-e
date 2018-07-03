@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
+from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
-from __future__ import division
 
+import json
 from calendar import monthrange
 from decimal import Decimal
-import json
 
-import numpy as np
-
+from numpy import int
+from numpy import zeros
+from numpy import ndarray
 
 class DataModel(object):
     def __init__(self, data=None):
@@ -37,19 +38,19 @@ class DataModel(object):
             'NLU': NLU,
             'NAnimals': NAnimals,
 
-            'Landuse': np.zeros(NLU, dtype=object),
-            'Area': np.zeros(NLU),
-            'CN': np.zeros(NLU),
-            'KF': np.zeros(NLU),
-            'LS': np.zeros(NLU),
-            'C': np.zeros(NLU),
-            'P': np.zeros(NLU),
+            'Landuse': zeros(NLU, dtype=object),
+            'Area': zeros(NLU),
+            'CN': zeros(NLU),
+            'KF': zeros(NLU),
+            'LS': zeros(NLU),
+            'C': zeros(NLU),
+            'P': zeros(NLU),
 
-            'NumNormalSys': np.zeros(12, dtype=int),
-            'NumPondSys': np.zeros(12),
-            'NumShortSys': np.zeros(12),
-            'NumDischargeSys': np.zeros(12),
-            'NumSewerSys': np.zeros(12),
+            'NumNormalSys': zeros(12, dtype=int),
+            'NumPondSys': zeros(12),
+            'NumShortSys': zeros(12),
+            'NumDischargeSys': zeros(12),
+            'NumSewerSys': zeros(12),
 
             'SEDFEN': 0,
             'NFEN': 0,
@@ -104,8 +105,7 @@ class DataModel(object):
 
             'Storm': 0,
             'CSNAreaSim': 0,
-            'CSNDevType': 'None',
-            'AdjUrbanQTotal': 0,
+            'CSNDevType': 'None'
         }
 
     def date_guides(self):
@@ -119,8 +119,8 @@ class DataModel(object):
                           'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
             if 'DaysMonth' not in model:
-                output['DaysMonth'] = np.zeros((year_range, 12),
-                                               dtype=np.int)
+                output['DaysMonth'] = zeros((year_range, 12),
+                                            dtype=int)
                 for y in range(year_range):
                     year = begyear + y
                     for m in range(12):
@@ -144,7 +144,7 @@ class DataModel(object):
 
 class NumpyAwareJSONEncoder(json.JSONEncoder):
     def default(self, obj):
-        if isinstance(obj, np.ndarray):
+        if isinstance(obj, ndarray):
             return obj.tolist()
         elif isinstance(obj, Decimal):
             return float(obj)
