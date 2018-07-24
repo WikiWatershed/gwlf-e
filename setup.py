@@ -51,8 +51,16 @@ setup(
     keywords='gwlf-e watershed hydrology',
     packages=find_packages(exclude=['tests']),
     install_requires=[
-        'numpy == 1.14.3',
-        'numba == 0.38.0'
+        'certifi==2018.4.16',
+        'enum34==1.1.6',
+        'funcsigs==1.0.2',
+        'llvmlite==0.23.2',
+        'mock==2.0.0',
+        'nose==1.3.7',
+        'numba==0.38.1',
+        'numpy==1.14.5',
+        'singledispatch==3.4.0.3',
+        'six==1.11.0',
     ],
     extras_require={
         'dev': [],
