@@ -1278,7 +1278,47 @@ class GmsWriter(object):
     def __init__(self, fp):
         self.fp = csv.writer(fp)
 
-    def write(self, z):
+    def writeOutput(self, z):
+        unsatstor_carryover = UnSatStorCarryover_f(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb,
+                                                   z.Area, z.CNI_0,
+                                                   z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN,
+                                                   z.UnsatStor_0, z.KV,
+                                                   z.PcntET, z.DayHrs, z.MaxWaterCap)
+        satstor_carryover = SatStorCarryOver_f(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb,
+                                               z.Area, z.CNI_0,
+                                               z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN,
+                                               z.UnsatStor_0, z.KV,
+                                               z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0, z.RecessionCoef,
+                                               z.SeepCoef)
+        antmoist = AntMoist(z.NYrs, z.DaysMonth, z.Temp, z.Prec, z.InitSnow_0, z.AntMoist_0)
+        cni = CNI_f(z.NRur, z.NUrb, z.CNI_0)
+        cnp = CNP_f(z.NRur, z.NUrb, z.CNP_0)
+        n7b_2 = N7b_2(z.NYrs, z.NGPctManApp, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN,
+                      z.NGAppNRate,
+                      z.Prec,
+                      z.DaysMonth,
+                      z.NGPctSoilIncRate, z.GRPctManApp, z.GRAppNRate, z.GRPctSoilIncRate, z.NGBarnNRate, z.AWMSNgPct,
+                      z.NgAWMSCoeffN,
+                      z.RunContPct, z.RunConCoeffN, z.PctGrazing, z.GRBarnNRate, z.AWMSGrPct, z.GrAWMSCoeffN,
+                      z.PctStreams,
+                      z.GrazingNRate,
+                      z.n41b,
+                      z.n85h, z.n41d, z.n85j, z.n41f, z.n85l, z.n42, z.n45, z.n69, z.n43, z.n64)
+        grlbn_2 = GRLBN_2(z.NYrs, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN, z.GRPctManApp,
+                          z.PctGrazing, z.GRBarnNRate, z.Prec, z.DaysMonth, z.AWMSGrPct, z.GrAWMSCoeffN, z.RunContPct,
+                          z.RunConCoeffN)
+        ng_lost_barn_n_sum = NGLostBarnNSum(z.NYrs, z.NGPctManApp, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt,
+                                            z.AnimalDailyN, z.NGBarnNRate, z.Prec, z.DaysMonth, z.AWMSNgPct,
+                                            z.NgAWMSCoeffN, z.RunContPct, z.RunConCoeffN)
+        av_gr_stream_n = AvGRStreamN_f(z.PctStreams, z.PctGrazing, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt,
+                                       z.AnimalDailyN)
+        init_ng_n = InitNgN_f(z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN)
+        init_gr_n = InitGrN_f(z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN)
+        self.write(z, unsatstor_carryover, satstor_carryover, antmoist, cni, cnp, n7b_2, grlbn_2, ng_lost_barn_n_sum,
+                   av_gr_stream_n, init_ng_n, init_gr_n)
+
+    def write(self, z, UnSatStorCarryover, SatStorCarryOver, AntMoist, CNI, CNP, N7b_2, GRLBN_2, NGLostBarnNSum,
+              AvGRStreamN, InitNgN, InitGrN):
         self.writerow([
             z.NRur,
             z.NUrb,
@@ -1289,12 +1329,8 @@ class GmsWriter(object):
             z.TranVersionNo,
             z.RecessionCoef,
             z.SeepCoef,
-            UnSatStorCarryover_f(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
-                                 z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV,
-                                 z.PcntET, z.DayHrs, z.MaxWaterCap),
-            SatStorCarryOver_f(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb, z.Area, z.CNI_0,
-                               z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN, z.UnsatStor_0, z.KV,
-                               z.PcntET, z.DayHrs, z.MaxWaterCap, z.SatStor_0, z.RecessionCoef, z.SeepCoef),
+            UnSatStorCarryover,
+            SatStorCarryOver,
             z.InitSnow_0,
             z.SedDelivRatio_0,
             z.MaxWaterCap,
@@ -1317,7 +1353,7 @@ class GmsWriter(object):
         ])
 
         for i in range(5):
-            self.writerow([AntMoist(z.NYrs, z.DaysMonth, z.Temp, z.Prec, z.InitSnow_0, z.AntMoist_0)[i]])
+            self.writerow([AntMoist[i]])
 
         for i in range(12):
             self.writerow([
@@ -1348,8 +1384,8 @@ class GmsWriter(object):
                 z.Area[i],
                 z.Imper[i],
 
-                CNI_f(z.NRur, z.NUrb, z.CNI_0)[1][i],
-                CNP_f(z.NRur, z.NUrb, z.CNP_0)[1][i],
+                CNI[1][i],
+                CNP[1][i],
                 z.TotSusSolids[i],
             ])
 
@@ -1461,17 +1497,7 @@ class GmsWriter(object):
             z.n6c,
             z.n6d,
             z.n7,
-            N7b_2(z.NYrs, z.NGPctManApp, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN, z.NGAppNRate,
-                  z.Prec,
-                  z.DaysMonth,
-                  z.NGPctSoilIncRate, z.GRPctManApp, z.GRAppNRate, z.GRPctSoilIncRate, z.NGBarnNRate, z.AWMSNgPct,
-                  z.NgAWMSCoeffN,
-                  z.RunContPct, z.RunConCoeffN, z.PctGrazing, z.GRBarnNRate, z.AWMSGrPct, z.GrAWMSCoeffN, z.PctStreams,
-                  z.GrazingNRate,
-                  z.n41b,
-                  z.n85h, z.n41d, z.n85j, z.n41f, z.n85l, z.n42, z.n45, z.n69, z.n43, z.n64)[-1]
-            # get the carried over value
-            ,
+            N7b_2[-1],  # get the carried over value
             z.n8,
             z.n9,
             z.n10,
@@ -1574,19 +1600,15 @@ class GmsWriter(object):
             z.n42b,
             z.n42c,
             z.n43,
-            GRLBN_2(z.NYrs, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN, z.GRPctManApp, z.PctGrazing,
-                    z.GRBarnNRate,
-                    z.Prec, z.DaysMonth, z.AWMSGrPct, z.GrAWMSCoeffN, z.RunContPct, z.RunConCoeffN)[-1],
-            NGLostBarnNSum(z.NYrs, z.NGPctManApp, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN,
-                           z.NGBarnNRate,
-                           z.Prec, z.DaysMonth, z.AWMSNgPct, z.NgAWMSCoeffN, z.RunContPct, z.RunConCoeffN)[-1],
+            GRLBN_2[-1],
+            NGLostBarnNSum[-1],
             z.GRLBP,
             z.NGLBP,
             z.NGLManP,
             z.NGLBFC,
             z.GRLBFC,
             z.GRSFC,
-            AvGRStreamN_f(z.PctStreams, z.PctGrazing, z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN),
+            AvGRStreamN,
             z.GRSP,
         ])
 
@@ -1896,13 +1918,13 @@ class GmsWriter(object):
         ])
 
         self.writerow([
-            InitNgN_f(z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN),
+            InitNgN,
             z.InitNgP,
             z.InitNgFC,
             z.NGAppSum,
             z.NGBarnSum,
             z.NGTotSum,
-            InitGrN_f(z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN),
+            InitGrN,
             z.InitGrP,
             z.InitGrFC,
             z.GRAppSum,
