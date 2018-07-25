@@ -27,7 +27,7 @@ with open(path.join(path.abspath(path.dirname(__file__)),
     long_description = f.read()
 
 tests_require = [
-    'nose == 1.3.4',
+    'nose == 1.3.7',
     'coverage == 4.0.3'
 ]
 
