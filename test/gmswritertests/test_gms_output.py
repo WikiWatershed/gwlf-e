@@ -12,8 +12,7 @@ from gwlfe import gwlfe
 
 
 
-class TestGMSWriterOutput(unittest.TestCase):
-    __test__ = False
+class TestGMSOutput(unittest.TestCase):
 
     @classmethod
     def setUpClass(self):

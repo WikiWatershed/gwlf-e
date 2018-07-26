@@ -1279,6 +1279,7 @@ class GmsWriter(object):
         self.fp = csv.writer(fp)
 
     def writeOutput(self, z):
+        """This function writes the result of running the model to a GMS file for later analysis"""
         unsatstor_carryover = UnSatStorCarryover_f(z.NYrs, z.DaysMonth, z.Temp, z.InitSnow_0, z.Prec, z.NRur, z.NUrb,
                                                    z.Area, z.CNI_0,
                                                    z.AntMoist_0, z.Grow_0, z.CNP_0, z.Imper, z.ISRR, z.ISRA, z.CN,
@@ -1314,11 +1315,24 @@ class GmsWriter(object):
                                        z.AnimalDailyN)
         init_ng_n = InitNgN_f(z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN)
         init_gr_n = InitGrN_f(z.GrazingAnimal_0, z.NumAnimals, z.AvgAnimalWt, z.AnimalDailyN)
-        self.write(z, unsatstor_carryover, satstor_carryover, antmoist, cni, cnp, n7b_2, grlbn_2, ng_lost_barn_n_sum,
-                   av_gr_stream_n, init_ng_n, init_gr_n)
+        self.write_gms(z, unsatstor_carryover, satstor_carryover, z.InitSnow_0, z.SedDelivRatio_0, z.SedAFactor_0, antmoist, z.Grow_0, cni, cnp,
+                       n7b_2, grlbn_2,
+                       ng_lost_barn_n_sum,
+                       av_gr_stream_n, init_ng_n, init_gr_n,z.GrazingAnimal_0)
 
-    def write(self, z, UnSatStorCarryover, SatStorCarryOver, AntMoist, CNI, CNP, N7b_2, GRLBN_2, NGLostBarnNSum,
-              AvGRStreamN, InitNgN, InitGrN):
+    def write(self, python_ob):  # TODO: rename this function something like "python_to_gms"
+        """This function converts Azavea's internal structure to a GMS file"""
+
+        self.write_gms(python_ob, python_ob.UnsatStor, python_ob.SatStor, python_ob.InitSnow, python_ob.SedDelivRatio,
+                       python_ob.SedAFactor,
+                       python_ob.AntMoist, python_ob.Grow, python_ob.CNI,
+                       python_ob.CNP, [python_ob.n7b], [python_ob.GRLBN], [python_ob.NGLBN],
+                       python_ob.GRSN, python_ob.InitNgN, python_ob.InitGrN, python_ob.GrazingAnimal)
+
+    def write_gms(self, z, UnSatStorCarryover, SatStorCarryOver, InitSnow_0, SedDelivRatio_0, SedAFactor_0, AntMoist, Grow_0, CNI, CNP, N7b_2,
+                  GRLBN_2, NGLostBarnNSum,
+                  AvGRStreamN, InitNgN, InitGrN, GrazingAnimal_0):
+        """This is a generalized function for writing GMS files. The z argument should eventually be replaced by explicit arguments"""
         self.writerow([
             z.NRur,
             z.NUrb,
@@ -1331,8 +1345,8 @@ class GmsWriter(object):
             z.SeepCoef,
             UnSatStorCarryover,
             SatStorCarryOver,
-            z.InitSnow_0,
-            z.SedDelivRatio_0,
+            InitSnow_0,
+            SedDelivRatio_0,
             z.MaxWaterCap,
             z.StreamLength,
             z.AgLength,
@@ -1344,7 +1358,7 @@ class GmsWriter(object):
             z.WxYrs,
             z.WxYrBeg,
             z.WxYrEnd,
-            z.SedAFactor_0,
+            SedAFactor_0,
             z.TotArea,
             z.TileDrainRatio,
             z.TileDrainDensity,
@@ -1360,7 +1374,7 @@ class GmsWriter(object):
                 z.Month[i],
                 z.KV[i],
                 z.DayHrs[i],
-                z.Grow_0[i],
+                Grow_0[i],
                 z.Acoef[i],
                 z.StreamWithdrawal[i],
                 z.GroundWithdrawal[i],
@@ -1952,7 +1966,7 @@ class GmsWriter(object):
             self.writerow([
                 z.AnimalName[i],
                 z.NumAnimals[i],
-                z.GrazingAnimal_0[i],
+                GrazingAnimal_0[i],
                 z.AvgAnimalWt[i],
                 z.AnimalDailyN[i],
                 z.AnimalDailyP[i],

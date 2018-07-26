@@ -13,38 +13,25 @@ from gwlfe import gwlfe
 
 
 class TestGMSWriter(unittest.TestCase):
-    __test__ = False
 
     @classmethod
-    def setUpClass(self, input_file, output_file):
-        self.input_file = input_file
-        self.output_file = output_file
-    #
-    # def test_prez_gms_writer(self):
-    #     mapshed_data = json.load(self.input_file)
-    #     pre_z = Parser.DataModel(mapshed_data)
-    #     output = StringIO()
-    #     writer = Parser.GmsWriter(output)
-    #     writer.write(pre_z)
-    #
-    #     output.seek(0)
-    #
-    #     print(output.readlines())
+    def setUpClass(self):
+        self.input_file = open(os.path.abspath(os.path.join(__file__, '../', "mapshed_data.json.txt")), "r")
+        self.output_file = open(os.path.abspath(os.path.join(__file__, '../', "mapshed_data.gms")), 'r')
 
     def test_gms_writer(self):
         """
         Test that GmsWriter is able to replicate the sample GMS created
         from MapShed.
         """
-        z = Parser.GmsReader(self.input_file).read()
-
+        mapshed_data = json.load(self.input_file)
+        pre_z = Parser.DataModel(mapshed_data)
         output = StringIO()
-        _, output_z = gwlfe.run(z)
-        output_writer = Parser.GmsWriter(output)
-        output_writer.write(output_z)
+        writer = Parser.GmsWriter(output)
+        writer.write(pre_z)
+        output.seek(0)
 
         ground_truth = csv.reader(self.output_file, delimiter=",")
-        output.seek(0)
         output_parsed = csv.reader(output, delimiter=",")
         error = False
         for i, row in enumerate(izip(ground_truth, output_parsed)):
