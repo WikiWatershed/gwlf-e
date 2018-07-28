@@ -29,11 +29,14 @@ from Input.LandUse.Ag.AvTileDrain import AvTileDrain_f
 from Input.WaterBudget.AvWithdrawal import AvWithdrawal_f
 from Input.WaterBudget.AvGroundWater import AvGroundWater_f
 from MultiUse_Fxns.Runoff.AvRunoff import AvRunoff_f
+from Memoization import resetMemoization
 
 log = logging.getLogger(__name__)
 
 
 def run(z):
+    resetMemoization()
+
     log.debug('Running model...')
 
     # Raise exception instead of printing a warning for floating point
