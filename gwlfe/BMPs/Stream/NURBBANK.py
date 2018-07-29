@@ -21,7 +21,8 @@ def NURBBANK(NYrs, DaysMonth, Temp, InitSnow_0, Prec, NRur, NUrb, Area,
                                AvSlope, SedAAdjust, StreamLength, SedNitr, BankNFrac)
     for Y in range(NYrs):
         for i in range(12):
-            result[Y][i] = (UrbBankStab / n42b) * streambank_n[Y][i] * n69c
+            if n42b > 0:
+                result[Y][i] = (UrbBankStab / n42b) * streambank_n[Y][i] * n69c
     return result
 
 
