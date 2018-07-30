@@ -10,6 +10,7 @@ import unittest
 import numpy as np
 
 from gwlfe import gwlfe, Parser
+from gwlfe.Memoization import resetMemoization
 
 
 class TestOutput(unittest.TestCase):
@@ -120,15 +121,5 @@ class TestOutput(unittest.TestCase):
         if (error == True):
             raise AssertionError("Not all values within margin of error")
 
-    # def test_generated_output_matches_static_output(self):
-    #     """
-    #     Test generated output using the sample GMS, input_4.gms
-    #     versus static output generated using the same file.
-    #     """
-    #     input_file = open('input_4.gms', 'r')
-    #     z = parser.GmsReader(input_file).read()
-    #     generated_output = gwlfe.run(z)
-    #
-    #     static_output = json.load(open('input_4.output', 'r'))
-    #
-    #     self.assertEqual(generated_output, static_output)
+    def tearDown(self):
+        resetMemoization()
