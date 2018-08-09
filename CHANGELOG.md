@@ -1,3 +1,17 @@
+## 1.0.0
+
+- Includes major improvements by Drexel for refactoring the `CalcCN` and
+  associated functions to reduce computation time. Accomplished by extracting
+  code to a number of independent functions, vectorizing, and memoizing them.
+  This results in an average speedup of 75% overall.
+- **BREAKING** `parser` has been renamed to `Parser`
+- **BREAKING** `run` now returns a tuple instead of a single value. The first
+  value is a JSON of results, same as before. The second value is the internal
+  model `z` which could be used to modularize the GMS writing in the future, as
+  the JSON conversion currently done is lossy.
+- `numba` is now a dependency, and must be installed prior to installing
+  `gwlf-e`
+
 ## 0.6.3
 
 - Add lower threshold to GrFlow to prevent double underflow.
