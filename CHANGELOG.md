@@ -1,3 +1,8 @@
+## 1.0.1
+
+- Remove `bdist_wheel` as distribution because `linux` wheels are no longer
+  supported by PyPI. See [PEP 513](https://www.python.org/dev/peps/pep-0513/)
+
 ## 1.0.0
 
 - Includes major improvements by Drexel for refactoring the `CalcCN` and
