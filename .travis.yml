@@ -5,7 +5,9 @@ sudo: false
 env:
   - TOXENV=py27
 
-install: pip install tox
+install:
+  - pip install -r requirements.txt
+  - pip install tox
 
 script: tox
 

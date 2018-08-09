@@ -1,0 +1,258 @@
+{
+    "MeanFlow": 622501736.0648791, 
+    "monthly": [
+        {
+            "AvEvapoTrans": 0.5773698326849449, 
+            "AvTileDrain": 0.0, 
+            "AvPrecipitation": 7.924800000000002, 
+            "AvRunoff": 2.4864508490241817, 
+            "AvGroundWater": 4.539643048642405, 
+            "AvPtSrcFlow": 7.643464207216376, 
+            "AvWithdrawal": 0.0, 
+            "AvStreamFlow": 14.669558104882963
+        }, 
+        {
+            "AvEvapoTrans": 0.8790971306096889, 
+            "AvTileDrain": 0.0, 
+            "AvPrecipitation": 7.248736666666666, 
+            "AvRunoff": 2.449656518459569, 
+            "AvGroundWater": 4.309527583214896, 
+            "AvPtSrcFlow": 6.903774122647051, 
+            "AvWithdrawal": 0.0, 
+            "AvStreamFlow": 13.662958224321518
+        }, 
+        {
+            "AvEvapoTrans": 2.5500287988503625, 
+            "AvTileDrain": 0.0, 
+            "AvPrecipitation": 8.751993333333333, 
+            "AvRunoff": 2.367774623397854, 
+            "AvGroundWater": 4.945444437816072, 
+            "AvPtSrcFlow": 7.643464207216376, 
+            "AvWithdrawal": 0.0, 
+            "AvStreamFlow": 14.956683268430302
+        }, 
+        {
+            "AvEvapoTrans": 4.848282060905678, 
+            "AvTileDrain": 0.0, 
+            "AvPrecipitation": 8.90651, 
+            "AvRunoff": 0.6238603433086418, 
+            "AvGroundWater": 4.855247345093289, 
+            "AvPtSrcFlow": 7.39690084569326, 
+            "AvWithdrawal": 0.0, 
+            "AvStreamFlow": 12.876008534095192
+        }, 
+        {
+            "AvEvapoTrans": 8.229315957489439, 
+            "AvTileDrain": 0.0, 
+            "AvPrecipitation": 9.634643333333335, 
+            "AvRunoff": 0.6420619101592752, 
+            "AvGroundWater": 3.358632607530854, 
+            "AvPtSrcFlow": 7.643464207216376, 
+            "AvWithdrawal": 0.0, 
+            "AvStreamFlow": 11.644158724906505
+        }, 
+        {
+            "AvEvapoTrans": 9.591326511155561, 
+            "AvTileDrain": 0.0, 
+            "AvPrecipitation": 9.255760000000002, 
+            "AvRunoff": 0.7029723518112838, 
+            "AvGroundWater": 1.6835566216238516, 
+            "AvPtSrcFlow": 7.39690084569326, 
+            "AvWithdrawal": 0.0, 
+            "AvStreamFlow": 9.783429819128395
+        }, 
+        {
+            "AvEvapoTrans": 9.490037417375195, 
+            "AvTileDrain": 0.0, 
+            "AvPrecipitation": 10.811933333333336, 
+            "AvRunoff": 1.116575972460723, 
+            "AvGroundWater": 0.8176821005587392, 
+            "AvPtSrcFlow": 7.643464207216376, 
+            "AvWithdrawal": 0.0, 
+            "AvStreamFlow": 9.57772228023584
+        }, 
+        {
+            "AvEvapoTrans": 8.22276154447643, 
+            "AvTileDrain": 0.0, 
+            "AvPrecipitation": 9.152890000000001, 
+            "AvRunoff": 0.7978430551552216, 
+            "AvGroundWater": 0.48811428037824794, 
+            "AvPtSrcFlow": 7.643464207216376, 
+            "AvWithdrawal": 0.0, 
+            "AvStreamFlow": 8.929421542749846
+        }, 
+        {
+            "AvEvapoTrans": 5.189544195196074, 
+            "AvTileDrain": 0.0, 
+            "AvPrecipitation": 8.694420000000001, 
+            "AvRunoff": 0.8556019828055929, 
+            "AvGroundWater": 0.6301364730025184, 
+            "AvPtSrcFlow": 7.39690084569326, 
+            "AvWithdrawal": 0.0, 
+            "AvStreamFlow": 8.88263930150137
+        }, 
+        {
+            "AvEvapoTrans": 3.845450257236718, 
+            "AvTileDrain": 0.0, 
+            "AvPrecipitation": 6.980766666666668, 
+            "AvRunoff": 1.012248087829482, 
+            "AvGroundWater": 1.1141849492017935, 
+            "AvPtSrcFlow": 7.643464207216376, 
+            "AvWithdrawal": 0.0, 
+            "AvStreamFlow": 9.769897244247652
+        }, 
+        {
+            "AvEvapoTrans": 2.1523052423009035, 
+            "AvTileDrain": 0.0, 
+            "AvPrecipitation": 8.39724, 
+            "AvRunoff": 1.5747843222095328, 
+            "AvGroundWater": 2.06663765130198, 
+            "AvPtSrcFlow": 7.39690084569326, 
+            "AvWithdrawal": 0.0, 
+            "AvStreamFlow": 11.038322819204772
+        }, 
+        {
+            "AvEvapoTrans": 1.0838805536322695, 
+            "AvTileDrain": 0.0, 
+            "AvPrecipitation": 8.713893333333331, 
+            "AvRunoff": 2.15322943197448, 
+            "AvGroundWater": 4.040108063818363, 
+            "AvPtSrcFlow": 7.643464207216376, 
+            "AvWithdrawal": 0.0, 
+            "AvStreamFlow": 13.836801703009218
+        }
+    ], 
+    "meta": {
+        "NRur": 10, 
+        "SedDelivRatio": 0.07223889754306229, 
+        "NLU": 16, 
+        "NUrb": 6, 
+        "WxYrBeg": 1961, 
+        "NYrs": 30, 
+        "WxYrEnd": 1990
+    }, 
+    "MeanFlowPerSecond": 19.73940056014964, 
+    "AreaTotal": 44583.0, 
+    "SummaryLoads": [
+        {
+            "Source": "Total Loads", 
+            "TotalN": 7205141.095949468, 
+            "TotalP": 307998.5157181606, 
+            "Sediment": 173234327.44968584, 
+            "Unit": "kg"
+        }, 
+        {
+            "Source": "Loading Rates", 
+            "TotalN": 161.61184971736913, 
+            "TotalP": 6.908429574460234, 
+            "Sediment": 3885.6588262271684, 
+            "Unit": "kg/ha"
+        }, 
+        {
+            "Source": "Mean Annual Concentration", 
+            "TotalN": 11.574491569287007, 
+            "TotalP": 0.49477535221855196, 
+            "Sediment": 278.28730012028564, 
+            "Unit": "mg/l"
+        }, 
+        {
+            "Source": "Mean Low-Flow Concentration", 
+            "TotalN": 13.915109918304877, 
+            "TotalP": 0.6395149361760984, 
+            "Sediment": 311.4948976501928, 
+            "Unit": "mg/l"
+        }
+    ], 
+    "Loads": [
+        {
+            "Source": "Hay/Pasture", 
+            "TotalN": 49.94041783782335, 
+            "TotalP": 15.966744491634069, 
+            "Sediment": 3357.2729226612446
+        }, 
+        {
+            "Source": "Cropland", 
+            "TotalN": 637.891801584014, 
+            "TotalP": 99.9120957297604, 
+            "Sediment": 53494.587105618615
+        }, 
+        {
+            "Source": "Wooded Areas", 
+            "TotalN": 151.7774739778054, 
+            "TotalP": 9.605458616275254, 
+            "Sediment": 2388.05334925497
+        }, 
+        {
+            "Source": "Wetlands", 
+            "TotalN": 910.1355963548125, 
+            "TotalP": 49.0026171624185, 
+            "Sediment": 1625.4529674882665
+        }, 
+        {
+            "Source": "Open Land", 
+            "TotalN": 80.13496873080253, 
+            "TotalP": 2.3066218207424773, 
+            "Sediment": 963.5925534828103
+        }, 
+        {
+            "Source": "Barren Areas", 
+            "TotalN": 31.5338071298873, 
+            "TotalP": 1.060643638738752, 
+            "Sediment": 13.42788307755717
+        }, 
+        {
+            "Source": "Low-Density Mixed", 
+            "TotalN": 5530.114155962533, 
+            "TotalP": 615.2328984794672, 
+            "Sediment": 200107.4070183567
+        }, 
+        {
+            "Source": "Medium-Density Mixed", 
+            "TotalN": 14776.231830951245, 
+            "TotalP": 1531.292361253024, 
+            "Sediment": 597212.0538644418
+        }, 
+        {
+            "Source": "High-Density Mixed", 
+            "TotalN": 10985.644411763538, 
+            "TotalP": 1138.4657173514663, 
+            "Sediment": 444007.60202145344
+        }, 
+        {
+            "Source": "Other Upland Areas", 
+            "TotalN": 0.0, 
+            "TotalP": 0.0, 
+            "Sediment": 0.0
+        }, 
+        {
+            "Source": "Farm Animals", 
+            "TotalN": 1972.351502545644, 
+            "TotalP": 518.438643774461, 
+            "Sediment": 0
+        }, 
+        {
+            "Source": "Stream Bank Erosion", 
+            "TotalN": 70243.0, 
+            "TotalP": 32805.0, 
+            "Sediment": 171931158.0
+        }, 
+        {
+            "Source": "Subsurface Flow", 
+            "TotalN": 787112.8408786296, 
+            "TotalP": 6763.631915842648, 
+            "Sediment": 0
+        }, 
+        {
+            "Source": "Point Sources", 
+            "TotalN": 6275034.830000001, 
+            "TotalP": 264448.6, 
+            "Sediment": 0
+        }, 
+        {
+            "Source": "Septic Systems", 
+            "TotalN": 37624.66910399998, 
+            "TotalP": 0.0, 
+            "Sediment": 0
+        }
+    ]
+}
