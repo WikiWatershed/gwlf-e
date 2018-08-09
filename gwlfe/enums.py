@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
+from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
-from __future__ import division
 
 
 class YesOrNo(object):
@@ -53,6 +53,9 @@ class ETflag(object):
         elif value == cls.BLAINY_CRIDDLE_METHOD:
             return 1
         raise ValueError('Unexpected value: ' + str(value))
+
+
+GROWING_SEASON = '<Growing season>'
 
 
 class GrowFlag(object):

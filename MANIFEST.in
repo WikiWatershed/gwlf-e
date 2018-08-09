@@ -2,5 +2,6 @@ include DESCRIPTION.rst
 include *.md
 include *.py
 include LICENSE
+include *.txt
 
 recursive-include test *
