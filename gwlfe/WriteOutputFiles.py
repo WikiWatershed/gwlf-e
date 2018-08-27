@@ -956,6 +956,12 @@ def WriteOutput(z):
         'TotalN': z.AvLuTotNitr[12],
         'TotalP': z.AvLuTotPhos[12],
     })
+    output['Loads'].append({
+        'Source': 'Low-Density Open Space',
+        'Sediment': z.AvLuSedYield[13] * TONNE_TO_KG,
+        'TotalN': z.AvLuTotNitr[13],
+        'TotalP': z.AvLuTotPhos[13],
+    })
     # Disturbed, Turfgrass, Unpaved Road
     output['Loads'].append({
         'Source': 'Other Upland Areas',
