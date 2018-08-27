@@ -30,7 +30,7 @@
 "Ld_Mixed",50,.15,92,74,60
 "Md_Mixed",47,.52,98,79,70
 "Hd_Mixed",84,.87,98,79,80
-"Ld_Residential",131,.15,92,74,90
+"Ld_Open_Space",131,.15,92,74,90
 "Md_Residential",46,.52,92,74,100
 "Hd_Residential",0,0,0,0,0
 1,0,0,1,1,1,1
