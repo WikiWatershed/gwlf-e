@@ -962,13 +962,6 @@ def WriteOutput(z):
         'TotalN': z.AvLuTotNitr[13],
         'TotalP': z.AvLuTotPhos[13],
     })
-    # Disturbed, Turfgrass, Unpaved Road
-    output['Loads'].append({
-        'Source': 'Other Upland Areas',
-        'Sediment': sum(z.AvLuSedYield[l] * TONNE_TO_KG for l in (4, 5, 9)),
-        'TotalN': sum(z.AvLuTotNitr[l] for l in (4, 5, 9)),
-        'TotalP': sum(z.AvLuTotPhos[l] for l in (4, 5, 9)),
-    })
     output['Loads'].append({
         'Source': 'Farm Animals',
         'Sediment': 0,
