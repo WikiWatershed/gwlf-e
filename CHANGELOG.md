@@ -1,3 +1,9 @@
+## 2.0.0-beta
+
+- Add "Low-Density Open Space" to Load outputs
+- Remove "Other Upland Areas" from Load outputs
+- Rename "Ld_Residential" to "Ld_Open_Space" in output GMS files
+
 ## 1.0.1
 
 - Remove `bdist_wheel` as distribution because `linux` wheels are no longer
