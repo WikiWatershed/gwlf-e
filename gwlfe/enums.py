@@ -157,7 +157,8 @@ class LandUse(object):
             return cls.MD_MIXED
         elif value in ('Hd_Mixed', 'HD Mixed'):
             return cls.HD_MIXED
-        elif value in ('Ld_Residential', 'LD Residential'):
+        elif value in ('Ld_Residential', 'LD Residential',
+                       'Ld_Open_Space', 'LD Open Space'):
             return cls.LD_RESIDENTIAL
         elif value in ('Md_Residential', 'MD Residential'):
             return cls.MD_RESIDENTIAL
@@ -196,7 +197,7 @@ class LandUse(object):
         elif value == cls.HD_MIXED:
             return 'Hd_Mixed'
         elif value == cls.LD_RESIDENTIAL:
-            return 'Ld_Residential'
+            return 'Ld_Open_Space'
         elif value == cls.MD_RESIDENTIAL:
             return 'Md_Residential'
         elif value == cls.HD_RESIDENTIAL:
