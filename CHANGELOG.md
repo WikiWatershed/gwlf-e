@@ -1,3 +1,7 @@
+## 2.0.0
+
+- Official Release. No changes since `2.0.0-beta`.
+
 ## 2.0.0-beta
 
 - Add "Low-Density Open Space" to Load outputs
