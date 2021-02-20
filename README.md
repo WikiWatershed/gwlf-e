@@ -8,7 +8,8 @@ Port of Generalized Watersheds Loading Functions - Enhanced (MapShed)
 Install using `pip`. Ensure `numba` is installed first:
 
 ```bash
-$ pip install numba==0.38.1
+$ pip install llvmlite==0.26
+$ pip install numba==0.41.0
 $ pip install gwlf-e
 ```
 
