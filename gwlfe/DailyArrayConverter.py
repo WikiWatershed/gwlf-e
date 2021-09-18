@@ -72,7 +72,7 @@ def mask_builder(DaysMonth):
 
 
 def ymd_to_daily(ymd_array, DaysMonth):
-    month_maps = map(lambda x: leap_year if x[1] == 29 else non_leap_year, DaysMonth)
+    month_maps = [leap_year if x[1] == 29 else non_leap_year for x in DaysMonth]
     mask = ravel(array(month_maps))
     x = ma.array(ymd_array, mask=mask)
     return x[~x.mask]
@@ -80,7 +80,7 @@ def ymd_to_daily(ymd_array, DaysMonth):
 
 def daily_to_ymd(daily_array, NYrs, DaysMonth):
     result = zeros((NYrs * 12 * 31,))
-    month_maps = map(lambda x: leap_year if x[1] == 29 else non_leap_year, DaysMonth)
+    month_maps = [leap_year if x[1] == 29 else non_leap_year for x in DaysMonth]
     mask = ravel(array(month_maps))
     x = ma.array(result, mask=mask)
     x[~x.mask] = daily_array
