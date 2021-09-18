@@ -2084,7 +2084,7 @@ class GmsWriter(object):
         self.fp.writerow([self.serialize_value(col) for col in row])
 
     def serialize_value(self, value):
-        if isinstance(value, basestring):
+        if isinstance(value, str):
             return self.serialize_enum(value)
         return value
 
