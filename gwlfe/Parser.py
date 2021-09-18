@@ -1253,7 +1253,7 @@ class GmsReader(object):
         or type. If a scalar value is passed instead, assert that the
         next token value matches and raise a ValueError if it does not.
         """
-        value, line_no, col_no = self.fp.next()
+        value, line_no, col_no = next(self.fp)
 
         if callable(typ):
             try:
