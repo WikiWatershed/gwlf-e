@@ -3,10 +3,10 @@ from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
 
-from Input.LandUse.TotAreaMeters import TotAreaMeters
-from MultiUse_Fxns.Discharge.StreamFlow_1 import StreamFlow_1_f
-from MultiUse_Fxns.LossFactAdj import LossFactAdj_f
-from MultiUse_Fxns.Runoff.UrbRunoffLiter import UrbRunoffLiter_f
+from .Input.LandUse.TotAreaMeters import TotAreaMeters
+from .MultiUse_Fxns.Discharge.StreamFlow_1 import StreamFlow_1_f
+from .MultiUse_Fxns.LossFactAdj import LossFactAdj_f
+from .MultiUse_Fxns.Runoff.UrbRunoffLiter import UrbRunoffLiter_f
 
 """
 Imported from AFOS.bas

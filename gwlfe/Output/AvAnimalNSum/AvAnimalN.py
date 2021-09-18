@@ -1,8 +1,8 @@
 from numpy import sum
 from numpy import zeros
 
-from AnimalN import AnimalN
-from AnimalN import AnimalN_f
+from .AnimalN import AnimalN
+from .AnimalN import AnimalN_f
 from gwlfe.Memoization import memoize
 
 

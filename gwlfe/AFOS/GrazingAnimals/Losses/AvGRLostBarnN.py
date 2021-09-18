@@ -1,8 +1,8 @@
 from numpy import average
 from numpy import zeros
 
-from GRLostBarnN import GRLostBarnN
-from GRLostBarnN import GRLostBarnN_f
+from .GRLostBarnN import GRLostBarnN
+from .GRLostBarnN import GRLostBarnN_f
 from gwlfe.Memoization import memoize
 
 

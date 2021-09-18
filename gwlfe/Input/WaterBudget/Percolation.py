@@ -6,7 +6,7 @@ from gwlfe.Input.WaterBudget.Infiltration import Infiltration_f
 from gwlfe.Memoization import memoize
 
 try:
-    from Percolation_inner_compiled import Percolation_inner
+    from .Percolation_inner_compiled import Percolation_inner
 except ImportError:
     print("Unable to import compiled Percolation_inner, using slower version")
     from gwlfe.Input.WaterBudget.Percolation_inner import Percolation_inner

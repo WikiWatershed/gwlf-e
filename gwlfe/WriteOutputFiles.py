@@ -8,30 +8,30 @@ import logging
 # from numpy import round
 from numpy import zeros
 
-import LoadReductions
-from Input.Animals.TotAEU import TotAEU_f
-from Input.Animals.TotLAEU import TotLAEU
-from Input.Animals.TotPAEU import TotPAEU_f
-from Input.LandUse.Ag.AvTileDrain import AvTileDrain_f
-from Input.LandUse.AreaTotal import AreaTotal_f
-from Input.WaterBudget.AvEvapoTrans import AvEvapoTrans_f
-from Input.WaterBudget.AvGroundWater import AvGroundWater_f
-from Input.WaterBudget.AvWithdrawal import AvWithdrawal_f
-from MultiUse_Fxns.AttenN import AttenN
-from MultiUse_Fxns.Constants import NPConvert
-from MultiUse_Fxns.Erosion.AvErosion import AvErosion_f
-from MultiUse_Fxns.Erosion.AvSedYield import AvSedYield
-from MultiUse_Fxns.Erosion.AvSedYield import AvSedYield_f
-from MultiUse_Fxns.Erosion.AvStreamBankNSum import AvStreamBankNSum_f
-from MultiUse_Fxns.Erosion.SedDelivRatio import SedDelivRatio
-from MultiUse_Fxns.Runoff.AvRunoff import AvRunoff_f
-from MultiUse_Fxns.Runoff.RetentFactorN import RetentFactorN
-from Output.AvAnimalNSum.AvAnimalNSum_1 import AvAnimalNSum_1_f
-from Output.AvAnimalNSum.N7b_1 import N7b_1_f
-from Output.Loading.LuTotNitr_1 import LuTotNitr_1_f
-from Output.Loading.LuTotPhos import LuTotPhos_f
-from Output.Loading.StreamBankNSum import StreamBankNSum_f
-from enums import YesOrNo, LandUse
+from . import LoadReductions
+from .Input.Animals.TotAEU import TotAEU_f
+from .Input.Animals.TotLAEU import TotLAEU
+from .Input.Animals.TotPAEU import TotPAEU_f
+from .Input.LandUse.Ag.AvTileDrain import AvTileDrain_f
+from .Input.LandUse.AreaTotal import AreaTotal_f
+from .Input.WaterBudget.AvEvapoTrans import AvEvapoTrans_f
+from .Input.WaterBudget.AvGroundWater import AvGroundWater_f
+from .Input.WaterBudget.AvWithdrawal import AvWithdrawal_f
+from .MultiUse_Fxns.AttenN import AttenN
+from .MultiUse_Fxns.Constants import NPConvert
+from .MultiUse_Fxns.Erosion.AvErosion import AvErosion_f
+from .MultiUse_Fxns.Erosion.AvSedYield import AvSedYield
+from .MultiUse_Fxns.Erosion.AvSedYield import AvSedYield_f
+from .MultiUse_Fxns.Erosion.AvStreamBankNSum import AvStreamBankNSum_f
+from .MultiUse_Fxns.Erosion.SedDelivRatio import SedDelivRatio
+from .MultiUse_Fxns.Runoff.AvRunoff import AvRunoff_f
+from .MultiUse_Fxns.Runoff.RetentFactorN import RetentFactorN
+from .Output.AvAnimalNSum.AvAnimalNSum_1 import AvAnimalNSum_1_f
+from .Output.AvAnimalNSum.N7b_1 import N7b_1_f
+from .Output.Loading.LuTotNitr_1 import LuTotNitr_1_f
+from .Output.Loading.LuTotPhos import LuTotPhos_f
+from .Output.Loading.StreamBankNSum import StreamBankNSum_f
+from .enums import YesOrNo, LandUse
 
 log = logging.getLogger(__name__)
 

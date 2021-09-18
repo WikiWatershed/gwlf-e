@@ -15,21 +15,21 @@ import logging
 from numpy import zeros
 from numpy import seterr
 
-import ReadGwlfDataFile
-import PrelimCalculations
-import AFOS_old
-import CalcLoads
-import StreamBank
-import AnnualMeans
-import WriteOutputFiles
-from Input.WaterBudget.InitSnow import InitSnow_f
-from Input.WaterBudget.GrowFactor import GrowFactor_f
-from Input.LandUse.TotAreaMeters import TotAreaMeters
-from Input.LandUse.Ag.AvTileDrain import AvTileDrain_f
-from Input.WaterBudget.AvWithdrawal import AvWithdrawal_f
-from Input.WaterBudget.AvGroundWater import AvGroundWater_f
-from MultiUse_Fxns.Runoff.AvRunoff import AvRunoff_f
-from Memoization import resetMemoization
+from . import ReadGwlfDataFile
+from . import PrelimCalculations
+from . import AFOS_old
+from . import CalcLoads
+from . import StreamBank
+from . import AnnualMeans
+from . import WriteOutputFiles
+from .Input.WaterBudget.InitSnow import InitSnow_f
+from .Input.WaterBudget.GrowFactor import GrowFactor_f
+from .Input.LandUse.TotAreaMeters import TotAreaMeters
+from .Input.LandUse.Ag.AvTileDrain import AvTileDrain_f
+from .Input.WaterBudget.AvWithdrawal import AvWithdrawal_f
+from .Input.WaterBudget.AvGroundWater import AvGroundWater_f
+from .MultiUse_Fxns.Runoff.AvRunoff import AvRunoff_f
+from .Memoization import resetMemoization
 
 log = logging.getLogger(__name__)
 

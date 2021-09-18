@@ -12,7 +12,7 @@ from gwlfe.MultiUse_Fxns.Discharge.UrbanQTotal import UrbanQTotal
 from gwlfe.MultiUse_Fxns.Discharge.UrbanQTotal import UrbanQTotal_f
 
 try:
-    from AdjUrbanQTotal_inner_compiled import AdjUrbanQTotal_inner
+    from .AdjUrbanQTotal_inner_compiled import AdjUrbanQTotal_inner
 except ImportError:
     print("Unable to import compiled AdjUrbanQTotal_inner, using slower version")
     from gwlfe.MultiUse_Fxns.Discharge.AdjUrbanQTotal_inner import AdjUrbanQTotal_inner

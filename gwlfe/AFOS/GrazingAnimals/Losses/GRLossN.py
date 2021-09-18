@@ -3,8 +3,8 @@ from numpy import reshape
 from numpy import where
 from numpy import zeros
 
-from GRStreamN import GRStreamN
-from GRStreamN import GRStreamN_f
+from .GRStreamN import GRStreamN
+from .GRStreamN import GRStreamN_f
 from gwlfe.AFOS.GrazingAnimals.Loads.GrazingN import GrazingN
 from gwlfe.AFOS.GrazingAnimals.Loads.GrazingN import GrazingN_f
 from gwlfe.Memoization import memoize

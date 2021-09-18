@@ -7,7 +7,7 @@ from gwlfe.MultiUse_Fxns.Discharge.AdjUrbanQTotal import AdjUrbanQTotal
 from gwlfe.MultiUse_Fxns.Discharge.AdjUrbanQTotal import AdjUrbanQTotal_f
 
 try:
-    from UrbLoadRed_inner_compiled import UrbLoadRed_inner
+    from .UrbLoadRed_inner_compiled import UrbLoadRed_inner
 except ImportError:
     print("Unable to import compiled UrbLoadRed_inner, using slower version")
     from gwlfe.BMPs.Stream.UrbLoadRed_inner import UrbLoadRed_inner

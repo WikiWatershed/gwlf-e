@@ -10,22 +10,22 @@ Imported from ReadAllDataFiles.bas
 """
 
 import logging
-from Input.WaterBudget.FlowDays import FlowDays
+from .Input.WaterBudget.FlowDays import FlowDays
 from .enums import SweepType, YesOrNo
 from . import PrelimQualCalculations
 
 log = logging.getLogger(__name__)
 
-from AFOS.GrazingAnimals.Loads.GrazingN import GrazingN_f
-from AFOS.GrazingAnimals.Losses.GRStreamN import GRStreamN_f
-from AFOS.GrazingAnimals.Loads.GRAccManAppN import GRAccManAppN_f
-from AFOS.nonGrazingAnimals.Loads.NGAppManN import NGAppManN_f
-from AFOS.nonGrazingAnimals.Losses.NGLostBarnN import NGLostBarnN_f
-from AFOS.GrazingAnimals.Losses.GRLostBarnN import GRLostBarnN_f
-from AFOS.GrazingAnimals.Losses.GRLostManN import GRLostManN_f
-from AFOS.nonGrazingAnimals.Losses.NGLostManN import NGLostManN_f
-from AFOS.GrazingAnimals.Losses.GRLossN import GRLossN_f
-from Input.Animals.GrazingAnimal import GrazingAnimal
+from .AFOS.GrazingAnimals.Loads.GrazingN import GrazingN_f
+from .AFOS.GrazingAnimals.Losses.GRStreamN import GRStreamN_f
+from .AFOS.GrazingAnimals.Loads.GRAccManAppN import GRAccManAppN_f
+from .AFOS.nonGrazingAnimals.Loads.NGAppManN import NGAppManN_f
+from .AFOS.nonGrazingAnimals.Losses.NGLostBarnN import NGLostBarnN_f
+from .AFOS.GrazingAnimals.Losses.GRLostBarnN import GRLostBarnN_f
+from .AFOS.GrazingAnimals.Losses.GRLostManN import GRLostManN_f
+from .AFOS.nonGrazingAnimals.Losses.NGLostManN import NGLostManN_f
+from .AFOS.GrazingAnimals.Losses.GRLossN import GRLossN_f
+from .Input.Animals.GrazingAnimal import GrazingAnimal
 
 
 def ReadAllData(z):

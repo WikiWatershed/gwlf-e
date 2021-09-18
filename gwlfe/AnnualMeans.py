@@ -8,19 +8,19 @@ Imported from AnnualMeans.bas
 """
 
 import logging
-from Input.WaterBudget import Precipitation
-from Input.WaterBudget.AvEvapoTrans import AvEvapoTrans_f
-from MultiUse_Fxns.PtSrcFlow import AvPtSrcFlow_f
-from MultiUse_Fxns.Erosion.AvStreamBankEros import AvStreamBankEros_f
-from Input.LandUse.Ag.AvTileDrain import AvTileDrain_f
-from Input.WaterBudget.AvWithdrawal import AvWithdrawal_f
-from Input.WaterBudget.AvGroundWater import AvGroundWater_f
-from MultiUse_Fxns.Runoff.AvRunoff import AvRunoff_f
-from MultiUse_Fxns.Erosion.AvErosion import AvErosion_f
-from MultiUse_Fxns.Erosion.AvSedYield import AvSedYield_f
-from MultiUse_Fxns.Runoff.LuRunoff import LuRunoff_f
-from Output.Loading.LuTotPhos import LuTotPhos_f
-from Output.Loading.LuTotNitr import LuTotNitr_f
+from .Input.WaterBudget import Precipitation
+from .Input.WaterBudget.AvEvapoTrans import AvEvapoTrans_f
+from .MultiUse_Fxns.PtSrcFlow import AvPtSrcFlow_f
+from .MultiUse_Fxns.Erosion.AvStreamBankEros import AvStreamBankEros_f
+from .Input.LandUse.Ag.AvTileDrain import AvTileDrain_f
+from .Input.WaterBudget.AvWithdrawal import AvWithdrawal_f
+from .Input.WaterBudget.AvGroundWater import AvGroundWater_f
+from .MultiUse_Fxns.Runoff.AvRunoff import AvRunoff_f
+from .MultiUse_Fxns.Erosion.AvErosion import AvErosion_f
+from .MultiUse_Fxns.Erosion.AvSedYield import AvSedYield_f
+from .MultiUse_Fxns.Runoff.LuRunoff import LuRunoff_f
+from .Output.Loading.LuTotPhos import LuTotPhos_f
+from .Output.Loading.LuTotNitr import LuTotNitr_f
 
 log = logging.getLogger(__name__)
 

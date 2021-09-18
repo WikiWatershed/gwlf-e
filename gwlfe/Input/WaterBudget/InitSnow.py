@@ -3,7 +3,7 @@ from numpy import zeros
 from gwlfe.Memoization import memoize
 
 try:
-    from InitSnow_f_inner_compiled import InitSnow_f_inner
+    from .InitSnow_f_inner_compiled import InitSnow_f_inner
 except ImportError:
     print("Unable to import compiled InitSnow_inner, using slower version")
     from gwlfe.Input.WaterBudget.InitSnow_inner import InitSnow_f_inner

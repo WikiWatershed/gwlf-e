@@ -1,6 +1,6 @@
 from numpy import sum
 
-from NGLostBarnN import NGLostBarnN
+from .NGLostBarnN import NGLostBarnN
 
 
 def NGLostBarnNSum(NYrs, NGPctManApp, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, NGBarnNRate, Prec,

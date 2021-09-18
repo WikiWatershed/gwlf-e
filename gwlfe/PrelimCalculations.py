@@ -8,7 +8,7 @@ Imported from PrelimCalculations.bas
 """
 
 import logging
-from enums import LandUse
+from .enums import LandUse
 
 log = logging.getLogger(__name__)
 

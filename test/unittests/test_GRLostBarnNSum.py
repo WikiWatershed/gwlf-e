@@ -1,4 +1,4 @@
-from VariableUnittest import VariableUnitTest
+from .VariableUnitTest import VariableUnitTest
 
 
 class TestGRLostBarnNSum(VariableUnitTest):
