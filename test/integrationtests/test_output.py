@@ -23,12 +23,15 @@ class TestOutput(unittest.TestCase):
     @classmethod
     def setUpClass(self, input_file_name, output_file_name):
         self.basepath = os.path.abspath(os.path.join(__file__, '../'))
+        
         inputfile = os.path.join(self.basepath,input_file_name)
+        with open(inputfile, 'r') as input_file:
+            self.z = Parser.GmsReader(input_file).read()
+            self.generated_output, _ = gwlfe.run(self.z)    
+        
         outputfile = os.path.join(self.basepath,output_file_name)
-        input_file = open(inputfile, 'r')
-        self.z = Parser.GmsReader(input_file).read()
-        self.generated_output, _ = gwlfe.run(self.z)
-        self.static_output = json.load(open(outputfile, 'r'))
+        with open(outputfile, 'r') as output_file:
+            self.static_output = json.load(output_file)    
 
     def test_constants(self):
         constant_keys = ["MeanFlow", "MeanFlowPerSecond", "AreaTotal"]
