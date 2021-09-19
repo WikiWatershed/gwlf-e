@@ -1,8 +1,8 @@
 import csv
 import os
 import unittest
-from StringIO import StringIO
 from itertools import izip
+from io import StringIO
 import json
 
 import numpy as np
