@@ -53,7 +53,7 @@ class TestOutput(unittest.TestCase):
         error = False
         for i, month in enumerate(self.generated_output["monthly"]):
             self.assertItemsEqual(self.generated_output["monthly"][i], self.static_output["monthly"][i])
-            for (key, val) in month.iteritems():
+            for (key, val) in month.items():
                 try:
                     np.testing.assert_allclose(self.generated_output["monthly"][i][key],
                                                self.static_output["monthly"][i][key],
@@ -86,7 +86,7 @@ class TestOutput(unittest.TestCase):
         error = False
         for i, month in enumerate(self.generated_output["SummaryLoads"]):
             self.assertItemsEqual(self.generated_output["SummaryLoads"][i], self.static_output["SummaryLoads"][i])
-            for (key, val) in month.iteritems():
+            for (key, val) in month.items():
                 try:
                     try:
                         np.testing.assert_allclose(self.generated_output["SummaryLoads"][i][key],
@@ -108,7 +108,7 @@ class TestOutput(unittest.TestCase):
         error = False
         for i, month in enumerate(self.generated_output["Loads"]):
             self.assertItemsEqual(self.generated_output["Loads"][i], self.static_output["Loads"][i])
-            for (key, val) in month.iteritems():
+            for (key, val) in month.items():
                 try:
                     try:
                         np.testing.assert_allclose(self.generated_output["Loads"][i][key],
