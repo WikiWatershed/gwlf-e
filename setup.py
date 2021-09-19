@@ -45,11 +45,11 @@ setup(
         'Intended Audience :: Developers',
         'Intended Audience :: Education',
         'License :: OSI Approved :: Apache Software License',
-        'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 3',
     ],
     keywords='gwlf-e watershed hydrology',
     packages=find_packages(exclude=['tests']),
+    python_requires=">=3.7",
     install_requires=[
         'certifi==2021.5.30',
         'funcsigs==1.0.2',
