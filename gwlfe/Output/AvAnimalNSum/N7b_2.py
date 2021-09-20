@@ -1,6 +1,6 @@
 from numpy import zeros
 
-from N7b import N7b
+from .N7b import N7b
 from gwlfe.AFOS.GrazingAnimals.Losses.GRLBN_2 import GRLBN_2
 from gwlfe.AFOS.GrazingAnimals.Losses.GRStreamN import AvGRStreamN
 from gwlfe.AFOS.nonGrazingAnimals.Losses.NGLostBarnNSum import NGLostBarnNSum

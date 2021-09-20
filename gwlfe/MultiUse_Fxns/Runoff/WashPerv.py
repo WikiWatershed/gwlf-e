@@ -11,7 +11,7 @@ from gwlfe.MultiUse_Fxns.Runoff.QrunP import QrunP
 from gwlfe.MultiUse_Fxns.Runoff.QrunP import QrunP_f
 
 try:
-    from WashPerv_inner_compiled import WashPerv_inner
+    from .WashPerv_inner_compiled import WashPerv_inner
 except ImportError:
     print("Unable to import compiled WashPerv_inner, using slower version")
     from gwlfe.MultiUse_Fxns.Runoff.WashPerv_inner import WashPerv_inner

@@ -136,23 +136,23 @@
     "SummaryLoads": [
         {
             "Source": "Total Loads", 
-            "TotalN": 62554.89087311879, 
-            "TotalP": 9008.384515683565, 
-            "Sediment": 4631054.160525507, 
+            "TotalN": 62555.20164434627, 
+            "TotalP": 9008.418935088383, 
+            "Sediment": 4631065.313740464, 
             "Unit": "kg"
         }, 
         {
             "Source": "Loading Rates", 
-            "TotalN": 6.142226431907505, 
-            "TotalP": 0.88452775967986, 
-            "Sediment": 454.7203723857574, 
+            "TotalN": 6.142256946344043, 
+            "TotalP": 0.8845311393001436, 
+            "Sediment": 454.72146751310476, 
             "Unit": "kg/ha"
         }, 
         {
             "Source": "Mean Annual Concentration", 
-            "TotalN": 1.3786275608457275, 
-            "TotalP": 0.19853295239867583, 
-            "Sediment": 102.06234576317192, 
+            "TotalN": 1.3786344098350443, 
+            "TotalP": 0.1985337109571106, 
+            "Sediment": 102.06259156536765, 
             "Unit": "mg/l"
         }, 
         {
@@ -202,9 +202,9 @@
         }, 
         {
             "Source": "Low-Density Mixed", 
-            "TotalN": 234.94304797610081, 
-            "TotalP": 26.02107004146233, 
-            "Sediment": 8431.830506856597
+            "TotalN": 235.25381920358242, 
+            "TotalP": 26.05548944627908, 
+            "Sediment": 8442.983721812758
         }, 
         {
             "Source": "Medium-Density Mixed", 

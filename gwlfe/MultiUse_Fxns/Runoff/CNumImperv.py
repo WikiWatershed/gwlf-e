@@ -12,7 +12,7 @@ from gwlfe.Memoization import memoize
 from gwlfe.MultiUse_Fxns.Runoff.CNI import CNI, CNI_f
 
 try:
-    from CNumImperv_inner_compiled import CNumImperv_inner
+    from .CNumImperv_inner_compiled import CNumImperv_inner
 except ImportError:
     print("Unable to import compiled CNumImper_inner, using slower version")
     from gwlfe.MultiUse_Fxns.Runoff.CNumImperv_inner import CNumImperv_inner

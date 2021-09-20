@@ -5,19 +5,25 @@ Port of Generalized Watersheds Loading Functions - Enhanced (MapShed)
 
 ## Installation
 
-Install using `pip`. Ensure `numba` is installed first:
+Install using `pip`:
 
 ```bash
-$ pip install numba==0.38.1
 $ pip install gwlf-e
 ```
 
-## Testing
+## Development
 
-Run `python setup.py test` from within the project directory.
+Ensure you have Python 3.9 and [pipenv](https://pipenv.pypa.io/en/latest/) available. Then run:
 
-To run a manual test againt the model output and the expected output from a known gms file, you can run `python compare_output.py` or `python compare_output.py results.json` from within the test directory.
+```bash
+$ pipenv sync
+```
 
+### Testing
+
+```bash
+$ pipenv run nosetests
+```
 
 ## Deployments
 

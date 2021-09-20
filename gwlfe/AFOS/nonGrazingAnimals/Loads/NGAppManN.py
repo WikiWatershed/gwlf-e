@@ -1,7 +1,7 @@
 from numpy import zeros
 
-from InitNgN import InitNgN
-from InitNgN import InitNgN_f
+from .InitNgN import InitNgN
+from .InitNgN import InitNgN_f
 from gwlfe.Memoization import memoize
 
 

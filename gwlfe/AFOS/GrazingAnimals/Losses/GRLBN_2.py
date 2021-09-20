@@ -1,7 +1,7 @@
 from numpy import sum
 from numpy import zeros
 
-from GRLostBarnN import GRLostBarnN
+from .GRLostBarnN import GRLostBarnN
 
 
 def GRLBN_2(NYrs, GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, GRPctManApp, PctGrazing, GRBarnNRate,

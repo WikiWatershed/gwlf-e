@@ -7,7 +7,7 @@ from gwlfe.Input.WaterBudget.Water import Water, Water_f
 from gwlfe.Memoization import memoize
 
 try:
-    from AMC5_yesterday_inner_compiled import AMC5_yesterday_inner
+    from .AMC5_yesterday_inner_compiled import AMC5_yesterday_inner
 except ImportError:
     print("Unable to import compiled AMC5_yesterday_inner, using slower version")
     from gwlfe.Input.WaterBudget.AMC5_yesterday_inner import AMC5_yesterday_inner

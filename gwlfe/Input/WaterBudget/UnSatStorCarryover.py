@@ -5,7 +5,7 @@ from gwlfe.Input.WaterBudget.ET import DailyET_f
 from gwlfe.Input.WaterBudget.Infiltration import Infiltration_f
 
 try:
-    from UnsatStor_inner_compiled import UnsatStor_inner
+    from .UnsatStor_inner_compiled import UnsatStor_inner
 except ImportError:
     print("Unable to import compiled UnsatStor_inner, using slower version")
     from gwlfe.Input.WaterBudget.UnsatStor_inner import UnsatStor_inner

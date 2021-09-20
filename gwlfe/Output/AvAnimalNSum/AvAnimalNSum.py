@@ -1,7 +1,7 @@
 from numpy import sum as npsum
 
-from AvAnimalN import AvAnimalN
-from AvAnimalN import AvAnimalN_f
+from .AvAnimalN import AvAnimalN
+from .AvAnimalN import AvAnimalN_f
 from gwlfe.Memoization import memoize
 
 

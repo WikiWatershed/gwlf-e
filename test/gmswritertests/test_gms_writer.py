@@ -1,8 +1,7 @@
 import csv
 import os
 import unittest
-from StringIO import StringIO
-from itertools import izip
+from io import StringIO
 import json
 
 import numpy as np
@@ -34,8 +33,8 @@ class TestGMSWriter(unittest.TestCase):
         ground_truth = csv.reader(self.output_file, delimiter=",")
         output_parsed = csv.reader(output, delimiter=",")
         error = False
-        for i, row in enumerate(izip(ground_truth, output_parsed)):
-            for j, column in enumerate(izip(row[0], row[1])):
+        for i, row in enumerate(zip(ground_truth, output_parsed)):
+            for j, column in enumerate(zip(row[0], row[1])):
                 ground_truth_val = column[0]
                 output_val = column[1]
                 try:

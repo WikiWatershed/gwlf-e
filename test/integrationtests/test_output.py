@@ -23,12 +23,15 @@ class TestOutput(unittest.TestCase):
     @classmethod
     def setUpClass(self, input_file_name, output_file_name):
         self.basepath = os.path.abspath(os.path.join(__file__, '../'))
+        
         inputfile = os.path.join(self.basepath,input_file_name)
+        with open(inputfile, 'r') as input_file:
+            self.z = Parser.GmsReader(input_file).read()
+            self.generated_output, _ = gwlfe.run(self.z)    
+        
         outputfile = os.path.join(self.basepath,output_file_name)
-        input_file = open(inputfile, 'r')
-        self.z = Parser.GmsReader(input_file).read()
-        self.generated_output, _ = gwlfe.run(self.z)
-        self.static_output = json.load(open(outputfile, 'r'))
+        with open(outputfile, 'r') as output_file:
+            self.static_output = json.load(output_file)    
 
     def test_constants(self):
         constant_keys = ["MeanFlow", "MeanFlowPerSecond", "AreaTotal"]
@@ -49,8 +52,8 @@ class TestOutput(unittest.TestCase):
         self.assertEqual(len(self.generated_output["monthly"]), len(self.static_output["monthly"]))
         error = False
         for i, month in enumerate(self.generated_output["monthly"]):
-            self.assertItemsEqual(self.generated_output["monthly"][i], self.static_output["monthly"][i])
-            for (key, val) in month.iteritems():
+            self.assertCountEqual(self.generated_output["monthly"][i], self.static_output["monthly"][i])
+            for (key, val) in month.items():
                 try:
                     np.testing.assert_allclose(self.generated_output["monthly"][i][key],
                                                self.static_output["monthly"][i][key],
@@ -82,8 +85,8 @@ class TestOutput(unittest.TestCase):
         self.assertEqual(len(self.generated_output["SummaryLoads"]), len(self.static_output["SummaryLoads"]))
         error = False
         for i, month in enumerate(self.generated_output["SummaryLoads"]):
-            self.assertItemsEqual(self.generated_output["SummaryLoads"][i], self.static_output["SummaryLoads"][i])
-            for (key, val) in month.iteritems():
+            self.assertCountEqual(self.generated_output["SummaryLoads"][i], self.static_output["SummaryLoads"][i])
+            for (key, val) in month.items():
                 try:
                     try:
                         np.testing.assert_allclose(self.generated_output["SummaryLoads"][i][key],
@@ -104,8 +107,8 @@ class TestOutput(unittest.TestCase):
         self.assertEqual(len(self.generated_output["Loads"]), len(self.static_output["Loads"]))
         error = False
         for i, month in enumerate(self.generated_output["Loads"]):
-            self.assertItemsEqual(self.generated_output["Loads"][i], self.static_output["Loads"][i])
-            for (key, val) in month.iteritems():
+            self.assertCountEqual(self.generated_output["Loads"][i], self.static_output["Loads"][i])
+            for (key, val) in month.items():
                 try:
                     try:
                         np.testing.assert_allclose(self.generated_output["Loads"][i][key],

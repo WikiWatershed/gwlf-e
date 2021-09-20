@@ -7,7 +7,6 @@ import json
 from calendar import monthrange
 from decimal import Decimal
 
-from numpy import int
 from numpy import zeros
 from numpy import ndarray
 

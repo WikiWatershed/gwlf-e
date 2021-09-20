@@ -11,7 +11,7 @@ from gwlfe.Memoization import memoize
 from gwlfe.MultiUse_Fxns.Runoff.CNP import CNP, CNP_f
 
 try:
-    from CNumPerv_inner_compiled import CNumPerv_inner
+    from .CNumPerv_inner_compiled import CNumPerv_inner
 except ImportError:
     print("Unable to import compiled CNumPerv_f_inner, using slower version")
     from gwlfe.MultiUse_Fxns.Runoff.CNumPerv_inner import CNumPerv_inner

@@ -1,7 +1,7 @@
 from numpy import zeros
 
-from GRAppManN import GRAppManN
-from GRAppManN import GRAppManN_f
+from .GRAppManN import GRAppManN
+from .GRAppManN import GRAppManN_f
 from gwlfe.AFOS.GrazingAnimals.Loads.GRAccManAppN import GRAccManAppN
 from gwlfe.AFOS.GrazingAnimals.Loads.GRAccManAppN import GRAccManAppN_f
 
