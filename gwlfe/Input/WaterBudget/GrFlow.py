@@ -5,7 +5,7 @@ from gwlfe.Input.WaterBudget.Percolation import Percolation_f
 from gwlfe.Memoization import memoize
 
 try:
-    from DeepSeep_inner_compiled import DeepSeep_inner
+    from .DeepSeep_inner_compiled import DeepSeep_inner
 except ImportError:
     print("Unable to import compiled DeepSeep_inner, using slower version")
     from gwlfe.Input.WaterBudget.DeepSeep_inner import DeepSeep_inner

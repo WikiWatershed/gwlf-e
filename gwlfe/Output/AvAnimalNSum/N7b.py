@@ -1,4 +1,4 @@
-from AvAnimalNSum import AvAnimalNSum
+from .AvAnimalNSum import AvAnimalNSum
 from gwlfe.BMPs.AgAnimal.NAGBUFFER import NAGBUFFER
 from gwlfe.BMPs.AgAnimal.NAGBUFFER import NAGBUFFER_f
 from gwlfe.BMPs.AgAnimal.NAWMSL import NAWMSL

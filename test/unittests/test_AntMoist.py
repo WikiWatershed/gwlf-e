@@ -5,7 +5,7 @@ import numpy as np
 
 from gwlfe import Parser
 from gwlfe.Input.WaterBudget import AntMoist
-from VariableUnittest import VariableUnitTest
+from .VariableUnitTest import VariableUnitTest
 
 class TestAntMoist(VariableUnitTest):
     @skip("not ready")

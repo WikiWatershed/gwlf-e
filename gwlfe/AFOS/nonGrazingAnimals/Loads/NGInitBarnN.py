@@ -1,10 +1,10 @@
 from numpy import maximum
 from numpy import zeros
 
-from NGAccManAppN import NGAccManAppN
-from NGAccManAppN import NGAccManAppN_f
-from NGAppManN import NGAppManN
-from NGAppManN import NGAppManN_f
+from .NGAccManAppN import NGAccManAppN
+from .NGAccManAppN import NGAccManAppN_f
+from .NGAppManN import NGAppManN
+from .NGAppManN import NGAppManN_f
 from gwlfe.Memoization import memoize
 
 

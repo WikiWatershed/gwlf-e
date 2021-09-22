@@ -1,6 +1,6 @@
 import numpy as np
 
-from VariableUnittest import VariableUnitTest
+from .VariableUnitTest import VariableUnitTest
 from gwlfe import enums
 from gwlfe.Input.WaterBudget import Grow
 

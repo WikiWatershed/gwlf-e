@@ -1,5 +1,5 @@
-from AvGRLostBarnNSum import AvGRLostBarnNSum
-from AvGRLostBarnNSum import AvGRLostBarnNSum_f
+from .AvGRLostBarnNSum import AvGRLostBarnNSum
+from .AvGRLostBarnNSum import AvGRLostBarnNSum_f
 from gwlfe.Memoization import memoize
 
 

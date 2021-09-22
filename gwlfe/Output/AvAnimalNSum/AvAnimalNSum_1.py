@@ -1,5 +1,5 @@
-from N7b import N7b
-from N7b import N7b_f
+from .N7b import N7b
+from .N7b import N7b_f
 from gwlfe.Memoization import memoize
 
 

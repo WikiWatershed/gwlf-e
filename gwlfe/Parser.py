@@ -9,17 +9,17 @@ import re
 
 from numpy import zeros
 
-from AFOS.GrazingAnimals.Loads.InitGrN import InitGrN_f
-from AFOS.GrazingAnimals.Losses.GRLBN_2 import GRLBN_2
-from AFOS.GrazingAnimals.Losses.GRStreamN import AvGRStreamN_f
-from AFOS.nonGrazingAnimals.Loads.InitNgN import InitNgN_f
-from AFOS.nonGrazingAnimals.Losses.NGLostBarnNSum import NGLostBarnNSum
-from Input.WaterBudget.AntMoist import AntMoist
-from Input.WaterBudget.SatStorCarryOver import SatStorCarryOver_f
-from Input.WaterBudget.UnSatStorCarryover import UnSatStorCarryover_f
-from MultiUse_Fxns.Runoff.CNI import CNI_f
-from MultiUse_Fxns.Runoff.CNP import CNP_f
-from Output.AvAnimalNSum.N7b_2 import N7b_2
+from .AFOS.GrazingAnimals.Loads.InitGrN import InitGrN_f
+from .AFOS.GrazingAnimals.Losses.GRLBN_2 import GRLBN_2
+from .AFOS.GrazingAnimals.Losses.GRStreamN import AvGRStreamN_f
+from .AFOS.nonGrazingAnimals.Loads.InitNgN import InitNgN_f
+from .AFOS.nonGrazingAnimals.Losses.NGLostBarnNSum import NGLostBarnNSum
+from .Input.WaterBudget.AntMoist import AntMoist
+from .Input.WaterBudget.SatStorCarryOver import SatStorCarryOver_f
+from .Input.WaterBudget.UnSatStorCarryover import UnSatStorCarryover_f
+from .MultiUse_Fxns.Runoff.CNI import CNI_f
+from .MultiUse_Fxns.Runoff.CNP import CNP_f
+from .Output.AvAnimalNSum.N7b_2 import N7b_2
 from .datamodel import DataModel
 from .enums import YesOrNo, ETflag, GrowFlag, LandUse, SweepType
 
@@ -1253,7 +1253,7 @@ class GmsReader(object):
         or type. If a scalar value is passed instead, assert that the
         next token value matches and raise a ValueError if it does not.
         """
-        value, line_no, col_no = self.fp.next()
+        value, line_no, col_no = next(self.fp)
 
         if callable(typ):
             try:
@@ -2084,7 +2084,7 @@ class GmsWriter(object):
         self.fp.writerow([self.serialize_value(col) for col in row])
 
     def serialize_value(self, value):
-        if isinstance(value, basestring):
+        if isinstance(value, str):
             return self.serialize_enum(value)
         return value
 

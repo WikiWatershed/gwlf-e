@@ -1,6 +1,6 @@
 import numpy as np
 
-from VariableUnittest import VariableUnitTest
+from .VariableUnitTest import VariableUnitTest
 from gwlfe.AFOS.GrazingAnimals.Losses.GRLostBarnN import GRLostBarnN
 from gwlfe.AFOS.GrazingAnimals.Losses.GRLostBarnN import GRLostBarnN_f
 

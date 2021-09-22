@@ -25,7 +25,7 @@ if os.path.exists("test/"+test_filename):
 else:
     with open("test/"+test_filename,"w") as file:
         file.write("import numpy as np\n"
-                    "from VariableUnittest import VariableUnitTest\n"
+                    "from .VariableUnitTest import VariableUnitTest\n"
                     "from unittest import skip\n"
                     "from gwlfe import {variable}\n"
                     "\n\n"

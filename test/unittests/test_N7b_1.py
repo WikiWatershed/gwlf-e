@@ -2,7 +2,7 @@ from unittest import skip
 
 import numpy as np
 
-from VariableUnittest import VariableUnitTest
+from .VariableUnitTest import VariableUnitTest
 from gwlfe.Output.AvAnimalNSum.N7b_1 import N7b_1
 
 

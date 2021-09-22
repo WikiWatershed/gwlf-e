@@ -1,8 +1,8 @@
 from numpy import maximum
 from numpy import zeros
 
-from InitNgN import InitNgN
-from InitNgN import InitNgN_f
+from .InitNgN import InitNgN
+from .InitNgN import InitNgN_f
 
 
 def NGAccManAppN(GrazingAnimal_0, NumAnimals, AvgAnimalWt, AnimalDailyN, NGPctManApp):

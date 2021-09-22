@@ -8,7 +8,7 @@ Imported from LoadReductions.bas
 """
 
 import logging
-from BMPs.Stream.FilterEff import FilterEff
+from .BMPs.Stream.FilterEff import FilterEff
 
 log = logging.getLogger(__name__)
 

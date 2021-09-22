@@ -1,7 +1,7 @@
 from numpy import sum
 
-from GRLoadN import GRLoadN
-from GRLoadN import GRLoadN_f
+from .GRLoadN import GRLoadN
+from .GRLoadN import GRLoadN_f
 from gwlfe.Input.Animals.GrazingAnimal import GrazingAnimal
 from gwlfe.Memoization import memoize
 from gwlfe.enums import YesOrNo

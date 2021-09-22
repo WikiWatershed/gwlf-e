@@ -8,13 +8,13 @@ Imported from StreamBank.bas
 """
 
 import logging
-from Input.LandUse.AreaTotal import AreaTotal_f
-from Input.LandUse.Ag.TileDrain import TileDrain_f
-from Output.Loading.StreamBankEros_1 import StreamBankEros_1_f
-from Input.LandUse.Ag.AGSTRM import AGSTRM_f
-from Output.Loading.StreamBankN_1 import StreamBankN_1_f
-from Output.AvAnimalNSum.AnimalN import AnimalN_f
-from Output.Loading.StreamBankEros import StreamBankEros_f
+from .Input.LandUse.AreaTotal import AreaTotal_f
+from .Input.LandUse.Ag.AGSTRM import AGSTRM_f
+from .Input.LandUse.Ag.TileDrain import TileDrain_f
+from .Output.AvAnimalNSum.AnimalN import AnimalN_f
+from .Output.Loading.StreamBankEros import StreamBankEros_f
+from .Output.Loading.StreamBankEros_1 import StreamBankEros_1_f
+from .Output.Loading.StreamBankN_1 import StreamBankN_1_f
 
 log = logging.getLogger(__name__)
 
