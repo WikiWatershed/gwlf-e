@@ -27,27 +27,56 @@ $ pipenv run nosetests
 
 ## Deployments
 
-Deployments to PyPi are handled through [Travis-CI](https://travis-ci.org/WikiWatershed/gwlf-e). The following git flow commands create a release using Travis:
+Create a new release using git flow:
 
-``` bash
-$ git flow release start 0.1.0
+```console
+$ git flow release start 3.0.0
 $ vim CHANGELOG.md
 $ vim setup.py
 $ git add CHANGELOG.md setup.py
-$ git commit -m "0.1.0"
-$ git flow release publish 0.1.0
-$ git flow release finish 0.1.0
+$ git commit -m "3.0.0"
+$ git flow release publish 3.0.0
 ```
 
-After you've completed the `git flow` steps, you'll need to push the changes from your local `master` and `develop` branches back to the main repository.
+Then create a wheel to publish to PyPI using [build](https://github.com/pypa/build):
 
-```bash
-$ git checkout develop
-$ git push origin develop
-$ git checkout master
-$ git push origin master
-# Trigger PyPi deployment
-$ git push --tags
+```console
+$ pipenv run python -m build
+```
+
+This should create two files under `dist/`:
+
+```console
+$ ls -1 dist/
+gwlf-e-3.0.0.tar.gz
+gwlf_e-3.0.0-cp39-cp39-macosx_11_0_x86_64.whl
+```
+
+Then publish the wheel to PyPI using [twine](https://github.com/pypa/twine/) and credentials from LastPass:
+
+```console
+$ python -m twine check dist/*
+Checking dist/gwlf_e-3.0.0-cp39-cp39-macosx_11_0_x86_64.whl: PASSED
+Checking dist/gwlf-e-3.0.0.tar.gz: PASSED
+```
+```console
+$ python -m twine upload dist/*
+Uploading distributions to https://upload.pypi.org/legacy/
+Enter your username: azavea
+Enter your password:
+Uploading gwlf_e-3.0.0-cp39-cp39-macosx_11_0_x86_64.whl
+100%|
+Uploading gwlf-e-3.0.0.tar.gz
+100%|
+
+View at:
+https://pypi.org/project/gwlf-e/3.0.0/
+```
+
+Finally, finish the release:
+
+```console
+$ git flow release finish -p 3.0.0
 ```
 
 ## License
