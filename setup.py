@@ -36,6 +36,7 @@ setup(
     version='2.0.0',
     description='A Python port of Generalized Watersheds Loading Functions - Enhanced (MapShed)',
     long_description=long_description,
+    long_description_content_type='text/x-rst',
     url='https://github.com/WikiWatershed/gwlf-e',
     author='Azavea Inc.',
     author_email='systems@azavea.com',
@@ -48,7 +49,7 @@ setup(
         'Programming Language :: Python :: 3',
     ],
     keywords='gwlf-e watershed hydrology',
-    packages=find_packages(exclude=['tests']),
+    packages=find_packages(exclude=['test']),
     python_requires=">=3.7",
     install_requires=[
         'certifi==2021.5.30',
