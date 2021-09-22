@@ -1,3 +1,12 @@
+## 3.0.0-beta
+
+- **BREAKING** Drop support for Python 2.7
+- Upgrade to Python 3.9
+- Add `--json` flag to `run` which outputs the JSON model results to stdout.
+  The JSON is sorted and formatted, and is stable enough for diffing.
+- Add `pyproject.toml` for building wheel
+- Update README with new build and publish instructions
+
 ## 2.0.0
 
 - Official Release. No changes since `2.0.0-beta`.
