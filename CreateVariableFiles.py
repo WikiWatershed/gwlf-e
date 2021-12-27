@@ -1,7 +1,7 @@
 import os
 
 
-variable_name = raw_input("Enter the name of the variable:")
+variable_name = input("Enter the name of the variable:")
 
 #write variable file
 var_filename = "%s.py"%(variable_name)
