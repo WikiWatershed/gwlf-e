@@ -1,5 +1,6 @@
 import random
 
+import numpy as np
 import numpy.ma as ma
 # from numba import jit
 from numpy import array
@@ -63,7 +64,7 @@ non_leap_year = [False, False, False, False, False, False, False, False, False, 
 
 
 def mask_builder(DaysMonth):
-    ones = ravel(ones((12, 31))).astype("int")
+    ones = ravel(np.ones((12, 31))).astype("int")
     slices = []
     for i, month in enumerate(DaysMonth[0]):
         slices.append(slice(31 * i, 31 * i + month))
