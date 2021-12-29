@@ -762,7 +762,10 @@ def WriteOutput(z):
     SumWxYrEnd = z.WxYrEnd
 
     # Which land use sources to include in the totals.
-    sources = (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
+    # These are indices of this array: https://github.com/WikiWatershed/model-my-watershed/blob/415be752ea7b66ae5e1d15afe1a11cf4051dbd5e/src/mmw/mmw/settings/gwlfe_settings.py#L23-L39
+    # This list matches the land type in the Loads list below
+    # 13 was added and 4, 5, 9 removed in https://github.com/WikiWatershed/gwlf-e/pull/84
+    sources = (0, 1, 2, 3, 6, 7, 8, 10, 11, 12, 13)
 
     # ha
     AreaTotal = sum(z.Area[l] for l in sources)

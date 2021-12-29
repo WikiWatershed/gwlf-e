@@ -19,6 +19,12 @@ Ensure you have Python 3.9 and [pipenv](https://pipenv.pypa.io/en/latest/) avail
 $ pipenv sync
 ```
 
+### Running Locally
+
+```bash
+$ pipenv run ./run.py --json test/integrationtests/input_4_output.json test/integrationtests/input_4.gms
+```
+
 ### Testing
 
 ```bash

@@ -42,7 +42,7 @@ def main():
 
         if (args.json != None):
             with open(args.json, "w") as file:
-                json.dump(result, file, indent=2, sort_keys=True)
+                json.dump(result, file, indent=4, sort_keys=True)
 
 
 if __name__ == '__main__':
