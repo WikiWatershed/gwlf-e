@@ -1,3 +1,12 @@
+## 3.1.0
+
+- Fix SummaryLoad outputs to include "Low-Density Open Space", and exclude
+  "Other Upland Areas"
+
+## 3.0.0
+
+- Official Release. No changes since `3.0.0-beta`.
+
 ## 3.0.0-beta
 
 - **BREAKING** Drop support for Python 2.7
