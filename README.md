@@ -13,7 +13,7 @@ $ pip install gwlf-e
 
 ## Development
 
-Ensure you have Python 3.9 and [pipenv](https://pipenv.pypa.io/en/latest/) available. Then run:
+Ensure you have Python 3.10 and [pipenv](https://pipenv.pypa.io/en/latest/) available. Then run:
 
 ```bash
 $ pipenv sync
