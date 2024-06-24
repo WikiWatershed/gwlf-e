@@ -3,5 +3,5 @@ requires = [
     "setuptools>=42",
     "wheel>=0.31",
     "twine>=1.11",
-    'numba==0.54.0',
+    'numba==0.*',
 ]

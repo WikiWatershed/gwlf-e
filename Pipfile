@@ -4,16 +4,16 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-certifi = "==2021.5.30"
-funcsigs = "==1.0.2"
-llvmlite = "==0.37.0"
-nose = "==1.3.7"
-numpy = "==1.20.3"
-numba = "==0.54.0"
+certifi = "==2021.*"
+funcsigs = "==1.0.*"
+llvmlite = "==0.*"
+pynose = "==1.5.*"
+numpy = "==1.*"
+numba = "==0.*"
 
 [dev-packages]
 build = "*"
 twine = "*"
 
 [requires]
-python_version = "3.9"
+python_version = "3.10"
