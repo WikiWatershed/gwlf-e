@@ -6,9 +6,10 @@ on:
       - '*'
 
 jobs:
-  deploy:
+  release:
     runs-on: ubuntu-latest
-
+    permissions:
+      id-token: write
     steps:
     - uses: actions/checkout@v4
     - name: Set up Python 3.10
@@ -27,5 +28,3 @@ jobs:
         pipenv run python -m cibuildwheel --output-dir dist
     - name: Publish package
       uses: pypa/gh-action-pypi-publish@release/v1
-      with:
-        password: ${{ secrets.PYPI_API_TOKEN }}
