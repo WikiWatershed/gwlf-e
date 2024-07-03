@@ -1,4 +1,4 @@
-certifi==2021.5.30
+certifi>=2021
 funcsigs==1.0.2
 llvmlite==0.38.*
 pynose==1.5.*
