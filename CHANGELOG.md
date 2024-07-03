@@ -1,3 +1,11 @@
+## 3.2.0
+
+- Add support for Python 3.9, 3.10
+- Add wheels for Linux for Python 3.8, 3.9, 3.10
+- Add instructions for installing in other platforms
+- Automated publishing to PyPI via GitHub Actions
+- Allow installing any modern `certifi`
+
 ## 3.1.0
 
 - Fix SummaryLoad outputs to include "Low-Density Open Space", and exclude
