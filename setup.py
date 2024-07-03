@@ -52,7 +52,7 @@ setup(
     packages=find_packages(exclude=['test']),
     python_requires=">=3.7",
     install_requires=[
-        'certifi==2021.5.30',
+        'certifi>=2021',
         'funcsigs==1.0.2',
         'llvmlite==0.38.*',
         'pynose==1.5.*',

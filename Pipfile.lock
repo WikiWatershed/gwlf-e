@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "8aef7ea5d8bc275f2f117c858f5d4aac5887ad94a2dc40a45ca49e7d225d6ad1"
+            "sha256": "db50ee70395401a3ee4232a96283055f794d4572c2a9c270f960eaae2546dedb"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -18,11 +18,12 @@
     "default": {
         "certifi": {
             "hashes": [
-                "sha256:2bbf76fd432960138b3ef6dda3dde0544f27cbf8546c458e60baf371917ba9ee",
-                "sha256:50b1e4f8446b06f41be7dd6338db18e0990601dce795c2b1686458aa7e8fa7d8"
+                "sha256:3cd43f1c6fa7dedc5899d69d3ad0398fd018ad1a17fba83ddaf78aa46c747516",
+                "sha256:ddc6c8ce995e6987e7faf5e3f1b02b302836a0e5d98ece18392cb1a36c72ad56"
             ],
             "index": "pypi",
-            "version": "==2021.5.30"
+            "markers": "python_version >= '3.6'",
+            "version": "==2024.6.2"
         },
         "funcsigs": {
             "hashes": [
@@ -151,11 +152,11 @@
         },
         "setuptools": {
             "hashes": [
-                "sha256:937a48c7cdb7a21eb53cd7f9b59e525503aa8abaf3584c730dc5f7a5bec3a650",
-                "sha256:a58a8fde0541dab0419750bcc521fbdf8585f6e5cb41909df3a472ef7b81ca95"
+                "sha256:b8b8060bb426838fbe942479c90296ce976249451118ef566a5a0b7d8b78fb05",
+                "sha256:bd63e505105011b25c3c11f753f7e3b8465ea739efddaccef8f0efac2137bac1"
             ],
             "markers": "python_version >= '3.8'",
-            "version": "==70.1.1"
+            "version": "==70.2.0"
         }
     },
     "develop": {
@@ -194,11 +195,12 @@
         },
         "certifi": {
             "hashes": [
-                "sha256:2bbf76fd432960138b3ef6dda3dde0544f27cbf8546c458e60baf371917ba9ee",
-                "sha256:50b1e4f8446b06f41be7dd6338db18e0990601dce795c2b1686458aa7e8fa7d8"
+                "sha256:3cd43f1c6fa7dedc5899d69d3ad0398fd018ad1a17fba83ddaf78aa46c747516",
+                "sha256:ddc6c8ce995e6987e7faf5e3f1b02b302836a0e5d98ece18392cb1a36c72ad56"
             ],
             "index": "pypi",
-            "version": "==2021.5.30"
+            "markers": "python_version >= '3.6'",
+            "version": "==2024.6.2"
         },
         "cffi": {
             "hashes": [
@@ -356,12 +358,12 @@
         },
         "cibuildwheel": {
             "hashes": [
-                "sha256:b6cd9c09ddda4b8a77e93550e8c7cd423e3850ec7ba008ee1dbcb4848e9ee6c1",
-                "sha256:c60a8e9aa0322b13f5965a8396fcabb64ce0f45b2f7130273b2589f6066034be"
+                "sha256:02ead5d7e3e81fe2ee0afb78746b1494af6b37afc1e32fae12f9c9a28c14e369",
+                "sha256:d331c81c505106ee585333b871718cf0516ac10d55c4dda2c00c8a7405743cab"
             ],
             "index": "pypi",
             "markers": "python_version >= '3.8'",
-            "version": "==2.19.1"
+            "version": "==2.19.2"
         },
         "cryptography": {
             "hashes": [
