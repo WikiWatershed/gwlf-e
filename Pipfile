@@ -13,6 +13,7 @@ numba = "==0.55.*"
 
 [dev-packages]
 build = "*"
+cibuildwheel = "*"
 twine = "*"
 
 [requires]

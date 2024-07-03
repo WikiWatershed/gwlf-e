@@ -2,6 +2,11 @@
 requires = [
     "setuptools>=42",
     "wheel>=0.31",
+    "cibuildwheel>=2.13",
     "twine>=1.11",
     'numba==0.55.*',
 ]
+
+[tool.cibuildwheel]
+build = "cp38-manylinux_* cp39-manylinux_* cp310-manylinux_*"
+archs = "x86_64"
