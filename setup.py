@@ -21,9 +21,9 @@ from gwlfe.BMPs.Stream.UrbLoadRed_inner import cc as ulrcc
 from gwlfe.MultiUse_Fxns.Runoff.WashImperv_inner import cc as wipcc
 from gwlfe.MultiUse_Fxns.Runoff.WashPerv_inner import cc as wpcc
 
-# Get the long description from DESCRIPTION.rst
+# Get the long description from README.md
 with open(path.join(path.abspath(path.dirname(__file__)),
-                    'DESCRIPTION.rst'), encoding='utf-8') as f:
+                    'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 tests_require = [
@@ -36,7 +36,7 @@ setup(
     version='3.1.0',
     description='A Python port of Generalized Watersheds Loading Functions - Enhanced (MapShed)',
     long_description=long_description,
-    long_description_content_type='text/x-rst',
+    long_description_content_type='text/markdown',
     url='https://github.com/WikiWatershed/gwlf-e',
     author='Azavea Inc.',
     author_email='systems@azavea.com',
