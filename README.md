@@ -1,8 +1,6 @@
 # gwlf-e
 Port of Generalized Watersheds Loading Functions - Enhanced (MapShed)
 
-[![Build Status](https://travis-ci.org/WikiWatershed/gwlf-e.svg?branch=develop)](https://travis-ci.org/WikiWatershed/gwlf-e)
-
 ## Installation
 
 Install using `pip`:
@@ -11,9 +9,18 @@ Install using `pip`:
 $ pip install gwlf-e
 ```
 
+For Linux x64 on Python 3.8, 3.9, and 3.10 the above will pull a published wheel.
+For other platforms, a wheel would have to be built.
+In that case, you may also need to install `setuptools`, `wheel`, and `build` to compile it locally:
+
+```bash
+$ pip install wheel build
+$ pip install --no-build-isolation gwlf-e
+```
+
 ## Development
 
-Ensure you have Python 3.9 and [pipenv](https://pipenv.pypa.io/en/latest/) available. Then run:
+Ensure you have Python 3.10 and [pipenv](https://pipenv.pypa.io/en/latest/) available. Then run:
 
 ```bash
 $ pipenv sync
@@ -41,49 +48,10 @@ $ vim CHANGELOG.md
 $ vim setup.py
 $ git add CHANGELOG.md setup.py
 $ git commit -m "3.0.0"
-$ git flow release publish 3.0.0
-```
-
-Then create a wheel to publish to PyPI using [build](https://github.com/pypa/build):
-
-```console
-$ pipenv run python -m build
-```
-
-This should create two files under `dist/`:
-
-```console
-$ ls -1 dist/
-gwlf-e-3.0.0.tar.gz
-gwlf_e-3.0.0-cp39-cp39-macosx_11_0_x86_64.whl
-```
-
-Then publish the wheel to PyPI using [twine](https://github.com/pypa/twine/) and credentials from LastPass:
-
-```console
-$ python -m twine check dist/*
-Checking dist/gwlf_e-3.0.0-cp39-cp39-macosx_11_0_x86_64.whl: PASSED
-Checking dist/gwlf-e-3.0.0.tar.gz: PASSED
-```
-```console
-$ python -m twine upload dist/*
-Uploading distributions to https://upload.pypi.org/legacy/
-Enter your username: azavea
-Enter your password:
-Uploading gwlf_e-3.0.0-cp39-cp39-macosx_11_0_x86_64.whl
-100%|
-Uploading gwlf-e-3.0.0.tar.gz
-100%|
-
-View at:
-https://pypi.org/project/gwlf-e/3.0.0/
-```
-
-Finally, finish the release:
-
-```console
 $ git flow release finish -p 3.0.0
 ```
+
+When the tag is pushed up, [GitHub Actions](./.github/workflows/release.yml) will publish a release to PyPI.
 
 ## License
 

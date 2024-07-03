@@ -1,4 +1,3 @@
-include DESCRIPTION.rst
 include *.md
 include *.py
 include LICENSE
