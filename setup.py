@@ -27,7 +27,7 @@ with open(path.join(path.abspath(path.dirname(__file__)),
     long_description = f.read()
 
 tests_require = [
-    'nose == 1.3.7',
+    'pynose == 1.5.*',
     'coverage == 4.0.3'
 ]
 
@@ -54,10 +54,10 @@ setup(
     install_requires=[
         'certifi==2021.5.30',
         'funcsigs==1.0.2',
-        'llvmlite==0.37.0',
-        'nose==1.3.7',
-        'numpy==1.20.3',
-        'numba==0.54.0',
+        'llvmlite==0.38.*',
+        'pynose==1.5.*',
+        'numpy==1.21.*',
+        'numba==0.55.*',
     ],
     extras_require={
         'dev': [],
