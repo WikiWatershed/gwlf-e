@@ -23,7 +23,8 @@ $ pip install --no-build-isolation gwlf-e
 Ensure you have Python 3.10 and [pipenv](https://pipenv.pypa.io/en/latest/) available. Then run:
 
 ```bash
-$ pipenv sync
+$ pipenv sync --dev
+$ pipenv run python setup.py build
 ```
 
 ### Running Locally
