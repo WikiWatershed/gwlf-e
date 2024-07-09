@@ -56,7 +56,7 @@ setup(
         'funcsigs==1.0.2',
         'llvmlite==0.38.*',
         'pynose==1.5.*',
-        'numpy==1.21.*',
+        'numpy==1.22.*',
         'numba==0.55.*',
     ],
     extras_require={
