@@ -1,3 +1,7 @@
+## 3.3.0
+
+- Upgrade to NumPy 1.22 to fix compiling with Numba 0.55
+
 ## 3.2.0
 
 - Add support for Python 3.9, 3.10

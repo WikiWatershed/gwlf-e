@@ -33,7 +33,7 @@ tests_require = [
 
 setup(
     name='gwlf-e',
-    version='3.2.0',
+    version='3.3.0',
     description='A Python port of Generalized Watersheds Loading Functions - Enhanced (MapShed)',
     long_description=long_description,
     long_description_content_type='text/markdown',
